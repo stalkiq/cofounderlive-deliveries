@@ -1,0 +1,40 @@
+{
+  "name": "Capability Test",
+  "googleCapability": {
+    "service": "bigquery",
+    "label": "BigQuery live analytics",
+    "rationale": "Verify sample operations data",
+    "primaryScreen": 0,
+    "config": {
+      "analyticsLabel": "Test rows"
+    }
+  },
+  "screens": [
+    {
+      "type": "table",
+      "items": [
+        {
+          "title": "Alpha",
+          "detail": "First sample",
+          "status": "Sample",
+          "value": "12"
+        },
+        {
+          "title": "Beta",
+          "detail": "Second sample",
+          "status": "Sample",
+          "value": "8"
+        }
+      ]
+    },
+    {
+      "type": "catalog",
+      "items": []
+    },
+    {
+      "type": "workflow",
+      "items": []
+    }
+  ],
+  "workflow": {}
+}
