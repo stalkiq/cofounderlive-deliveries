@@ -1,0 +1,182 @@
+{
+  "name": "Curbcut",
+  "workspaceLabel": "Curbcut Pilot",
+  "experience": {
+    "archetype": "mobile",
+    "device": "mobile",
+    "navigationStyle": "bottom",
+    "density": "comfortable",
+    "typeStyle": "sans",
+    "radius": "sharp",
+    "motif": "High-contrast tactile street-map with safety-yellow highlights"
+  },
+  "eyebrow": "MVP WORKFLOW DEMO",
+  "headline": "Know the entry before you roll.",
+  "subheadline": "A high-contrast, data-precise neighborhood guide with a built-in High-Contrast & Text-Scaling Toggle, helping active wheelchair users navigate local culture with absolute certainty.",
+  "palette": {
+    "background": "#1A1A1A",
+    "surface": "#2D2D2D",
+    "primary": "#FFC72C",
+    "accent": "#E05A47",
+    "text": "#F5F5F7"
+  },
+  "googleCapability": {
+    "service": "maps",
+    "label": "Curbcut Live Map",
+    "rationale": "Allows active rollers to visualize exact physical entry points, ramp slopes, and accessible pathways on a custom high-contrast map before arriving.",
+    "primaryScreen": 0,
+    "config": {
+      "assistantRole": "Help the user complete the product's core workflow using only the supplied product context.",
+      "mapQuery": "wheelchair accessible cafes and restaurants in San Francisco",
+      "calendarTitle": "",
+      "analyticsLabel": "Live sample operations data"
+    }
+  },
+  "screens": [
+    {
+      "label": "Explore Map",
+      "type": "map",
+      "title": "Tactile Asphalt Map",
+      "description": "Real-time verified routes and entrances with safety-yellow path highlights.",
+      "metrics": [
+        {
+          "label": "Verified Spots",
+          "value": "142"
+        },
+        {
+          "label": "Avg. Door Width",
+          "value": "34 in"
+        }
+      ],
+      "items": [
+        {
+          "title": "Sightglass Coffee",
+          "detail": "Flat entry, 35\" automatic door, accessible restroom.",
+          "status": "Verified",
+          "meta": "0.2 mi away | Safety-Yellow Path Active",
+          "value": "Flat"
+        },
+        {
+          "title": "The Mill",
+          "detail": "Ramped entry (4.2° slope), 33\" manual door.",
+          "status": "Verified",
+          "meta": "0.5 mi away | Safety-Yellow Path Active",
+          "value": "Ramp"
+        },
+        {
+          "title": "Bi-Rite Market",
+          "detail": "Flat entry, tight interior aisles (32\" clearance).",
+          "status": "Caution",
+          "meta": "0.8 mi away | Caution Path Active",
+          "value": "Tight Aisles"
+        }
+      ]
+    },
+    {
+      "label": "Verified Spots",
+      "type": "catalog",
+      "title": "Local Culture & Dining",
+      "description": "Detailed architectural dimensions for nearby venues.",
+      "metrics": [
+        {
+          "label": "Fully Accessible",
+          "value": "94%"
+        },
+        {
+          "label": "Restroom Verified",
+          "value": "81"
+        }
+      ],
+      "items": [
+        {
+          "title": "Sightglass Coffee",
+          "detail": "Door Width: 35\" | Ramp Slope: 0° (Flat) | Restroom Turning Radius: 62\"",
+          "status": "Highly Accessible",
+          "meta": "Cafe",
+          "value": "Photo Proof"
+        },
+        {
+          "title": "The Mill",
+          "detail": "Door Width: 33\" | Ramp Slope: 4.2° | Restroom Turning Radius: 60\"",
+          "status": "Accessible",
+          "meta": "Bakery",
+          "value": "Photo Proof"
+        },
+        {
+          "title": "Nopa",
+          "detail": "Door Width: 36\" | Ramp Slope: 0° | Restroom Turning Radius: 65\"",
+          "status": "Highly Accessible",
+          "meta": "Restaurant",
+          "value": "Photo Proof"
+        },
+        {
+          "title": "Alamo Square Park (East Path)",
+          "detail": "Paved path | Slope: 6.1° (Steep) | Restroom: None",
+          "status": "Challenging",
+          "meta": "Park",
+          "value": "Path Alert"
+        }
+      ]
+    },
+    {
+      "label": "Verify Entrance",
+      "type": "workflow",
+      "title": "Submit Dimension Audit",
+      "description": "Help the community by submitting verified physical measurements of a local venue.",
+      "metrics": [],
+      "items": []
+    }
+  ],
+  "workflow": {
+    "title": "Submit Dimension Audit",
+    "description": "Enter precise physical measurements to help active rollers navigate with absolute certainty.",
+    "fields": [
+      {
+        "label": "Venue Name",
+        "type": "text",
+        "placeholder": "e.g., Sightglass Coffee"
+      },
+      {
+        "label": "Entrance Type",
+        "type": "select",
+        "options": [
+          "Flat / Flush Entry",
+          "Ramped (under 5° slope)",
+          "Step (under 2 inches)",
+          "Inaccessible Step"
+        ]
+      },
+      {
+        "label": "Measured Door Width",
+        "type": "select",
+        "options": [
+          "Under 32 inches (Tight)",
+          "32 to 36 inches (Standard)",
+          "Over 36 inches (Spacious)"
+        ]
+      },
+      {
+        "label": "Restroom Accessibility",
+        "type": "select",
+        "options": [
+          "Accessible (60\"+ turning radius)",
+          "Ambulant accessible only",
+          "Not accessible"
+        ]
+      },
+      {
+        "label": "Photo Proof Upload",
+        "type": "text",
+        "placeholder": "Paste link to photo proof or drag image here"
+      },
+      {
+        "label": "Audit Date",
+        "type": "date",
+        "placeholder": "Select date of measurement"
+      }
+    ],
+    "buttonLabel": "Submit Verified Dimensions",
+    "successTitle": "Audit Submitted Successfully",
+    "successMessage": "Thank you! Our team will cross-reference your photo proof and update the live tactile map within 2 hours."
+  }
+}
