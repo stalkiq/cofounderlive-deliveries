@@ -1,0 +1,222 @@
+{
+  "name": "Vesta.OS",
+  "workspaceLabel": "TACTICAL COMMAND CONSOLE v1.08",
+  "experience": {
+    "archetype": "operations",
+    "device": "desktop",
+    "navigationStyle": "sidebar",
+    "density": "compact",
+    "typeStyle": "mono",
+    "radius": "sharp",
+    "motif": "HUD scanlines and thermal plume vector boundaries"
+  },
+  "eyebrow": "TACTICAL EVACUATION ROUTING ENGINE",
+  "headline": "Clear paths through the smoke when seconds dictate survival.",
+  "subheadline": "Real-time WebGL wind vectors and dynamic route-risk calculation for state-level emergency dispatchers.",
+  "palette": {
+    "background": "#121315",
+    "surface": "#1E2024",
+    "primary": "#FF5A00",
+    "accent": "#D62AD0",
+    "text": "#F5F6F8"
+  },
+  "googleCapabilities": [
+    {
+      "service": "routes",
+      "label": "Dynamic Evacuation Routing",
+      "rationale": "Calculates real-time evacuation corridors bypassing active wildfire thermal plumes and toxic air corridors.",
+      "primaryScreen": 0,
+      "config": {
+        "assistantRole": "Help the user complete the product's core workflow using only the supplied product context.",
+        "mapQuery": "",
+        "locationQuery": "",
+        "origin": "Sacramento, CA",
+        "destination": "South Lake Tahoe, CA",
+        "calendarTitle": "",
+        "analyticsLabel": "Live sample operations data",
+        "targetLanguage": "es",
+        "analysisMode": "both",
+        "speechPrompt": "Read this result aloud"
+      }
+    },
+    {
+      "service": "air_quality",
+      "label": "Toxic Plume Monitoring",
+      "rationale": "Monitors live PM2.5 and AQI levels along the active incident zones to feed the Route Risk Index (RRI) calculator.",
+      "primaryScreen": 0,
+      "config": {
+        "assistantRole": "Help the user complete the product's core workflow using only the supplied product context.",
+        "mapQuery": "",
+        "locationQuery": "Kyburz, CA",
+        "origin": "",
+        "destination": "",
+        "calendarTitle": "",
+        "analyticsLabel": "Live sample operations data",
+        "targetLanguage": "es",
+        "analysisMode": "both",
+        "speechPrompt": "Read this result aloud"
+      }
+    }
+  ],
+  "screens": [
+    {
+      "label": "TACTICAL_MAP",
+      "type": "map",
+      "title": "Live Vector Plume Map",
+      "description": "WebGL-rendered wind drift vector overlay with dynamic Route Risk Index (RRI) calculation.",
+      "metrics": [
+        {
+          "label": "RRI_AVG",
+          "value": "4.82"
+        },
+        {
+          "label": "PM2.5_MAX",
+          "value": "312 µg/m³"
+        },
+        {
+          "label": "WIND_DIR",
+          "value": "ENE @ 18kts"
+        }
+      ],
+      "items": [
+        {
+          "title": "Segment Alpha-1 (US-50)",
+          "detail": "High thermal exposure near Kyburz. RRI: 8.45 [CRITICAL]",
+          "status": "CLOSED",
+          "meta": "TEMP: 840°C",
+          "value": "RRI: 8.45"
+        },
+        {
+          "title": "Segment Beta-3 (CA-88 Bypass)",
+          "detail": "Clear of active smoke drift. RRI: 1.20 [SAFE]",
+          "status": "ACTIVE",
+          "meta": "AQI: 45",
+          "value": "RRI: 1.20"
+        }
+      ]
+    },
+    {
+      "label": "INCIDENT_LOG",
+      "type": "table",
+      "title": "Active Thermal Plumes & Incidents",
+      "description": "Real-time telemetry from satellite ingestion pipeline updated <45s ago.",
+      "metrics": [
+        {
+          "label": "ACTIVE_PLUMES",
+          "value": "14"
+        },
+        {
+          "label": "DISPATCHED_ROUTES",
+          "value": "8"
+        },
+        {
+          "label": "SYS_LATENCY",
+          "value": "12ms"
+        }
+      ],
+      "items": [
+        {
+          "title": "Caldor Fire Plume [ID: PL-902]",
+          "detail": "Expanding north-northeast. Thermal core >800°C.",
+          "status": "EXPANDING",
+          "meta": "LAT: 38.8026 / LON: -120.6356",
+          "value": "CRITICAL"
+        },
+        {
+          "title": "Mosquito Ridge Plume [ID: PL-411]",
+          "detail": "Smoldering phase. Low wind drift impact.",
+          "status": "STABLE",
+          "meta": "LAT: 39.0122 / LON: -120.7455",
+          "value": "MODERATE"
+        }
+      ]
+    },
+    {
+      "label": "ROUTE_CALCULATOR",
+      "type": "workflow",
+      "title": "RRI Route Dispatch Generator",
+      "description": "Calculate safe evacuation corridors bypassing toxic air corridors and thermal plumes.",
+      "metrics": [
+        {
+          "label": "ACTIVE_DISPATCHES",
+          "value": "4"
+        },
+        {
+          "label": "CALC_TIME_AVG",
+          "value": "1.4s"
+        }
+      ],
+      "items": [
+        {
+          "title": "Route Alpha-1 Bypass (US-50)",
+          "detail": "RRI: 2.15. Corridor secured. Telemetry dispatched to Cal Fire units.",
+          "status": "DISPATCHED",
+          "meta": "LATENCY: 12ms",
+          "value": "SECURED"
+        },
+        {
+          "title": "Route Beta-3 Direct (CA-88)",
+          "detail": "RRI: 1.20. Clear of active plume drift.",
+          "status": "STANDBY",
+          "meta": "LATENCY: 14ms",
+          "value": "STANDBY"
+        }
+      ]
+    }
+  ],
+  "workflow": {
+    "title": "Generate Tactical Evacuation Route",
+    "description": "Input origin, destination, and risk tolerance thresholds to compute a dynamic Route Risk Index (RRI) bypass path.",
+    "fields": [
+      {
+        "label": "Evacuation Origin City/Coordinates",
+        "type": "text",
+        "placeholder": "e.g., Sacramento, CA"
+      },
+      {
+        "label": "Safe Destination City/Coordinates",
+        "type": "text",
+        "placeholder": "e.g., South Lake Tahoe, CA"
+      },
+      {
+        "label": "Maximum Acceptable PM2.5 Exposure",
+        "type": "select",
+        "options": [
+          "< 50 µg/m³ (Sensitive Groups)",
+          "< 150 µg/m³ (Standard)",
+          "< 250 µg/m³ (Emergency Only)"
+        ]
+      },
+      {
+        "label": "Thermal Proximity Buffer",
+        "type": "select",
+        "options": [
+          "2 Miles (High Risk)",
+          "5 Miles (Standard)",
+          "10 Miles (Conservative)"
+        ]
+      }
+    ],
+    "buttonLabel": "COMPUTE SAFE CORRIDOR [SYS_RUN]",
+    "successTitle": "CORRIDOR SECURED",
+    "successMessage": "CORRIDOR SECURED. WebGL vector overlay active. Dispatching telemetry to Cal Fire units. Route corridor computed with RRI of 2.15."
+  },
+  "googleCapability": {
+    "service": "routes",
+    "label": "Dynamic Evacuation Routing",
+    "rationale": "Calculates real-time evacuation corridors bypassing active wildfire thermal plumes and toxic air corridors.",
+    "primaryScreen": 0,
+    "config": {
+      "assistantRole": "Help the user complete the product's core workflow using only the supplied product context.",
+      "mapQuery": "",
+      "locationQuery": "",
+      "origin": "Sacramento, CA",
+      "destination": "South Lake Tahoe, CA",
+      "calendarTitle": "",
+      "analyticsLabel": "Live sample operations data",
+      "targetLanguage": "es",
+      "analysisMode": "both",
+      "speechPrompt": "Read this result aloud"
+    }
+  }
+}
