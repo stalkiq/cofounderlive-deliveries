@@ -1,0 +1,93 @@
+{
+  "name": "Garden Grid",
+  "subheadline": "Shared garden supplies, clearly coordinated.",
+  "headline": "Know what the garden needs next.",
+  "workspaceLabel": "Garden operations",
+  "eyebrow": "Community operations",
+  "experience": {
+    "archetype": "community",
+    "device": "desktop",
+    "navigationStyle": "sidebar",
+    "density": "comfortable",
+    "typeStyle": "sans",
+    "radius": "soft",
+    "motif": "plot markers"
+  },
+  "palette": {
+    "background": "#f5f1e8",
+    "surface": "#ffffff",
+    "primary": "#285943",
+    "accent": "#d17b37",
+    "text": "#16251d"
+  },
+  "googleCapability": {
+    "service": "calendar",
+    "label": "Google Calendar planning",
+    "rationale": "Shared workdays and supply pickups are time-based coordination.",
+    "primaryScreen": 1,
+    "config": {
+      "calendarTitle": "Garden Grid workday"
+    }
+  },
+  "screens": [
+    {
+      "label": "Supplies",
+      "type": "catalog",
+      "title": "Shared supplies",
+      "description": "Fictional sample inventory",
+      "metrics": [],
+      "items": [
+        {
+          "title": "Compost",
+          "detail": "Two sample bags available",
+          "status": "Sample",
+          "meta": "Shed A",
+          "value": "2"
+        }
+      ]
+    },
+    {
+      "label": "Calendar",
+      "type": "calendar",
+      "title": "Garden schedule",
+      "description": "Plan the next shared workday",
+      "metrics": [],
+      "items": [
+        {
+          "title": "Bed preparation",
+          "detail": "Sample work session",
+          "status": "Sample",
+          "meta": "Saturday",
+          "value": "9 AM"
+        }
+      ]
+    },
+    {
+      "label": "Add",
+      "type": "workflow",
+      "title": "Plan a workday",
+      "description": "Create a shared plan",
+      "metrics": [],
+      "items": []
+    }
+  ],
+  "workflow": {
+    "title": "Plan a workday",
+    "description": "Create a calendar-ready garden task.",
+    "fields": [
+      {
+        "label": "Task",
+        "type": "text",
+        "placeholder": "Prepare north beds"
+      },
+      {
+        "label": "Date",
+        "type": "date",
+        "placeholder": ""
+      }
+    ],
+    "buttonLabel": "Add to calendar",
+    "successTitle": "Plan ready",
+    "successMessage": "Your sample plan is ready for Google Calendar."
+  }
+}
