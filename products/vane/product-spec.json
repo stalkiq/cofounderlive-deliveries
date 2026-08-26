@@ -1,0 +1,182 @@
+{
+  "name": "Vane",
+  "workspaceLabel": "Vane Tactical Command",
+  "experience": {
+    "archetype": "operations",
+    "device": "desktop",
+    "navigationStyle": "sidebar",
+    "density": "compact",
+    "typeStyle": "mono",
+    "radius": "sharp",
+    "motif": "High-contrast tactical radar with glowing isobar vectors"
+  },
+  "eyebrow": "PRE-LAUNCH INVESTOR BRIEFING",
+  "headline": "Predict the storm. Protect the route.",
+  "subheadline": "A high-fidelity weather intelligence platform built for global maritime dispatchers and supply chain risk managers.",
+  "palette": {
+    "background": "#0B0C10",
+    "surface": "#1F2833",
+    "primary": "#45A29E",
+    "accent": "#CCFF00",
+    "text": "#F5F5F7"
+  },
+  "googleCapability": {
+    "service": "maps",
+    "label": "Live Route Vector Map",
+    "rationale": "Integrating Google Maps allows dispatchers to overlay dynamic weather fronts and isobar vectors directly onto real-world shipping lanes and port coordinates.",
+    "primaryScreen": 0,
+    "config": {
+      "assistantRole": "Help the user complete the product's core workflow using only the supplied product context.",
+      "mapQuery": "Singapore Strait",
+      "calendarTitle": "",
+      "analyticsLabel": "Live sample operations data"
+    }
+  },
+  "screens": [
+    {
+      "label": "Tactical Map",
+      "type": "map",
+      "title": "Global Weather & Route Overlay",
+      "description": "Real-time maritime weather vectors, active typhoons, and vessel coordinates.",
+      "metrics": [
+        {
+          "label": "Active Vessels",
+          "value": "42"
+        },
+        {
+          "label": "High Risk Alerts",
+          "value": "4"
+        },
+        {
+          "label": "Avg Delay Avoided",
+          "value": "18.4 hrs"
+        }
+      ],
+      "items": [
+        {
+          "title": "MV Polaris - Route Pacific-A",
+          "detail": "Approaching Category 3 Typhoon 'Mawar'. Rerouting recommended.",
+          "status": "CRITICAL",
+          "meta": "Wind: 65kts | Wave: 8.2m",
+          "value": "Reroute Active"
+        },
+        {
+          "title": "MV Albatross - Route Atlantic-B",
+          "detail": "Encountering localized low-pressure isobar deformation.",
+          "status": "WARNING",
+          "meta": "Wind: 42kts | Wave: 5.1m",
+          "value": "Monitoring"
+        }
+      ]
+    },
+    {
+      "label": "Fleet Status",
+      "type": "table",
+      "title": "Active Fleet Risk Register",
+      "description": "Real-time monitoring of transoceanic vessels and localized atmospheric pressure threats.",
+      "metrics": [
+        {
+          "label": "System Status",
+          "value": "NOMINAL"
+        },
+        {
+          "label": "Data Latency",
+          "value": "1.2s"
+        }
+      ],
+      "items": [
+        {
+          "title": "MV Poseidon",
+          "detail": "Singapore to Shanghai (South China Sea)",
+          "status": "SAFE",
+          "meta": "Tailwinds optimizing fuel consumption",
+          "value": "ETA On Time"
+        },
+        {
+          "title": "MV Triton",
+          "detail": "Tokyo to Los Angeles (North Pacific)",
+          "status": "WARNING",
+          "meta": "Slight route deviation due to wave height",
+          "value": "ETA +4h"
+        },
+        {
+          "title": "MV Sovereign",
+          "detail": "Rotterdam to New York (North Atlantic)",
+          "status": "SAFE",
+          "meta": "Isobars stable across transit zone",
+          "value": "ETA On Time"
+        }
+      ]
+    },
+    {
+      "label": "Route Optimizer",
+      "type": "workflow",
+      "title": "Simulate & Optimize Route",
+      "description": "Generate a weather-optimized alternative route bypassing active pressure fronts and high wave vectors.",
+      "metrics": [
+        {
+          "label": "Simulations Run",
+          "value": "128"
+        },
+        {
+          "label": "Avg Time Saved",
+          "value": "11.2 hrs"
+        }
+      ],
+      "items": [
+        {
+          "title": "Sim #1042 - MV Polaris",
+          "detail": "Optimized bypass around localized isobar deformation zone.",
+          "status": "OPTIMIZED",
+          "meta": "Tactical Mode: Max Safety | Saved 14h",
+          "value": "Completed"
+        },
+        {
+          "title": "Sim #1041 - MV Triton",
+          "detail": "Calculated northern vector avoiding wave heights >4m.",
+          "status": "OPTIMIZED",
+          "meta": "Tactical Mode: Fuel Efficiency | Saved 8h",
+          "value": "Completed"
+        }
+      ]
+    }
+  ],
+  "workflow": {
+    "title": "Initiate Route Optimization",
+    "description": "Input vessel parameters and target destination to calculate a weather-safe vector path.",
+    "fields": [
+      {
+        "label": "Vessel IMO Number",
+        "type": "text",
+        "placeholder": "e.g., IMO 9876543"
+      },
+      {
+        "label": "Target Destination Port",
+        "type": "select",
+        "options": [
+          "Port of Rotterdam",
+          "Port of Shanghai",
+          "Port of Los Angeles",
+          "Port of Singapore"
+        ]
+      },
+      {
+        "label": "Departure Date",
+        "type": "date",
+        "placeholder": "Select departure date"
+      },
+      {
+        "label": "Tactical Mode Priority",
+        "type": "select",
+        "options": [
+          "Fuel Efficiency",
+          "Max Safety (Avoid >4m waves)",
+          "Speed Priority"
+        ]
+      }
+    ],
+    "buttonLabel": "Generate Vector Route",
+    "successTitle": "Optimized Route Generated",
+    "successMessage": "Alternative route vector calculated using Tactical Mode. Isobar deformation bypassed. 14 hours of severe weather exposure avoided. GRIB2 data synced to vessel ECDIS."
+  }
+}
