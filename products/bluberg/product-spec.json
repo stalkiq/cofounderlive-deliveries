@@ -1,0 +1,205 @@
+{
+  "name": "bluberg",
+  "workspaceLabel": "bluberg Workspace",
+  "experience": {
+    "archetype": "workspace",
+    "device": "desktop",
+    "navigationStyle": "sidebar",
+    "density": "spacious",
+    "typeStyle": "sans",
+    "radius": "sharp",
+    "motif": "A geometric, brutalist iceberg graphic integrated into the Timeline screen that physically sinks deeper underwater as active slots are completed."
+  },
+  "eyebrow": "MONASTIC FOCUS ENGINE",
+  "headline": "The tip of the iceberg.",
+  "subheadline": "The brutalist antidote to infinite backlogs. Keep 90% of your chaotic tasks submerged and focus only on the 6 surface-level slots.",
+  "palette": {
+    "background": "#F4F7F6",
+    "surface": "#FFFFFF",
+    "primary": "#1A202C",
+    "accent": "#3182CE",
+    "text": "#1A202C"
+  },
+  "googleCapabilities": [
+    {
+      "service": "gemini",
+      "label": "Monastic Distiller",
+      "rationale": "Uses Gemini to analyze a chaotic brain-dump of tasks, distill them down to exactly six high-impact items, and instantly generate 'Commit to Timeline' actions for zero-friction execution.",
+      "primaryScreen": 0,
+      "config": {
+        "assistantRole": "An uncompromising monastic editor who rejects fluff, filters out underwater noise, and forces the user to select exactly six surface slots from their submerged backlog, outputting direct 'Commit' triggers.",
+        "mapQuery": "Minimalist workspaces",
+        "locationQuery": "San Francisco",
+        "origin": "",
+        "destination": "",
+        "calendarTitle": "",
+        "analyticsLabel": "Cognitive Load Reduction",
+        "targetLanguage": "en",
+        "analysisMode": "text",
+        "speechPrompt": "Read this result aloud"
+      }
+    }
+  ],
+  "screens": [
+    {
+      "label": "Distill",
+      "type": "assistant",
+      "title": "The Noise Filter",
+      "description": "Dump your chaotic backlog. The Monastic Distiller will filter out the underwater noise and extract exactly six surface slots with instant 'Commit' actions.",
+      "metrics": [
+        {
+          "label": "Submerged Noise",
+          "value": "90%"
+        },
+        {
+          "label": "Surface Slots",
+          "value": "6 Max"
+        }
+      ],
+      "items": [
+        {
+          "title": "Brain Dump Input",
+          "detail": "Review 40 unread emails, design landing page hero, fix CSS grid bug, call investor, write blog post, tweet update, clean desk, buy coffee, review analytics.",
+          "status": "Raw Noise",
+          "meta": "User Input",
+          "value": ""
+        },
+        {
+          "title": "Distilled Six Recommendation",
+          "detail": "1. Refine landing page hero typography. 2. Fix CSS grid alignment bug. 3. Draft investor update. 4. Process critical emails. 5. Clear desk. 6. Rest.",
+          "status": "Suggested",
+          "meta": "Press 'Commit to Timeline' to auto-populate",
+          "value": ""
+        }
+      ]
+    },
+    {
+      "label": "Timeline",
+      "type": "timeline",
+      "title": "The Surface Slots",
+      "description": "Your uncompromising daily timeline. Exactly six surface slots. The brutalist iceberg sinks deeper underwater as you complete tasks.",
+      "metrics": [
+        {
+          "label": "Surface Slots",
+          "value": "4 / 6"
+        },
+        {
+          "label": "Iceberg Submersion Depth",
+          "value": "66% Submerged"
+        }
+      ],
+      "items": [
+        {
+          "title": "[1] Refine landing page hero typography",
+          "detail": "Apply Swiss design principles and sharp 1px borders.",
+          "status": "Active",
+          "meta": "Press '1' to complete",
+          "value": "1"
+        },
+        {
+          "title": "[2] Fix CSS grid alignment bug",
+          "detail": "Ensure zero-latency layout rendering on desktop.",
+          "status": "Active",
+          "meta": "Press '2' to complete",
+          "value": "2"
+        },
+        {
+          "title": "[3] Draft investor update",
+          "detail": "Focus on the validation plan and pilot metrics.",
+          "status": "Active",
+          "meta": "Press '3' to complete",
+          "value": "3"
+        },
+        {
+          "title": "[4] Process critical emails",
+          "detail": "Limit to top 3 urgent design partner inquiries.",
+          "status": "Active",
+          "meta": "Press '4' to complete",
+          "value": "4"
+        },
+        {
+          "title": "[5] Empty Slot",
+          "detail": "Unassigned. Protect your cognitive bandwidth.",
+          "status": "Empty",
+          "meta": "Press '5' to assign",
+          "value": "5"
+        },
+        {
+          "title": "[6] Empty Slot",
+          "detail": "Unassigned. Protect your cognitive bandwidth.",
+          "status": "Empty",
+          "meta": "Press '6' to assign",
+          "value": "6"
+        }
+      ]
+    },
+    {
+      "label": "Commit",
+      "type": "workflow",
+      "title": "Lock in a Slot",
+      "description": "Directly assign a task to one of the six available surface slots. Designed for zero-latency, keyboard-only execution.",
+      "metrics": [
+        {
+          "label": "Keyboard Mode",
+          "value": "Active"
+        }
+      ],
+      "items": []
+    }
+  ],
+  "workflow": {
+    "title": "Commit Focus Task",
+    "description": "Directly assign a task to one of the six available surface slots. Use keyboard keys 1-6 for instant, mouse-free management.",
+    "fields": [
+      {
+        "label": "Task Description",
+        "type": "text",
+        "placeholder": "e.g., Refine landing page hero typography"
+      },
+      {
+        "label": "Slot Assignment (Press Key 1-6)",
+        "type": "select",
+        "placeholder": "",
+        "options": [
+          "Slot 1 (Key 1)",
+          "Slot 2 (Key 2)",
+          "Slot 3 (Key 3)",
+          "Slot 4 (Key 4)",
+          "Slot 5 (Key 5)",
+          "Slot 6 (Key 6)"
+        ]
+      },
+      {
+        "label": "Estimated Deep Work Blocks",
+        "type": "select",
+        "placeholder": "",
+        "options": [
+          "1 Block (30m)",
+          "2 Blocks (60m)",
+          "3 Blocks (90m)"
+        ]
+      }
+    ],
+    "buttonLabel": "Lock into Timeline (Enter)",
+    "successTitle": "Task Locked",
+    "successMessage": "Task successfully committed to your surface timeline. Iceberg depth updated."
+  },
+  "googleCapability": {
+    "service": "gemini",
+    "label": "Monastic Distiller",
+    "rationale": "Uses Gemini to analyze a chaotic brain-dump of tasks, distill them down to exactly six high-impact items, and instantly generate 'Commit to Timeline' actions for zero-friction execution.",
+    "primaryScreen": 0,
+    "config": {
+      "assistantRole": "An uncompromising monastic editor who rejects fluff, filters out underwater noise, and forces the user to select exactly six surface slots from their submerged backlog, outputting direct 'Commit' triggers.",
+      "mapQuery": "Minimalist workspaces",
+      "locationQuery": "San Francisco",
+      "origin": "",
+      "destination": "",
+      "calendarTitle": "",
+      "analyticsLabel": "Cognitive Load Reduction",
+      "targetLanguage": "en",
+      "analysisMode": "text",
+      "speechPrompt": "Read this result aloud"
+    }
+  }
+}
