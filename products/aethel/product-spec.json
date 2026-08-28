@@ -1,0 +1,190 @@
+{
+  "name": "Aethel",
+  "workspaceLabel": "The Illustrated Primer",
+  "experience": {
+    "archetype": "assistant",
+    "device": "desktop",
+    "navigationStyle": "sidebar",
+    "density": "spacious",
+    "typeStyle": "serif",
+    "radius": "soft",
+    "motif": "Evolving ink-and-watercolor illustrations on digital parchment"
+  },
+  "eyebrow": "A Lifelong, Adaptive Companion for a Mind in the Making",
+  "headline": "The Illustrated Primer, Realized.",
+  "subheadline": "An AI-powered adaptive learning platform that begins as a devoted reading tutor and grows into a lifelong intellectual companion for every child.",
+  "palette": {
+    "background": "#FDFBF7",
+    "surface": "#EFECE6",
+    "primary": "#1C2321",
+    "accent": "#A64B2A",
+    "text": "#1C2321"
+  },
+  "googleCapabilities": [
+    {
+      "service": "gemini",
+      "label": "Socratic Primer Engine",
+      "rationale": "Generates personalized, Socratic-style narrative lessons and adaptive dialogue paths based on a child's unique curiosity, age, and moral reasoning level.",
+      "primaryScreen": 0,
+      "config": {
+        "assistantRole": "An elegant, Socratic tutor inspired by Neal Stephenson's Primer. You speak with intellectual warmth, using rich storytelling, gentle questioning, and neo-Victorian grace to guide a child's reasoning.",
+        "mapQuery": "",
+        "locationQuery": "",
+        "origin": "",
+        "destination": "",
+        "calendarTitle": "",
+        "analyticsLabel": "Live sample operations data",
+        "targetLanguage": "",
+        "analysisMode": "both",
+        "speechPrompt": "Read the Socratic response aloud in a warm, comforting tone"
+      }
+    }
+  ],
+  "screens": [
+    {
+      "label": "The Primer Sandbox",
+      "type": "assistant",
+      "title": "Dialogue with the Primer",
+      "description": "Engage directly with Aethel's Socratic engine. Input a spark of curiosity to see how the Primer weaves it into a tailored lesson of logic, character, and discovery.",
+      "metrics": [
+        {
+          "label": "Active Inquiry",
+          "value": "The Clockwork Engine"
+        },
+        {
+          "label": "Cognitive Depth",
+          "value": "Level III (Socratic)"
+        }
+      ],
+      "items": [
+        {
+          "title": "The Mystery of the Pendulum",
+          "detail": "A story about Galileo, gravity, and the courage to question established dogmas.",
+          "status": "Active Story",
+          "meta": "Ages 7-9",
+          "value": ""
+        },
+        {
+          "title": "Ink-and-Watercolor Canvas",
+          "detail": "A digital parchment illustration of a swinging brass pendulum inside a cathedral, shifting dynamically with the story's progress.",
+          "status": "Rendering",
+          "meta": "Visual Motif",
+          "value": ""
+        }
+      ]
+    },
+    {
+      "label": "Configure Path",
+      "type": "workflow",
+      "title": "Inscribe a New Chapter",
+      "description": "Set the coordinates for your child's next intellectual adventure. Aethel will synthesize these inputs into a bespoke, multi-day narrative curriculum.",
+      "metrics": [],
+      "items": [
+        {
+          "title": "Draft Chapter: The Clockwork Heavens",
+          "detail": "Awaiting Socratic synthesis. Focuses on celestial motion and empirical observation.",
+          "status": "Drafting",
+          "meta": "Pending Generation",
+          "value": ""
+        },
+        {
+          "title": "Selected Virtue: Empirical Rigor",
+          "detail": "Will guide the child to question dogmatic assumptions about the night sky.",
+          "status": "Configured",
+          "meta": "Active Parameter",
+          "value": ""
+        }
+      ]
+    },
+    {
+      "label": "The Evolving Ledger",
+      "type": "timeline",
+      "title": "A Mind in the Making",
+      "description": "A chronological record of your child's intellectual growth, moral reasoning milestones, and shared dialogues with Aethel.",
+      "metrics": [
+        {
+          "label": "Hours of Deep Focus",
+          "value": "42.5 hrs"
+        },
+        {
+          "label": "Concepts Mastered",
+          "value": "18"
+        },
+        {
+          "label": "Primary Virtue",
+          "value": "Intellectual Courage"
+        }
+      ],
+      "items": [
+        {
+          "title": "Socratic Dialogue on Justice",
+          "detail": "Discussed fairness using the story of the shared harvest. Child prioritized equity over raw division.",
+          "status": "In Progress",
+          "meta": "Yesterday",
+          "value": ""
+        },
+        {
+          "title": "The Concept of Zero",
+          "detail": "Explored the history of nothingness through ancient Indian mathematics. Demonstrated high abstract reasoning.",
+          "status": "Mastered",
+          "meta": "3 days ago",
+          "value": ""
+        },
+        {
+          "title": "Phonics: The Silent 'E'",
+          "detail": "Mastered the magic 'e' rule through a custom fable about a silent wizard who transforms words.",
+          "status": "Mastered",
+          "meta": "1 week ago",
+          "value": ""
+        }
+      ]
+    }
+  ],
+  "workflow": {
+    "title": "Inscribe a New Chapter",
+    "description": "Configure the adaptive parameters for your child's next Socratic learning arc.",
+    "fields": [
+      {
+        "label": "Child's Name & Age",
+        "type": "text",
+        "placeholder": "e.g., Victoria, Age 8, curious about the clockwork of the heavens"
+      },
+      {
+        "label": "Core Spark of Curiosity",
+        "type": "text",
+        "placeholder": "e.g., Why do the stars twinkle, or how do the gears of a pocketwatch turn?"
+      },
+      {
+        "label": "Primary Intellectual Virtue Focus",
+        "type": "select",
+        "options": [
+          "Intellectual Courage (Questioning dogma)",
+          "Socratic Humility (Embracing what we do not know)",
+          "Empirical Rigor (Testing through observation)",
+          "Ethical Responsibility (The impact of our choices)"
+        ]
+      }
+    ],
+    "buttonLabel": "Weave Lesson Path",
+    "successTitle": "The Chapter is Written",
+    "successMessage": "Aethel has synthesized a 5-part narrative arc blending astronomy with the history of scientific courage. The first dialogue is ready in the Sandbox."
+  },
+  "googleCapability": {
+    "service": "gemini",
+    "label": "Socratic Primer Engine",
+    "rationale": "Generates personalized, Socratic-style narrative lessons and adaptive dialogue paths based on a child's unique curiosity, age, and moral reasoning level.",
+    "primaryScreen": 0,
+    "config": {
+      "assistantRole": "An elegant, Socratic tutor inspired by Neal Stephenson's Primer. You speak with intellectual warmth, using rich storytelling, gentle questioning, and neo-Victorian grace to guide a child's reasoning.",
+      "mapQuery": "",
+      "locationQuery": "",
+      "origin": "",
+      "destination": "",
+      "calendarTitle": "",
+      "analyticsLabel": "Live sample operations data",
+      "targetLanguage": "",
+      "analysisMode": "both",
+      "speechPrompt": "Read the Socratic response aloud in a warm, comforting tone"
+    }
+  }
+}
