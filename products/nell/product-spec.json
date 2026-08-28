@@ -1,0 +1,172 @@
+{
+  "name": "Nell",
+  "workspaceLabel": "The Primer Workspace",
+  "experience": {
+    "archetype": "assistant",
+    "device": "desktop",
+    "navigationStyle": "sidebar",
+    "density": "spacious",
+    "typeStyle": "serif",
+    "radius": "soft",
+    "motif": "Neo-Victorian digital parchment with floating dust motes and ink-bleed illustrations"
+  },
+  "eyebrow": "A Diamond Age, Realized",
+  "headline": "An adaptive, lifelong companion for your child's mind.",
+  "subheadline": "Moving beyond passive screens. Nell is an interactive, generative tutor that weaves reading, writing, and reasoning into a personalized, evolving narrative for children aged 4 to 8.",
+  "palette": {
+    "background": "#121B16",
+    "surface": "#1E2D25",
+    "primary": "#E6D5B8",
+    "accent": "#D4A373",
+    "text": "#F4EFE6"
+  },
+  "googleCapabilities": [
+    {
+      "service": "gemini",
+      "label": "Socratic Story Weaver",
+      "rationale": "Powers the core conversational engine, generating personalized Socratic dialogue and adaptive fairy tales that respond to the child's real-time inputs and cognitive milestones.",
+      "primaryScreen": 1,
+      "config": {
+        "assistantRole": "You are Nell, a wise, patient, and enchanting Neo-Victorian tutor. You speak in warm, literary, and encouraging tones. You guide children aged 4-8 through Socratic dialogue, weaving reading, arithmetic, and ethical reasoning into whimsical stories. Never lecture; ask gentle, thought-provoking questions that help the child discover the answer themselves.",
+        "mapQuery": "",
+        "locationQuery": "",
+        "origin": "",
+        "destination": "",
+        "calendarTitle": "",
+        "analyticsLabel": "",
+        "targetLanguage": "",
+        "analysisMode": "both",
+        "speechPrompt": "Speak Nell's Socratic questions aloud in a warm, patient, and enchanting Neo-Victorian voice, pacing the delivery for a young child to easily comprehend and rep"
+      }
+    }
+  ],
+  "screens": [
+    {
+      "label": "The Chronicle",
+      "type": "timeline",
+      "title": "Your Child's Evolving Story",
+      "description": "A chronological record of the narrative chapters Nell has woven, mapping cognitive milestones and vocabulary acquired along the journey.",
+      "metrics": [
+        {
+          "label": "Hours Engaged",
+          "value": "14.5 hrs"
+        },
+        {
+          "label": "Words Mastered",
+          "value": "184 words"
+        },
+        {
+          "label": "Reasoning Level",
+          "value": "Stage 2 (Socratic)"
+        }
+      ],
+      "items": [
+        {
+          "title": "Chapter I: The Whispering Woods",
+          "detail": "Explored phonics of the letter 'W' through a quest to help a lost owl find its home.",
+          "status": "Completed",
+          "meta": "Oct 12",
+          "value": "Phonics Focus"
+        },
+        {
+          "title": "Chapter II: The Clockmaker's Apprentice",
+          "detail": "Introduced basic arithmetic and intervals of time by repairing a mechanical brass sparrow.",
+          "status": "Completed",
+          "meta": "Oct 19",
+          "value": "Arithmetic Focus"
+        },
+        {
+          "title": "Chapter III: The River of Reason",
+          "detail": "An interactive dilemma teaching cause, effect, and the ethics of sharing a limited resource.",
+          "status": "Active Now",
+          "meta": "Oct 26",
+          "value": "Ethics & Logic"
+        }
+      ]
+    },
+    {
+      "label": "The Primer's Voice",
+      "type": "assistant",
+      "title": "Dialogue with Nell",
+      "description": "Engage directly with the Primer. Speak or type to continue your child's personalized narrative adventure.",
+      "metrics": [
+        {
+          "label": "Current Realm",
+          "value": "The River of Reason"
+        },
+        {
+          "label": "Active Inquiry",
+          "value": "Socratic Inquiry"
+        }
+      ],
+      "items": [
+        {
+          "title": "Nell",
+          "detail": "The river is wide, and the beaver has only three logs to share. If he gives two to the squirrel, what must he keep for his own dam? What do you think is fair?",
+          "status": "Delivered",
+          "meta": "Just now",
+          "value": "Prompt"
+        }
+      ]
+    },
+    {
+      "label": "The Inkwell",
+      "type": "workflow",
+      "title": "Seed a New Chapter",
+      "description": "Guide Nell's next narrative arc by weaving in real-world events, struggles, or interests your child is experiencing today.",
+      "metrics": [],
+      "items": []
+    }
+  ],
+  "workflow": {
+    "title": "Configure Next Chapter",
+    "description": "Provide context from your child's life to help Nell craft a deeply personalized, highly relevant learning experience.",
+    "fields": [
+      {
+        "label": "Recent Real-World Experience",
+        "type": "text",
+        "placeholder": "e.g., We visited a local farm and saw sheep being sheared."
+      },
+      {
+        "label": "Core Learning Focus",
+        "type": "select",
+        "options": [
+          "Reading & Phonics (The Written Word)",
+          "Arithmetic & Patterns (The Language of Numbers)",
+          "Ethics & Character (The Way of Wisdom)"
+        ]
+      },
+      {
+        "label": "Current Emotional Theme or Challenge",
+        "type": "select",
+        "options": [
+          "Patience & Waiting",
+          "Sharing & Empathy",
+          "Overcoming Fear of Mistakes",
+          "Curiosity & Exploration"
+        ]
+      }
+    ],
+    "buttonLabel": "Weave Into the Primer",
+    "successTitle": "The Ink Has Dried",
+    "successMessage": "Nell has integrated these experiences into her memory graph. The next time your child opens the Primer, a new chapter tailored to these themes will gracefully unfold."
+  },
+  "googleCapability": {
+    "service": "gemini",
+    "label": "Socratic Story Weaver",
+    "rationale": "Powers the core conversational engine, generating personalized Socratic dialogue and adaptive fairy tales that respond to the child's real-time inputs and cognitive milestones.",
+    "primaryScreen": 1,
+    "config": {
+      "assistantRole": "You are Nell, a wise, patient, and enchanting Neo-Victorian tutor. You speak in warm, literary, and encouraging tones. You guide children aged 4-8 through Socratic dialogue, weaving reading, arithmetic, and ethical reasoning into whimsical stories. Never lecture; ask gentle, thought-provoking questions that help the child discover the answer themselves.",
+      "mapQuery": "",
+      "locationQuery": "",
+      "origin": "",
+      "destination": "",
+      "calendarTitle": "",
+      "analyticsLabel": "",
+      "targetLanguage": "",
+      "analysisMode": "both",
+      "speechPrompt": "Speak Nell's Socratic questions aloud in a warm, patient, and enchanting Neo-Victorian voice, pacing the delivery for a young child to easily comprehend and rep"
+    }
+  }
+}
