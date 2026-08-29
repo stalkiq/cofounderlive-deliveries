@@ -1,0 +1,267 @@
+{
+  "missionId": "ep_mteqhfcg",
+  "idea": "app for people who rv across the united states",
+  "brand": {
+    "name": "Roamstead",
+    "tagline": "The ultimate co-pilot for life on the open road.",
+    "audience": "Full-time digital nomads and active retirees navigating the US in Class A and Class B motorhomes.",
+    "tone": [
+      "Rugged",
+      "Nostalgic",
+      "Dependable"
+    ],
+    "visualConcept": "A modern digital field guide inspired by vintage WPA National Park posters, featuring tactile textures, warm organic tones, and bold retro-tinged typography.",
+    "layout": "A single-page narrative flow that mimics a road trip: starting with a wide scenic hero shot, transitioning into a dashboard preview 'instrument' layout, and ending with an interactive community map 'campfire' section.",
+    "palette": {
+      "background": "#FDFBF7",
+      "surface": "#F0EAE1",
+      "primary": "#1B3B2B",
+      "accent": "#C85A32",
+      "text": "#1E1E1E"
+    },
+    "creativeNotes": [
+      "Use SVG path animations to trace winding scenic routes on the interactive map mockups as the user scrolls down the page.",
+      "Implement a subtle CSS grain texture overlay across the background to evoke a printed, tactile field-guide feel without sacrificing performance.",
+      "Build custom interactive UI toggles that resemble vintage dashboard switches and analog dials for the maintenance tracker preview section."
+    ]
+  },
+  "mvp": {
+    "name": "Roamstead",
+    "workspaceLabel": "Roamstead Co-Pilot",
+    "experience": {
+      "archetype": "mobile",
+      "device": "mobile",
+      "navigationStyle": "bottom",
+      "density": "comfortable",
+      "typeStyle": "serif",
+      "radius": "soft",
+      "motif": "Vintage National Park field guide with tactile retro dashboard switches"
+    },
+    "eyebrow": "FIELD DISPATCH NO. 1",
+    "headline": "The ultimate co-pilot for life on the open road.",
+    "subheadline": "A rugged, offline-first digital field guide designed for Class A & B motorhomes navigating low clearances, cellular dead zones, and remote boondocking.",
+    "palette": {
+      "background": "#FDFBF7",
+      "surface": "#F0EAE1",
+      "primary": "#1B3B2B",
+      "accent": "#C85A32",
+      "text": "#1E1E1E"
+    },
+    "googleCapabilities": [
+      {
+        "service": "routes",
+        "label": "RV-Safe Routing Engine",
+        "rationale": "Calculates safe, low-clearance-avoiding routes specifically tailored for heavy Class A and Class B motorhomes.",
+        "primaryScreen": 0,
+        "config": {
+          "assistantRole": "Help the user complete the product's core workflow using only the supplied product context.",
+          "mapQuery": "",
+          "locationQuery": "",
+          "origin": "Moab, UT",
+          "destination": "Zion National Park, UT",
+          "calendarTitle": "",
+          "analyticsLabel": "Live sample operations data",
+          "targetLanguage": "en",
+          "analysisMode": "both",
+          "speechPrompt": "Read this result aloud"
+        }
+      },
+      {
+        "service": "weather",
+        "label": "Destination Weather Watch",
+        "rationale": "Provides real-time wind, temperature, and storm alerts at the destination to ensure safe rig setup and awning protection.",
+        "primaryScreen": 0,
+        "config": {
+          "assistantRole": "Help the user complete the product's core workflow using only the supplied product context.",
+          "mapQuery": "",
+          "locationQuery": "Zion National Park, UT",
+          "origin": "",
+          "destination": "",
+          "calendarTitle": "",
+          "analyticsLabel": "Live sample operations data",
+          "targetLanguage": "en",
+          "analysisMode": "both",
+          "speechPrompt": "Read this result aloud"
+        }
+      }
+    ],
+    "screens": [
+      {
+        "label": "Scenic Route",
+        "type": "map",
+        "title": "RV-Safe Navigator",
+        "description": "Active route from Moab to Zion. Automatically avoiding low-clearance bridges, propane-restricted tunnels, and steep mountain passes.",
+        "metrics": [
+          {
+            "label": "Route",
+            "value": "Moab to Zion"
+          },
+          {
+            "label": "Distance",
+            "value": "342 Miles"
+          },
+          {
+            "label": "Safety Clearance",
+            "value": "No Clearances < 13'6\""
+          }
+        ],
+        "items": [
+          {
+            "title": "I-70 Westbound Clearance Check",
+            "detail": "All overpasses verified above 14'0\". Safe for Class A rigs.",
+            "status": "Safe",
+            "meta": "Mile Marker 112",
+            "value": "Clear"
+          },
+          {
+            "title": "Zion Mount Carmel Tunnel",
+            "detail": "Requires escort permit for vehicles over 11'4\" tall or 7'10\" wide.",
+            "status": "Warning",
+            "meta": "UT-9 East Entrance",
+            "value": "Permit Req."
+          },
+          {
+            "title": "Virgin River Canyon Wind Alert",
+            "detail": "Crosswinds exceeding 25mph expected. Hold steering wheel firmly.",
+            "status": "Advisory",
+            "meta": "Weather Alert",
+            "value": "High Wind"
+          }
+        ]
+      },
+      {
+        "label": "The Dashboard",
+        "type": "dashboard",
+        "title": "Rig Telemetry & Maintenance",
+        "description": "Analog-inspired diagnostic meters tracking your motorhome's vital systems and scheduled generator cycles.",
+        "metrics": [
+          {
+            "label": "Gen Hours",
+            "value": "142.5 hrs"
+          },
+          {
+            "label": "House Battery",
+            "value": "12.6V (92%)"
+          },
+          {
+            "label": "Fresh Water",
+            "value": "65%"
+          },
+          {
+            "label": "Grey Water",
+            "value": "42%"
+          }
+        ],
+        "items": [
+          {
+            "title": "Generator Oil & Filter Change",
+            "detail": "Due every 150 hours to maintain warranty and peak performance.",
+            "status": "Due Soon",
+            "meta": "7.5 hours remaining",
+            "value": "[Dial: 142.5h]"
+          },
+          {
+            "title": "Chassis Lube & Inspection",
+            "detail": "Check front suspension grease points and steering linkage.",
+            "status": "Completed",
+            "meta": "2,400 miles ago",
+            "value": "[Toggle: On]"
+          },
+          {
+            "title": "LP Gas Level Calibration",
+            "detail": "Verify analog dial matches digital sensor output.",
+            "status": "Pending",
+            "meta": "Annual Check",
+            "value": "[Toggle: Off]"
+          }
+        ]
+      },
+      {
+        "label": "Campfire Dispatch",
+        "type": "workflow",
+        "title": "Report Road Hazard",
+        "description": "Contribute to the offline-first community map. Share verified low clearances, cellular dead zones, or pristine boondocking spots with fellow nomads.",
+        "metrics": [
+          {
+            "label": "Local Cache",
+            "value": "42 Reports"
+          },
+          {
+            "label": "Sync Status",
+            "value": "Offline Ready"
+          }
+        ],
+        "items": [
+          {
+            "title": "Low branch reported on UT-9",
+            "detail": "Measured clearance approx 12'10\" near Zion East Entrance.",
+            "status": "Active",
+            "meta": "Reported 2h ago",
+            "value": "Avoid"
+          },
+          {
+            "title": "No cell service at Coalpits Wash",
+            "detail": "Zero bars on Verizon and AT&T for a 3-mile stretch.",
+            "status": "Verified",
+            "meta": "Reported 5h ago",
+            "value": "Offline"
+          }
+        ]
+      }
+    ],
+    "workflow": {
+      "title": "Dispatch a Road Report",
+      "description": "Submit real-time road conditions or campsite details. Your report will be cryptographically signed and synced to the local cache of nearby travelers.",
+      "fields": [
+        {
+          "label": "Report Type",
+          "type": "select",
+          "options": [
+            "Low Clearance Hazard (< 13'6\")",
+            "Cellular Dead Zone",
+            "Verified Boondocking (Dry Camping) Spot",
+            "Steep Grade (> 8%)",
+            "Road Obstruction / Construction"
+          ]
+        },
+        {
+          "label": "Location / Nearest Mile Marker",
+          "type": "text",
+          "placeholder": "e.g., US-191 South, Mile Marker 124"
+        },
+        {
+          "label": "Observed Clearance or Details",
+          "type": "text",
+          "placeholder": "e.g., Unmarked bridge, measured at 12'8\""
+        },
+        {
+          "label": "Date Observed",
+          "type": "date",
+          "placeholder": ""
+        }
+      ],
+      "buttonLabel": "Broadcast to Campfire Map",
+      "successTitle": "Dispatch Broadcasted Successfully",
+      "successMessage": "Your report has been logged locally and will automatically sync to passing RVers via our peer-to-peer network. Thank you for keeping the open road safe!"
+    },
+    "googleCapability": {
+      "service": "routes",
+      "label": "RV-Safe Routing Engine",
+      "rationale": "Calculates safe, low-clearance-avoiding routes specifically tailored for heavy Class A and Class B motorhomes.",
+      "primaryScreen": 0,
+      "config": {
+        "assistantRole": "Help the user complete the product's core workflow using only the supplied product context.",
+        "mapQuery": "",
+        "locationQuery": "",
+        "origin": "Moab, UT",
+        "destination": "Zion National Park, UT",
+        "calendarTitle": "",
+        "analyticsLabel": "Live sample operations data",
+        "targetLanguage": "en",
+        "analysisMode": "both",
+        "speechPrompt": "Read this result aloud"
+      }
+    }
+  },
+  "revision": 2
+}
