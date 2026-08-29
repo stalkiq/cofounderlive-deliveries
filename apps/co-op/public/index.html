@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Co-Op | Don't work with AI alone.</title>
+  <!-- Google Fonts: Inter (Sans-Serif) & Fira Code (Monospace) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;700&family=Inter:wght@400;500;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+  <!-- Root Application Container -->
+  <div class="coop-app font-sans">
+    
+    <!-- Sidebar Navigation -->
+    <aside class="coop-sidebar">
+      <div class="sidebar-header">
+        <div class="brand-logo">
+          <span class="logo-symbol">▢</span>
+          <h1>Co-Op</h1>
+        </div>
+        <p class="tagline">Don't work with AI alone.</p>
+      </div>
+
+      <nav class="sidebar-nav">
+        <ul>
+          <li>
+            <button class="nav-btn active" data-tab="active-canvas">
+              <span class="btn-icon">⚡</span> Active Canvas
+            </button>
+          </li>
+          <li>
+            <button class="nav-btn" data-tab="deploy-agent">
+              <span class="btn-icon">🚀</span> Deploy New Agent
+            </button>
+          </li>
+          <li>
+            <button class="nav-btn" data-tab="control-room">
+              <span class="btn-icon">🛠️</span> Agent Control Room
+            </button>
+          </li>
+          <li>
+            <button class="nav-btn" data-tab="thesis">
+              <span class="btn-icon">📖</span> Manifesto / Thesis
+            </button>
+          </li>
+        </ul>
+      </nav>
+
+      <div class="sidebar-sessions-list">
+        <h3>ACTIVE WORKSPACES</h3>
+        <ul id="active-sessions-menu">
+          <!-- Dynamically populated from /api/sessions -->
+          <li class="loading">Fetching stream...</li>
+        </ul>
+      </div>
+
+      <div class="sidebar-footer">
+        <div class="user-status-card">
+          <div class="avatar-dot"></div>
+          <div class="user-info">
+            <span class="user-name">You (Co-Author)</span>
+            <span class="user-role">Human Developer</span>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Workspace Frame -->
+    <main class="coop-main-content">
+      
+      <!-- Top Global Status Bar -->
+      <header class="coop-top-bar">
+        <div class="current-session-info">
+          <span class="eyebrow">ACTIVE SESSION</span>
+          <h2 id="session-title">#dev-agent-refactor</h2>
+        </div>
+        
+        <!-- Live Global Metrics Row -->
+        <div class="session-metrics">
+          <div class="metric-item">
+            <span class="metric-label">Active Humans</span>
+            <span class="metric-value" id="metric-humans">3</span>
+          </div>
+          <div class="divider"></div>
+          <div class="metric-item">
+            <span class="metric-label">Active Agents</span>
+            <span class="metric-value volt-color" id="metric-agents">2</span>
+          </div>
+          <div class="divider"></div>
+          <div class="metric-item">
+            <span class="metric-label">Sync Latency</span>
+            <span class="metric-value accent-color" id="metric-latency">12ms</span>
+          </div>
+        </div>
+      </header>
+
+      <!-- Tab Content Area -->
+      <div class="tab-viewport">
+
+        <!-- TAB 1: ACTIVE CANVAS (PRIMARY COLLABORATIVE WORKSPACE) -->
+        <section id="tab-active-canvas" class="tab-content active">
+          <div class="canvas-split-layout">
+            
+            <!-- Left Panel: Activity Stream / Hand-Off Logs -->
+            <div class="left-panel-stream">
+              <div class="panel-header">
+                <h3>Live Activity Stream</h3>
+                <span class="feed-status-dot"></span>
+              </div>
+              
+              <div class="activity-timeline" id="message-stream-box">
+                <!-- Messages populated dynamically -->
+              </div>
+
+              <!-- Message Input Prompt Form -->
+              <div class="message-composer">
+                <form id="message-form" class="composer-form">
+                  <input type="text" id="message-input" placeholder="Prompt DevAgent-3 or co-authors..." autocomplete="off">
+                  <button type="submit" class="volt-btn square-btn">Send</button>
+                </form>
+                <p class="composer-hint">Type a prompt to assign work or co-author</p>
+              </div>
+            </div>
+
+            <!-- Right Panel: Figma-Meets-Terminal Real-Time Canvas -->
+            <div class="right-panel-canvas">
+              <div class="canvas-banner">
+                <div class="canvas-file-info">
+                  <span class="file-icon">📄</span>
+                  <span id="canvas-filename" class="font-mono">auth_service.py</span>
+                </div>
+                <div class="canvas-indicators">
+                  <span class="indicator-badge repo-badge font-mono" id="canvas-repo">github.com/co-op/auth-service</span>
+                </div>
+              </div>
+
+              <!-- Visual Editor Container -->
+              <div class="visual-editor-container">
+                
+                <!-- Overlay cursor elements injected dynamically -->
+                <div id="editor-cursors-layer" class="cursors-overlay">
+                  <!-- Cursors dynamically rendered here -->
+                </div>
+
+                <textarea id="code-textarea" class="font-mono" spellcheck="false" placeholder="# Cooperative Canvas Editor"></textarea>
+                
+                <!-- Takeover Overlay Banner -->
+                <div id="takeover-overlay" class="takeover-active-indicator hidden">
+                  <div class="indicator-inner">
+                    <span class="lock-icon">🔒</span>
+                    <h3>MANUAL TAKEOVER ENGAGED</h3>
+                    <p>DevAgent-3 behavior suspended. Directly editing file. Release lock to resume agent.</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Canvas Interruption Dock -->
+              <div class="canvas-actions-dock">
+                <button id="takeover-btn" class="takeover-trigger font-mono">
+                  <span class="pulse-icon"></span> TAKEOVER AGENT
+                </button>
+                <div class="dock-shortcut font-mono">Shortcut: <kbd>ESC</kbd></div>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+        <!-- TAB 2: DEPLOY NEW MULTIPLAYER AGENT (WORKFLOW) -->
+        <section id="tab-deploy-agent" class="tab-content">
+          <div class="workflow-container">
+            <header class="workflow-header">
+              <span class="workflow-eyebrow">AGENT DEPLOYMENT PIPELINE</span>
+              <h2>Launch Collaborative Agent Session</h2>
+              <p>Spin up a new shared agent instance, bind it to a repository or document context, and invite your team to co-author in real-time.</p>
+            </header>
+
+            <form id="deploy-agent-form" class="workflow-card">
+              <div class="form-group">
+                <label for="agent-name">Session Name / Handle</label>
+                <div class="input-prefix-box">
+                  <span class="prefix">#</span>
+                  <input type="text" id="agent-name" placeholder="dev-agent-refactor" required>
+                </div>
+                <p class="field-desc">Unique identifier for the cooperative canvas. Only lowercase letters, digits, and dashes allowed.</p>
+              </div>
+
+              <div class="form-group row-group">
+                <div class="half-group">
+                  <label for="agent-persona">Agent Persona / Base Role</label>
+                  <select id="agent-persona" required>
+                    <option value="">Select agent role...</option>
+                    <option value="DevAgent (Coding & Refactoring)" selected>DevAgent (Coding & Refactoring)</option>
+                    <option value="QA-Agent (Test Generation)">QA-Agent (Test Generation)</option>
+                    <option value="DocAgent (Technical Writing)">DocAgent (Technical Writing)</option>
+                    <option value="SalesAgent (Deal Strategy)">SalesAgent (Deal Strategy)</option>
+                  </select>
+                </div>
+
+                <div class="half-group">
+                  <label for="team-access">Team Access Control</label>
+                  <select id="team-access">
+                    <option value="Engineering Core" selected>Engineering Core</option>
+                    <option value="Product & QA">Product & QA</option>
+                    <option value="Entire Workspace">Entire Workspace</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="context-url">Target Repository / Context URL</label>
+                <input type="text" id="context-url" placeholder="github.com/co-op/auth-service" required>
+                <p class="field-desc">The shared resource file path, document, or repository context the team and agent will co-author.</p>
+              </div>
+
+              <button type="submit" class="submit-btn volt-btn">Launch Shared Session</button>
+            </form>
+
+            <div id="deployment-success-toast" class="success-banner hidden">
+              <h3>⚡ Session Live!</h3>
+              <p>DevAgent-3 has entered the canvas. Share the session link with your team to start co-authoring.</p>
+              <button id="go-to-session-btn" class="accent-btn">Enter Live Stream Canvas</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- TAB 3: AGENT CONTROL ROOM -->
+        <section id="tab-control-room" class="tab-content">
+          <div class="dashboard-container">
+            <header class="dashboard-header">
+              <h2>Agent Brain & Redirection</h2>
+              <p>Observe the global context usage, inspect run state latency, or manual trigger redirection commands.</p>
+            </header>
+
+            <div class="control-metrics-grid">
+              <div class="card metric-card">
+                <span class="lbl font-mono">CONTEXT WINDOW</span>
+                <span class="val font-mono primary-color" id="control-context">128k</span>
+                <span class="sub">Total capacity limit</span>
+              </div>
+              <div class="card metric-card">
+                <span class="lbl font-mono">EXECUTION TIME</span>
+                <span class="val font-mono" id="control-execution">4.2h</span>
+                <span class="sub">Continuous process up-time</span>
+              </div>
+              <div class="card metric-card">
+                <span class="lbl font-mono">COST SAVED</span>
+                <span class="val font-mono highlight-color" id="control-cost">$340</span>
+                <span class="sub">Compared to human labor equivalent</span>
+              </div>
+            </div>
+
+            <div class="rooms-split">
+              <!-- Left side: Prompt Redirection Interface -->
+              <div class="card room-action-card">
+                <h3>Direct Mind Redirection</h3>
+                <p>Send high-priority interrupt thoughts straight to the active Session's AI Brain with a dedicated task list instruction.</p>
+                
+                <form id="redirect-brain-form">
+                  <div class="form-group">
+                    <label>Select Workspace to Target</label>
+                    <select id="redirect-session-select" class="session-dropdown">
+                      <!-- Populated dynamically -->
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label>Interrupt Directive</label>
+                    <textarea id="redirect-directive" placeholder="Interrupt whatever you are rewriting and generate validation unit tests next..." class="font-mono" style="height: 100px; resize: none;"></textarea>
+                  </div>
+                  <button type="submit" class="accent-btn" style="width: 100%;">Signal Mind Interrupt</button>
+                </form>
+              </div>
+
+              <!-- Right side: Active Session States list -->
+              <div class="card active-agent-status-card">
+                <h3>Collaborative Queue State</h3>
+                <div class="agent-track-list" id="agent-queue-list">
+                  <!-- Dynamically populated -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- TAB 4: MANIFESTO & THESIS (THE THEME) -->
+        <section id="tab-thesis" class="tab-content">
+          <div class="manifesto-wrapper">
+            <div class="manifesto-header">
+              <span class="manifesto-eyebrow">THE MULTIPLAYER AI THESIS</span>
+              <h2>Don't work with AI alone.</h2>
+              <p class="manifesto-subheading">Why the future of software construction requires transforming private threads into cooperative canvases.</p>
+            </div>
+
+            <article class="manifesto-body font-sans text-muted">
+              <p>The best work tools of the last two decades won by going multiplayer. Google Docs replaced Microsoft Word. Figma beat Photoshop. And they turned solo tools into places where teams do their best work together.</p>
+              
+              <div class="glowing-quote">
+                "But AI hasn't had its multiplayer moment yet."
+              </div>
+
+              <p>AI agents are the most powerful new tool a team has, but it's the one thing people still use by themselves. That's because right now, working with AI is largely single-player. You open a chat, type a prompt, and get an answer, in a box only you can see. When you want to collaborate with your teammates and agents, the best you can do is send a link to a read-only transcript they can't touch.</p>
+              
+              <p><strong>That's about to change.</strong></p>
+
+              <p>Agents are starting to run tasks that take hours, days, even weeks. Work at that scale was never meant to be done alone, and pulls in many people across a company. Anyone on a team should be able to drop into the same live agent session to watch it work, redirect it, and hand it off, the way they'd work with any other human team member. This turns the work a team does with agents into a shared, living thing instead of a thousand private threads.</p>
+
+              <p>We think there's a version of this for every kind of work. Shared agents for engineers coding together in real time. For sales teams working a deal together. For support teams resolving a ticket. For lawyers drafting a contract, analysts building a model, and marketers shipping a campaign. Anywhere a team already crowds around one problem, there should be multiplayer agents they all share.</p>
+
+              <hr class="thesis-separator">
+
+              <h3>Cooperative Framework Integration Specs</h3>
+              <p>The current application implements active durable APIs to support cooperative sessions. Built using high-performance Express models, it offers real-time cursor synchronizations, takeover mechanics, and durable memory structures.</p>
+              
+              <div class="endpoint-grid">
+                <div class="endpoint-item">
+                  <span class="badge get font-mono">GET</span> <code class="font-mono">/api/sessions</code>
+                  <p>Fetches listed cooperative workspace channels.</p>
+                </div>
+                <div class="endpoint-item">
+                  <span class="badge post font-mono">POST</span> <code class="font-mono">/api/sessions</code>
+                  <p>Deploys a new shared session live onto the cluster.</p>
+                </div>
+                <div class="endpoint-item">
+                  <span class="badge post font-mono">POST</span> <code class="font-mono">/api/sessions/:id/messages</code>
+                  <p>Pushes prompt/text into the active stream, triggering responses.</p>
+                </div>
+                <div class="endpoint-item">
+                  <span class="badge post font-mono">POST</span> <code class="font-mono">/api/sessions/:id/takeover</code>
+                  <p>Toggles manual lock takeover override actions.</p>
+                </div>
+              </div>
+            </article>
+          </div>
+        </section>
+
+      </div>
+    </main>
+  </div>
+
+  <script src="/js/app.js"></script>
+</body>
+</html>
