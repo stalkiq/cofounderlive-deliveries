@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Co-Op | Don't work with AI alone.</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts: Inter (Humans) & JetBrains Mono (Terminal/Agents) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            coBg: '#121214',
+            coSurface: '#1E1E24',
+            coPrimary: '#CCFF00', // Volt green
+            coAccent: '#FF007A',  // Magenta pink
+            coText: '#F5F5F7',
+            coMuted: '#8E8E93',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    /* Custom Styling for cyber terminal aesthetic */
+    body {
+      background-color: #121214;
+      color: #F5F5F7;
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 4px;
+      height: 4px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: #121214;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #3E3E4A;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+      background: #CCFF00;
+    }
+    /* Typing Cursor Animation */
+    .typing-cursor {
+      display: inline-block;
+      width: 8px;
+      height: 15px;
+      background-color: #CCFF00;
+      animation: blink 0.8s infinite;
+      vertical-align: middle;
+    }
+    @keyframes blink {
+      50% { opacity: 0; }
+    }
+    /* Glowing states */
+    .neon-border-volt {
+      box-shadow: 0 0 10px rgba(204, 255, 0, 0.2);
+      border: 1px solid #CCFF00;
+    }
+    .neon-border-pink {
+      box-shadow: 0 0 10px rgba(255, 0, 122, 0.25);
+      border: 1px solid #FF007A;
+    }
+    .cursor-active {
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    /* Mono block lines */
+    .code-line::before {
+      content: attr(data-line);
+      display: inline-block;
+      width: 2rem;
+      color: #555562;
+      text-align: right;
+      margin-right: 1rem;
+      user-select: none;
+    }
+  </style>
+</head>
+<body class="font-sans antialiased selection:bg-coPrimary selection:text-black min-h-screen flex flex-col">
+
+  <!-- Header Panel -->
+  <header class="border-b border-zinc-800 bg-[#151518] px-6 py-4 flex items-center justify-between sticky top-0 z-50">
+    <div class="flex items-center gap-3">
+      <div class="bg-coPrimary text-black font-mono font-bold px-2 py-1 text-sm tracking-wider">CO-OP</div>
+      <div class="text-xs font-mono font-semibold text-coMuted tracking-wider hidden sm:block">/ MULTIPLAYER AI SIMULATION</div>
+    </div>
+    <div class="flex items-center gap-4 text-xs font-mono">
+      <div class="flex items-center gap-2">
+        <span class="w-2.5 h-2.5 bg-emerald-500 rounded-full animate-ping"></span>
+        <span class="text-zinc-400">Server Status:</span>
+        <span class="text-emerald-400">ONLINE</span>
+      </div>
+      <div class="hidden md:flex items-center gap-2 ml-4 pl-4 border-l border-zinc-800">
+        <span class="text-zinc-400">Backend Store:</span>
+        <span class="text-zinc-300 font-bold">memory.json</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Split-Screen Layout -->
+  <main class="flex-1 grid grid-cols-1 lg:grid-cols-12 overflow-hidden">
+    
+    <!-- Left Column: Manifesto & Launch Control (5 cols) -->
+    <section class="lg:col-span-5 p-6 md:p-8 border-r border-zinc-800 flex flex-col gap-8 overflow-y-auto custom-scrollbar bg-coBg">
+      
+      <!-- Brand & Manifesto pitch -->
+      <div class="space-y-4">
+        <span class="text-xs font-mono text-coPrimary tracking-wider uppercase font-bold">The Multiplayer AI Thesis</span>
+        <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight text-white leading-tight">
+          Don't work with AI alone.
+        </h1>
+        <p class="text-zinc-300 leading-relaxed text-sm md:text-base">
+          The best tools won by going multiplayer. Google Docs replaced Word. Figma beat Photoshop. They turned solo tools into spaces where teams do their best work together. 
+        </p>
+        <p class="text-zinc-400 text-xs md:text-sm leading-relaxed border-l-2 border-coPrimary pl-4 py-1 italic">
+          "AI agents are running tasks that take hours or weeks. Work at that scale was never meant to be done alone. Drop into live active agent sessions, co-author code, redirect execution on the fly, or hit Takeover."
+        </p>
+      </div>
+
+      <hr class="border-zinc-800">
+
+      <!-- Form Schema: Deploy Collaborative Agent Session -->
+      <div class="bg-coSurface p-5 border border-zinc-800 relative">
+        <div class="absolute -top-3 left-4 bg-[#151518] px-2 text-xs font-mono text-coPrimary tracking-widest border border-zinc-800 font-bold">
+          LAUNCH SHARED SESSION
+        </div>
+        
+        <p class="text-xs text-zinc-400 mb-4 mt-2">
+          Configure a new multiplayer agent instance and invite your team to co-author in real-time. This triggers a persistent storage endpoint at <code class="text-coPrimary font-mono">POST /api/memory</code>.
+        </p>
+
+        <form id="launch-session-form" class="space-y-4">
+          <!-- Selection Parameter: Agent Persona -->
+          <div>
+            <label class="block text-xs font-mono text-zinc-400 uppercase tracking-widest mb-1.5" for="agent-persona">
+              Agent Persona *
+            </label>
+            <select id="agent-persona" class="w-full bg-[#121214] border border-zinc-700 focus:border-coPrimary focus:outline-none text-sm text-zinc-100 font-mono px-3 py-2 rounded-none transition" required>
+              <option value="" disabled selected>Select agent role...</option>
+              <option value="DevAgent (Coding & Refactoring)">DevAgent (Coding & Refactoring)</option>
+              <option value="QA-Agent (Test Generation)">QA-Agent (Test Generation)</option>
+              <option value="DocAgent (Technical Writing)">DocAgent (Technical Writing)</option>
+              <option value="SalesAgent (Deal Strategy)">SalesAgent (Deal Strategy)</option>
+            </select>
+          </div>
+
+          <!-- Text Parameter: Target Repository -->
+          <div>
+            <label class="block text-xs font-mono text-zinc-400 uppercase tracking-widest mb-1.5" for="target-repo">
+              Target Repository / Context URL *
+            </label>
+            <input type="text" id="target-repo" placeholder="e.g. github.com/co-op/auth-service" class="w-full bg-[#121214] border border-zinc-700 focus:border-coPrimary focus:outline-none text-sm text-zinc-100 font-mono px-3 py-2 rounded-none placeholder-zinc-650 transition" required>
+          </div>
+
+          <!-- Selection Parameter: Team Access Level -->
+          <div>
+            <label class="block text-xs font-mono text-zinc-400 uppercase tracking-widest mb-1.5" for="team-access">
+              Team Access Level *
+            </label>
+            <select id="team-access" class="w-full bg-[#121214] border border-zinc-700 focus:border-coPrimary focus:outline-none text-sm text-zinc-100 font-mono px-3 py-2 rounded-none transition" required>
+              <option value="" disabled selected>Select level...</option>
+              <option value="Engineering Core">Engineering Core</option>
+              <option value="Product & QA">Product & QA</option>
+              <option value="Entire Workspace">Entire Workspace</option>
+            </select>
+          </div>
+
+          <!-- Custom Additional Prompt context (Map to "body") -->
+          <div>
+            <label class="block text-xs font-mono text-zinc-400 uppercase tracking-widest mb-1.5" for="session-prompt">
+              Session Focus & Instructions (Body) *
+            </label>
+            <textarea id="session-prompt" rows="3" placeholder="Define the task context or specific prompts for the agent..." class="w-full bg-[#121214] border border-zinc-700 focus:border-coPrimary focus:outline-none text-sm text-zinc-150 font-mono p-3 rounded-none placeholder-zinc-650 transition" required></textarea>
+          </div>
+
+          <!-- Launch Button -->
+          <button type="submit" class="w-full bg-coPrimary hover:bg-white text-black font-bold font-mono py-3 px-4 rounded-none transition flex items-center justify-center gap-2">
+            <i data-lucide="zap" class="w-4 h-4 fill-current"></i>
+            LAUNCH COLLABORATIVE SESSION
+          </button>
+        </form>
+      </div>
+
+      <!-- Live Memory Stream (GET /api/memory list) -->
+      <div>
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="text-sm font-mono text-white flex items-center gap-2">
+            <span class="w-2 h-2 bg-coPrimary rounded-full"></span>
+            ACTIVE MEMORY SESSIONS
+          </h3>
+          <button id="refresh-memories-btn" class="p-1 hover:text-coPrimary transition text-zinc-400" title="Refresh session memory stream">
+            <i data-lucide="refresh-cw" class="w-4 h-4"></i>
+          </button>
+        </div>
+
+        <p class="text-xs text-zinc-400 mb-3 leading-relaxed">
+          The panel below polls and retrieves launched instances from the live file-backed storage at <code class="text-coAccent font-mono">GET /api/memory</code>.
+        </p>
+
+        <!-- Loader -->
+        <div id="memories-loader" class="hidden py-8 text-center text-xs font-mono text-zinc-500">
+          <i data-lucide="loader" class="w-5 h-5 animate-spin mx-auto mb-2 text-coPrimary"></i>
+          Querying backend database file...
+        </div>
+
+        <!-- Session List container -->
+        <div id="memories-list" class="space-y-4 max-h-[350px] overflow-y-auto custom-scrollbar pr-1">
+          <!-- Populated dynamically -->
+        </div>
+      </div>
+      
+    </section>
+
+    <!-- Right Column: Figma-meets-Terminal Active Canvas (7 cols) -->
+    <section class="lg:col-span-7 bg-[#0E0E10] flex flex-col overflow-hidden border-t lg:border-t-0 border-zinc-850">
+      
+      <!-- Metrics Bar header -->
+      <div class="grid grid-cols-3 border-b border-zinc-800 bg-[#141417] text-center font-mono">
+        <div class="py-3 px-2 border-r border-zinc-800">
+          <div class="text-[10px] text-zinc-500 uppercase tracking-wider">Active Humans</div>
+          <div class="text-lg md:text-xl font-bold text-white flex items-center justify-center gap-1.5 mt-0.5">
+            <i data-lucide="users" class="w-4 h-4 text-zinc-400"></i>
+            <span id="humans-count">3</span>
+          </div>
+        </div>
+        <div class="py-3 px-2 border-r border-zinc-800">
+          <div class="text-[10px] text-zinc-500 uppercase tracking-wider">Shared Agents</div>
+          <div class="text-lg md:text-xl font-bold text-coPrimary flex items-center justify-center gap-1.5 mt-0.5">
+            <i data-lucide="cpu" class="w-4 h-4 text-coPrimary"></i>
+            <span id="agents-count">2</span>
+          </div>
+        </div>
+        <div class="py-3 px-2">
+          <div class="text-[10px] text-zinc-500 uppercase tracking-wider">Sync Latency</div>
+          <div class="text-lg md:text-xl font-bold text-coAccent flex items-center justify-center gap-1.5 mt-0.5">
+            <i data-lucide="activity" class="w-4 h-4 text-coAccent"></i>
+            <span id="sync-latency">12ms</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Simulated Cooperative Code Editor Container -->
+      <div class="flex-1 p-4 md:p-6 flex flex-col gap-4 overflow-y-auto custom-scrollbar relative justify-start">
+        
+        <!-- Canvas Status indicator overlay -->
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-2">
+            <span class="w-2.5 h-2.5 bg-coAccent rounded-full animate-pulse"></span>
+            <span class="font-mono text-xs text-white">#dev-agent-refactor</span>
+          </div>
+          <div class="text-[11px] font-mono text-zinc-500">
+            Active file: <span class="text-zinc-350 bg-zinc-800 font-semibold px-1 rounded-sm">auth_service.py</span>
+          </div>
+        </div>
+
+        <!-- Terminal / Editor Mock -->
+        <div class="bg-coSurface border border-zinc-800 relative p-4 flex flex-col font-mono text-xs md:text-sm leading-relaxed overflow-hidden min-h-[340px] shadow-2xl justify-between">
+          
+          <div class="flex items-center justify-between border-b border-zinc-800 pb-2.5 mb-4 text-zinc-500">
+            <div class="flex items-center gap-1.5">
+              <span class="w-2.5 h-2.5 rounded-full bg-red-500/60 inline-block"></span>
+              <span class="w-2.5 h-2.5 rounded-full bg-yellow-500/60 inline-block"></span>
+              <span class="w-2.5 h-2.5 rounded-full bg-green-500/60 inline-block"></span>
+            </div>
+            <div class="text-[10px] uppercase font-bold tracking-wider text-coPrimary">Live-Editor</div>
+          </div>
+
+          <!-- Code Window -->
+          <div class="flex-1 relative space-y-1.5 text-zinc-300 pointer-events-none select-none z-10 font-mono">
+            
+            <!-- Real-time multiplayer canvas cursor illustrations -->
+            <!-- Sarah PM Moving Cursor -->
+            <div id="sarah-cursor" class="absolute cursor-active bg-coAccent text-black text-[9px] px-1 px-1.5 py-0.5 font-bold flex items-center gap-1 rounded-sm shadow-md" style="top: 25px; left: 45%;">
+              <span class="w-1.5 h-1.5 bg-white rounded-full"></span>
+              <span>Sarah (PM)</span>
+              <!-- Pointer triangle shadow -->
+              <span class="absolute left-1 -bottom-1 border-t-[5px] border-t-coAccent border-x-[5px] border-x-transparent"></span>
+            </div>
+
+            <!-- Alex Dev Moving Cursor -->
+            <div id="alex-cursor" class="absolute cursor-active bg-cyan-400 text-black text-[9px] px-1.5 py-0.5 font-bold flex items-center gap-1 rounded-sm shadow-md" style="top: 145px; left: 20%;">
+              <span class="w-1.5 h-1.5 bg-black rounded-full"></span>
+              <span>Alex (Dev)</span>
+              <span class="absolute left-1 -bottom-1 border-t-[5px] border-t-cyan-400 border-x-[5px] border-x-transparent"></span>
+            </div>
+
+            <!-- Glowing DevAgent-3 Typing Cursor visual label -->
+            <div id="agent-cursor" class="absolute cursor-active bg-coPrimary text-black text-[9px] px-1.5 py-0.5 font-bold flex items-center gap-1 rounded-sm shadow-md z-20" style="top: 180px; left: 60%;">
+              <span class="w-1.5 h-1.5 bg-black rounded-full animate-ping"></span>
+              <span>DevAgent-3</span>
+              <span class="absolute left-1 -top-1 border-b-[5px] border-b-coPrimary border-x-[5px] border-x-transparent"></span>
+            </div>
+
+            <!-- Source code segments -->
+            <div class="code-line" data-line="1">import jwt</div>
+            <div class="code-line" data-line="2">import datetime</div>
+            <div class="code-line text-zinc-500" data-line="3"># Co-Op: Shared multiplayer environment</div>
+            <div class="code-line text-[#FF79C6]" data-line="4">class OAuth2ValidationSuite:</div>
+            <div class="code-line text-[#6272A4]" data-line="5">&nbsp;&nbsp;&nbsp;&nbsp;def __init__(self, key_server_url):</div>
+            <div class="code-line text-zinc-300" data-line="6">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.auth_url = key_server_url</div>
+            <div class="code-line" data-line="7"></div>
+            <div class="code-line text-[#50FA7B]" data-line="8">&nbsp;&nbsp;&nbsp;&nbsp;def audit_session_tokens(self, auth_header):</div>
+            <div class="code-line" data-line="9">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if not auth_header.startswith("Bearer "):</div>
+            <div class="code-line text-amber-300" data-line="10">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;raise ValueError("Malformed credentials schema")</div>
+            <div class="code-line" data-line="11"></div>
+            <!-- Typed code section -->
+            <div id="simulated-typing-zone" class="code-line min-h-[30px]" data-line="12">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;token = auth_header.split(" ")[1]</div>
+            <div id="agent-writing-output" class="code-line text-coPrimary min-h-[40px]" data-line="13">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id="typed-code-element"># DevAgent-3 Typing...</span><span class="typing-cursor"></span></div>
+          </div>
+
+          <!-- Bottom interactive takeover overlay triggers -->
+          <div class="mt-4 pt-3 border-t border-zinc-850 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 text-xs bg-[#1A1A20] p-3 -mx-4 -mb-4 border-t border-zinc-800">
+            <div class="flex items-center gap-1.5 text-zinc-400 font-mono">
+              <i data-lucide="shield-alert" class="w-4 h-4 text-coAccent"></i>
+              <span>Press <b class="text-zinc-200">ESC</b> or tap right button to interrupt DevAgent-3</span>
+            </div>
+            <button id="takeover-btn" class="bg-coAccent hover:bg-white text-black font-bold font-mono px-3.5 py-1.5 rounded-none transition flex items-center justify-center gap-1.5 uppercase hover:shadow-[0_0_15px_rgba(255,0,122,0.45)]">
+              <i data-lucide="hand" class="w-3.5 h-3.5 fill-current"></i>
+              Takeover Agent
+            </button>
+          </div>
+        </div>
+
+        <!-- Custom Human Steer Command Interruption Modal (Embedded) -->
+        <div id="takeover-modal" class="hidden bg-[#1E1E24] border border-coAccent p-4 font-mono text-xs space-y-3 shadow-2xl relative z-30">
+          <div class="flex items-center justify-between text-coAccent border-b border-zinc-800 pb-2">
+            <span class="flex items-center gap-1 font-bold">
+              <span class="inline-block w-2 h-2 bg-coAccent rounded-full animate-ping"></span>
+              [AGENT INTERRUPTED BY HUMAN TAKE-OVER]
+            </span>
+            <button id="close-modal" class="text-zinc-500 hover:text-white">&times;</button>
+          </div>
+          <p class="text-zinc-300 leading-relaxed">
+            You have paused DevAgent-3's current pipeline. Type a direct command to steering the agent's behavior. DevAgent will dynamically respond to your query.
+          </p>
+          <div class="space-y-2">
+            <div class="flex bg-black p-2 items-center text-zinc-400 border border-zinc-800">
+              <span class="text-coAccent mr-2 italic">Sarah(PM) @ takeover-terminal:~$</span>
+              <input type="text" id="takeover-input" placeholder="e.g. Stop writing Python tests, write a deployable Node.js Dockerfile instead." class="w-full bg-transparent focus:outline-none text-white text-xs">
+            </div>
+            <div class="flex justify-end gap-2 text-[10px]">
+              <button id="cancel-takeover" class="px-3 py-1.5 border border-zinc-700 text-zinc-400 hover:text-white transition">Cancel</button>
+              <button id="submit-takeover" class="px-3.5 py-1.5 bg-coAccent text-black font-semibold hover:bg-white transition flex items-center gap-1">
+                Inject Prompts
+                <i data-lucide="corner-down-left" class="w-3 h-3"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Live Canvas Activity Logs -->
+        <div class="bg-[#121215] border border-zinc-850 p-4 font-mono text-xs">
+          <div class="text-zinc-500 border-b border-zinc-850 pb-2 mb-2 flex items-center gap-2">
+            <i data-lucide="terminal" class="w-3.5 h-3.5 text-coPrimary"></i>
+            <span>LIVE CANVAS STREAM ACTIVITIES</span>
+          </div>
+          <div id="canvas-logs" class="space-y-1.5 max-h-[160px] overflow-y-auto custom-scrollbar text-zinc-400">
+            <div class="flex justify-between items-start border-b border-[#1A1A1E] pb-1">
+              <span class="text-[#FF79C6] font-semibold flex items-center gap-1">
+                <span class="inline-block w-1.5 h-1.5 bg-[#FF79C6] rounded-full"></span>
+                Sarah (PM)
+              </span>
+              <span>joined session and highlighted oauth block</span>
+              <span class="text-[10px] text-zinc-650 font-semibold text-right">10:42 AM</span>
+            </div>
+            <div class="flex justify-between items-start border-b border-[#1A1A1E] pb-1">
+              <span class="text-[#CCFF00] font-semibold flex items-center gap-1">
+                <span class="inline-block w-1.5 h-1.5 bg-[#CCFF00] rounded-full animate-ping"></span>
+                DevAgent-3
+              </span>
+              <span>started python class authorization refactoring</span>
+              <span class="text-[10px] text-zinc-650 font-semibold text-right">10:43 AM</span>
+            </div>
+            <div class="flex justify-between items-start border-b border-[#1A1A1E] pb-1">
+              <span class="text-cyan-400 font-semibold flex items-center gap-1">
+                <span class="inline-block w-1.5 h-1.5 bg-cyan-400 rounded-full"></span>
+                Alex (Dev)
+              </span>
+              <span>highlighted lines 45-60: commenting edge cases</span>
+              <span class="text-[10px] text-zinc-650 font-semibold text-right">10:44 AM</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Agent Response stream (DOCK RECENT / INTERACTIVE DEMO OUT) -->
+        <div id="agent-response-panel" class="hidden bg-[#1E1E24] border border-coPrimary p-4 font-mono text-xs space-y-2">
+          <div class="flex items-center gap-2 text-coPrimary border-b border-zinc-800 pb-1.5">
+            <i data-lucide="help-circle" class="w-4 h-4"></i>
+            <span class="font-bold">DevAgent-3 (Collaborator response)</span>
+          </div>
+          <div id="agent-response-text" class="text-zinc-200 italic leading-relaxed whitespace-pre-wrap">
+            Responding...
+          </div>
+          <div class="text-[10px] text-zinc-500 font-mono text-right flex items-center justify-end gap-1">
+            <i data-lucide="check" class="w-3.5 h-3.5 text-coPrimary"></i>
+            Control returned to the multiplayer canvas stream.
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-t border-zinc-900 bg-[#0E0E10] px-6 py-4 flex flex-col md:flex-row items-center justify-between text-xs font-mono text-zinc-500 gap-2">
+    <div>&copy; 2026 Co-Op - Real-time Collaborative AI Agent Canvas</div>
+    <div class="flex gap-4">
+      <a href="#" class="hover:text-coPrimary transition">API Spec</a>
+      <a href="#" class="hover:text-coPrimary transition">Multiplayer Architecture</a>
+      <a href="#" class="hover:text-coPrimary transition">Terms</a>
+    </div>
+  </footer>
+
+  <!-- Frontend Logic scripts -->
+  <script>
+    // System State parameters 
+    let memoriesList = [];
+    const simulatedTypingCode = [
+      '    def audit_session_tokens(self, auth_header):',
+      '        if not auth_header.startswith("Bearer "):',
+      '            raise ValueError("Malformed credentials schema")',
+      '',
+      '        # DevAgent-3 writing verification checks...',
+      '        token = auth_header.split(" ")[1]',
+      '        payload = jwt.decode(token, verify=True)',
+      '        print("[DevAgent-3] Claims signature checked ok.")',
+      '        return payload',
+      '',
+      '        # Session handover complete. Human input active.'
+    ];
+    let typingIndex = 0;
+    let lineCharIndex = 0;
+    let typingTimer = null;
+    let activeSimulation = true;
+
+    // Elements lookup
+    const memoriesListEl = document.getElementById('memories-list');
+    const memoriesLoaderEl = document.getElementById('memories-loader');
+    const refreshBtn = document.getElementById('refresh-memories-btn');
+    const launchForm = document.getElementById('launch-session-form');
+    
+    // Form Inputs
+    const agentPersonaInput = document.getElementById('agent-persona');
+    const targetRepoInput = document.getElementById('target-repo');
+    const teamAccessInput = document.getElementById('team-access');
+    const sessionPromptInput = document.getElementById('session-prompt');
+
+    // Cursors
+    const sarahCursor = document.getElementById('sarah-cursor');
+    const alexCursor = document.getElementById('alex-cursor');
+    const agentCursor = document.getElementById('agent-cursor');
+
+    // Interruption
+    const takeoverBtn = document.getElementById('takeover-btn');
+    const takeoverModal = document.getElementById('takeover-modal');
+    const takeoverInput = document.getElementById('takeover-input');
+    const submitTakeoverBtn = document.getElementById('submit-takeover');
+    const cancelTakeoverBtn = document.getElementById('cancel-takeover');
+    const closeModalBtn = document.getElementById('close-modal');
+    const typedCodeElement = document.getElementById('typed-code-element');
+    const canvasLogs = document.getElementById('canvas-logs');
+
+    // Agent live response
+    const agentResponsePanel = document.getElementById('agent-response-panel');
+    const agentResponseText = document.getElementById('agent-response-text');
+
+    // Latency simulator
+    setInterval(() => {
+      const latencyVal = Math.floor(Math.random() * 8) + 8; // 8-15ms
+      document.getElementById('sync-latency').innerText = `${latencyVal}ms`;
+    }, 4000);
+
+    // Random cursor animations simulating active multiplayer session
+    setInterval(() => {
+      if (activeSimulation) {
+        // Sarah
+        const sarahX = Math.floor(Math.random() * 40) + 30; // 30-70%
+        const sarahY = Math.floor(Math.random() * 100) + 20; // 20-120px
+        sarahCursor.style.left = `${sarahX}%`;
+        sarahCursor.style.top = `${sarahY}px`;
+        
+        // Alex
+        const alexX = Math.floor(Math.random() * 50) + 10; // 10-60%
+        const alexY = Math.floor(Math.random() * 120) + 140; // 140-260px
+        alexCursor.style.left = `${alexX}%`;
+        alexCursor.style.top = `${alexY}px`;
+      }
+    }, 5500);
+
+    // Fetch memory registry
+    async function fetchMemories() {
+      memoriesLoaderEl.classList.remove('hidden');
+      memoriesListEl.innerHTML = '';
+      try {
+        const res = await fetch('/api/memory');
+        if (!res.ok) throw new Error('API Query failure');
+        memoriesList = await res.json();
+        renderMemories();
+      } catch (err) {
+        console.error('Error fetching session memory:', err);
+        memoriesListEl.innerHTML = `
+          <div class="border border-red-500/20 bg-red-500/10 p-4 text-xs font-mono text-red-400">
+            Failed to parse real memories. Make sure the Node.js backend is running.
+          </div>
+        `;
+      } finally {
+        memoriesLoaderEl.classList.add('hidden');
+      }
+    }
+
+    // Render memories output list
+    function renderMemories() {
+      if (memoriesList.length === 0) {
+        memoriesListEl.innerHTML = `
+          <div class="text-zinc-550 border border-zinc-850 p-6 text-center text-xs font-mono">
+            No memories saved. Fill the launch controller above!
+          </div>
+        `;
+        return;
+      }
+
+      memoriesListEl.innerHTML = memoriesList.map(item => {
+        const dateStr = item.createdAt ? new Date(item.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : 'Just now';
+        
+        // Assign color badges based on persona selected
+        let colorTheme = 'text-coPrimary border-coPrimary/30 bg-coPrimary/5';
+        if (item.persona.includes('QA')) colorTheme = 'text-cyan-400 border-cyan-400/30 bg-cyan-400/5';
+        if (item.persona.includes('Doc')) colorTheme = 'text-emerald-400 border-emerald-400/30 bg-emerald-400/5';
+        if (item.persona.includes('Sales')) colorTheme = 'text-amber-400 border-amber-400/30 bg-amber-400/5';
+
+        return `
+          <div class="bg-coSurface border border-zinc-800 p-4 relative hover:border-zinc-700 transition space-y-2 group">
+            <div class="flex items-start justify-between gap-2">
+              <div>
+                <span class="text-[9px] font-mono border px-1.5 py-0.5 uppercase tracking-wider font-semibold ${colorTheme}">
+                  ${item.persona}
+                </span>
+                <h4 class="text-white font-mono text-xs font-bold mt-2 whitespace-nowrap overflow-hidden text-ellipsis max-w-[280px]" title="${item.title}">
+                  ${item.title}
+                </h4>
+              </div>
+              <button onclick="deleteMemory('${item.id}')" class="text-zinc-500 hover:text-coAccent transition p-1 opacity-0 group-hover:opacity-100 focus:opacity-100" title="Delete Memory Record">
+                <i data-lucide="trash-2" class="w-4 h-4"></i>
+              </button>
+            </div>
+            
+            <p class="text-[11px] text-zinc-300 leading-relaxed font-mono whitespace-pre-wrap">${item.body}</p>
+            
+            <div class="flex items-center justify-between text-[10px] font-mono text-zinc-500 border-t border-zinc-850 pt-2 mt-1">
+              <span class="flex items-center gap-1">
+                <i data-lucide="database" class="w-3 h-3"></i>
+                ${item.access}
+              </span>
+              <span>${dateStr}</span>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      // Refresh lucide icon svgs
+      lucide.createIcons();
+    }
+
+    // Delete existing memory logic
+    async function deleteMemory(id) {
+      if (!confirm('Are you sure you want to stop this shared agent session and delete it from memory?')) {
+        return;
+      }
+      try {
+        const response = await fetch(`/api/memory/${id}`, {
+          method: 'DELETE'
+        });
+        if (response.ok) {
+          addActivityLog('System Action', `Stopped agent session ID: [#${id.substring(0, 5)}] from active registry`);
+          await fetchMemories();
+        } else {
+          alert('Error handling deletion.');
+        }
+      } catch (err) {
+        console.error('Failed to post delete request:', err);
+      }
+    }
+
+    // Submit workflow: Create new Memory
+    launchForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const payload = {
+        title: `${agentPersonaInput.value}: refactoring ${targetRepoInput.value.replace('github.com/', '')}`,
+        body: sessionPromptInput.value,
+        persona: agentPersonaInput.value,
+        repo: targetRepoInput.value,
+        access: teamAccessInput.value
+      };
+
+      try {
+        const res = await fetch('/api/memory', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(payload)
+        });
+
+        if (!res.ok) throw new Error('API insertion error');
+
+        const saved = await res.json();
+        
+        // Log activity
+        addActivityLog('Agent Deploy', `Deployed custom collaborative session with persona: ${saved.persona}`);
+        
+        // Reset Launch Form inputs
+        launchForm.reset();
+        
+        // Instantly reload
+        await fetchMemories();
+        
+        // Scroll to the sessions list to show newly added items
+        memoriesListEl.scrollTop = 0;
+      } catch(err) {
+        console.error('Error handling creation:', err);
+        alert('Could not submit session parameters. Is the server offline?');
+      }
+    });
+
+    // Animated Typing Simulation representing active agent co-authoring code
+    function simulateAgentTyping() {
+      if (!activeSimulation) return;
+      
+      const currentSentence = simulatedTypingCode[typingIndex];
+      
+      // If we reach index boundaries, reset or loop
+      if (typingIndex >= simulatedTypingCode.length) {
+        typingIndex = 0;
+        typedCodeElement.innerHTML = '';
+        lineCharIndex = 0;
+        simulateAgentTyping();
+        return;
+      }
+
+      const isComment = currentSentence.trim().startsWith('#');
+      if (isComment) {
+        typedCodeElement.classList.add('text-[#6272A4]'); // Comment color
+        typedCodeElement.classList.remove('text-coPrimary');
+      } else {
+        typedCodeElement.classList.remove('text-[#6272A4]');
+        typedCodeElement.classList.add('text-coPrimary');
+      }
+
+      if (lineCharIndex < currentSentence.length) {
+        // Handle indent spaces correctly in browser rendering
+        let char = currentSentence.charAt(lineCharIndex);
+        if (char === ' ') {
+          typedCodeElement.innerHTML += '&nbsp;';
+        } else {
+          typedCodeElement.textContent += char;
+        }
+        
+        // Position typing cursor graphic relative to editor typing zone
+        const typedRect = typedCodeElement.getBoundingClientRect();
+        const paneRect = document.getElementById('simulated-typing-zone').parentElement.getBoundingClientRect();
+        
+        // Slide cursor visual tag alongside typewriter index position 
+        let calcX = (lineCharIndex * 6) + 40;
+        if (calcX > paneRect.width - 150) calcX = paneRect.width - 130;
+        
+        let calcY = 170 + (typingIndex * 15);
+        if (calcY > 320) calcY = 320;
+        
+        agentCursor.style.left = `${calcX}px`;
+        agentCursor.style.top = `${calcY}px`;
+        
+        lineCharIndex++;
+        typingTimer = setTimeout(simulateAgentTyping, Math.random() * 40 + 25);
+      } else {
+        // Line complete, wait briefly & move to next line
+        typingTimer = setTimeout(() => {
+          typingIndex++;
+          lineCharIndex = 0;
+          
+          const typingZone = document.getElementById('simulated-typing-zone');
+          // Add completed line to coding output
+          const div = document.createElement('div');
+          div.className = 'code-line text-zinc-300';
+          div.setAttribute('data-line', (12 + typingIndex).toString());
+          div.innerHTML = typedCodeElement.innerHTML;
+          
+          typingZone.parentNode.insertBefore(div, typingZone);
+          
+          typedCodeElement.innerHTML = '';
+          simulateAgentTyping();
+        }, 1500);
+      }
+    }
+
+    // Interactive Human Takeover/Agent Interruption Handling
+    function handleInterruption() {
+      // Pause automatic simulation
+      activeSimulation = false;
+      clearTimeout(typingTimer);
+      
+      // Update interactive UI elements
+      document.getElementById('agents-count').innerText = "1"; // Deactivated one
+      takeoverBtn.classList.add('opacity-50', 'pointer-events-none');
+      
+      // Flash modal warnings
+      takeoverModal.classList.remove('hidden');
+      takeoverInput.focus();
+      
+      addActivityLog('Takeover Action', '[INTERRUPT SHORTCUT ESC TRIGGERED] Human grabbed co-author canvas controller');
+    }
+
+    // Action logs generator
+    function addActivityLog(type, text) {
+      const stamp = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+      let badgeTheme = 'text-coAccent';
+      if (type === 'Agent Deploy') badgeTheme = 'text-coPrimary';
+      if (type === 'System Action') badgeTheme = 'text-zinc-500';
+
+      const logNode = document.createElement('div');
+      logNode.className = 'flex justify-between items-start border-b border-[#1A1A1E] pb-1';
+      logNode.innerHTML = `
+        <span class="${badgeTheme} font-semibold flex items-center gap-1">
+          <span class="inline-block w-1.5 h-1.5 bg-current rounded-full"></span>
+          ${type}
+        </span>
+        <span class="flex-1 px-2 text-zinc-300">${text}</span>
+        <span class="text-[10px] text-zinc-650 font-semibold text-right">${stamp}</span>
+      `;
+      canvasLogs.prepend(logNode);
+    }
+
+    // Submit input action redirection details
+    async function submitRedirection() {
+      const userMessage = takeoverInput.value.trim();
+      if (!userMessage) return;
+
+      takeoverModal.classList.add('hidden');
+      agentResponsePanel.classList.remove('hidden');
+      agentResponseText.innerText = `Analyzing intent: "${userMessage}"...\n\n[DevAgent-3 Process Brain]: Interrupted execution sequence initialized based on human coordinate override request. Halting auth_service.py refactoring.\n\nNow generating: Node.js workspace structure, writing automated Dockerfile builds, and preparing standard REST controller payloads at /api/memory to satisfy core memory requirement.`;
+
+      addActivityLog('Steer Redirect', `Redirected DevAgent-3 pipeline. Instruction: "${userMessage}"`);
+
+      // Resume simulation after brief response delay
+      setTimeout(() => {
+        agentResponsePanel.classList.add('hidden');
+        takeoverBtn.classList.remove('opacity-50', 'pointer-events-none');
+        activeSimulation = true;
+        document.getElementById('agents-count').innerText = "2";
+        
+        // Append instruction automatically into backend memory records list to show persistence!
+        postInterruptionPrompt(userMessage);
+
+        simulateAgentTyping();
+      }, 7000);
+    }
+
+    // Push takeover instructions as a new persistent record to proof true backend usage
+    async function postInterruptionPrompt(promptText) {
+      const payload = {
+        title: `Takeover Override: Steered DevAgent-3`,
+        body: `Instruction: "${promptText}"\nAgent Response: Paused Python validation refactoring, restructured active workspace layout. Syncing live memory nodes.`,
+        persona: `DevAgent (Coding & Refactoring)`,
+        repo: `github.com/co-op/auth-service`,
+        access: `Engineering Core`
+      };
+
+      try {
+        const res = await fetch('/api/memory', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(payload)
+        });
+        if (res.ok) {
+          await fetchMemories();
+        }
+      } catch (err) {
+        console.error('Failed to persist steer details:', err);
+      }
+    }
+
+    // Attach listeners
+    takeoverBtn.addEventListener('click', handleInterruption);
+    
+    // Support keyboard ESC takeover trigger as highlighted in MVP requirements
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && activeSimulation) {
+        handleInterruption();
+      }
+    });
+
+    submitTakeoverBtn.addEventListener('click', submitRedirection);
+    takeoverInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') submitRedirection();
+    });
+
+    cancelTakeoverBtn.addEventListener('click', () => {
+      takeoverModal.classList.add('hidden');
+      takeoverBtn.classList.remove('opacity-50', 'pointer-events-none');
+      activeSimulation = true;
+      document.getElementById('agents-count').innerText = "2";
+      simulateAgentTyping();
+    });
+
+    closeModalBtn.addEventListener('click', () => {
+      takeoverModal.classList.add('hidden');
+      takeoverBtn.classList.remove('opacity-50', 'pointer-events-none');
+      activeSimulation = true;
+      document.getElementById('agents-count').innerText = "2";
+      simulateAgentTyping();
+    });
+
+    refreshBtn.addEventListener('click', fetchMemories);
+
+    // Boot initialize
+    window.addEventListener('DOMContentLoaded', () => {
+      fetchMemories();
+      simulateAgentTyping();
+    });
+  </script>
+</body>
+</html>
