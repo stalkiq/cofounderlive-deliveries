@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Co-Op — Don't work with AI alone.</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=JetBrains+Mono:wght@400;700&family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Real-time Interactive Cursor Demo Layer -->
+  <div id="canvas-cursors-container"></div>
+
+  <!-- Header Banner -->
+  <header class="app-header">
+    <div class="header-logo">
+      <span class="logo-text">CO-OP</span>
+      <span class="tag-badge">MULTIPLAYER</span>
+    </div>
+    <div class="header-status">
+      <span class="status-indicator online"></span>
+      <span class="status-label">SYS_LATENCY: <strong id="global-latency">12ms</strong></span>
+    </div>
+  </header>
+
+  <main class="main-container">
+    <!-- Left Column: Manifesto & Form -->
+    <section class="left-panel">
+      <div class="manifesto-card">
+        <span class="category-tag">THE MULTIPLAYER AI THESIS</span>
+        <h1 class="main-headline">Don't work with AI alone.</h1>
+        <p class="pitch-text">
+          The best work tools of the last two decades won by going multiplayer. Google Docs replaced Microsoft Word. Figma beat Photoshop. This turns solo tools into places where teams do their best work together.
+        </p>
+        <p class="pitch-text highlighted">
+          AI agents are the most powerful tool a team has, yet they are strictly single-player. You prompt in private; the best you can do is share a stale transcript. <strong>That's about to change.</strong>
+        </p>
+        <div class="manifesto-bullet-container">
+          <div class="bullet-item">
+            <span class="bullet-icon">⚡</span>
+            <span><strong>Figma-meets-Terminal</strong> — Join, inspect, or guide live agents co-authoring blocks in real time.</span>
+          </div>
+          <div class="bullet-item">
+            <span class="bullet-icon">🛑</span>
+            <span><strong>Tactile Takeover</strong> — Instantly pause running pipelines and assume manual cursor control.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Action Config Form -->
+      <div class="form-card">
+        <h2 class="card-heading">Launch Collaborative Session</h2>
+        <p class="card-subheading">Deploy a new shared agent instance, bind it to a repo, and invite your team to co-author.</p>
+        
+        <form id="session-form" class="launch-form">
+          <div class="form-group">
+            <label for="agent-persona" class="field-label">Agent Persona</label>
+            <select id="agent-persona" class="form-select" required>
+              <option value="DevAgent (Coding & Refactoring)">DevAgent (Coding & Refactoring)</option>
+              <option value="QA-Agent (Test Generation)">QA-Agent (Test Generation)</option>
+              <option value="DocAgent (Technical Writing)">DocAgent (Technical Writing)</option>
+              <option value="SalesAgent (Deal Strategy)">SalesAgent (Deal Strategy)</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="repo-url" class="field-label">Target Repository / Context URL</label>
+            <input type="text" id="repo-url" class="form-input" placeholder="github.com/co-op/auth-service" required>
+          </div>
+
+          <div class="form-group">
+            <label for="team-access" class="field-label">Team Access Level</label>
+            <select id="team-access" class="form-select" required>
+              <option value="Engineering Core">Engineering/QA Core (Restricted)</option>
+              <option value="Product & QA">Product & QA (Shared)</option>
+              <option value="Entire Workspace">Entire Workspace (Open Collaborate)</option>
+            </select>
+          </div>
+
+          <button type="submit" class="primary-btn">
+            <span>Launch Shared Session</span>
+            <span class="arrow-symbol">→</span>
+          </button>
+        </form>
+      </div>
+
+      <!-- Active Sessions Manager -->
+      <div class="sessions-list-card">
+        <h2 class="card-heading">Active Team Canvases</h2>
+        <div id="sessions-container" class="sessions-grid">
+          <!-- Dynamically populated -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Right Column: Interactive Canvas & Terminal -->
+    <section class="right-panel">
+      <!-- Session Workspace Header -->
+      <div class="canvas-header">
+        <div class="stream-info">
+          <div class="sessions-tabs" id="sessions-tabs-nav">
+            <!-- Tabs loaded dynamically -->
+          </div>
+        </div>
+        <div class="system-stats">
+          <div class="stat-indicator">
+            <span class="stat-lbl">HUMANS</span>
+            <span class="stat-val" id="stat-humans">3</span>
+          </div>
+          <div class="stat-indicator">
+            <span class="stat-lbl">AGENTS</span>
+            <span class="stat-val" id="stat-agents">2</span>
+          </div>
+          <div class="stat-indicator highlighted">
+            <span class="stat-lbl">SYNC LATENCY</span>
+            <span class="stat-val volt-color" id="stat-latency">12ms</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Main Canvas Grid -->
+      <div class="canvas-grid-layout">
+        
+        <!-- Left half: Monospace Code Terminal -->
+        <div class="code-terminal-wrapper">
+          <div class="terminal-ctrl-bar">
+            <div class="window-decorations">
+              <span class="dot red"></span>
+              <span class="dot yellow"></span>
+              <span class="dot green"></span>
+            </div>
+            <div class="active-filename" id="terminal-filename">auth_service.py</div>
+            <div id="takeover-status-badge" class="state-pill status-active">
+              <span class="pulse-dot"></span>
+              <span id="badge-text" class="mono-label">AGENT EXECUTING</span>
+            </div>
+          </div>
+          <div class="editor-viewport">
+            <!-- Live interactive editor -->
+            <textarea id="code-editor" class="code-monaco" readonly># Loading active code repo...</textarea>
+            
+            <!-- Animated cursor overlays within editor to simulate multiplayer co-authoring -->
+            <div id="editor-cursors-layer">
+              <div class="canvas-cursor" id="user-alex" style="top: 140px; left: 160px;">
+                <div class="pointer-arrow red-pointer"></div>
+                <div class="cursor-nametag red-bg">Alex (Dev)</div>
+              </div>
+              <div class="canvas-cursor agent-highlight" id="user-agent" style="top: 220px; left: 240px;">
+                <div class="pointer-arrow volt-pointer"></div>
+                <div class="cursor-nametag volt-bg">DevAgent-3</div>
+              </div>
+            </div>
+          </div>
+          <!-- Takeover CTA Panel -->
+          <div class="takeover-action-overlay">
+            <button id="takeover-btn" class="takeover-trigger-btn">
+              <span class="btn-icon">⚡</span>
+              <span id="takeover-btn-text">Takeover Agent (Esc)</span>
+            </button>
+            <p class="takeover-helper-txt">
+              Takeover stops auto-pipelines instantly so you can force edit directly in the text viewport.
+            </p>
+          </div>
+        </div>
+
+        <!-- Right half: Events Stream & Agent Control Room -->
+        <div class="workspace-events-column">
+          
+          <div class="events-history-card">
+            <div class="card-tabs-header">
+              <button class="event-tab-btn active" data-filter="all">Live Canvas Stream</button>
+              <button class="event-tab-btn" data-filter="takeovers">Audit Log</button>
+            </div>
+            <div id="event-logs-list" class="log-stream-viewport">
+              <!-- Dynamically populated messages -->
+            </div>
+          </div>
+
+          <!-- Prompt Controls -->
+          <div class="control-box-input">
+            <h3 class="panel-subtitle">Redirect Agent / Co-author</h3>
+            <form id="control-prompt-form" class="inline-prompt-box">
+              <input type="text" id="prompt-input" placeholder="Prompt DevAgent-3 (e.g. 'implement authentication headers validation')" class="prompt-textfield" required />
+              <button type="submit" class="prompt-submit-btn">
+                <span>SEND</span>
+              </button>
+            </form>
+          </div>
+
+        </div>
+
+      </div>
+    </main>
+
+    <!-- Overlay Alerts -->
+    <div id="alert-toast" class="toast-indicator hidden">
+      <div class="toast-body">
+        <span class="toast-icon">⚡</span>
+        <div class="toast-content">
+          <h4 id="toast-title" class="toast-head">Action Logged</h4>
+          <p id="toast-message" class="toast-desc">Details persisted successfully.</p>
+        </div>
+      </div>
+    </div>
+
+  <footer class="app-footer">
+    <div class="footer-copy">© 2026 Co-Op Multiplayer Collaborative Platform. Built for teams and autonomous agents alike.</div>
+    <div class="footer-links">
+      <a href="/api/sessions" target="_blank" class="dev-link">API Sessions DB</a>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
