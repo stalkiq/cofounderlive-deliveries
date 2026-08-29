@@ -1,0 +1,29 @@
+[
+  {
+    "id": "1",
+    "title": "DevAgent-3: Refactoring auth_service.py",
+    "body": "Persona: Coding & Refactoring. Context Repository: github.com/co-op/auth-service. Running OAuth2 validation checks and writing unit tests for token expiration edge cases.",
+    "createdAt": "2026-08-29T16:01:43.000Z",
+    "persona": "DevAgent (Coding & Refactoring)",
+    "repo": "github.com/co-op/auth-service",
+    "access": "Engineering Core"
+  },
+  {
+    "id": "2",
+    "title": "QA-Agent: Verifying edge-case boundaries",
+    "body": "Persona: Test Generation. Context Repository: github.com/co-op/auth-service. Waiting for DevAgent-3 to hand over the terminal session before running API suite regression tests.",
+    "createdAt": "2026-08-29T17:01:43.000Z",
+    "persona": "QA-Agent (Test Generation)",
+    "repo": "github.com/co-op/auth-service",
+    "access": "Product & QA"
+  },
+  {
+    "id": "3",
+    "title": "DocAgent: API Endpoint Documentation Update",
+    "body": "Persona: Technical Writing. Context Repository: github.com/co-op/api-docs. Auto-generating markdown endpoints summary for the newly introduced shared session structures.",
+    "createdAt": "2026-08-29T17:31:43.000Z",
+    "persona": "DocAgent (Technical Writing)",
+    "repo": "github.com/co-op/api-docs",
+    "access": "Entire Workspace"
+  }
+]
