@@ -1,0 +1,242 @@
+{
+  "missionId": "ep_mteu5u46",
+  "idea": "A Cloud for Small Software#\nBy Pete Koomen\n\nUsing agents to build personal software to solve your own problems is a lot of fun.\n\nThis is \"Small Software\". Purpose-built tools that will only ever have one or a small handful of users.\n\nSmall software is useful for teams too: Every team does things differently, and there's unlimited demand for bespoke tools for running workflows, tracking important numbers, managing sprints, sharing prototypes, and so on.\n\nSoftware like this is now very easy to build, but still hard to deploy and share.\n\nIncumbent clouds like Azure and AWS were designed for shipping Big Software that scales with many users… at the cost of complexity.\n\nA cloud designed for small software could delete most of this complexity and unlock a big set of new use cases that agents have only recently made possible.\n\nAt the same time, there are other hard problems to solve: every company will want to customize the environment this software runs in, auth & permissions are hard, and allowing nontechnical users to share arbitrary code is tricky to do securely.\n\nSmall software should be as easy to share with your colleagues as a Google Doc.\n\nIf you're working on something like this, we'd love to hear from you.",
+  "brand": {
+    "name": "Pico",
+    "tagline": "The instant cloud for bespoke, agent-built tools.",
+    "audience": "AI-native developers and team leads building custom internal workflows.",
+    "tone": [
+      "Tactile",
+      "Utilitarian",
+      "Immediate"
+    ],
+    "visualConcept": "A high-contrast 'digital workbench' featuring paper-textured cards, retro-monospaced typography, and glowing orange status indicators that make micro-apps feel like physical, modular gadgets.",
+    "layout": "A minimalist, single-column manifesto layout centered around a live 'drag-and-drop code' sandbox, transitioning into a stark, side-by-side comparison of AWS overhead versus Pico's single-click sharing.",
+    "palette": {
+      "background": "#121110",
+      "surface": "#1C1A18",
+      "primary": "#F4F1EB",
+      "accent": "#FF5A00",
+      "text": "#A8A29E"
+    },
+    "creativeNotes": [
+      "Embed a live, interactive terminal widget in the hero section that lets visitors paste a raw script and instantly generates a mock 'pico.run/share' link.",
+      "Use a dynamic 'complexity toggle' that visually collapses a sprawling, multi-service AWS architecture diagram into a single, clean Pico container.",
+      "Style the UI elements with heavy borders, monospaced fonts, and physical toggle-switch animations to emphasize the 'handcrafted tool' aesthetic."
+    ]
+  },
+  "mvp": {
+    "name": "Pico",
+    "workspaceLabel": "Pico Workbench",
+    "experience": {
+      "archetype": "terminal",
+      "device": "desktop",
+      "navigationStyle": "sidebar",
+      "density": "compact",
+      "typeStyle": "mono",
+      "radius": "sharp",
+      "motif": "glowing orange status indicators, tactile toggle switches, and an interactive AWS vs. Pico complexity toggle"
+    },
+    "eyebrow": "THE INSTANT CLOUD FOR BESPOKE, AGENT-BUILT TOOLS",
+    "headline": "Deploy small software in one click.",
+    "subheadline": "AWS was built for Big Software. Pico is a tactile digital workbench for the long tail of single-purpose, agent-generated tools. Share custom workflows, scripts, and micro-apps as easily as a Google Doc.",
+    "palette": {
+      "background": "#121110",
+      "surface": "#1C1A18",
+      "primary": "#F4F1EB",
+      "accent": "#FF5A00",
+      "text": "#A8A29E"
+    },
+    "googleCapabilities": [
+      {
+        "service": "gemini",
+        "label": "Pico Agent Compiler",
+        "rationale": "Analyzes raw agent-generated scripts, automatically infers required environment variables, and generates secure web wrappers and API endpoints.",
+        "primaryScreen": 1,
+        "config": {
+          "assistantRole": "An expert cloud infrastructure compiler for micro-apps. You analyze raw Python, Node.js, or Bash scripts, identify dependencies, suggest environment variables, and design secure web interfaces.",
+          "mapQuery": "",
+          "locationQuery": "",
+          "origin": "",
+          "destination": "",
+          "calendarTitle": "",
+          "analyticsLabel": "Live compiler sandbox telemetry",
+          "targetLanguage": "",
+          "analysisMode": "both",
+          "speechPrompt": "Explain the runtime environment and security sandbox generated for this script."
+        }
+      }
+    ],
+    "screens": [
+      {
+        "label": "Deploy Sandbox",
+        "type": "workflow",
+        "title": "Instant Sandbox Provisioner",
+        "description": "Paste raw agent-generated code to instantly spin up an isolated, secure container running in milliseconds.",
+        "metrics": [
+          {
+            "label": "Active Slots",
+            "value": "8 / 10"
+          },
+          {
+            "label": "Avg Provision Time",
+            "value": "420ms"
+          }
+        ],
+        "items": [
+          {
+            "title": "Slack Webhook Alert",
+            "detail": "Quick-start template to post structured payloads to Slack channels.",
+            "status": "Template",
+            "meta": "Python",
+            "value": "Load Template"
+          },
+          {
+            "title": "CSV to JSON Parser",
+            "detail": "Lightweight utility to transform and clean uploaded CSV data.",
+            "status": "Template",
+            "meta": "Node.js",
+            "value": "Load Template"
+          },
+          {
+            "title": "S3 Backup Script",
+            "detail": "Securely pipe files to an external S3 bucket with minimal configuration.",
+            "status": "Template",
+            "meta": "Bash",
+            "value": "Load Template"
+          }
+        ]
+      },
+      {
+        "label": "Workbench AI",
+        "type": "assistant",
+        "title": "Pico Agent Compiler",
+        "description": "Let Gemini analyze your raw code, generate physical UI knobs for non-technical users, and verify security boundaries.",
+        "metrics": [
+          {
+            "label": "Analysis Depth",
+            "value": "Strict Sandbox"
+          }
+        ],
+        "items": [
+          {
+            "title": "Analyze Lead Scraper Script",
+            "detail": "Pasted Python script utilizing BeautifulSoup and requests.",
+            "status": "Ready",
+            "meta": "Inferred Env: SCRAPER_API_KEY",
+            "value": "Analyze"
+          },
+          {
+            "title": "Generate UI Knobs",
+            "detail": "Create a tactile slider for 'Max Pages' and a text input for 'Target URL'.",
+            "status": "Suggested",
+            "meta": "2 UI Elements",
+            "value": "Generate"
+          }
+        ]
+      },
+      {
+        "label": "Active Slots",
+        "type": "catalog",
+        "title": "Your Micro-App Workbench",
+        "description": "Manage your deployed single-purpose tools. Flip the sharing toggles to instantly grant access to your team.",
+        "metrics": [
+          {
+            "label": "Compute Used",
+            "value": "14,205s"
+          },
+          {
+            "label": "Active Users",
+            "value": "4"
+          }
+        ],
+        "items": [
+          {
+            "title": "Complexity Mode",
+            "detail": "Toggle between AWS (Enterprise Complexity) and Pico (Zero-Config).",
+            "status": "Pico Mode Active",
+            "meta": "Tactile Switch",
+            "value": "Toggle to AWS"
+          },
+          {
+            "title": "pico.run/lead-scraper",
+            "detail": "Extracts weekly leads from target directories and pushes to Slack.",
+            "status": "Live",
+            "meta": "Sharing: Team Only",
+            "value": "9.2s compute"
+          },
+          {
+            "title": "pico.run/sprint-burndown",
+            "detail": "Generates custom SVG burndown charts from raw Jira CSV exports.",
+            "status": "Live",
+            "meta": "Sharing: Public Link",
+            "value": "1.4s compute"
+          },
+          {
+            "title": "pico.run/pdf-redactor",
+            "detail": "Locally redacts PII from uploaded PDFs using lightweight regex.",
+            "status": "Paused",
+            "meta": "Sharing: Private",
+            "value": "0.0s compute"
+          }
+        ]
+      }
+    ],
+    "workflow": {
+      "title": "Deploy New Micro-App",
+      "description": "Drop your raw script, select your runtime, and get a live secure link instantly.",
+      "fields": [
+        {
+          "label": "App Name",
+          "type": "text",
+          "placeholder": "e.g., lead-scraper"
+        },
+        {
+          "label": "Runtime Environment",
+          "type": "select",
+          "options": [
+            "Python 3.11 (Lightweight)",
+            "Node.js 20 (Alpine)",
+            "Bash Script (Secure Sandbox)"
+          ]
+        },
+        {
+          "label": "Raw Script / Code",
+          "type": "text",
+          "placeholder": "Paste your agent-generated code here..."
+        },
+        {
+          "label": "Access Control Level",
+          "type": "select",
+          "options": [
+            "Private (Only Me)",
+            "Team Access (Google Workspace Auth)",
+            "Public (Anyone with link)"
+          ]
+        }
+      ],
+      "buttonLabel": "Provision Slot (pico.run)",
+      "successTitle": "Slot Provisioned Successfully!",
+      "successMessage": "Your micro-app is live at pico.run/lead-scraper. Share this link with your team to let them run it securely."
+    },
+    "googleCapability": {
+      "service": "gemini",
+      "label": "Pico Agent Compiler",
+      "rationale": "Analyzes raw agent-generated scripts, automatically infers required environment variables, and generates secure web wrappers and API endpoints.",
+      "primaryScreen": 1,
+      "config": {
+        "assistantRole": "An expert cloud infrastructure compiler for micro-apps. You analyze raw Python, Node.js, or Bash scripts, identify dependencies, suggest environment variables, and design secure web interfaces.",
+        "mapQuery": "",
+        "locationQuery": "",
+        "origin": "",
+        "destination": "",
+        "calendarTitle": "",
+        "analyticsLabel": "Live compiler sandbox telemetry",
+        "targetLanguage": "",
+        "analysisMode": "both",
+        "speechPrompt": "Explain the runtime environment and security sandbox generated for this script."
+      }
+    }
+  },
+  "revision": 2
+}
