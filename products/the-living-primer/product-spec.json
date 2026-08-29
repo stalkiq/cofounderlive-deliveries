@@ -1,0 +1,187 @@
+{
+  "name": "The Living Primer",
+  "workspaceLabel": "The Living Primer Parent & Child Portal",
+  "experience": {
+    "archetype": "assistant",
+    "device": "desktop",
+    "navigationStyle": "sidebar",
+    "density": "spacious",
+    "typeStyle": "serif",
+    "radius": "soft",
+    "motif": "A luxury blue leather-bound book with double-border rules, generous margins, hand-drawn indigo ink illustrations, a vertical spine line connecting chapters, and handwritten margina"
+  },
+  "eyebrow": "A Neo-Classical Alternative to Gamified Screens",
+  "headline": "The Living Primer: Wisdom woven from your child's world.",
+  "subheadline": "An AI-powered interactive primer and adaptive tutor, styled as a luxury physical book, designed to teach reading, writing, and character without dopamine-loop mechanics.",
+  "palette": {
+    "background": "#F4F7F9",
+    "surface": "#E8EEF3",
+    "primary": "#1A2E40",
+    "accent": "#2E6F9E",
+    "text": "#1A2E40"
+  },
+  "googleCapabilities": [
+    {
+      "service": "gemini",
+      "label": "The Scribe's Socratic Story Engine",
+      "rationale": "Generates personalized, classical stories that weave reading, arithmetic, and moral reasoning into a narrative tailored to the child's daily life, rendered in a custom serif container mimicking a physical book page with interactive marginalia tooltips.",
+      "primaryScreen": 1,
+      "config": {
+        "assistantRole": "An enchanting, neo-classical tutor inspired by Neal Stephenson's Primer. You speak with intellectual warmth as 'The Scribe', guiding a child through reading, arithmetic, and ethical reasoning using gentle Socratic questioning and beautiful, slow-paced storytelling. Format output as physical book pages with marginalia tooltips.",
+        "mapQuery": "",
+        "locationQuery": "",
+        "origin": "",
+        "destination": "",
+        "calendarTitle": "",
+        "analyticsLabel": "",
+        "targetLanguage": "",
+        "analysisMode": "both",
+        "speechPrompt": ""
+      }
+    }
+  ],
+  "screens": [
+    {
+      "label": "The Chronicle of Growth",
+      "type": "timeline",
+      "title": "The Chronicle of Growth",
+      "description": "A beautiful, chronological record of your child's intellectual journey, moral virtues explored, and parent-written annotations styled as handwritten marginalia along the spine.",
+      "metrics": [
+        {
+          "label": "Chapters Completed",
+          "value": "4"
+        },
+        {
+          "label": "Core Virtues Explored",
+          "value": "Fortitude, Curiosity"
+        },
+        {
+          "label": "Vocabulary Mastered",
+          "value": "142 words"
+        }
+      ],
+      "items": [
+        {
+          "title": "Chapter I: The Whispering Oak",
+          "detail": "Focus: Phonics (Short 'o' sounds) & Kindness. Marginalia: 'Arthur shared his toy dog with Clara today without being asked.'",
+          "status": "Completed",
+          "meta": "Oct 12",
+          "value": "100% Mastery"
+        },
+        {
+          "title": "Chapter II: The Merchant's Scales",
+          "detail": "Focus: Basic Addition & Fairness. Arthur helped a woodland merchant balance acorn trades.",
+          "status": "Completed",
+          "meta": "Oct 24",
+          "value": "100% Mastery"
+        },
+        {
+          "title": "Chapter III: The Constellation Map",
+          "detail": "Focus: Spatial Reasoning & Perseverance. Arthur navigated a ship using stars.",
+          "status": "In Progress",
+          "meta": "Active",
+          "value": "65% Progress"
+        },
+        {
+          "title": "Chapter IV: The Shared Blocks",
+          "detail": "Focus: Phonics & Generosity. (The ink is drying on your next chapter...)",
+          "status": "Weaving Narrative",
+          "meta": "Pending",
+          "value": "0% - Weaving"
+        }
+      ]
+    },
+    {
+      "label": "The Living Primer",
+      "type": "assistant",
+      "title": "The Living Primer",
+      "description": "Speak or type to The Scribe. The book listens, adapts, and weaves your child's surroundings into the next paragraph of their classical education, rendered in a custom serif page layout.",
+      "metrics": [
+        {
+          "label": "Current Mode",
+          "value": "Socratic Dialogue"
+        },
+        {
+          "label": "Active Theme",
+          "value": "The Meadow of Numbers"
+        }
+      ],
+      "items": [
+        {
+          "title": "The Scribe",
+          "detail": "Welcome back, Arthur. Today, the squirrel Barnaby has found five golden walnuts, but his basket has room for only three. Shall we help him decide which to keep, or find a way to carry them all?",
+          "status": "Awaiting response",
+          "meta": "System",
+          "value": "Story Prompt"
+        }
+      ]
+    },
+    {
+      "label": "The Author's Desk",
+      "type": "workflow",
+      "title": "The Author's Desk",
+      "description": "As a parent, guide the Primer's focus. Input real-world events, struggles, or interests, and The Scribe will seamlessly weave them into tomorrow's classical lesson.",
+      "metrics": [],
+      "items": []
+    }
+  ],
+  "workflow": {
+    "title": "Configure Chapter IV",
+    "description": "Tailor the narrative engine to your child's current developmental stage and real-world context.",
+    "fields": [
+      {
+        "label": "Child's Current Real-World Focus or Event",
+        "type": "text",
+        "placeholder": "e.g., Arthur is learning to share his blocks with his younger sister."
+      },
+      {
+        "label": "Target Academic Skill",
+        "type": "select",
+        "placeholder": "",
+        "options": [
+          "Phonics: Consonant Blends",
+          "Arithmetic: Simple Subtraction",
+          "Spatial: Left vs. Right",
+          "Logic: Cause and Effect"
+        ]
+      },
+      {
+        "label": "Core Moral Virtue to Emphasize",
+        "type": "select",
+        "placeholder": "",
+        "options": [
+          "Generosity (Sharing & Community)",
+          "Fortitude (Overcoming Fear)",
+          "Temperance (Patience & Focus)",
+          "Justice (Fairness & Truth)"
+        ]
+      },
+      {
+        "label": "Commencement Date",
+        "type": "date",
+        "placeholder": "Select when this chapter should begin"
+      }
+    ],
+    "buttonLabel": "Inscribe Chapter into the Primer",
+    "successTitle": "Chapter Woven Successfully",
+    "successMessage": "The narrative has been inscribed. The next chapter awaits your child."
+  },
+  "googleCapability": {
+    "service": "gemini",
+    "label": "The Scribe's Socratic Story Engine",
+    "rationale": "Generates personalized, classical stories that weave reading, arithmetic, and moral reasoning into a narrative tailored to the child's daily life, rendered in a custom serif container mimicking a physical book page with interactive marginalia tooltips.",
+    "primaryScreen": 1,
+    "config": {
+      "assistantRole": "An enchanting, neo-classical tutor inspired by Neal Stephenson's Primer. You speak with intellectual warmth as 'The Scribe', guiding a child through reading, arithmetic, and ethical reasoning using gentle Socratic questioning and beautiful, slow-paced storytelling. Format output as physical book pages with marginalia tooltips.",
+      "mapQuery": "",
+      "locationQuery": "",
+      "origin": "",
+      "destination": "",
+      "calendarTitle": "",
+      "analyticsLabel": "",
+      "targetLanguage": "",
+      "analysisMode": "both",
+      "speechPrompt": ""
+    }
+  }
+}
