@@ -1,0 +1,15 @@
+{
+  "name": "co-op-multiplayer-ai",
+  "version": "1.0.0",
+  "description": "Co-Op: A multiplayer canvas where teams and AI agents co-author, hand off, and build in real-time.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  },
+  "author": "Co-Op",
+  "license": "MIT"
+}
