@@ -1,0 +1,204 @@
+{
+  "name": "Astraea",
+  "workspaceLabel": "Astraea Folio (Role: Child/Parent Toggle Enabled)",
+  "experience": {
+    "archetype": "assistant",
+    "device": "desktop",
+    "navigationStyle": "sidebar",
+    "density": "spacious",
+    "typeStyle": "serif",
+    "radius": "soft",
+    "motif": "A leather-bound folio with deep indigo ink-wash textures, gold-leaf accents, and a growth constellation map."
+  },
+  "eyebrow": "The Living Book Initiative",
+  "headline": "Astraea: Nurturing wisdom through the art of the living story.",
+  "subheadline": "Inspired by science fiction, engineered for reality. Astraea is an adaptive AI companion that evolves alongside your child, teaching deep reasoning, character, and foundational intellect through a tactile, living-book interface.",
+  "palette": {
+    "background": "#F4F7F9",
+    "surface": "#E2E8F0",
+    "primary": "#1B2A4A",
+    "accent": "#D4AF37",
+    "text": "#0F172A"
+  },
+  "googleCapabilities": [
+    {
+      "service": "gemini",
+      "label": "Socratic Primer Engine",
+      "rationale": "Generates personalized, Socratic stories and dialogues that adapt to the child's vocabulary, emotional state, and logical reasoning.",
+      "primaryScreen": 0,
+      "config": {
+        "assistantRole": "You are Astraea, a wise, patient, and enchanting Socratic tutor inspired by 'A Young Lady's Illustrated Primer'. Speak in a warm, intellectual, and slightly magical tone. Guide the child to think and reason through gentle questions rather than direct answers.",
+        "mapQuery": "",
+        "locationQuery": "",
+        "origin": "",
+        "destination": "",
+        "calendarTitle": "",
+        "analyticsLabel": "",
+        "targetLanguage": "",
+        "analysisMode": "both",
+        "speechPrompt": "Listen to the child's spoken response, transcribe it accurately, and respond using warm, clear text-to-speech audio at a slow, encouraging pace suitable for ear"
+      }
+    }
+  ],
+  "screens": [
+    {
+      "label": "[Child Mode] The Primer",
+      "type": "assistant",
+      "title": "The Living Book",
+      "description": "Speak with Astraea. The ink-wash illustrations and prose will adapt to your thoughts and environment.",
+      "metrics": [
+        {
+          "label": "Current Chapter",
+          "value": "The Lost Key"
+        },
+        {
+          "label": "Socratic Depth",
+          "value": "Level 3"
+        }
+      ],
+      "items": [
+        {
+          "title": "Astraea's Opening",
+          "detail": "A small sparrow sits on a stone wall, holding a key made of brass. It looks at you, waiting. 'Why do we lock things away?' it asks. What do you tell the sparrow?",
+          "status": "Active",
+          "meta": "Socratic Prompt",
+          "value": ""
+        }
+      ]
+    },
+    {
+      "label": "[Parent Mode] Cognitive Path",
+      "type": "timeline",
+      "title": "Intellectual Lineage",
+      "description": "A chronological record of your child's intellectual, moral, and logical development, mapped as a growth constellation.",
+      "metrics": [
+        {
+          "label": "Vocabulary Size",
+          "value": "1,240 words"
+        },
+        {
+          "label": "Core Virtues Explored",
+          "value": "Empathy, Courage, Logic"
+        }
+      ],
+      "items": [
+        {
+          "title": "The Concept of Fairness",
+          "detail": "Explored through the story of the Divided Harvest. Demonstrated understanding of distributive justice.",
+          "status": "Mastered",
+          "meta": "Oct 24",
+          "value": ""
+        },
+        {
+          "title": "Introduction to Deductive Logic",
+          "detail": "Solved the Riddle of the Three Lanterns using syllogistic reasoning.",
+          "status": "In Progress",
+          "meta": "Oct 22",
+          "value": ""
+        },
+        {
+          "title": "Empathy & Perspective-Taking",
+          "detail": "Discussed the giant's feelings when his garden was entered without permission.",
+          "status": "Introduced",
+          "meta": "Oct 19",
+          "value": ""
+        }
+      ]
+    },
+    {
+      "label": "[Parent Mode] Weave Lesson",
+      "type": "workflow",
+      "title": "The Narrative Weaver",
+      "description": "Seed a new custom chapter in Astraea's living book based on a real-life situation your child is experiencing.",
+      "metrics": [
+        {
+          "label": "Active Seeds",
+          "value": "2 Woven"
+        },
+        {
+          "label": "Next Up",
+          "value": "The Block Castle"
+        }
+      ],
+      "items": [
+        {
+          "title": "The Block Castle of Concord",
+          "detail": "Focus: Empathy & Sharing. Inspired by a disagreement over wooden blocks.",
+          "status": "Queued",
+          "meta": "Woven Oct 25",
+          "value": ""
+        },
+        {
+          "title": "The Dark Cave of Whispers",
+          "detail": "Focus: Courage in the Dark. Inspired by fear of bedtime shadows.",
+          "status": "Completed",
+          "meta": "Woven Oct 18",
+          "value": ""
+        }
+      ]
+    }
+  ],
+  "workflow": {
+    "title": "Seed a Narrative",
+    "description": "Input a real-world scenario or moral challenge. Astraea will organically weave this into the next Socratic story.",
+    "fields": [
+      {
+        "label": "Focus Virtue / Skill",
+        "type": "select",
+        "placeholder": "",
+        "options": [
+          "Empathy & Sharing",
+          "Courage in the Dark",
+          "Logical Deduction",
+          "Patience & Waiting"
+        ]
+      },
+      {
+        "label": "The Seed",
+        "type": "text",
+        "placeholder": "e.g., Leo had a disagreement with his sister about sharing the wooden blocks today."
+      },
+      {
+        "label": "Tone Setting",
+        "type": "select",
+        "placeholder": "",
+        "options": [
+          "Whimsical",
+          "Stoic",
+          "Adventurous"
+        ]
+      },
+      {
+        "label": "Target Reading Level",
+        "type": "select",
+        "placeholder": "",
+        "options": [
+          "Early Reader (Phonics focus)",
+          "Developing Reader (Simple prose)",
+          "Fluent Thinker (Socratic dialogue)"
+        ]
+      }
+    ],
+    "buttonLabel": "Weave into the Primer",
+    "successTitle": "The Story has Taken Root",
+    "successMessage": "Astraea has integrated 'The Block Castle of Concord' into the active story queue. The next time your child opens the Primer, the sparrow will guide them through this lesson."
+  },
+  "googleCapability": {
+    "service": "gemini",
+    "label": "Socratic Primer Engine",
+    "rationale": "Generates personalized, Socratic stories and dialogues that adapt to the child's vocabulary, emotional state, and logical reasoning.",
+    "primaryScreen": 0,
+    "config": {
+      "assistantRole": "You are Astraea, a wise, patient, and enchanting Socratic tutor inspired by 'A Young Lady's Illustrated Primer'. Speak in a warm, intellectual, and slightly magical tone. Guide the child to think and reason through gentle questions rather than direct answers.",
+      "mapQuery": "",
+      "locationQuery": "",
+      "origin": "",
+      "destination": "",
+      "calendarTitle": "",
+      "analyticsLabel": "",
+      "targetLanguage": "",
+      "analysisMode": "both",
+      "speechPrompt": "Listen to the child's spoken response, transcribe it accurately, and respond using warm, clear text-to-speech audio at a slow, encouraging pace suitable for ear"
+    }
+  }
+}
