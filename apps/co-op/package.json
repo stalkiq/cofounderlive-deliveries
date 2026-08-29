@@ -1,0 +1,26 @@
+{
+  "name": "co-op-multiplayer-ai",
+  "version": "1.0.0",
+  "description": "Co-Op: A Figma-meets-Terminal multiplayer canvas where teams and AI agents co-author, hand off, and build in real-time.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": [
+    "cooperative",
+    "multiplayer",
+    "collaboration",
+    "ai-agent",
+    "gemini",
+    "express"
+  ],
+  "author": "Co-Op Team",
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.19.2"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
