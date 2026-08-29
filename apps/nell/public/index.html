@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nell — The Living Primer</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Quicksand:wght@400;500;600;700&family=Sorts+Mill+Goudy:ital@0;1&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="primer-container">
+        <!-- Sidebar Navigation -->
+        <aside class="primer-sidebar">
+            <div class="sidebar-header">
+                <div class="gold-seal">⚜️</div>
+                <h1 class="brand-title">Nell</h1>
+                <p class="brand-tagline">The Living Primer</p>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <button class="nav-btn active" data-target="screen-primer">
+                    <span class="nav-icon">📖</span> The Parchment
+                </button>
+                <button class="nav-btn" data-target="screen-ledger">
+                    <span class="nav-icon">📜</span> Ledger of Wisdom
+                </button>
+                <button class="nav-btn" data-target="screen-inscribe">
+                    <span class="nav-icon">✒️</span> Inscribe Context
+                </button>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="gemini-badge" id="gemini-status">
+                    <div class="status-indicator"></div>
+                    <span class="status-text">Dialogue Engine: Active</span>
+                </div>
+                <button class="reset-btn" id="reset-button" title="Reset all memories and settings">
+                    🔄 Reset Memory
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content Glass/Parchment Board -->
+        <main class="primer-main">
+            <!-- Screen 1: The Primer / Living Parchment (Dual Pane) -->
+            <section id="screen-primer" class="screen-section active">
+                <div class="screen-header">
+                    <div class="header-titles">
+                        <span class="eyebrow">The Living Primer</span>
+                        <h2 class="section-title">The Living Parchment</h2>
+                        <p class="section-desc">Engage with Nell in Socratic dialogue on the left, while your inquiries update on the right.</p>
+                    </div>
+                    <div class="header-metrics">
+                        <div class="metric-card">
+                            <span class="metric-label">Active Chapter</span>
+                            <span class="metric-value" id="metric-chapter">Loading...</span>
+                        </div>
+                        <div class="metric-card">
+                            <span class="metric-label">Socratic Spark</span>
+                            <span class="metric-value gold" id="metric-spark">--</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="workspace-grid">
+                    <!-- Left Pane: Socratic Dialogue Chat -->
+                    <div class="workspace-pane chat-pane">
+                        <div class="pane-header">
+                            <h3>Socratic Dialogue</h3>
+                            <span class="parchment-symbol">❦</span>
+                        </div>
+                        
+                        <div class="chat-history" id="chat-history-container">
+                            <!-- Messages populated via JS -->
+                            <div class="system-message">Unrolling the ancient parchment...</div>
+                        </div>
+
+                        <form id="chat-input-form" class="chat-input-area">
+                            <input type="text" id="chat-message-input" placeholder="Type your Socratic thoughts here, child..." autocomplete="off" required>
+                            <button type="submit" class="send-btn">
+                                <span>Inscribe</span><span class="btn-arrow">→</span>
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- Right Pane: Active Inquiries & Logical Prompts -->
+                    <div class="workspace-pane inquiries-pane">
+                        <div class="pane-header">
+                            <h3>Active Inquiries</h3>
+                            <span class="parchment-symbol">⚜️</span>
+                        </div>
+                        <div class="inquiries-list" id="inquiries-container">
+                            <!-- Inquiries populated via JS -->
+                        </div>
+                        
+                        <!-- Mini manual inquiry solving form -->
+                        <div class="quick-solver">
+                            <h4 class="solver-title">Solve an Inquiry</h4>
+                            <form id="solve-inquiry-form" class="solver-fields">
+                                <select id="solve-inquiry-select" required>
+                                    <option value="" disabled selected>Select Inquiry</option>
+                                </select>
+                                <input type="text" id="solve-inquiry-value" placeholder="Your solution..." required>
+                                <button type="submit" class="gold-outline-btn">Decipher</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Screen 2: The Ledger of Wisdom -->
+            <section id="screen-ledger" class="screen-section">
+                <div class="screen-header">
+                    <div class="header-titles">
+                        <span class="eyebrow">The Ledger of Wisdom</span>
+                        <h2 class="section-title">Ledger of Milestones</h2>
+                        <p class="section-desc">A chronological record of developmental steps, moral choices, and cognitive breakthroughs recognized by Nell.</p>
+                    </div>
+                    <div class="header-metrics">
+                        <div class="metric-card">
+                            <span class="metric-label">Concepts Mastered</span>
+                            <span class="metric-value" id="ledger-metric-concepts">0</span>
+                        </div>
+                        <div class="metric-card">
+                            <span class="metric-label">Moral Compass</span>
+                            <span class="metric-value gold" id="ledger-metric-moral">--</span>
+                        </div>
+                        <div class="metric-card">
+                            <span class="metric-label">Hours Engaged</span>
+                            <span class="metric-value" id="ledger-metric-hours">0.0h</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ledger-container">
+                    <div class="ledger-timeline-panel">
+                        <div class="inner-header">
+                            <h3>Milestone Chronology</h3>
+                            <span class="parchment-symbol">📜</span>
+                        </div>
+                        <div class="timeline" id="timeline-container">
+                            <!-- Populated via JS -->
+                        </div>
+                    </div>
+
+                    <div class="ledger-form-panel">
+                        <div class="inner-header">
+                            <h3>Log Moral Milestone</h3>
+                            <span class="parchment-symbol">🖋️</span>
+                        </div>
+                        <p class="panel-desc">Log a custom observation or sibling sharing event to immediately record inside Nell's history.</p>
+                        <form id="milestone-form" class="gold-form">
+                            <div class="form-group">
+                                <label for="m-title">Milestone Title</label>
+                                <input type="text" id="m-title" placeholder="e.g., Sharing the Water Jug" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="m-detail">Observation & Outcome</label>
+                                <textarea id="m-detail" rows="4" placeholder="Describe the ethical decision, breakthrough, or question that was answered..." required></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="m-meta">Meta / Timeframe</label>
+                                <input type="text" id="m-meta" placeholder="e.g., Morning Adventure, Playing outside" defaultValue="Recorded Now">
+                            </div>
+                            <button type="submit" class="gold-fill-btn">Record in Ledger</button>
+                        </form>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Screen 3: Inscribe New Context (Parent Portal) -->
+            <section id="screen-inscribe" class="screen-section">
+                <div class="screen-header">
+                    <div class="header-titles">
+                        <span class="eyebrow">Inscribe New Context</span>
+                        <h2 class="section-title">The Parent's Workshop</h2>
+                        <p class="section-desc">Guide the Primer's next evolution by weaving real-world events, fears, triumphs, or passions into Nell's Socratic dialogue.</p>
+                    </div>
+                </div>
+
+                <div class="inscribe-container">
+                    <div class="inscribe-form-pane">
+                        <div class="pane-header">
+                            <h3>Seed the Next Chapter</h3>
+                            <span class="parchment-symbol">✒️</span>
+                        </div>
+                        <p class="form-intro">Provide contextual seeds. Nell will seamlessly weave these cogs and levers into her fantasy narratives dynamically.</p>
+                        
+                        <form id="inscribe-form" class="gold-form">
+                            <div class="form-group">
+                                <label for="i-interest">Current Obsession or Interest</label>
+                                <span class="group-tip">e.g., clockwork gears, baking sourdough bread, flying birds, baking, keys</span>
+                                <input type="text" id="i-interest" placeholder="e.g., clockwork gears" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="i-skill">Target Cognitive Skill</label>
+                                <span class="group-tip">The mental toolkit standard Nell should guide them to develop</span>
+                                <select id="i-skill" required>
+                                    <option value="Socratic Logic & Cause-Effect">Socratic Logic & Cause-Effect</option>
+                                    <option value="Fractional Division & Sharing">Fractional Division & Sharing</option>
+                                    <option value="Ethical Decision Making" selected>Ethical Decision Making</option>
+                                    <option value="Phonics & Spatial Reasoning">Phonics & Spatial Reasoning</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="i-challenge">Real-world Milestone or Challenge (Optional)</label>
+                                <span class="group-tip">e.g., sharing a new toy with a younger sibling, fear of the dark</span>
+                                <input type="text" id="i-challenge" placeholder="e.g., sharing toys with a younger sibling">
+                            </div>
+                            <button type="submit" class="gold-fill-btn-large">
+                                Inscribe into the Primer
+                            </button>
+                        </form>
+                    </div>
+
+                    <div class="inscribe-history-pane">
+                        <div class="pane-header">
+                            <h3>Historical Inscryptions</h3>
+                            <span class="parchment-symbol">📖</span>
+                        </div>
+                        <div class="inscryptions-list" id="inscryptions-history-container">
+                            <!-- Inscryp timeline populated via JS -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Modals or notifications -->
+    <div class="notification-container" id="notification-container"></div>
+
+    <script src="client.js"></script>
+</body>
+</html>
