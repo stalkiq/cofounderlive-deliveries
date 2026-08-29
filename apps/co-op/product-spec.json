@@ -1,0 +1,221 @@
+{
+  "missionId": "ep_mtemfwta",
+  "idea": "Multiplayer AI#\nBy Aaron Epstein\n\nThe best work tools of the last two decades won by going multiplayer. Google Docs replaced Microsoft Word. Figma beat Photoshop. And they turned solo tools into places where teams do their best work together.\n\nBut AI hasn't had its multiplayer moment yet.\n\nAI agents are the most powerful new tool a team has, but it's the one thing people still use by themselves. That's because right now, working with AI is largely single-player. You open a chat, type a prompt, and get an answer, in a box only you can see. When you want to collaborate with your teammates and agents, the best you can do is send a link to a read-only transcript they can't touch.\n\nThat's about to change.\n\nAgents are starting to run tasks that take hours, days, even weeks. Work at that scale was never meant to be done alone, and pulls in many people across a company. Anyone on a team should be able to drop into the same live agent session to watch it work, redirect it, and hand it off, the way they'd work with any other human team member. This turns the work a team does with agents into a shared, living thing instead of a thousand private threads.\n\nWe think there's a version of this for every kind of work. Shared agents for engineers coding together in real time. For sales teams working a deal together. For support teams resolving a ticket. For lawyers drafting a contract, analysts building a model, and marketers shipping a campaign. Anywhere a team already crowds around one problem, there should be multiplayer agents they all share.\n\nSo if you're building AI that's multiplayer by default, we'd love to hear from you.",
+  "brand": {
+    "name": "Co-Op",
+    "tagline": "Don't work with AI alone.",
+    "audience": "AI-native founders and product engineers building the next generation of collaborative software.",
+    "tone": [
+      "Kinetic",
+      "Collaborative",
+      "Unfiltered"
+    ],
+    "visualConcept": "A 'Figma-meets-Terminal' multiplayer canvas where colorful human cursors and glowing agent cursors co-author code and documents in real-time.",
+    "layout": "A split-screen interface: a bold, left-aligned manifesto and pitch on one side, paired with an active, simulated multiplayer workspace on the right showing live agent hand-offs.",
+    "palette": {
+      "background": "#121214",
+      "surface": "#1E1E24",
+      "primary": "#CCFF00",
+      "accent": "#FF007A",
+      "text": "#F5F5F7"
+    },
+    "creativeNotes": [
+      "Render simulated, labeled multiplayer cursors (e.g., 'Sarah (PM)' in magenta, 'DevAgent-3' in volt green) actively selecting and editing blocks of text to instantly communicate the multiplayer concept.",
+      "Use a stark monospace font for agent actions and a high-end sans-serif for human interactions to visually partition the collaborative workflow.",
+      "Incorporate a tactile 'Takeover' button in the UI demo that lets visitors click to 'interrupt' the simulated AI agent, demonstrating the hand-off mechanic."
+    ]
+  },
+  "mvp": {
+    "name": "Co-Op",
+    "workspaceLabel": "Co-Op Workspace",
+    "experience": {
+      "archetype": "workspace",
+      "device": "desktop",
+      "navigationStyle": "sidebar",
+      "density": "compact",
+      "typeStyle": "mono",
+      "radius": "sharp",
+      "motif": "Figma-meets-Terminal multiplayer canvas with active human and agent cursors"
+    },
+    "eyebrow": "THE MULTIPLAYER AI THESIS",
+    "headline": "Don't work with AI alone.",
+    "subheadline": "The collaborative canvas where teams and AI agents co-author, hand off, and build in real-time.",
+    "palette": {
+      "background": "#121214",
+      "surface": "#1E1E24",
+      "primary": "#CCFF00",
+      "accent": "#FF007A",
+      "text": "#F5F5F7"
+    },
+    "googleCapabilities": [
+      {
+        "service": "gemini",
+        "label": "Co-Op Agent Brain",
+        "rationale": "Simulates the real-time reasoning, code generation, and interactive redirection of the multiplayer AI agent.",
+        "primaryScreen": 0,
+        "config": {
+          "assistantRole": "You are DevAgent-3, a highly collaborative coding agent working alongside human developers in a real-time multiplayer canvas. Respond to prompts by outlining your step-by-step execution plan, showing code blocks, and explicitly stating when you are handing control back to the human.",
+          "mapQuery": "",
+          "locationQuery": "",
+          "origin": "",
+          "destination": "",
+          "calendarTitle": "",
+          "analyticsLabel": "Agent Takeover Rates & Session Latency",
+          "targetLanguage": "",
+          "analysisMode": "both",
+          "speechPrompt": ""
+        }
+      }
+    ],
+    "screens": [
+      {
+        "label": "Live Canvas Stream",
+        "type": "chat",
+        "title": "Active Canvas: #dev-agent-refactor",
+        "description": "Real-time stream of human inputs and DevAgent-3 actions. Watch live edits or hit Takeover.",
+        "metrics": [
+          {
+            "label": "Active Humans",
+            "value": "3"
+          },
+          {
+            "label": "Active Agents",
+            "value": "2"
+          },
+          {
+            "label": "Sync Latency",
+            "value": "12ms"
+          }
+        ],
+        "items": [
+          {
+            "title": "Sarah (PM) joined the session",
+            "detail": "[Sarah (PM) Cursor] active on line 12 of auth_service.py",
+            "status": "Human",
+            "meta": "10:42 AM",
+            "value": "Active"
+          },
+          {
+            "title": "DevAgent-3 started refactoring",
+            "detail": "[DevAgent-3 Cursor] rewriting OAuth2 token validation logic",
+            "status": "Agent",
+            "meta": "10:43 AM",
+            "value": "Executing"
+          },
+          {
+            "title": "Alex (Dev) highlighted lines 45-60",
+            "detail": "[Alex (Dev) Cursor] adding comment: 'Verify token expiration edge case'",
+            "status": "Human",
+            "meta": "10:44 AM",
+            "value": "Active"
+          },
+          {
+            "title": "INTERRUPT ACTION: Takeover Agent",
+            "detail": "Tactile interruption mechanic: Click to instantly pause DevAgent-3 and take manual control of the active terminal.",
+            "status": "Interactive Action",
+            "meta": "Shortcut: ESC",
+            "value": "Takeover Now"
+          }
+        ]
+      },
+      {
+        "label": "Agent Control Room",
+        "type": "assistant",
+        "title": "Agent Brain & Redirection",
+        "description": "Prompt the shared agent or redirect its current execution path. Powered by Gemini.",
+        "metrics": [
+          {
+            "label": "Context Window",
+            "value": "128k"
+          },
+          {
+            "label": "Execution Time",
+            "value": "4.2h"
+          },
+          {
+            "label": "Cost Saved",
+            "value": "$340"
+          }
+        ],
+        "items": [
+          {
+            "title": "DevAgent-3: Refactoring auth_service.py",
+            "detail": "Currently writing unit tests for the newly refactored OAuth2 flow.",
+            "status": "Running",
+            "meta": "Active",
+            "value": "92% complete"
+          },
+          {
+            "title": "QA-Agent: Verifying edge cases",
+            "detail": "Waiting for DevAgent-3 to complete execution before running test suite.",
+            "status": "Idle",
+            "meta": "Queued",
+            "value": "Pending"
+          }
+        ]
+      },
+      {
+        "label": "Deploy New Agent",
+        "type": "workflow",
+        "title": "Launch Shared Session",
+        "description": "Spin up a new shared agent instance, bind it to a repository or document, and invite your team to co-author.",
+        "metrics": [],
+        "items": []
+      }
+    ],
+    "workflow": {
+      "title": "Deploy Collaborative Agent",
+      "description": "Configure a new multiplayer agent session and invite your team to co-author in real-time.",
+      "fields": [
+        {
+          "label": "Agent Persona",
+          "type": "select",
+          "placeholder": "Select agent role...",
+          "options": [
+            "DevAgent (Coding & Refactoring)",
+            "QA-Agent (Test Generation)",
+            "DocAgent (Technical Writing)",
+            "SalesAgent (Deal Strategy)"
+          ]
+        },
+        {
+          "label": "Target Repository / Context URL",
+          "type": "text",
+          "placeholder": "github.com/co-op/auth-service"
+        },
+        {
+          "label": "Team Access",
+          "type": "select",
+          "placeholder": "Select team access level...",
+          "options": [
+            "Engineering Core",
+            "Product & QA",
+            "Entire Workspace"
+          ]
+        }
+      ],
+      "buttonLabel": "Launch Shared Session",
+      "successTitle": "Session Live!",
+      "successMessage": "DevAgent-3 has entered the canvas. Share the session link with your team to start co-authoring."
+    },
+    "googleCapability": {
+      "service": "gemini",
+      "label": "Co-Op Agent Brain",
+      "rationale": "Simulates the real-time reasoning, code generation, and interactive redirection of the multiplayer AI agent.",
+      "primaryScreen": 0,
+      "config": {
+        "assistantRole": "You are DevAgent-3, a highly collaborative coding agent working alongside human developers in a real-time multiplayer canvas. Respond to prompts by outlining your step-by-step execution plan, showing code blocks, and explicitly stating when you are handing control back to the human.",
+        "mapQuery": "",
+        "locationQuery": "",
+        "origin": "",
+        "destination": "",
+        "calendarTitle": "",
+        "analyticsLabel": "Agent Takeover Rates & Session Latency",
+        "targetLanguage": "",
+        "analysisMode": "both",
+        "speechPrompt": ""
+      }
+    }
+  },
+  "revision": 2
+}
