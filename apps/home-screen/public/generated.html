@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HOME SCREEN // Terminal Portal</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Grid Matrix Overlay for cybernetic brutalist feel -->
+  <div class="matrix-overlay"></div>
+
+  <div class="app-container">
+    
+    <!-- LEFT SIDEBAR: NAVIGATION -->
+    <aside class="sidebar">
+      <div class="brand-section">
+        <div class="brand-title">HOME SCREEN</div>
+        <div class="brand-workspace">Hacker Portal v1.0.4</div>
+        <div class="brand-status">
+          <span class="beacon"></span>
+          <span class="status-text">TERMINAL SYNCED</span>
+        </div>
+      </div>
+
+      <nav class="nav-links">
+        <button class="nav-btn active" data-target="simulator">
+          <span class="btn-num">[01]</span> COST SIMULATOR
+        </button>
+        <button class="nav-btn" data-target="ledger">
+          <span class="btn-num">[02]</span> DEFLATION LEDGER
+        </button>
+        <button class="nav-btn" data-target="submit-pitch">
+          <span class="btn-num">[03]</span> CLAIM ICON SLOT
+        </button>
+        <button class="nav-btn" data-target="transmissions">
+          <span class="btn-num">[04]</span> LOG POOL (<span id="transmission-count">3</span>)
+        </button>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="monitors">
+          <div class="monitor-line">SYS_TIME: <span id="clock-display">00:00:00 UTC</span></div>
+          <div class="monitor-line">NODE_ENV: <span class="accent-text">PRODUCTION</span></div>
+          <div class="monitor-line font-size-control">
+            TEXT_SIZE: 
+            <button class="txt-size-btn active" data-size="compact">CMPCT</button>
+            <button class="txt-size-btn" data-size="large">LRG</button>
+          </div>
+        </div>
+        <div class="disclaimer">
+          THE RACE FOR THE NEXT BILLION-USER ICON. NO SLOP. PURE CODE.
+        </div>
+      </div>
+    </aside>
+
+    <!-- CENTER PANE: MAIN INTERACTIVE CONSOLE -->
+    <main class="console-main">
+      <header class="console-header">
+        <div class="eyebrow">THE HOME SCREEN IS EMPTY</div>
+        <h1 class="headline">The race for the next billion-user icon.</h1>
+        <p class="subheadline">
+          Every major platform shift mints consumer giants. We back the maverick founders building highly tactile, agentic consumer products at the exact intersection of falling token costs and human-grade reasoning.
+        </p>
+      </header>
+
+      <!-- SCREEN 1: AGENT COST SIMULATOR -->
+      <section id="screen-simulator" class="screen-panel active">
+        <div class="panel-header">
+          <span class="panel-tag">[NODE_1 // SIMULATOR]</span>
+          <h2>Agent Cost-Curve Simulator</h2>
+        </div>
+        <p class="panel-desc">
+          Describe your agent's workflow (e.g. daily tasks, model queries, stream size). We will evaluate your path to a mass-market cost structure using automated YoY 10x token deflation curves.
+        </p>
+
+        <div class="simulator-layout">
+          <div class="sim-controls">
+            <div class="form-group">
+              <label for="agent-desc">Agent Workflow Description:</label>
+              <textarea id="agent-desc" placeholder="A proactive agent that manages personal wealth by scanning bank transactions, scraping daily price sheets, and auto-negotiating recurring bills downwards..."></textarea>
+            </div>
+            
+            <div class="sim-actions">
+              <button id="btn-simulate" class="brutalist-btn primary-btn">
+                [ TRANSMIT TO DEF-ENGINE ]
+              </button>
+              <button id="btn-load-sample" class="brutalist-btn">
+                [ LOAD SAMPLE: WEALTH MANAGER ]
+              </button>
+            </div>
+
+            <div class="slider-box">
+              <div class="slider-header">
+                <span class="slider-title">DEFLATION TIMELINE SLIDER (YoY -90%)</span>
+                <span class="slider-year-val" id="timeline-year-label">YEAR: 2024</span>
+              </div>
+              <input type="range" id="deflation-slider" min="2024" max="2028" value="2024" step="1">
+              <div class="slider-marks">
+                <span>2024 (Active)</span>
+                <span>2025</span>
+                <span>2026 (Target)</span>
+                <span>2027</span>
+                <span>2028</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Live Readout Metrics -->
+          <div class="sim-readout">
+            <div class="metric-card">
+              <span class="m-label">CURRENT COST/USER/MO</span>
+              <div class="m-value" id="metric-current-cost">$1,200.00</div>
+              <span class="m-meta" id="metric-token-est">Est: 1.2M tokens/day</span>
+            </div>
+            <div class="metric-card accent-card">
+              <span class="m-label">SIMULATED SCALED COST</span>
+              <div class="m-value accent-text" id="metric-projected-cost">$1,200.00</div>
+              <span class="m-meta" id="metric-year-sub">For Year: 2024</span>
+            </div>
+            <div class="metric-card">
+              <span class="m-label">MASS MARKET FEASIBILITY</span>
+              <div class="m-value" id="metric-feasibility">15.4%</div>
+              <div class="progress-bar">
+                <div class="progress-fill" id="metric-progress-fill" style="width: 15.4%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Interactive SVG Chart -->
+        <div class="chart-container">
+          <div class="chart-header">
+            <span class="chart-title">DEFLATION ARBITRAGE TRAJECTORY (1M Tokens Cost Profile)</span>
+            <span id="chart-status" class="chart-status-unlocked">[ STATUS: PRE-FEASIBLE ]</span>
+          </div>
+          <div class="chart-inner">
+            <svg viewBox="0 0 800 220" class="deflation-chart">
+              <!-- Grid lines -->
+              <line x1="50" y1="20" x2="750" y2="20" stroke="#1c1c1c" stroke-dasharray="3,3" />
+              <line x1="50" y1="70" x2="750" y2="70" stroke="#1c1c1c" stroke-dasharray="3,3" />
+              <line x1="50" y1="120" x2="750" y2="120" stroke="#1c1c1c" stroke-dasharray="3,3" />
+              <line x1="50" y1="170" x2="750" y2="170" stroke="#1c1c1c" stroke-dasharray="3,3" />
+              
+              <!-- Vertical guides -->
+              <line x1="50" y1="20" x2="50" y2="180" stroke="#1c1c1c" />
+              <line x1="225" y1="20" x2="225" y2="180" stroke="#1c1c1c" />
+              <line x1="400" y1="20" x2="400" y2="180" stroke="#1c1c1c" stroke-dasharray="2,2" />
+              <line x1="575" y1="20" x2="575" y2="180" stroke="#1c1c1c" />
+              <line x1="750" y1="20" x2="750" y2="180" stroke="#1c1c1c" />
+
+              <!-- Cost curve paths -->
+              <path id="curve-background" d="M 50,30 Q 225,120 400,165 T 750,172" fill="none" stroke="#222" stroke-width="4"></path>
+              <path id="curve-deflation" d="M 50,30 Q 225,120 400,165 T 750,172" fill="none" stroke="#FF5A09" stroke-width="3" stroke-linecap="round"></path>
+              
+              <!-- Feasibility Threshold ($1 threshold border) -->
+              <line x1="50" y1="168" x2="750" y2="168" stroke="#00ff66" stroke-dasharray="5,5" stroke-opacity="0.4" />
+              <text x="60" y="162" fill="#00ff66" font-size="9" opacity="0.7" font-family="monospace">MASS MARKET FEASIBILITY THRESHOLD ($1.00/User/Mo)</text>
+
+              <!-- Node labels / Markers -->
+              <circle cx="50" cy="30" r="5" fill="#FFFFFF" />
+              <circle cx="225" cy="120" r="5" fill="#FF5A09" />
+              <circle cx="400" cy="165" r="5" fill="#FF5A09" />
+              <circle cx="575" cy="170" r="5" fill="#FF5A09" />
+              <circle cx="750" cy="172" r="5" fill="#FF5A09" />
+
+              <!-- Drag/Scattered Indicator coordinate overlay -->
+              <g id="chart-indicator" transform="translate(50, 30)">
+                <circle cx="0" cy="0" r="10" fill="none" stroke="#FF5A09" stroke-width="2">
+                  <animate attributeName="r" values="7;14;7" dur="2s" repeatCount="indefinite" />
+                </circle>
+                <circle cx="0" cy="0" r="3" fill="#FF5A09" />
+                <line x1="0" y1="-30" x2="0" y2="30" stroke="#FF5A09" stroke-width="1" stroke-dasharray="2,2" />
+                <rect x="10" y="-35" width="95" height="22" fill="#161616" stroke="#FF5A09" stroke-width="1" rx="0" />
+                <text x="16" y="-21" fill="#FFFFFF" font-size="9" font-family="monospace" id="chart-indicator-text">$1,200.00/mo</text>
+              </g>
+
+              <!-- Axes legends -->
+              <text x="50" y="200" fill="#666" font-size="10" font-family="monospace" text-anchor="middle">2024</text>
+              <text x="225" y="200" fill="#666" font-size="10" font-family="monospace" text-anchor="middle">2025</text>
+              <text x="400" y="200" fill="#FF5A09" font-size="10" font-family="monospace" text-anchor="middle">2026 (TARGET)</text>
+              <text x="575" y="200" fill="#666" font-size="10" font-family="monospace" text-anchor="middle">2027</text>
+              <text x="750" y="200" fill="#666" font-size="10" font-family="monospace" text-anchor="middle">2028</text>
+            </svg>
+          </div>
+        </div>
+      </section>
+
+      <!-- SCREEN 2: DEFLATION LEDGER -->
+      <section id="screen-ledger" class="screen-panel">
+        <div class="panel-header">
+          <span class="panel-tag">[NODE_2 // LEDGER]</span>
+          <h2>Token Deflation Ledger</h2>
+        </div>
+        <p class="panel-desc">
+          Historical and projected cost per million tokens across major model classes. We are playing a game of systemic deflation, tracking the inevitable march toward near-free background intelligence.
+        </p>
+
+        <div class="ledger-metrics">
+          <div class="metric-card">
+            <span class="m-label">AVERAGE YOY DEFLATION</span>
+            <div class="m-value accent-text">-90.2%</div>
+          </div>
+          <div class="metric-card">
+            <span class="m-label">CURRENT BASE COST/1M TOKENS</span>
+            <div class="m-value">$2.50</div>
+          </div>
+        </div>
+
+        <div class="ledger-table-wrapper">
+          <table class="brutalist-table">
+            <thead>
+              <tr>
+                <th>DEVELOPMENT ERA</th>
+                <th>KEY PARADIGM REASONING</th>
+                <th>MODEL STATUS</th>
+                <th>REDUCTION RATIO</th>
+                <th>COST PER 1M TOKENS</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>GPT-3 Era (2020)</strong></td>
+                <td>High-latency, raw autocomplete vectors. No direct planning.</td>
+                <td><span class="badge grey">HISTORICAL</span></td>
+                <td>100.0%</td>
+                <td>$20.00</td>
+              </tr>
+              <tr>
+                <td><strong>GPT-4 Era (2023)</strong></td>
+                <td>Early conversational chains, heavy API hosting ceiling.</td>
+                <td><span class="badge grey">HISTORICAL</span></td>
+                <td>10.0%</td>
+                <td>$10.00</td>
+              </tr>
+              <tr class="highlight-row">
+                <td><strong>Agentic Era (2024)</strong></td>
+                <td>Sub-dollar multi-model cascades, high background context.</td>
+                <td><span class="badge active-badge">ACTIVE</span></td>
+                <td>1.0%</td>
+                <td>$1.00</td>
+              </tr>
+              <tr class="projected-row">
+                <td><strong>Ubiquitous Era (2026)</strong></td>
+                <td>Edge-deployed weights, near-zero distributed marginal cost.</td>
+                <td><span class="badge glow-badge">PROJECTED</span></td>
+                <td>0.01%</td>
+                <td>$0.01</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="brutalist-callout">
+          <h3>[ LAW_OF_DEFLATION: UNDERSTAND THE SHIFT ]</h3>
+          <p>
+            "Three years into the AI revolution, the only new icon on your phone is ChatGPT. Why? Because founders are trying to build mobile-era software with super-computer bills. When the cost curve hits near-zero, consumer software unlocks completely. You don't build a chat box—you build a silent agent that runs 1.2M tokens a day representing you."
+          </p>
+        </div>
+      </section>
+
+      <!-- SCREEN 3: CLAIM ICON SLOT (SUBMIT PITCH) -->
+      <section id="screen-submit-pitch" class="screen-panel">
+        <div class="panel-header">
+          <span class="panel-tag">[NODE_3 // TRANSMIT PITCH]</span>
+          <h2>Claim Your Icon Slot</h2>
+        </div>
+        <p class="panel-desc">
+          We are pre-launch and deploying capital. No pitch decks, no business canvases, no slop. Show us the code structure, the terminal logs, or the raw reasoning loop you've built.
+        </p>
+
+        <div class="pitch-workflow">
+          <div class="pitch-stats">
+            <div class="metric-card">
+              <span class="m-label">ACTIVE PORTFOLIO SLOTS</span>
+              <div class="m-value">14 / 16</div>
+            </div>
+            <div class="metric-card">
+              <span class="m-label">AVERAGE TICKET SIZE</span>
+              <div class="m-value">$1.5M SEED</div>
+            </div>
+          </div>
+
+          <form id="submission-form" class="brutalist-form">
+            <div class="form-row-2">
+              <div class="form-group">
+                <label for="project-name">1. Project Name / Brand Identifier *</label>
+                <input type="text" id="project-name" required placeholder="e.g. Neon Health Agent">
+              </div>
+              <div class="form-group">
+                <label for="project-category">2. Target Consumer Category *</label>
+                <select id="project-category" required>
+                  <option value="Agentic Utility (Logistics, Money, Health)">Agentic Utility (Logistics, Money, Health)</option>
+                  <option value="Social & Play (New Networks, Gaming)">Social & Play (New Networks, Gaming)</option>
+                  <option value="Proactive Learning & Context">Proactive Learning & Context</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="terminal-output">3. Raw Terminal Output / Code Loop Snippet *</label>
+              <textarea id="terminal-output" class="terminal-editor" required placeholder="Paste your agent's execution logs, console output, or core processing loop code..."></textarea>
+              <span class="input-tip">Must present runnable context. Show us the technical evidence.</span>
+            </div>
+
+            <!-- Form alert status -->
+            <div class="form-status" id="form-status-msg" style="display: none;">
+              <!-- Dynamically populated -->
+            </div>
+
+            <button type="submit" id="btn-transmit-pitch" class="brutalist-btn primary-btn block-btn">
+              [ TRANSMIT TO HOME SCREEN LEDGER ]
+            </button>
+          </form>
+        </div>
+      </section>
+
+      <!-- SCREEN 4: ACTIVE TRANSMISSIONS POOL -->
+      <section id="screen-transmissions" class="screen-panel">
+        <div class="panel-header">
+          <span class="panel-tag">[NODE_4 // TRANSMISSIONS POOL]</span>
+          <h2>Synchronized Submissions</h2>
+        </div>
+        <p class="panel-desc">
+          Live feed of vetted pitch transmissions written to our durable backend. Click any entry to inspect raw terminal logs, cost calculations, and mass feasibility curves.
+        </p>
+
+        <div class="transmission-dashboard">
+          <div class="trans-list-pane">
+            <div class="pane-title">SYNCHRONIZED PITCH CHANNELS</div>
+            <div id="transmissions-list" class="trans-list-scroll">
+              <!-- Dynamically loaded -->
+              <div class="terminal-loader">PULLING POOL FROM MEMORY...</div>
+            </div>
+          </div>
+          
+          <div class="trans-inspect-pane">
+            <div class="pane-title">DECRYPTION / TRANSMISSION METRIC VIEWER</div>
+            <div id="instruction-placeholder" class="viewer-placeholder">
+              [ SELECT AN INBOUND ROUTE ON THE LEFT TO DISSECT TOKEN CHARACTERISTICS ]
+            </div>
+            <div id="trans-viewer-content" style="display: none;">
+              <div class="viewer-header">
+                <h3 id="view-title">Project Name</h3>
+                <span class="badge glow-badge" id="view-category">Utility</span>
+              </div>
+              <div class="viewer-meta-grid">
+                <div><strong>TIMESTAMP:</strong> <span id="view-time">Calculating...</span></div>
+                <div><strong>CURRENT RUN-COST:</strong> <span id="view-current-cost" class="accent-text">$0.00</span></div>
+                <div><strong>PROJECTED 2026:</strong> <span id="view-projected-cost">$0.00</span></div>
+                <div><strong>MASS MARKET SCALE:</strong> <span id="view-feasibility">0%</span></div>
+              </div>
+              <div class="viewer-body">
+                <label>CORE RAW REASONING LOOP:</label>
+                <pre class="terminal-sandbox" id="view-body-code"></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- RIGHT PANEL: 3D HOME SCREEN MOCKUP -->
+    <section class="device-section">
+      <div class="device-wrapper-tilted">
+        <div class="device-bezel" id="home-screen-bezel">
+          <div class="device-speaker"></div>
+          <div class="device-screen">
+            
+            <div class="phone-header">
+              <span id="phone-time">18:26</span>
+              <div class="phone-icons">
+                <span>5G</span>
+                <span class="battery">⚡ 100%</span>
+              </div>
+            </div>
+
+            <div class="grid-layout-title">THE HOME SCREEN STATUS</div>
+
+            <!-- CSS Grid representing mobile home screen slots -->
+            <div class="mobile-app-grid" id="mobile-icon-grid">
+              
+              <!-- First slot is always ChatGPT (The occupied one) -->
+              <div class="app-slot occupied" data-target-name="ChatGPT" data-desc="The current solitary AI giant. Built during the high-cost epoch.">
+                <div class="app-icon chatgpt-icon">
+                  <span class="icon-avatar">●</span>
+                </div>
+                <div class="app-label">ChatGPT</div>
+              </div>
+
+              <!-- Content Slots (will be dynamically attached/highlighted) -->
+              <!-- Slotted by Submissions -->
+              <div class="app-slot" id="slot-0" data-index="0" data-target-name="Empty Slot">
+                <div class="app-icon empty-icon"><div class="plus-glow">+</div></div>
+                <div class="app-label">Empty Slot</div>
+              </div>
+
+              <div class="app-slot" id="slot-1" data-index="1" data-target-name="Empty Slot">
+                <div class="app-icon empty-icon"><div class="plus-glow">+</div></div>
+                <div class="app-label">Empty Slot</div>
+              </div>
+
+              <div class="app-slot" id="slot-2" data-index="2" data-target-name="Empty Slot">
+                <div class="app-icon empty-icon"><div class="plus-glow">+</div></div>
+                <div class="app-label">Empty Slot</div>
+              </div>
+
+              <div class="app-slot" id="slot-3" data-index="3" data-target-name="Empty Slot">
+                <div class="app-icon empty-icon"><div class="plus-glow">+</div></div>
+                <div class="app-label">Empty Slot</div>
+              </div>
+
+              <div class="app-slot" id="slot-4" data-index="4" data-target-name="Empty Slot">
+                <div class="app-icon empty-icon"><div class="plus-glow">+</div></div>
+                <div class="app-label">Empty Slot</div>
+              </div>
+
+              <div class="app-slot" id="slot-5" data-index="5" data-target-name="Empty Slot">
+                <div class="app-icon empty-icon"><div class="plus-glow">+</div></div>
+                <div class="app-label">Empty Slot</div>
+              </div>
+
+              <div class="app-slot" id="slot-6" data-index="6" data-target-name="Empty Slot">
+                <div class="app-icon empty-icon"><div class="plus-glow">+</div></div>
+                <div class="app-label">Empty Slot</div>
+              </div>
+
+              <div class="app-slot" id="slot-7" data-index="7" data-target-name="Empty Slot">
+                <div class="app-icon empty-icon"><div class="plus-glow">+</div></div>
+                <div class="app-label">Empty Slot</div>
+              </div>
+
+              <div class="app-slot" id="slot-8" data-index="8" data-target-name="Empty Slot">
+                <div class="app-icon empty-icon"><div class="plus-glow">+</div></div>
+                <div class="app-label">Empty Slot</div>
+              </div>
+
+              <div class="app-slot" id="slot-9" data-index="9" data-target-name="Empty Slot">
+                <div class="app-icon empty-icon"><div class="plus-glow">+</div></div>
+                <div class="app-label">Empty Slot</div>
+              </div>
+
+              <div class="app-slot" id="slot-10" data-index="10" data-target-name="Empty Slot">
+                <div class="app-icon empty-icon"><div class="plus-glow">+</div></div>
+                <div class="app-label">Empty Slot</div>
+              </div>
+
+              <div class="app-slot" id="slot-11" data-index="11" data-target-name="Empty Slot">
+                <div class="app-icon empty-icon"><div class="plus-glow">+</div></div>
+                <div class="app-label">Empty Slot</div>
+              </div>
+
+              <div class="app-slot" id="slot-12" data-index="12" data-target-name="Empty Slot">
+                <div class="app-icon empty-icon"><div class="plus-glow">+</div></div>
+                <div class="app-label">Empty Slot</div>
+              </div>
+
+              <div class="app-slot" id="slot-13" data-index="13" data-target-name="Empty Slot">
+                <div class="app-icon empty-icon"><div class="plus-glow">+</div></div>
+                <div class="app-label">Empty Slot</div>
+              </div>
+
+              <div class="app-slot" id="slot-14" data-index="14" data-target-name="Empty Slot">
+                <div class="app-icon empty-icon"><div class="plus-glow">+</div></div>
+                <div class="app-label">Empty Slot</div>
+              </div>
+
+            </div>
+
+            <!-- Home Screen Indicator bar -->
+            <div class="phone-slider-dots">
+              <span class="active-dot"></span>
+              <span></span>
+            </div>
+            <div class="phone-home-indicator"></div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- Widget below the phone interface -->
+      <div class="mockup-control-widget">
+        <div class="widget-row">
+          <span class="dot-green"></span>
+          <strong>3D PREVIEW MATRIX</strong>
+        </div>
+        <p>This 3D-perspective home screen is angled to reflect physical weight. Submit your agent in Tab [03] to claim an empty grid slot, triggering a custom neon-coral glow silhouette.</p>
+        <button id="btn-toggle-tilt" class="brutalist-btn" style="width: 100%; margin-top: 5px;">
+          [ TOGGLE 3D PERSPECTIVE TILT ]
+        </button>
+      </div>
+    </section>
+
+  </div>
+  
+  <script src="app.js"></script>
+</body>
+</html>

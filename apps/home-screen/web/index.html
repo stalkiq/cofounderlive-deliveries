@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Home Screen</title>
+  <style>
+    body{font-family:system-ui,sans-serif;margin:0;background:#0f1115;color:#eef1f6}
+    main{max-width:720px;margin:0 auto;padding:32px 20px}
+    h1{font-size:28px;margin:0 0 8px}
+    p{color:#9aa3b2}
+    form,section{margin-top:20px;padding:16px;border:1px solid #2a2f3a;border-radius:12px;background:#161a22}
+    label{display:block;font-size:12px;margin:0 0 6px;color:#9aa3b2}
+    input,textarea{width:100%;box-sizing:border-box;margin:0 0 12px;padding:10px;border-radius:8px;border:1px solid #343b49;background:#0f131a;color:#eef1f6}
+    button{padding:10px 14px;border:0;border-radius:8px;background:#d8e5f2;color:#101114;font-weight:600;cursor:pointer}
+    li{margin:0 0 10px;padding:10px;border-radius:8px;background:#12161e}
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Home Screen</h1>
+    <p>This live preview saves to durable memory. Refresh after saving to confirm it stuck.</p>
+    <form id="saveForm">
+      <label for="title">Title</label>
+      <input id="title" name="title" required placeholder="What should we remember?" />
+      <label for="body">Notes</label>
+      <textarea id="body" name="body" rows="4" placeholder="Details"></textarea>
+      <button type="submit">Save</button>
+    </form>
+    <section>
+      <h2>Saved entries</h2>
+      <ul id="list"></ul>
+    </section>
+  </main>
+  <script>
+    async function loadEntries() {
+      const res = await fetch("/api/memory");
+      const data = await res.json();
+      const list = document.getElementById("list");
+      list.innerHTML = (data.entries || []).map(function (row) {
+        return "<li><strong>" + (row.title || "Entry") + "</strong><div>" + (row.body || "") + "</div></li>";
+      }).join("") || "<li>No saved entries yet.</li>";
+    }
+    document.getElementById("saveForm").addEventListener("submit", async function (event) {
+      event.preventDefault();
+      await fetch("/api/memory", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          title: document.getElementById("title").value,
+          body: document.getElementById("body").value
+        })
+      });
+      event.target.reset();
+      await loadEntries();
+    });
+    loadEntries();
+  </script>
+</body>
+</html>
