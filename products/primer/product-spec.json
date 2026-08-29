@@ -1,0 +1,164 @@
+{
+  "name": "Primer",
+  "workspaceLabel": "The Living Folio",
+  "experience": {
+    "archetype": "assistant",
+    "device": "desktop",
+    "navigationStyle": "sidebar",
+    "density": "comfortable",
+    "typeStyle": "serif",
+    "radius": "soft",
+    "motif": "midnight blue folio with subtle textured backgrounds, thin silver borders (#A5C4D4), custom serif typography, and evolving blue ink illustrations"
+  },
+  "eyebrow": "THE LIVING FOLIO",
+  "headline": "A living, lifelong companion for your child's mind.",
+  "subheadline": "An adaptive, screen-healthy AI tutor that evolves from basic literacy to deep critical thinking, inspired by classical education.",
+  "palette": {
+    "background": "#0D1B2A",
+    "surface": "#1B263B",
+    "primary": "#E0E1DD",
+    "accent": "#3A86C8",
+    "text": "#F0F4F8"
+  },
+  "googleCapabilities": [
+    {
+      "service": "gemini",
+      "label": "Socratic Narrative Engine",
+      "rationale": "Generates personalized, Socratic stories and adaptive lessons based on the child's real-world experiences and cognitive development.",
+      "primaryScreen": 0,
+      "config": {
+        "assistantRole": "An enchanting, classical Socratic tutor that speaks in age-appropriate allegories to teach reading, mathematics, and ethics. Always output markdown-based visual cues (e.g., [Blue Ink Sketch: A silver apple splitting in two]) alongside dialogue to guide the frontend's evolving blue ink illustrations.",
+        "mapQuery": "",
+        "locationQuery": "",
+        "origin": "",
+        "destination": "",
+        "calendarTitle": "",
+        "analyticsLabel": "",
+        "targetLanguage": "",
+        "analysisMode": "both",
+        "speechPrompt": ""
+      }
+    }
+  ],
+  "screens": [
+    {
+      "label": "The Living Folio",
+      "type": "assistant",
+      "title": "Dialogue with the Primer",
+      "description": "The child interacts with the living book. The ink morphs to illustrate the Socratic dialogue as they explore reading, math, and ethics.",
+      "metrics": [
+        {
+          "label": "Active Story Thread",
+          "value": "The Silver Orchard"
+        },
+        {
+          "label": "Cognitive Depth",
+          "value": "Level 3 (Phonics & Sharing)"
+        }
+      ],
+      "items": [
+        {
+          "title": "The Riddle of the Shared Silver Apples",
+          "detail": "If we have five silver apples and three friends, how do we divide them so that harmony remains in the orchard?",
+          "status": "Whispering",
+          "meta": "Socratic Math",
+          "value": "Pending Child's Response"
+        }
+      ]
+    },
+    {
+      "label": "The Cognitive Journey",
+      "type": "timeline",
+      "title": "Evolving Mind Map",
+      "description": "A chronological log of concepts introduced, stories woven, and cognitive milestones reached by your child.",
+      "metrics": [
+        {
+          "label": "Total Hours Engaged",
+          "value": "42 hrs"
+        },
+        {
+          "label": "Vocabulary Unlocked",
+          "value": "184 words"
+        }
+      ],
+      "items": [
+        {
+          "title": "Introduction to Division via Allegory",
+          "detail": "Wove the concept of sharing resources into 'The Riddle of the Shared Silver Apples' story.",
+          "status": "Etched in Mind",
+          "meta": "Ethics & Math",
+          "value": "Today"
+        },
+        {
+          "title": "Phonics: The 'Sh' Sound",
+          "detail": "Introduced through the whispering trees of the Silver Orchard.",
+          "status": "Whispering",
+          "meta": "Literacy",
+          "value": "Yesterday"
+        },
+        {
+          "title": "The Concept of Zero",
+          "detail": "Explored through the empty basket of the orchard keeper.",
+          "status": "Etched in Mind",
+          "meta": "Arithmetic",
+          "value": "3 days ago"
+        }
+      ]
+    },
+    {
+      "label": "Configure Next Chapter",
+      "type": "workflow",
+      "title": "Weave Real Life into the Narrative",
+      "description": "Inscribe upcoming family events, current struggles, or new interests. The Primer will seamlessly adapt tomorrow's Socratic stories to reflect these elements.",
+      "metrics": [],
+      "items": []
+    }
+  ],
+  "workflow": {
+    "title": "Weave Real Life into the Narrative",
+    "description": "Inscribe upcoming family events, current struggles, or new interests. The Primer will seamlessly adapt tomorrow's Socratic stories to reflect these elements.",
+    "fields": [
+      {
+        "label": "Inscribe a Real-World Event (e.g., Planting tomato seeds, losing a tooth)",
+        "type": "text",
+        "placeholder": "We are planting tomato seeds in the backyard tomorrow."
+      },
+      {
+        "label": "Pedagogical Focus",
+        "type": "select",
+        "placeholder": "",
+        "options": [
+          "Phonics & Word Sounds",
+          "Basic Addition & Subtraction",
+          "Socratic Ethics & Sharing"
+        ]
+      },
+      {
+        "label": "Target Date for Integration",
+        "type": "date",
+        "placeholder": ""
+      }
+    ],
+    "buttonLabel": "Inscribe into the Book",
+    "successTitle": "Narrative Thread Woven",
+    "successMessage": "The Primer has updated its cognitive map. Tomorrow's story will gently introduce these concepts through the allegory of the Silver Orchard."
+  },
+  "googleCapability": {
+    "service": "gemini",
+    "label": "Socratic Narrative Engine",
+    "rationale": "Generates personalized, Socratic stories and adaptive lessons based on the child's real-world experiences and cognitive development.",
+    "primaryScreen": 0,
+    "config": {
+      "assistantRole": "An enchanting, classical Socratic tutor that speaks in age-appropriate allegories to teach reading, mathematics, and ethics. Always output markdown-based visual cues (e.g., [Blue Ink Sketch: A silver apple splitting in two]) alongside dialogue to guide the frontend's evolving blue ink illustrations.",
+      "mapQuery": "",
+      "locationQuery": "",
+      "origin": "",
+      "destination": "",
+      "calendarTitle": "",
+      "analyticsLabel": "",
+      "targetLanguage": "",
+      "analysisMode": "both",
+      "speechPrompt": ""
+    }
+  }
+}
