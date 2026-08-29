@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pico — The instant cloud for bespoke, agent-built tools.</title>
+  <!-- Google JetBrains Mono Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Retro Glowing Scanline overlay -->
+  <div class="scanlines"></div>
+
+  <!-- Header Workbench Banner -->
+  <header class="workbench-header">
+    <div class="header-container">
+      <div class="pico-badge">
+        <span class="led pulsing"></span>
+        <span class="badge-text">PICO-V0.9_ALPHA</span>
+      </div>
+      <p class="eyebrow">THE INSTANT CLOUD FOR BESPOKE, AGENT-BUILT TOOLS</p>
+      <h1>Deploy small software in one click.</h1>
+      <p class="subheadline">
+        AWS was built for Big Software. Pico is a tactile digital workbench for the long tail of single-purpose, agent-generated tools. Share custom workflows, scripts, and micro-apps as easily as a Google Doc.
+      </p>
+    </div>
+  </header>
+
+  <main class="workbench-grid">
+
+    <!-- BLOCK 1: ARCHITECTURE COMPARISON (AWS vs Pico) -->
+    <section class="card full-width complexity-card">
+      <div class="card-header">
+        <div class="card-title-group">
+          <span class="icon-terminal">[⚔️]</span>
+          <h2>COMPLEXITY INDEXER</h2>
+        </div>
+        <div class="tactile-toggle-wrapper">
+          <span class="toggle-label aws-label active">AWS (Big Sprawl)</span>
+          <label class="switch">
+            <input type="checkbox" id="complexity-toggle">
+            <span class="slider"></span>
+          </label>
+          <span class="toggle-label pico-label">Pico (1-Click)</span>
+        </div>
+      </div>
+      
+      <div class="card-body">
+        <!-- AWS Mode view -->
+        <div class="architecture-diagram aws" id="aws-diagram">
+          <p class="arch-caption">Sprawling AWS Cloud Architecture overhead (6 services, 18+ configuration files, 15m deployment, IAM nightmares)</p>
+          <div class="sprawl-grid">
+            <div class="diagram-node node-danger">
+              <span class="node-tag">VPC & Subnets</span>
+              <span class="node-id">NAT Gateway, CIDR blocks, RTTables</span>
+              <div class="connection-line"></div>
+            </div>
+            <div class="diagram-node node-danger">
+              <span class="node-tag">ALB</span>
+              <span class="node-id">Application Load Balancer / Target Groups</span>
+            </div>
+            <div class="diagram-node node-danger">
+              <span class="node-tag">IAM Roles</span>
+              <span class="node-id">Security Policies, KMS Decryption, Access Bounds</span>
+            </div>
+            <div class="diagram-node node-danger">
+              <span class="node-tag">ECS Fargate</span>
+              <span class="node-id">Docker Images, Task Definitions, Auto-scaling</span>
+            </div>
+            <div class="diagram-node node-danger">
+              <span class="node-tag">CloudWatch</span>
+              <span class="node-id">Logs Streams, Diagnostic Alarms, Metric Sinks</span>
+            </div>
+            <div class="diagram-node node-danger">
+              <span class="node-tag">Route 53</span>
+              <span class="node-id">Hosted Zone, SSL Certs, DNS Propagation</span>
+            </div>
+          </div>
+          <div class="complexity-stat danger">
+            <span>Enterprise Overhead Rate:</span><strong>98%</strong>
+          </div>
+        </div>
+
+        <!-- Pico Mode view -->
+        <div class="architecture-diagram pico hidden animate-fade" id="pico-diagram">
+          <p class="arch-caption">Microsoftware sandbox container running instantly in isolated lightweight sandbox</p>
+          <div class="pico-box-container">
+            <div class="pico-box glow-pico">
+              <div class="pico-gear">⚡</div>
+              <div class="pico-box-details">
+                <span class="pico-box-title">pico.run Sandbox Instance</span>
+                <span class="pico-box-status">STATUS: ONLINE — Container running on Alpine/V8</span>
+                <span class="pico-box-telemetry">Active in 420ms | Provisioned securely via API Memory</span>
+              </div>
+            </div>
+          </div>
+          <div class="complexity-stat success">
+            <span>Time-to-Share:</span><strong>1 Second</strong>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BLOCK 2: INSTANT SANDBOX PROVISIONER FORM -->
+    <section class="card workflow-card">
+      <div class="card-header">
+        <div class="card-title-group">
+          <span class="icon-terminal">[⚡]</span>
+          <h2>DEPLOY SANDBOX</h2>
+        </div>
+        <div class="led-group">
+          <div class="led-label">SLOTS</div>
+          <span class="led-number" id="slots-metric">8/10</span>
+          <span class="led-dot orange glowing"></span>
+        </div>
+      </div>
+
+      <div class="card-body">
+        <p class="block-intro text-sm">
+          Paste your raw agent-generated script directly, pick a sandboxed engine, and declare access. Pico parses, registers, and serves it immediately.
+        </p>
+
+        <!-- Template Selector -->
+        <div class="templates-section">
+          <span class="section-label">QUICK-START CODE TEMPLATES:</span>
+          <div class="templates-grid">
+            <button class="btn btn-retro-small template-btn" data-template="slack">
+              <span class="meta-tag py">Py</span> Slack Alert
+            </button>
+            <button class="btn btn-retro-small template-btn" data-template="csv">
+              <span class="meta-tag js">JS</span> CSV to JSON
+            </button>
+            <button class="btn btn-retro-small template-btn" data-template="s3">
+              <span class="meta-tag sh">SH</span> S3 Backup
+            </button>
+          </div>
+        </div>
+
+        <!-- Main Form -->
+        <form id="deploy-form" class="retro-form">
+          <div class="form-group">
+            <label for="app-name">APP NAME (SLOT PATH)</label>
+            <div class="input-prefix-wrapper">
+              <span class="input-prefix">pico.run/</span>
+              <input type="text" id="app-name" placeholder="e.g. lead-scraper" required pattern="^[a-zA-Z0-9\-_]+$">
+            </div>
+            <span class="form-help">Lower-case alphanumeric, dashes, underscores only.</span>
+          </div>
+
+          <div class="form-group-row">
+            <div class="form-group">
+              <label for="app-runtime">RUNTIME ENGINE</label>
+              <select id="app-runtime">
+                <option value="Python 3.11 (Lightweight)">Python 3.11 (Lightweight)</option>
+                <option value="Node.js 20 (Alpine)">Node.js 20 (Alpine)</option>
+                <option value="Bash Script (Secure Sandbox)">Bash Script (Secure Sandbox)</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="app-access">ACCESS LEVEL MODE</label>
+              <select id="app-access">
+                <option value="Private (Only Me)">Private (Only Me)</option>
+                <option value="Team Access (Google Workspace Auth)">Team Access (Google Workspace)</option>
+                <option value="Public (Anyone with link)">Public (Anyone / Link)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="code-editor-header">
+              <label for="app-code">RAW SCRIPT / CODE CONTENTS</label>
+              <button type="button" class="btn-text" id="beautify-code-btn">Beautify Format</button>
+            </div>
+            <div class="code-editor-wrapper">
+              <div class="line-numbers">
+                <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span><span>11</span><span>12</span>
+              </div>
+              <textarea id="app-code" placeholder="Pasted raw agent-generated script code goes here..." required spellcheck="false"></textarea>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="app-detail">UTILITY DESCRIPTION (OPTIONAL)</label>
+            <input type="text" id="app-detail" placeholder="What does this custom workflow solve? (e.g., Pull spreadsheet metrics...)">
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-block" id="deploy-submit-btn">
+            PROVISION SLOT (pico.run)
+          </button>
+        </form>
+
+        <div id="provision-overlay" class="modal-overlay hidden">
+          <div class="modal-box">
+            <div class="spinner-pico"></div>
+            <h3>PROVISIONING ACTIVE SLOT...</h3>
+            <p>Compiling boundaries, checking sandboxed requirements, mapping endpoints...</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BLOCK 3: AGENT COMPILER & AI ASSISTANT -->
+    <section class="card assistant-card">
+      <div class="card-header">
+        <div class="card-title-group">
+          <span class="icon-terminal">[🤖]</span>
+          <h2>PICO AGENT COMPILER</h2>
+        </div>
+        <div class="led-group">
+          <span class="text-xs">GEMINI POWERED</span>
+          <span class="led-dot neon-blue glowing"></span>
+        </div>
+      </div>
+
+      <div class="card-body terminal-layout">
+        <p class="block-intro text-sm text-dim">
+          Deep reasoning sandbox: analyzes scripts to infer structural environment keys and suggests custom sliders/knobs for non-technical teammates.
+        </p>
+
+        <div class="terminal-box">
+          <div class="terminal-bar">
+            <span class="terminal-dot red"></span>
+            <span class="terminal-dot yellow"></span>
+            <span class="terminal-dot green"></span>
+            <span class="terminal-title">pico-compiler-shell</span>
+          </div>
+          <div class="terminal-content" id="compiler-output">
+            <span class="term-line prompt">compiler --status</span>
+            <span class="term-line response info">Pico Agent Compiler ready. Ready to scan.</span>
+            <span class="term-line output gray">Select a template or paste code, then click "Analyze" to run Gemini diagnostics.</span>
+          </div>
+        </div>
+
+        <div class="compiler-actions">
+          <button type="button" class="btn btn-secondary" id="analyze-script-btn">
+            ANALYZE SCRIPT BOUNDS
+          </button>
+        </div>
+
+        <!-- Smart UI Wrapper Outputs -->
+        <div class="knobs-wrapper hidden" id="knobs-section">
+          <span class="wrapper-title">🤖 COMPILER GENERATED INTERFACE WRAPPER</span>
+          <p class="text-xs text-dim">Inferred environment and UI Knobs crafted by the compiler:</p>
+          
+          <div class="knob-preview">
+            <div class="knob-item">
+              <label class="knob-label">Inferred Env Variable Required:</label>
+              <code class="env-code" id="inferred-env">SCRAPER_API_KEY</code>
+            </div>
+            
+            <div class="knob-item">
+              <label class="knob-label">Slider UI (Max Scraping Pages):</label>
+              <div class="knob-input-row">
+                <input type="range" class="retro-range" min="1" max="50" value="10" id="knob-slider">
+                <span class="knob-val" id="knob-slider-val">10 Pages</span>
+              </div>
+            </div>
+
+            <div class="knob-item">
+              <label class="knob-label">User Target Input:</label>
+              <input type="text" class="retro-text-knob" value="https://news.ycombinator.com" disabled>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BLOCK 4: WORKFLOW STORAGE (YOUR MICRO-APP WORKBENCH) -->
+    <section class="card list-card full-width">
+      <div class="card-header">
+        <div class="card-title-group">
+          <span class="icon-terminal">[💿]</span>
+          <h2>YOUR MICRO-APP WORKBENCH</h2>
+        </div>
+        <div class="metrics-grid">
+          <div class="metric-block">
+            <span class="metric-lbl">TOTAL COMPUTE</span>
+            <strong class="metric-val" id="total-compute">10.6s</strong>
+          </div>
+          <div class="metric-block">
+            <span class="metric-lbl">ACTIVE USERS</span>
+            <strong class="metric-val" id="active-users">6</strong>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-body">
+        <p class="block-intro">
+          Below are your persistent, sandboxed single-purpose tools stored durably on-chain. Tap any to examine internal scripts, toggle run status, or wipe the slot instantly.
+        </p>
+
+        <!-- Loading state -->
+        <div class="loading-state" id="list-loading">
+          <div class="spinner-pico-small"></div> Reading Pico records...
+        </div>
+
+        <!-- Deployed apps list container -->
+        <div class="deployed-apps-list" id="deployed-apps-container"></div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Interactive script popup modal to show details -->
+  <div id="view-code-modal" class="modal-overlay hidden">
+    <div class="modal-box code-modal">
+      <div class="modal-header">
+        <h3 id="modal-app-title">pico.run/lead-scraper</h3>
+        <button class="btn btn-close" id="close-modal-btn">X</button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-meta-row">
+          <div><strong>Runtime:</strong> <span id="modal-app-runtime">Python 3.11</span></div>
+          <div><strong>Sharing:</strong> <span id="modal-app-access">Team</span></div>
+          <div><strong>Created:</strong> <span id="modal-app-date">Aug 29</span></div>
+        </div>
+        <div class="code-view-container">
+          <pre><code id="modal-code-body"></code></pre>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="workbench-footer">
+    <p>© 2026 Pete Koomen — Pico Cloud Workbench System. Minimal scale. Infinite modular capability.</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
