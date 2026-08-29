@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nell — The Living Primer</title>
+  <!-- Beautiful Literary Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+  <!-- CSS Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Background Ambient Textures -->
+  <div class="ambient-overlay"></div>
+
+  <!-- Global App Layout -->
+  <div class="app-container">
+    
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+      <div class="brand-header">
+        <div class="brand-monogram">N</div>
+        <div class="brand-titles">
+          <h1>Nell</h1>
+          <p>The Living Primer</p>
+        </div>
+      </div>
+
+      <!-- Navigation tabs -->
+      <nav class="nav-links">
+        <button class="nav-btn active" data-tab="primer">
+          <span class="btn-icon">📘</span>
+          <span class="btn-text">The Primer</span>
+        </button>
+        <button class="nav-btn" data-tab="ledger">
+          <span class="btn-icon">📜</span>
+          <span class="btn-text">Ledger of Wisdom</span>
+        </button>
+        <button class="nav-btn" data-tab="inscribe">
+          <span class="btn-icon">✒️</span>
+          <span class="btn-text">Inscribe Context</span>
+        </button>
+      </nav>
+
+      <!-- Sidebar Footer / Utility -->
+      <div class="sidebar-footer">
+        <div class="status-badge">
+          <div class="pulse-indicator"></div>
+          <span>Socratic Engine Live</span>
+        </div>
+        <button id="resetBtn" class="reset-button" title="Restore Sandbox State">
+          Restore Sandbox Defaults
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+      
+      <!-- Top Bar with Core Metrics -->
+      <header class="top-bar">
+        <div class="chapter-info">
+          <span class="chapter-eyebrow">Active Volume</span>
+          <h2 id="activeChapterName">Loading chapter...</h2>
+        </div>
+        <div class="stats-row">
+          <div class="stat-card">
+            <span class="stat-label">Socratic Spark</span>
+            <div class="stat-value-container">
+              <span id="socraticSparkValue" class="stat-value">--%</span>
+              <div class="spark-bar-bg">
+                <div id="socraticSparkBar" class="spark-bar-fill" style="width: 0%"></div>
+              </div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <span class="stat-label">Milestones</span>
+            <span id="conceptsMasteredValue" class="stat-value">--</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-label">Hours Engaged</span>
+            <span id="hoursEngagedValue" class="stat-value">--h</span>
+          </div>
+        </div>
+      </header>
+
+      <!-- SCREEN 1: THE PRIMER (DUAL-PANE WORKSPACE) -->
+      <section id="tab-primer" class="tab-pane active">
+        <div class="dual-pane-layout">
+          
+          <!-- Dialogue Pane (Left) -->
+          <div class="pane dialogue-pane-container">
+            <div class="pane-header">
+              <div class="header-filigree-left"></div>
+              <h3>Socratic Dialogue</h3>
+              <div class="header-filigree-right"></div>
+            </div>
+            
+            <div id="dialogueStream" class="dialogue-stream">
+              <!-- Dynamically populated dialogue bubbles -->
+              <div class="loading-spinner">Waking Nell from parchment shadow...</div>
+            </div>
+
+            <!-- Dialogue input area -->
+            <form id="dialogueForm" class="dialogue-input-area">
+              <input type="text" id="dialogueInput" placeholder="Whisper your answer to Nell..." required autocomplete="off">
+              <button type="submit" class="submit-button">
+                <span>Inscribe Response</span>
+                <span class="glow-arrow">→</span>
+              </button>
+            </form>
+          </div>
+
+          <!-- Active Inquiries Pane (Right) -->
+          <div class="pane inquiries-pane">
+            <div class="pane-header">
+              <div class="header-filigree-left"></div>
+              <h3>Active Inquiries</h3>
+              <div class="header-filigree-right"></div>
+            </div>
+            
+            <div id="inquiriesList" class="inquiries-list">
+              <!-- Dynamically populated active problems -->
+            </div>
+
+            <!-- Philosophy/Spec prompt card -->
+            <div class="philosophy-card">
+              <div class="gold-seal"></div>
+              <p class="philosophy-quote">
+                "Not a replacement for teachers, but a companion that teaches young minds how to reason, how to grapple with ethics, meaning, and character."
+              </p>
+              <span class="philosophy-sig">— A Young Lady's Illustrated Primer</span>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- SCREEN 2: THE LEDGER (TIMELINE SCREEN) -->
+      <section id="tab-ledger" class="tab-pane">
+        <div class="ledger-container">
+          <div class="pane-header centered">
+            <div class="aesthetic-divider-left"></div>
+            <h2>The Ledger of Wisdom</h2>
+            <p class="section-subtitle">A chronological record of cognitive milestones, moral choices, and conceptual breakthroughs</p>
+            <div class="aesthetic-divider-right"></div>
+          </div>
+
+          <!-- Highlight Metric Grid -->
+          <div class="ledger-metrics-grid">
+            <div class="lead-metric">
+              <span class="lead-lbl">Moral Compass State</span>
+              <h4 id="moralCompassState">Altruistic</h4>
+              <p class="lead-desc">Calculated through choices and Socratic dialogues regarding resources and empathy.</p>
+            </div>
+            <div class="lead-metric">
+              <span class="lead-lbl">Active Learning Focus</span>
+              <h4 id="activeLearningFocus">Logic & Division</h4>
+              <p class="lead-desc">Current development course adjusted by parent inscription.</p>
+            </div>
+          </div>
+
+          <!-- Main Timeline -->
+          <div class="timeline-wrapper">
+            <div class="timeline-line"></div>
+            <div id="timelineContainer" class="timeline-container">
+              <!-- Timeline milestones injected dynamically -->
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SCREEN 3: INSCRIBE (FORM/WORKFLOW SCREEN) -->
+      <section id="tab-inscribe" class="tab-pane">
+        <div class="inscribe-container">
+          
+          <div class="form-parchment">
+            <!-- Vintage Gold Bordering -->
+            <div class="parchment-border-top"></div>
+            
+            <div class="form-header">
+              <h2>Seed the Next Chapter</h2>
+              <p>Provide real-world context, milestones, and challenges to help Nell weave a bespoke learning story that addresses your child's current development.</p>
+            </div>
+
+            <form id="inscribeForm">
+              <!-- Input field 1 -->
+              <div class="form-group">
+                <label for="interestField">
+                  <span class="input-num">01.</span>
+                  Current Obsession or Interest
+                </label>
+                <p class="input-desc">What fuels their imagination today? (e.g., clockwork gears, baking bread, dinosaurs)</p>
+                <input type="text" id="interestField" placeholder="e.g., clockwork gears" required value="clockwork gears">
+              </div>
+
+              <!-- Input field 2 -->
+              <div class="form-group">
+                <label for="skillField">
+                  <span class="input-num">02.</span>
+                  Target Cognitive Skill
+                </label>
+                <p class="input-desc">Select the structural logic module or moral discipline to introduce next.</p>
+                <select id="skillField">
+                  <option value="Socratic Logic & Cause-Effect">Socratic Logic & Cause-Effect (Physics, causality, reasoning)</option>
+                  <option value="Fractional Division & Sharing" selected>Fractional Division & Sharing (Mathematics, fractions, altruism)</option>
+                  <option value="Ethical Decision Making">Ethical Decision Making (Truth, cooperative outcomes)</option>
+                  <option value="Phonics & Spatial Reasoning">Phonics & Spatial Reasoning (Sound sequences, shapes)</option>
+                </select>
+              </div>
+
+              <!-- Input field 3 -->
+              <div class="form-group">
+                <label for="milestoneField">
+                  <span class="input-num">03.</span>
+                  Real-world Milestone or Challenge
+                </label>
+                <p class="input-desc">Any emotional hurdle, sibling challenge, or developmental fear? (e.g., sharing toys with a younger sibling, fear of the dark)</p>
+                <input type="text" id="milestoneField" placeholder="e.g., sharing toys with a younger sibling" value="sharing toys with a younger sibling">
+              </div>
+
+              <!-- Submit form button -->
+              <div class="form-actions">
+                <button type="submit" id="inscribeSubmitBtn" class="inscribe-submit-button">
+                  <span class="ink-blend">Inscribe into the Primer</span>
+                </button>
+              </div>
+            </form>
+
+            <div class="parchment-border-bottom"></div>
+          </div>
+
+          <!-- Successful Update Overlay / Toast -->
+          <div id="successOverlay" class="success-notification-overlay hidden">
+            <div class="success-card">
+              <div class="star-burst">✦</div>
+              <h3>Parchment Updated</h3>
+              <p>Nell has successfully woven those elements into the living narrative. Return to the Primer tab to discover the Socratic dialogue awaiting your child.</p>
+              <button id="successCloseBtn" class="success-close-btn">Return to Primer</button>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- Client JavaScript -->
+  <script src="app.js"></script>
+</body>
+</html>

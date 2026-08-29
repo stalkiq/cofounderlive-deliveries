@@ -1,0 +1,227 @@
+{
+  "missionId": "ep_mtekyhhy",
+  "idea": "In Neal Stephenson's The Diamond Age, a young girl is given an interactive book called A Young Lady's Illustrated Primer. It looks like a tool for learning to read, but it's far more. It adapts to her completely, and through stories tuned to her life, it teaches her not just to read but to think, to reason, and eventually to grapple with the hardest questions of ethics, meaning, and character. She returns to it day after day for years, and as she grows, it grows too. Continually reshaping itself around who she is becoming and the life she is living.\n\nFor the first time in history, something like the Primer is starting to feel possible.\n\nThe best education has always come from one-on-one tutoring. Aristotle taught Alexander. But that privilege has been reserved for the few. AI can bring it to every child. And great tutors do more than drill facts. Over years, they learn a child's mind, and with it how to teach what can't be drilled at all: thinking, reasoning, even wisdom.\n\nIn Stephenson's story, the Primer is an AI tutor that never runs out of patience or time. We're a long way from building one, but we can start today. What we'd love to see now is a product that adaptively teaches young children to read, write, and do arithmetic, at the quality of a devoted private tutor and at consumer scale. Not a replacement for teachers, but a supplement that makes them more effective.\n\nWhile we think this begins as something a parent buys to help their child learn basic skills, it is also the entry point to far greater ambitions. A company that gets it right could build toward something like the Primer, and even a fraction of that vision would have a profound effect on society.\n\nIf you're building this, we'd love to hear from you",
+  "brand": {
+    "name": "Nell",
+    "tagline": "The living book that teaches your child how to think.",
+    "audience": "Tech-forward parents and progressive educators seeking a screen-time alternative that fosters deep cognitive development.",
+    "tone": [
+      "Enchanting",
+      "Bespoke",
+      "Intellectual"
+    ],
+    "visualConcept": "A digital 'living parchment' interface featuring generative, interactive ink-and-gold illustrations that bloom and morph as the user scrolls, mimicking a magical leather-bound book.",
+    "layout": "A single-column, editorial-style scroll with generous margins, featuring a prominent interactive 'book' hero element that opens to reveal dynamic, personalized learning paths.",
+    "palette": {
+      "background": "#121612",
+      "surface": "#1C221C",
+      "primary": "#D4AF37",
+      "accent": "#E5A93C",
+      "text": "#F4EFE6"
+    },
+    "creativeNotes": [
+      "Implement a custom SVG filter to give vector illustrations a bleeding, organic 'fountain pen ink on paper' texture.",
+      "Use Rive to animate delicate, gold-leaf filigree borders that dynamically frame key value propositions as they scroll into view.",
+      "Incorporate a subtle, physics-based page-flip transition for the interactive demo section to evoke the tactile weight of a physical book."
+    ]
+  },
+  "mvp": {
+    "name": "Nell",
+    "workspaceLabel": "The Living Primer",
+    "experience": {
+      "archetype": "assistant",
+      "device": "desktop",
+      "navigationStyle": "sidebar",
+      "density": "comfortable",
+      "typeStyle": "serif",
+      "radius": "soft",
+      "motif": "Gold-leaf filigree framing a living, ink-stained parchment"
+    },
+    "eyebrow": "The Living Primer",
+    "headline": "The living book that teaches your child how to think.",
+    "subheadline": "An intellectual heirloom that grows alongside your child. Nell weaves classical instruction, reading, and reasoning into an enchanting, personalized narrative that shifts and matures as they do.",
+    "palette": {
+      "background": "#121612",
+      "surface": "#1C221C",
+      "primary": "#D4AF37",
+      "accent": "#E5A93C",
+      "text": "#F4EFE6"
+    },
+    "googleCapabilities": [
+      {
+        "service": "gemini",
+        "label": "Socratic Dialogue Engine",
+        "rationale": "Powers the core interactive storytelling engine, allowing Nell to dynamically adapt the narrative and engage the child in open-ended verbal reasoning based on their responses.",
+        "primaryScreen": 0,
+        "config": {
+          "assistantRole": "You are Nell, an enchanting, wise, and patient Socratic tutor inspired by the Young Lady's Illustrated Primer. Speak directly to a child with warmth, intellectual respect, and magical storytelling. Guide them to reason through questions rather than giving direct answers. Introduce gentle mathematical or logical puzzles woven into a fantasy narrative.",
+          "mapQuery": "",
+          "locationQuery": "",
+          "origin": "",
+          "destination": "",
+          "calendarTitle": "",
+          "analyticsLabel": "Live sample operations data",
+          "targetLanguage": "en",
+          "analysisMode": "both",
+          "speechPrompt": "Tell me a story about a clockwork sparrow who lost its key, and ask me a question to help me figure out how to balance the scales to wind it up."
+        }
+      }
+    ],
+    "screens": [
+      {
+        "label": "The Primer",
+        "type": "assistant",
+        "title": "The Living Parchment",
+        "description": "A spacious dual-pane workspace. Engage with the Socratic dialogue on the left, while active inquiries and logical prompts update on the right.",
+        "metrics": [
+          {
+            "label": "Active Chapter",
+            "value": "The Golden Gear"
+          },
+          {
+            "label": "Socratic Spark",
+            "value": "94%"
+          }
+        ],
+        "items": [
+          {
+            "title": "Why does the water wheel turn only when the river flows?",
+            "detail": "Nell prompts you to think about cause, effect, and continuous motion.",
+            "status": "Active Inquiry",
+            "meta": "Logic & Physics",
+            "value": ""
+          },
+          {
+            "title": "How many golden apples are left if the dragon takes half of eight?",
+            "detail": "A narrative introduction to division and fractions.",
+            "status": "Solved",
+            "meta": "Arithmetic",
+            "value": "4"
+          }
+        ]
+      },
+      {
+        "label": "The Ledger",
+        "type": "timeline",
+        "title": "The Ledger of Wisdom",
+        "description": "A chronological record of your child's cognitive milestones, moral choices, and conceptual breakthroughs.",
+        "metrics": [
+          {
+            "label": "Concepts Mastered",
+            "value": "18"
+          },
+          {
+            "label": "Moral Compass",
+            "value": "Altruistic"
+          },
+          {
+            "label": "Hours Engaged",
+            "value": "42.5"
+          }
+        ],
+        "items": [
+          {
+            "title": "Socratic Inquiry: Cause & Effect",
+            "detail": "Reasoned why shadows grow longer as the sun sets during the 'Valley of Whispers' chapter.",
+            "status": "In Progress",
+            "meta": "Today",
+            "value": ""
+          },
+          {
+            "title": "Moral Choice: The Shared Loaf",
+            "detail": "Chose to divide resources equally with the clockwork sparrow instead of keeping them for the journey.",
+            "status": "Recorded",
+            "meta": "Yesterday",
+            "value": ""
+          },
+          {
+            "title": "The Concept of Zero",
+            "detail": "Discovered through the story of the Empty Treasure Chest of the Pixie King.",
+            "status": "Mastered",
+            "meta": "2 days ago",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "label": "Inscribe",
+        "type": "workflow",
+        "title": "Inscribe New Context",
+        "description": "As a parent, guide the Primer's next evolution by weaving real-world events, interests, or emotional hurdles into the narrative.",
+        "metrics": [],
+        "items": [
+          {
+            "title": "Current Obsession or Interest",
+            "detail": "e.g., clockwork gears, baking bread, dinosaurs",
+            "status": "Required",
+            "meta": "Input Field",
+            "value": "Clockwork gears"
+          },
+          {
+            "title": "Target Cognitive Skill",
+            "detail": "Socratic Logic, Fractional Division, Ethical Decision Making, Phonics",
+            "status": "Required",
+            "meta": "Dropdown Field",
+            "value": "Ethical Decision Making"
+          },
+          {
+            "title": "Real-world Milestone or Challenge",
+            "detail": "e.g., sharing toys with a younger sibling, fear of the dark",
+            "status": "Optional",
+            "meta": "Input Field",
+            "value": "Sharing toys with a younger sibling"
+          }
+        ]
+      }
+    ],
+    "workflow": {
+      "title": "Seed the Next Chapter",
+      "description": "Provide real-world context to help Nell craft a bespoke story that addresses your child's current development.",
+      "fields": [
+        {
+          "label": "Current Obsession or Interest",
+          "type": "text",
+          "placeholder": "e.g., clockwork gears, baking bread, dinosaurs"
+        },
+        {
+          "label": "Target Cognitive Skill",
+          "type": "select",
+          "placeholder": "",
+          "options": [
+            "Socratic Logic & Cause-Effect",
+            "Fractional Division & Sharing",
+            "Ethical Decision Making",
+            "Phonics & Spatial Reasoning"
+          ]
+        },
+        {
+          "label": "Real-world Milestone or Challenge",
+          "type": "text",
+          "placeholder": "e.g., sharing toys with a younger sibling, fear of the dark"
+        }
+      ],
+      "buttonLabel": "Inscribe into the Primer",
+      "successTitle": "Parchment Updated",
+      "successMessage": "Nell has woven these elements into the living narrative. The next chapter will seamlessly introduce these concepts through the Socratic Dialogue Engine."
+    },
+    "googleCapability": {
+      "service": "gemini",
+      "label": "Socratic Dialogue Engine",
+      "rationale": "Powers the core interactive storytelling engine, allowing Nell to dynamically adapt the narrative and engage the child in open-ended verbal reasoning based on their responses.",
+      "primaryScreen": 0,
+      "config": {
+        "assistantRole": "You are Nell, an enchanting, wise, and patient Socratic tutor inspired by the Young Lady's Illustrated Primer. Speak directly to a child with warmth, intellectual respect, and magical storytelling. Guide them to reason through questions rather than giving direct answers. Introduce gentle mathematical or logical puzzles woven into a fantasy narrative.",
+        "mapQuery": "",
+        "locationQuery": "",
+        "origin": "",
+        "destination": "",
+        "calendarTitle": "",
+        "analyticsLabel": "Live sample operations data",
+        "targetLanguage": "en",
+        "analysisMode": "both",
+        "speechPrompt": "Tell me a story about a clockwork sparrow who lost its key, and ask me a question to help me figure out how to balance the scales to wind it up."
+      }
+    }
+  },
+  "revision": 3
+}
