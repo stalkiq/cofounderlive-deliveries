@@ -1,0 +1,207 @@
+{
+  "name": "Nell",
+  "workspaceLabel": "Sovereign Education Chamber",
+  "experience": {
+    "archetype": "assistant",
+    "device": "desktop",
+    "navigationStyle": "sidebar",
+    "density": "spacious",
+    "typeStyle": "serif",
+    "radius": "sharp",
+    "motif": "Victorian botanical illustrations and silver ink particles on deep indigo parchment. Font stack: Cormorant Garamond for headers, clean monospace for technical metrics."
+  },
+  "eyebrow": "A Sovereign Education for the Next Generation",
+  "headline": "The living book that grows with your child.",
+  "subheadline": "An adaptive, lifelong AI tutor inspired by the Illustrated Primer. On the left, a timeless, leather-bound e-paper book; on the right, an evolving digital mind that teaches reading, reasoning, and wisdom through a bespoke, tactile medium.",
+  "palette": {
+    "background": "#0A1128",
+    "surface": "#152238",
+    "primary": "#EAF2F8",
+    "accent": "#4A90E2",
+    "text": "#F0F4F8"
+  },
+  "googleCapabilities": [
+    {
+      "service": "gemini",
+      "label": "Socratic Narrative Engine",
+      "rationale": "Generates personalized, Socratic dialogues and moral tales that adapt dynamically to the child's current learning level and real-world experiences.",
+      "primaryScreen": 0,
+      "config": {
+        "assistantRole": "A wise, patient, and enchanting Socratic tutor inspired by the Illustrated Primer, teaching children logic, reading, and ethics through personalized stories.",
+        "mapQuery": "",
+        "locationQuery": "",
+        "origin": "",
+        "destination": "",
+        "calendarTitle": "",
+        "analyticsLabel": "Live sample operations data",
+        "targetLanguage": "",
+        "analysisMode": "both",
+        "speechPrompt": "Recite the Socratic dialogue in a warm, wise, and patient tone"
+      }
+    }
+  ],
+  "screens": [
+    {
+      "label": "The Living Book",
+      "type": "assistant",
+      "title": "Socratic Dialogue & Story",
+      "description": "Engage with Nell. The story adapts in real-time to your child's responses, weaving in math, logic, and classical ethics.",
+      "metrics": [
+        {
+          "label": "Active Narrative Arc",
+          "value": "The Golden Ratio"
+        },
+        {
+          "label": "Socratic Depth",
+          "value": "Level IV"
+        }
+      ],
+      "items": [
+        {
+          "title": "The Tale of the Golden Spiral",
+          "detail": "Nell: 'Look closely at the nautilus shell, Elizabeth. Do you see how each chamber grows, yet keeps the exact same shape as the last? Why do you think nature builds this way?'",
+          "status": "Active",
+          "meta": "Mathematics & Observation",
+          "value": "Chapter 3"
+        },
+        {
+          "title": "The Merchant's Scales",
+          "detail": "An interactive fable teaching basic division and the ethics of fair trade.",
+          "status": "Completed",
+          "meta": "Arithmetic & Ethics",
+          "value": "Chapter 2"
+        }
+      ]
+    },
+    {
+      "label": "The Mind Archive",
+      "type": "timeline",
+      "title": "Cognitive Development Ledger",
+      "description": "A local-first, multi-year memory archive mapping your child's intellectual breakthroughs, vocabulary expansion, and conceptual milestones.",
+      "metrics": [
+        {
+          "label": "Vocabulary Mastered",
+          "value": "1,420 words"
+        },
+        {
+          "label": "Core Virtues Explored",
+          "value": "Justice, Temperance"
+        }
+      ],
+      "items": [
+        {
+          "title": "Breakthrough: Geometric Proportions",
+          "detail": "Elizabeth independently deduced the relationship between the radius and circumference during the 'Sailing the Aegean' narrative.",
+          "status": "Milestone",
+          "meta": "1 day ago",
+          "value": "Mathematics"
+        },
+        {
+          "title": "Moral Inquiry: The Ring of Gyges",
+          "detail": "Explored the concept of invisible actions and personal integrity. Elizabeth concluded that true honor exists when no one is watching.",
+          "status": "Reflective",
+          "meta": "4 days ago",
+          "value": "Ethics"
+        },
+        {
+          "title": "Vocabulary Acquisition: 'Sovereign'",
+          "detail": "Successfully integrated 'sovereign' into her spoken dialogue during the constitutional roleplay.",
+          "status": "Acquired",
+          "meta": "1 week ago",
+          "value": "Language"
+        }
+      ]
+    },
+    {
+      "label": "Curate Lesson Arc",
+      "type": "workflow",
+      "title": "Inject Real-World Context",
+      "description": "As a parent, guide Nell's narrative engine by inputting upcoming family events, moral challenges, or specific academic focuses.",
+      "metrics": [
+        {
+          "label": "Active Overrides",
+          "value": "2 Active"
+        },
+        {
+          "label": "Next Theme",
+          "value": "Botanical Allegory"
+        }
+      ],
+      "items": [
+        {
+          "title": "Active Override: Sharing with Sibling",
+          "detail": "Weaving sibling cooperation themes into the upcoming 'The Ant and the Chrysalis' fable.",
+          "status": "Active",
+          "meta": "Parental Input",
+          "value": "Moral Focus"
+        },
+        {
+          "title": "Upcoming Chapter: The Socratic Beehive",
+          "detail": "Introduces division of labor and community ethics through a botanical allegory.",
+          "status": "Scheduled",
+          "meta": "Next Chapter",
+          "value": "Logic & Ethics"
+        }
+      ]
+    }
+  ],
+  "workflow": {
+    "title": "Configure Next Narrative Arc",
+    "description": "Direct Nell's Socratic focus for the coming week. The AI will seamlessly weave these themes into your child's daily stories.",
+    "fields": [
+      {
+        "label": "Real-World Context or Event",
+        "type": "text",
+        "placeholder": "e.g., Visiting grandfather's farm, learning to share with younger brother"
+      },
+      {
+        "label": "Primary Academic Focus",
+        "type": "select",
+        "placeholder": "",
+        "options": [
+          "Classical Geometry & Spatial Reasoning",
+          "Socratic Logic & Fallacy Detection",
+          "Phonics & Etymology",
+          "Early Arithmetic & Barter Systems"
+        ]
+      },
+      {
+        "label": "Core Virtue to Emphasize",
+        "type": "select",
+        "placeholder": "",
+        "options": [
+          "Fortitude (Courage in the face of difficulty)",
+          "Justice (Fairness and understanding of law)",
+          "Prudence (Wise decision making)",
+          "Temperation (Self-control and balance)"
+        ]
+      },
+      {
+        "label": "Target Activation Date",
+        "type": "date",
+        "placeholder": "Select date"
+      }
+    ],
+    "buttonLabel": "Weave Into Living Book",
+    "successTitle": "Narrative Arc Woven",
+    "successMessage": "Nell's local memory has been updated. The next chapter will gently introduce these concepts through an enchanting botanical allegory."
+  },
+  "googleCapability": {
+    "service": "gemini",
+    "label": "Socratic Narrative Engine",
+    "rationale": "Generates personalized, Socratic dialogues and moral tales that adapt dynamically to the child's current learning level and real-world experiences.",
+    "primaryScreen": 0,
+    "config": {
+      "assistantRole": "A wise, patient, and enchanting Socratic tutor inspired by the Illustrated Primer, teaching children logic, reading, and ethics through personalized stories.",
+      "mapQuery": "",
+      "locationQuery": "",
+      "origin": "",
+      "destination": "",
+      "calendarTitle": "",
+      "analyticsLabel": "Live sample operations data",
+      "targetLanguage": "",
+      "analysisMode": "both",
+      "speechPrompt": "Recite the Socratic dialogue in a warm, wise, and patient tone"
+    }
+  }
+}
