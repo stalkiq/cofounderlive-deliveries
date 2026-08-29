@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Co-Op | Don't work with AI alone.</title>
+  <!-- Google Fonts: Inter and Fira Code for Figma-terminal styling -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-container">
+    
+    <!-- LEFT SIDEBAR / MANIFESTO & LAUNCH PAD -->
+    <aside class="sidebar">
+      <div class="brand-header">
+        <div class="logo-mark">⚡</div>
+        <div>
+          <h1 class="brand-name">Co-Op</h1>
+          <p class="brand-tagline">Don't work with AI alone.</p>
+        </div>
+      </div>
+
+      <div class="manifesto-card">
+        <span class="manifesto-eyebrow">THE MULTIPLAYER AI THESIS</span>
+        <p class="manifesto-text">
+          The best work tools of the last two decades won by going <span>multiplayer</span>. Figma beat Photoshop. Google Docs replaced Word.
+        </p>
+        <p class="manifesto-text small">
+          Yet working with AI remains single-player. You prompt a private assistant in a silo. Co-Op turns solo agent workflows into a live shared canvas. Watch, redirect, and hand off in real-time.
+        </p>
+      </div>
+
+      <!-- MAIN CONFIG WORKFLOW FORM (Deploy Collaborative Agent) -->
+      <section class="section launch-section">
+        <div class="section-title">DEPLOY COLLABORATIVE AGENT</div>
+        <p class="section-desc">Launch a new multiplayer session and invite your team to co-author in real-time.</p>
+        
+        <form id="launch-session-form" class="workflow-form">
+          <div class="form-group">
+            <label for="agent-persona" class="form-label">Agent Persona</label>
+            <select id="agent-persona" required class="form-select">
+              <option value="DevAgent-3 (Coding & Refactoring)" selected>DevAgent-3 (Coding & Refactoring)</option>
+              <option value="QA-Agent-1 (Test Generation)">QA-Agent-1 (Test Generation)</option>
+              <option value="DocAgent-2 (Technical Writing)">DocAgent-2 (Technical Writing)</option>
+              <option value="SalesAgent-5 (Deal Strategy)">SalesAgent-5 (Deal Strategy)</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="context-url" class="form-label">Target Repository / Context URL</label>
+            <input type="text" id="context-url" class="form-input" placeholder="github.com/co-op/auth-service" required value="github.com/co-op/auth-service">
+          </div>
+
+          <div class="form-group">
+            <label for="team-access" class="form-label">Team Access Level</label>
+            <select id="team-access" class="form-select">
+              <option value="Engineering Core" selected>Engineering Core</option>
+              <option value="Product & QA">Product & QA</option>
+              <option value="Entire Workspace">Entire Workspace</option>
+            </select>
+          </div>
+
+          <button type="submit" class="btn btn-primary">Launch Shared Session</button>
+        </form>
+      </section>
+
+      <!-- ACTIVE SESSIONS / SAVED ENTRIES -->
+      <section class="section sessions-section">
+        <div class="section-header">
+          <div class="section-title">ACTIVE TEAM SESSIONS</div>
+          <span class="pulse-dot"></span>
+        </div>
+        <p class="section-desc">Active sessions hosted in your organization's workspace repository.</p>
+        
+        <div id="sessions-list" class="sessions-list">
+          <!-- Populated dynamically via JS -->
+          <div class="loading-spinner">Syncing canvas storage...</div>
+        </div>
+      </section>
+    </aside>
+
+    <!-- RIGHT MULTIPLAYER INTERACTIVE CANVAS -->
+    <main class="main-canvas">
+      
+      <!-- TOP STATUS BAR -->
+      <header class="canvas-header">
+        <div class="canvas-title-group">
+          <span class="active-tag">LIVE STREAMING</span>
+          <h2 id="active-canvas-title" class="canvas-title">Active Canvas: #dev-agent-refactor</h2>
+        </div>
+        
+        <!-- Live Metrics Indicators -->
+        <div class="metrics-container">
+          <div class="metric">
+            <span class="metric-label">Active Humans</span>
+            <span class="metric-value text-accent">3</span>
+          </div>
+          <div class="separator"></div>
+          <div class="metric">
+            <span class="metric-label">Active Agents</span>
+            <span class="metric-value text-primary">2</span>
+          </div>
+          <div class="separator"></div>
+          <div class="metric">
+            <span class="metric-label">Sync Latency</span>
+            <span class="metric-value">12ms</span>
+          </div>
+        </div>
+      </header>
+
+      <!-- EXTREME PLAY INTERACTIVE MULTIPLAYER WORKSPACE -->
+      <div class="workspace-grid">
+        
+        <!-- VISUAL EDITOR CANVAS -->
+        <div class="editor-pane">
+          <div class="editor-meta">
+            <span class="file-tab">
+              <svg class="file-icon" viewBox="0 0 24 24"><path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M13,8V3.5L18.5,9H13Z" fill="currentColor"/></svg>
+              auth_service.py
+            </span>
+            <div class="editor-mode">
+              <span>Status: </span>
+              <span id="session-status-badge" class="mode-badge">Running</span>
+            </div>
+          </div>
+          
+          <div class="editor-workspace">
+            <!-- Simulated Multiplayer Cursors Floating -->
+            <div class="cursor cursor-magenta" style="top: 80px; left: 180px;">
+              <span class="cursor-pointer"></span>
+              <span class="cursor-label">Sarah (PM)</span>
+            </div>
+            
+            <div id="agent-cursor" class="cursor cursor-volt" style="top: 145px; left: 340px;">
+              <span class="cursor-pointer"></span>
+              <span class="cursor-label">DevAgent-3</span>
+            </div>
+
+            <div class="cursor cursor-indigo" style="top: 240px; left: 510px;">
+              <span class="cursor-pointer"></span>
+              <span class="cursor-label">Alex (Dev)</span>
+            </div>
+
+            <!-- Preformatted text code container with editor interface -->
+            <div class="code-editor-wrapper">
+              <textarea id="live-code-area" class="code-textarea" spellcheck="false"></textarea>
+            </div>
+          </div>
+
+          <!-- TAKEOVER & ACTION BAR -->
+          <div class="control-footer">
+            <button id="takeover-btn" class="btn btn-accent btn-pulse">
+              <span class="btn-icon">⚡</span> Takeover Agent (ESC)
+            </button>
+            <p class="control-hint">Click terms/code to manually edit. Intercepting pauses DevAgent's automatic step-by-step thread immediately.</p>
+          </div>
+        </div>
+
+        <!-- STREAM EVENTS & CONTROL ROOMS -->
+        <div class="stream-pane">
+          
+          <!-- TAB HEADERS -->
+          <div class="pane-tabs">
+            <button class="pane-tab active" data-tab="timeline">Live Workspace Logs</button>
+            <button class="pane-tab" data-tab="control-room">Agent Control Room</button>
+          </div>
+
+          <!-- TAB CONTENT 1: TIMELINE -->
+          <div id="tab-timeline" class="tab-content active">
+            <div class="pane-desc">Real-time multiplayer timeline of active human handoffs, comments, and agent outputs.</div>
+            <div id="events-stream-list" class="timeline-logs">
+              <!-- Dynamically Populated -->
+            </div>
+            
+            <!-- Quick comment posting input to save entries into the DB -->
+            <form id="comment-form" class="comment-input-form">
+              <input type="text" id="comment-input" class="comment-input" placeholder="Type collaborative note or ask team/agent to adapt..." required>
+              <button type="submit" class="btn-send">Send</button>
+            </form>
+          </div>
+
+          <!-- TAB CONTENT 2: AGENT CONTROL ROOM -->
+          <div id="tab-control-room" class="tab-content">
+            <div class="pane-desc">Prompt the shared agent, direct its task list, or request test cases. Supported by Gemini.</div>
+            
+            <div class="control-room-stats">
+              <div class="stat-bubble">
+                <span class="bubble-lbl">CONTEXT WINDOW</span>
+                <span class="bubble-val">128K</span>
+              </div>
+              <div class="stat-bubble">
+                <span class="bubble-lbl">SAVED EXPENSES</span>
+                <span class="bubble-val text-primary">$340</span>
+              </div>
+            </div>
+
+            <div class="prompt-workspace">
+              <div class="agent-avatar-bar">
+                <div class="agent-avatar">🤖</div>
+                <div>
+                  <h4 class="agent-title">DevAgent-3 Workspace Controller</h4>
+                  <p class="agent-status">Awaiting instruction...</p>
+                </div>
+              </div>
+
+              <!-- Live Execution Suggestion Pills -->
+              <div class="suggestion-pills">
+                <button class="pill" type="button" onclick="quickPrompt('Secure the auth credentials validation flow by retrieving secrets from environment variables.')">🔒 Secure validation flow</button>
+                <button class="pill" type="button" onclick="quickPrompt('Write complete test validation suite asserting expired edge conditions.')">🧪 Write Unit Tests</button>
+                <button class="pill" type="button" onclick="quickPrompt('Comment line by line to explain the current authentication flow.')">📝 Document flow</button>
+              </div>
+
+              <form id="agent-prompt-form" class="prompt-form">
+                <textarea id="prompt-input" class="prompt-textarea" placeholder="Type prompt here... (e.g. 'Secure the hardcoded credentials string in our token decode controller')" required></textarea>
+                <button type="submit" id="prompt-btn" class="btn btn-primary full-width">Send Prompt to Agent Brain</button>
+              </form>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </main>
+
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
