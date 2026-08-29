@@ -1,0 +1,19 @@
+{
+  "name": "co-op",
+  "version": "1.0.0",
+  "description": "Co-Op: A 'Figma-meets-Terminal' multiplayer canvas where humans and agents co-author code in real-time.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "dependencies": {
+    "@google/generative-ai": "^0.11.4",
+    "express": "^4.19.2"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "author": "Co-Op Team",
+  "license": "MIT"
+}
