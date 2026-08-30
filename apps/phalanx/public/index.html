@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PHALANX // ZERO-TRUST SECURABLE RUNTIME</title>
+  <!-- Tailwind CSS Support -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- FontAwesome for Brutalist Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Custom Brutalist Style Sheet -->
+  <link rel="stylesheet" href="/css/style.css">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            phalanxBg: '#0D0E11',
+            phalanxSurface: '#1A1C23',
+            phalanxPrimary: '#FFB800',
+            phalanxAccent: '#00FF66',
+            phalanxText: '#F3F4F6'
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="tactical-grid text-neutral-200 min-h-screen relative flex flex-col selection:bg-yellow-500 selection:text-black">
+  <div class="scanlines-overlay"></div>
+
+  <!-- ONBOARDING OVERLAY: Cryptographic Handshake -->
+  <section id="onboarding-sec" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-neutral-950">
+    <div class="w-full max-w-2xl bg-[#1A1C23] border-2 border-[#FFB800] p-6 md:p-8 space-y-6 shadow-2xl relative shadow-yellow-500/10">
+      <!-- Top header line decoration -->
+      <div class="absolute top-0 left-0 right-0 h-1 bg-[#FFB800]"></div>
+      
+      <div class="flex items-center justify-between border-b border-neutral-800 pb-4">
+        <div class="flex items-center space-x-3">
+          <i class="fa-solid fa-shield-halved text-[#FFB800] text-2xl animate-pulse"></i>
+          <div>
+            <span class="text-xs text-amber-500 font-bold tracking-widest block font-sans">PHALANX INBOUND TERMINAL</span>
+            <span class="text-lg font-bold tracking-tight text-white uppercase">ZERO-TRUST SECURITY DECRYPTION GATE</span>
+          </div>
+        </div>
+        <div class="text-[10px] text-neutral-500 font-mono text-right hidden sm:block">
+          <div>LOC: SERVER_NODE_01</div>
+          <div>STATUS: LOCK_ENGAGED</div>
+        </div>
+      </div>
+
+      <p class="text-xs text-neutral-400 font-sans leading-relaxed">
+        Phalanx requires an active HSM decryption handshake to sync state logs and review the active enterprise agent registry. To begin your audit session, verify your credential context profile and cryptographically log into the zero-trust control layer.
+      </p>
+
+      <div class="bg-black/40 border border-neutral-800 p-4 space-y-3 font-mono text-xs text-left">
+        <div class="flex justify-between border-b border-neutral-900 pb-2">
+          <span class="text-neutral-500">SYSTEM PARAMETER</span>
+          <span class="text-neutral-300">VALUE/BINDING</span>
+        </div>
+        <div class="flex justify-between">
+          <span class="text-neutral-500">Security Clearance</span>
+          <span class="text-neutral-200">Level 4 // Financial Infrastructure Admin</span>
+        </div>
+        <div class="flex justify-between">
+          <span class="text-neutral-500">Durable Context Server</span>
+          <span class="text-amber-500 font-bold">POST/GET /api/memory (Attached)</span>
+        </div>
+        <div class="flex justify-between">
+          <span class="text-neutral-500">Model Armor Level</span>
+          <span class="text-emerald-400">Strict-LLM Guardrail Enforcer</span>
+        </div>
+      </div>
+
+      <div class="space-y-4 font-sans">
+        <div>
+          <label class="block text-xs font-bold text-neutral-400 uppercase tracking-widest mb-1.5" for="gate-operator-name">Operator Identity Name</label>
+          <input id="gate-operator-name" type="text" class="w-full bg-neutral-900 border border-neutral-700 text-white font-mono py-2 px-3 focus:outline-none focus:border-[#FFB800] focus:ring-1 focus:ring-[#FFB800]" value="Specialist CISO Inspector" placeholder="Enter name...">
+        </div>
+        <div>
+          <label class="block text-xs font-bold text-neutral-400 uppercase tracking-widest mb-1.5" for="gate-key-slot">Hardware Key Bind Location</label>
+          <select id="gate-key-slot" class="w-full bg-neutral-900 border border-neutral-700 text-white font-mono py-2 px-3 focus:outline-none focus:border-[#FFB800] focus:ring-1 focus:ring-[#FFB800]">
+            <option value="Primary-HSM-A9">Primary HSM Node Key (Slot A9)</option>
+            <option value="Risk-Signer-44">Risk Compliance Signer (Slot B1)</option>
+            <option value="Ephemeral-Local">Local Temporary Verification Key</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Live printing log inside Onboarding -->
+      <div id="onboarding-terminal-logs" class="bg-black text-[11px] p-3 font-mono text-neutral-400 max-h-32 overflow-y-auto border border-neutral-800 space-y-1 hidden">
+        <div>&gt; Syncing handshake profile...</div>
+      </div>
+
+      <button id="gate-btn" class="w-full bg-[#FFB800] hover:bg-[#ffc633] text-black font-bold uppercase py-3 transition duration-150 tracking-wider text-xs border border-[#FFB800] active:scale-[0.99]" onclick="triggerOnboardingHandshake()">
+        <i class="fa-solid fa-key mr-2"></i> DECRYPT STATE & SYNC SYSTEM FILES
+      </button>
+
+      <div class="text-[10px] text-center text-neutral-500 font-mono tracking-tighter">
+        SHA-256 DERIVATION INDEX VALID // NO AGENT IS PERMITTED WITHOUT HSM AUTH
+      </div>
+    </div>
+  </section>
+
+  <!-- MAIN APPLICATION HUB (HIDDEN UNTIL AUTHORIZED) -->
+  <div id="app-workspace" class="flex-1 flex flex-col hidden">
+    <!-- TOP CRITICAL BAR -->
+    <header class="bg-[#1A1C23] border-b border-[#2C2F3F] text-xs font-mono py-3 px-4 md:px-6 flex flex-col md:flex-row md:items-center md:justify-between space-y-2 md:space-y-0 relative z-30">
+      <div class="flex items-center space-x-3">
+        <div class="flex items-center space-x-1.5">
+          <div class="pulsing-dot"></div>
+          <span class="text-white font-bold tracking-wider">PHALANX RUNTIME</span>
+        </div>
+        <span class="text-neutral-500 hidden sm:inline">|</span>
+        <span class="text-amber-500 font-semibold tracking-tighter uppercase text-[11px]">ZERO-TRUST AGENT INFRASTRUCTURE</span>
+        <span class="bg-[#2C2F3F] text-[10px] text-neutral-300 px-2 py-0.5" id="operator-badge">ADMIN: CISO_INSPECTOR</span>
+      </div>
+
+      <!-- Live metrics readout bar -->
+      <div class="flex flex-wrap items-center gap-x-6 gap-y-1 text-[11px] text-neutral-400">
+        <div>
+          <span class="text-neutral-500 uppercase mr-1">FLEET SIZE:</span>
+          <span class="text-[#FFB800] font-bold" id="metric-active-fleet">0</span>
+        </div>
+        <div>
+          <span class="text-neutral-500 uppercase mr-1">COMPLIANCE:</span>
+          <span class="text-[#00FF66] font-bold">100.0% VERIFIED</span>
+        </div>
+        <div>
+          <span class="text-neutral-500 uppercase mr-1">BLOCKED:</span>
+          <span class="text-red-500 font-bold" id="metric-blocked-total">0</span>
+        </div>
+        <div class="hidden xl:block">
+          <span class="text-neutral-500 mr-1">SECURE RUNTIME:</span>
+          <span class="text-neutral-300 font-bold" id="current-clock">00:00:00 GMT</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- WORKSPACE ROW: SIDEBAR NAVIGATION + CONTENT GRID -->
+    <main class="flex-1 flex flex-col md:flex-row relative z-20">
+      
+      <!-- MINIMALIST brutalist SIDEBAR -->
+      <aside class="w-full md:w-64 bg-[#0D0E11] md:border-r border-[#2C2F3F] flex flex-col p-4 space-y-6 shrink-0">
+        <div>
+          <span class="text-[10px] text-neutral-500 font-mono tracking-widest block uppercase mb-2">OPERATIONAL CONTROL</span>
+          <nav class="space-y-1.5 text-xs font-mono">
+            <button onclick="switchScreen('screengrid')" id="nav-screengrid" class="nav-link w-full text-left py-2.5 px-3 block text-[#FFB800] bg-[#1A1C23] font-bold hover:bg-[#1A1C23]/60 border-l-2 border-[#FFB800] transition duration-150">
+              <i class="fa-solid fa-layer-group w-5"></i> [01] AGENT REGISTRY
+            </button>
+            <button onclick="switchScreen('screendeploy')" id="nav-screendeploy" class="nav-link w-full text-left py-2.5 px-3 block text-neutral-400 hover:text-white hover:bg-neutral-900 transition duration-150">
+              <i class="fa-solid fa-square-plus w-5"></i> [02] DEPLOY NEW AGENT
+            </button>
+            <button onclick="switchScreen('screenarmor')" id="nav-screenarmor" class="nav-link w-full text-left py-2.5 px-3 block text-neutral-400 hover:text-white hover:bg-neutral-900 transition duration-150">
+              <i class="fa-solid fa-shield-virus w-5"></i> [03] MODEL ARMOR SCANNER
+            </button>
+            <button onclick="switchScreen('screenhistory')" id="nav-screenhistory" class="nav-link w-full text-left py-2.5 px-3 block text-neutral-400 hover:text-white hover:bg-neutral-900 transition duration-150">
+              <i class="fa-solid fa-database w-5"></i> [04] STATE MEMORY INDEX
+            </button>
+          </nav>
+        </div>
+
+        <div class="border-t border-neutral-800 pt-4 mt-auto space-y-3">
+          <div class="text-[10px] text-neutral-500 font-mono tracking-wider block uppercase">HARDWARE CRYPTO HSM</div>
+          <div class="p-2.5 bg-neutral-900/60 border border-neutral-800 text-[11px] font-mono leading-relaxed space-y-1 text-neutral-400">
+            <div class="text-white font-bold"><i class="fa-solid fa-vault text-[#FFB800] mr-1"></i> BINDING VERIFIED:</div>
+            <div>STATUS: <span class="text-[#00FF66]">CONNECTED</span></div>
+            <div>RETENTION: <span class="text-neutral-300">SECURE DISK</span></div>
+          </div>
+          <button onclick="logoutSession()" class="w-full text-center border border-neutral-800 hover:border-red-500/40 text-neutral-500 hover:text-red-400 py-1.5 text-[10px] uppercase font-mono transition duration-150">
+            <i class="fa-solid fa-lock-open mr-1"></i> REVOKE AUTHORIZATION
+          </button>
+        </div>
+      </aside>
+
+      <!-- SCREEN SHELL CONTAINER -->
+      <div class="flex-1 bg-opacity-70 p-4 md:p-6 lg:p-8 overflow-y-auto">
+        
+        <!-- ============================================= -->
+        <!-- SCREEN 01: AGENT REGISTRY GRID (CATALOG) -->
+        <!-- ============================================= -->
+        <section id="screen-screengrid" class="space-y-6">
+          <div class="flex flex-col md:flex-row md:items-center justify-between border-b border-[#2C2F3F] pb-4 gap-4">
+            <div>
+              <nav class="text-xs text-neutral-500 font-mono mb-1">
+                <span>PHALANX</span> &gt; <span class="text-neutral-300">FLEET DISCOVERY</span>
+              </nav>
+              <h2 class="text-2xl font-bold tracking-tight text-white font-mono">Approved Enterprise Fleet</h2>
+              <p class="text-xs text-neutral-400 mt-1">
+                Central catalog of cryptographically verified, version-controlled autonomous AI agents cleared to fetch memory banks and write back.
+              </p>
+            </div>
+            <!-- Search & Filter Controls -->
+            <div class="flex flex-wrap items-center gap-2">
+              <input type="text" id="registry-search" oninput="fetchFilteredRegistry()" placeholder="Search agents..." class="bg-neutral-900 border border-neutral-700 py-1.5 px-3 text-xs w-48 font-mono focus:outline-none focus:border-[#FFB800] text-white">
+              <select id="registry-dept-filter" onchange="fetchFilteredRegistry()" class="bg-neutral-900 border border-neutral-700 py-1.5 px-3 text-xs font-mono focus:outline-none focus:border-[#FFB800] text-white">
+                <option value="">All Departments</option>
+                <option value="Treasury">Treasury</option>
+                <option value="Risk Management">Risk</option>
+                <option value="Compliance">Compliance</option>
+                <option value="Global Operations">Operations</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Top Statistics Widget Row -->
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div class="bg-[#1A1C23] border border-[#2C2F3F] p-4 text-left font-mono">
+              <div class="text-[10px] text-neutral-500 uppercase tracking-widest">ACTIVE FLEET CAPACITY</div>
+              <div class="text-2xl font-extrabold text-[#FFB800] glow-text-yellow mt-1 py-0.5" id="mini-stat-active-fleet">Loading...</div>
+              <div class="text-[10px] text-neutral-400 mt-1">Registered & cataloged agents</div>
+            </div>
+            <div class="bg-[#1A1C23] border border-[#2C2F3F] p-4 text-left font-mono">
+              <div class="text-[10px] text-neutral-500 uppercase tracking-widest">VERIFIED COMPLIANT</div>
+              <div class="text-2xl font-extrabold text-[#00FF66] glow-text-green mt-1 py-0.5">100% SECURE</div>
+              <div class="text-[10px] text-neutral-400 mt-1">State locked memory layers</div>
+            </div>
+            <div class="bg-[#1A1C23] border border-[#2C2F3F] p-4 text-left font-mono">
+              <div class="text-[10px] text-neutral-500 uppercase tracking-widest">BLOCKED INJECTIONS (TOT)</div>
+              <div class="text-2xl font-extrabold text-red-500 mt-1 py-0.5" id="mini-stat-blocked">Loading...</div>
+              <div class="text-[10px] text-neutral-400 mt-1">Interventions by Model Armor</div>
+            </div>
+          </div>
+
+          <!-- Two Column Catalog Layout: Grid on left, Selected Agent deep-dive on right -->
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+            <!-- Left Side Grid list -->
+            <div class="lg:col-span-7 space-y-3">
+              <div class="text-xs text-neutral-400 font-mono tracking-widest uppercase mb-1 flex justify-between">
+                <span>CATALOG INDEXED</span>
+                <span class="text-[#FFB800]" id="loaded-count">0 items found</span>
+              </div>
+              <div class="space-y-2.5 max-h-[500px] overflow-y-auto pr-1" id="agent-cards-container">
+                <!-- Loaded dynamically -->
+                <div class="text-center py-12 bg-neutral-900 border border-neutral-800 text-xs text-neutral-500 font-mono">
+                  Loading central Phalanx repository...
+                </div>
+              </div>
+            </div>
+
+            <!-- Right Side Deep-Dive Board -->
+            <div class="lg:col-span-5">
+              <div class="bg-[#1A1C23] border border-[#2C2F3F] p-4 font-mono space-y-4 text-xs sticky top-4">
+                <div class="border-b border-neutral-800 pb-3">
+                  <div class="flex items-center justify-between">
+                    <span class="text-[10px] text-neutral-500 tracking-wider font-bold">STATE CORE TARGET INSPECTOR</span>
+                    <span class="badge-crypt badge-verified" id="detail-tag-status">VERIFIED</span>
+                  </div>
+                  <h3 class="text-base font-extrabold text-white mt-1 uppercase" id="detail-title">Select Object</h3>
+                </div>
+
+                <div class="space-y-2 text-[11px] leading-relaxed">
+                  <p class="text-neutral-400 font-sans italic" id="detail-description">
+                    Select any verified autonomous agent thread from the registry on the left to review telemetry layers, memory configuration bounds, cryptography anchors, and live logs.
+                  </p>
+
+                  <div class="border-t border-neutral-800 pt-3 space-y-2">
+                    <div class="flex justify-between">
+                      <span class="text-neutral-500">SIGNATURE ADDRESS</span>
+                      <span class="text-neutral-200 mt-0.5 font-bold" id="detail-hash">N/A</span>
+                    </div>
+                    <div class="flex justify-between">
+                      <span class="text-neutral-500">INFRA CLASSIFICATION</span>
+                      <span class="text-[#FFB800] mt-0.5 font-bold" id="detail-department">N/A</span>
+                    </div>
+                    <div class="flex justify-between">
+                      <span class="text-neutral-500">STATE CONTROL MODULE</span>
+                      <span class="text-neutral-200 mt-0.5" id="detail-retention">N/A</span>
+                    </div>
+                    <div class="flex justify-between">
+                      <span class="text-neutral-500">INLINE SECURITY ARMOR</span>
+                      <span class="text-[#00FF66] font-semibold mt-0.5" id="detail-guardrail">N/A</span>
+                    </div>
+                    <div class="flex justify-between">
+                      <span class="text-neutral-500">HSM HSM KEY REGISTERED</span>
+                      <span class="text-neutral-300 font-bold mt-0.5" id="detail-keyslot">N/A</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Simulation stream logger inside Agent Registry Detail -->
+                <div class="space-y-1.5 border-t border-neutral-800 pt-3">
+                  <div class="flex justify-between items-center mb-1">
+                    <span class="text-[10px] text-[#00FF66] font-bold"><i class="fa-solid fa-wave-square mr-1"></i> TELEMETRY LOG FLOWS</span>
+                    <button class="bg-neutral-800 hover:bg-neutral-700 text-neutral-300 px-2 py-0.5 text-[9px] uppercase tracking-tighter" onclick="streamRandomTerminalLogs()">SPIN RANDOM STREAM</button>
+                  </div>
+                  <div id="selected-agent-telemetry" class="bg-black text-[10px] p-2.5 font-mono text-neutral-400 min-h-[140px] max-h-[180px] overflow-y-auto border border-neutral-900 leading-normal space-y-1">
+                    <div>[SYS-INIT] Telemetry channel open. Ready to capture trace events...</div>
+                    <div class="text-neutral-500">[IDLE] awaiting thread dispatch event.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============================================= -->
+        <!-- SCREEN 02: DEPLOY AGENT (WORKFLOW) -->
+        <!-- ============================================= -->
+        <section id="screen-screendeploy" class="space-y-6 hidden">
+          <div class="border-b border-[#2C2F3F] pb-4">
+            <nav class="text-xs text-neutral-500 font-mono mb-1">
+              <span>PHALANX</span> &gt; <span class="text-neutral-300">RESOURCE ALLOCATOR</span>
+            </nav>
+            <h2 class="text-2xl font-bold tracking-tight text-white font-mono">Provision Zero-Trust Agent</h2>
+            <p class="text-xs text-neutral-400 mt-1">
+              Register a hardened autonomous agent with dedicated security parameters, cryptographically bind local memories, and sign with HSM modules.
+            </p>
+          </div>
+
+          <!-- Layout: Two columns (The form on left, template library on right) -->
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+            <!-- Form Block -->
+            <div class="lg:col-span-7 bg-[#1A1C23] border border-[#2C2F3F] p-5 font-sans space-y-5 relative">
+              <div class="absolute top-0 left-0 right-0 h-1 bg-[#FFB800]"></div>
+              
+              <div class="border-b border-neutral-800 pb-3 flex items-center justify-between">
+                <span class="text-sm font-bold tracking-tight text-white font-mono"><i class="fa-solid fa-arrows-spin text-amber-500 mr-2"></i> AGENT CRITICAL SPECIFICATION</span>
+                <span class="text-[10px] font-mono text-neutral-500 uppercase">HSM COMPLIANCE FORM</span>
+              </div>
+
+              <!-- Form definition matches core workflow fields -->
+              <form id="deploy-agent-form" onsubmit="handleAgentProvisionSubmit(event)" class="space-y-4">
+                <div>
+                  <label class="block text-xs font-bold text-neutral-400 uppercase tracking-widest mb-1 font-mono">Agent Identification Name <span class="text-red-500">*</span></label>
+                  <p class="text-[10px] text-neutral-500 mb-1">Must contain unique identifier and version suffix.</p>
+                  <input type="text" id="form-agent-name" required placeholder="e.g., PortfolioRebalancer-v1" class="w-full bg-neutral-900 border border-neutral-700 text-white font-mono py-2 px-3 focus:outline-none focus:border-[#FFB800] text-sm focus:ring-1 focus:ring-[#FFB800]">
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label class="block text-xs font-bold text-neutral-400 uppercase tracking-widest mb-1 font-mono">Infrastructure Department <span class="text-red-500">*</span></label>
+                    <select id="form-department" class="w-full bg-neutral-900 border border-neutral-700 text-white font-mono py-2 px-3 focus:outline-none focus:border-[#FFB800] text-xs focus:ring-1 focus:ring-[#FFB800]">
+                      <option value="Treasury">Treasury Operations</option>
+                      <option value="Risk Management">Risk Management</option>
+                      <option value="Compliance">Compliance Ledger Group</option>
+                      <option value="Global Operations">Global Operations</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label class="block text-xs font-bold text-neutral-400 uppercase tracking-widest mb-1 font-mono">Memory Bank Policy <span class="text-red-500">*</span></label>
+                    <select id="form-retention" class="w-full bg-neutral-900 border border-neutral-700 text-white font-mono py-2 px-3 focus:outline-none focus:border-[#FFB800] text-xs">
+                      <option value="7 Days (Ephemeral)">7 Days (Ephemeral Logs)</option>
+                      <option value="30 Days (Standard)">30 Days (Standard Audit Mode)</option>
+                      <option value="Indefinite (State-Locked)">Indefinite (State-Locked Sandbox)</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label class="block text-xs font-bold text-neutral-400 uppercase tracking-widest mb-1 font-mono">Model Armor Guardrail <span class="text-red-500">*</span></label>
+                    <select id="form-guardrail" class="w-full bg-neutral-900 border border-neutral-700 text-white font-mono py-2 px-3 focus:outline-none focus:border-[#FFB800] text-xs">
+                      <option value="Strict (Financial Compliance)">Strict (Financial Compliance)</option>
+                      <option value="Standard (Enterprise)">Standard (Enterprise Boundaries)</option>
+                      <option value="Custom (Developer Sandbox)">Custom (Developer Sandbox Sandbox)</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label class="block text-xs font-bold text-neutral-400 uppercase tracking-widest mb-1 font-mono">HSM Key Slot Integration <span class="text-red-500">*</span></label>
+                    <select id="form-keyslot" class="w-full bg-neutral-900 border border-neutral-700 text-white font-mono py-2 px-3 focus:outline-none focus:border-[#FFB800] text-xs">
+                      <option value="Slot 01 (Primary Treasury Key)">Slot 01 (Primary Treasury Key)</option>
+                      <option value="Slot 02 (Risk Audit Signer)">Slot 02 (Risk Audit Signer)</option>
+                      <option value="Slot 03 (Compliance Ledger Signer)">Slot 03 (Compliance Ledger Signer)</option>
+                      <option value="Local Ephemeral Key">Local Ephemeral Key</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div>
+                  <label class="block text-xs font-bold text-neutral-400 uppercase tracking-widest mb-1 font-mono">Agent Tactical Objectives Detail</label>
+                  <p class="text-[10px] text-neutral-500 mb-1">State specific functions or operations this agent handles securely.</p>
+                  <textarea id="form-detail" rows="2" placeholder="e.g., Monitor intraday market liquidity feeds and automatically rebalance liquid positions with 100% telemetry traces..." class="w-full bg-neutral-900 border border-neutral-700 text-white font-sans py-2 px-3 focus:outline-none focus:border-[#FFB800] text-xs"></textarea>
+                </div>
+
+                <!-- Custom parameters -->
+                <div class="p-3 bg-neutral-950 border border-neutral-800 text-[11px] font-mono leading-relaxed space-y-1 text-neutral-500">
+                  <div class="text-neutral-400 font-bold uppercase tracking-widest text-[9px]">DURABLE PERSISTENCE MECHANISM:</div>
+                  This agent definition will trigger an immediate backend persistence handshake to <code class="text-[#FFB800]">POST /api/memory</code>. The newly derived dynamic configuration will reflect directly in the centralized catalog on validation success.
+                </div>
+
+                <button type="submit" class="w-full bg-[#FFB800] hover:bg-[#ffc633] text-black font-bold uppercase py-2.5 transition duration-150 tracking-wider text-xs font-mono">
+                  Initialize & Cryptographically Sign Agent
+                </button>
+              </form>
+
+              <!-- Success Notification Alert inside form container -->
+              <div id="provision-toast-success" class="bg-black/80 border-2 border-[#00FF66] p-4 text-xs font-mono text-neutral-300 space-y-2 hidden">
+                <div class="flex items-center space-x-2 text-[#00FF66] font-bold uppercase">
+                  <i class="fa-solid fa-circle-check text-base"></i>
+                  <span>Agent Provisioned & Verified</span>
+                </div>
+                <p class="text-[11px] leading-relaxed">
+                  Agent identity has been successfully registered in the Phalanx Registry. Cryptographic handshakes have been established with enterprise IAM.
+                </p>
+                <div class="bg-[#1A1C23] p-2 text-[10px] text-neutral-400 border border-neutral-800 flex justify-between">
+                  <span>PERSISTED IN MEMORY INDEX:</span>
+                  <span id="toast-success-id" class="text-[#00FF66] font-bold">N/A</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Templates Library / Preconfigured profiles list -->
+            <div class="lg:col-span-5 space-y-4 font-sans">
+              <div class="bg-[#1A1C23] border border-[#2C2F3F] p-4 space-y-3">
+                <span class="text-xs text-neutral-400 font-mono tracking-widest block uppercase">PRECONFIGURED TEMPLATE ARCHETYPES</span>
+                
+                <div class="space-y-3 font-mono text-xs">
+                  <div onclick="applyTemplateProfile('Baseline Financial Profile')" class="border border-neutral-800 hover:border-[#FFB800] p-3 cursor-pointer bg-neutral-900/60 transition duration-150 space-y-1">
+                    <div class="flex justify-between items-center">
+                      <span class="text-[#FFB800] font-bold">Baseline Financial Profile</span>
+                      <span class="bg-[#2C2F3F] px-1.5 py-0.5 text-[9px] text-[#00FF66]">HIGH SECURITY</span>
+                    </div>
+                    <p class="text-[10px] text-neutral-400 font-sans leading-normal">Pre-configured with strict ledger-writing guardrails and 30-day state retention.</p>
+                  </div>
+
+                  <div onclick="applyTemplateProfile('Read-Only Auditor Profile')" class="border border-neutral-800 hover:border-[#FFB800] p-3 cursor-pointer bg-neutral-900/60 transition duration-150 space-y-1">
+                    <div class="flex justify-between items-center">
+                      <span class="text-neutral-300 font-bold">Read-Only Auditor Profile</span>
+                      <span class="bg-[#2C2F3F] px-1.5 py-0.5 text-[9px] text-amber-500">MEDIUM SEC</span>
+                    </div>
+                    <p class="text-[10px] text-neutral-400 font-sans leading-normal">Zero write permissions, optimized for cross-border compliance audits.</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Terminal simulation display box -->
+              <div class="bg-[#1A1C23] border border-[#2C2F3F] p-4 font-mono text-xs">
+                <span class="text-neutral-500 uppercase tracking-widest text-[10px] block mb-2 font-bold">PROVISIONING CONTEXT STREAM</span>
+                <div id="provision-trace-console" class="bg-black text-[#a3a6b5] p-3 font-mono text-[10px] min-h-[140px] max-h-[160px] overflow-y-auto border border-neutral-900 rounded-none space-y-1 leading-normal">
+                  <div class="text-neutral-600">&gt; HSM allocator standing by...</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============================================= -->
+        <!-- SCREEN 03: MODEL ARMOR SCANNER (ASSISTANT & SCANNER) -->
+        <!-- ============================================= -->
+        <section id="screen-screenarmor" class="space-y-6 hidden">
+          <div class="border-b border-[#2C2F3F] pb-4">
+            <nav class="text-xs text-neutral-500 font-mono mb-1">
+              <span>PHALANX</span> &gt; <span class="text-neutral-300">SECURITY AUDIT GATEWAY</span>
+            </nav>
+            <h2 class="text-2xl font-bold tracking-tight text-white font-mono">Model Armor Guardrail Analyzer</h2>
+            <p class="text-xs text-neutral-400 mt-1">
+              Test queries and reasoning traces under real-time security matrices. Instantly spot hidden prompt injections, tool poisoning exploits, or sovereignty-violating data leaks.
+            </p>
+          </div>
+
+          <!-- Sandbox UI controls -->
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 font-mono">
+            <!-- Sandbox form on left -->
+            <div class="lg:col-span-7 bg-[#1A1C23] border border-[#2C2F3F] p-5 space-y-4">
+              <div class="flex items-center justify-between border-b border-neutral-800 pb-2">
+                <span class="text-xs font-bold text-[#FFB800] uppercase tracking-widest"><i class="fa-solid fa-code mr-1"></i> SIMULATOR WORKBENCH</span>
+                <span class="text-[10px] text-neutral-500">ENG: ENFORCED LATENCY &lt; 1ms</span>
+              </div>
+
+              <div class="space-y-3 font-sans">
+                <div>
+                  <label class="block text-xs font-bold text-neutral-400 uppercase tracking-widest mb-1.5 font-mono">Simulate Prompt/Reasoning Chain Input</label>
+                  <p class="text-[10px] text-neutral-500 mb-1.5">Paste a trace, a suspicious prompt injection attempt, or custom instructions to watch Model Armor evaluation in real time.</p>
+                  <textarea id="armor-input" rows="5" class="w-full bg-neutral-900 border border-neutral-700 text-white font-mono p-3 focus:outline-none focus:border-[#FFB800] text-xs leading-normal" placeholder="Paste command traces or type simulation payload here..."></textarea>
+                </div>
+
+                <!-- Fast preset templates -->
+                <div class="space-y-2">
+                  <div class="text-[10px] text-neutral-400 uppercase tracking-widest font-mono">QUICK PRESETS TEMPLATES:</div>
+                  <div class="flex flex-wrap gap-2">
+                    <button onclick="applyInjectionPreset('prompt')" class="bg-neutral-800 hover:bg-neutral-700 text-[10px] font-mono text-neutral-300 px-2.5 py-1">
+                      Prompt Attempt (Jailbreak)
+                    </button>
+                    <button onclick="applyInjectionPreset('poison')" class="bg-neutral-800 hover:bg-neutral-700 text-[10px] font-mono text-neutral-300 px-2.5 py-1">
+                      Tool Poisoning (SQL Schema Hook)
+                    </button>
+                    <button onclick="applyInjectionPreset('pii')" class="bg-neutral-800 hover:bg-neutral-700 text-[10px] font-mono text-neutral-300 px-2.5 py-1">
+                      PII Sovereign Leak Check
+                    </button>
+                    <button onclick="applyInjectionPreset('clean')" class="bg-neutral-800 hover:bg-neutral-700 text-[10px] font-mono text-neutral-300 px-2.5 py-1">
+                      Clean Treasury ledger check
+                    </button>
+                  </div>
+                </div>
+
+                <button onclick="scanArmorPayload()" class="w-full bg-[#FFB800] hover:bg-[#ffc633] text-black font-bold uppercase py-2.5 font-mono text-xs transition duration-150">
+                  <i class="fa-solid fa-wand-magic-sparkles mr-1"></i> Scan Reasoning Trace
+                </button>
+              </div>
+            </div>
+
+            <!-- Scanner Outputs on right -->
+            <div class="lg:col-span-5 space-y-4">
+              <!-- Realtime Analysis Score Card -->
+              <div class="bg-[#1A1C23] border border-[#2C2F3F] p-4 space-y-3">
+                <span class="text-[10px] text-neutral-500 tracking-wider block font-bold uppercase">MODEL ARMOR REPORT NODE</span>
+                
+                <div class="flex items-center justify-between bg-black/60 p-3 border border-neutral-800">
+                  <div>
+                    <span class="text-[10px] text-neutral-500 uppercase block">SECURITY THREAT INDEX</span>
+                    <span class="text-xl font-bold font-mono tracking-tighter text-[#00FF66]" id="armor-risk-label">0.0% SAFE</span>
+                  </div>
+                  <div class="h-10 w-24 bg-neutral-900 border border-neutral-800 relative overflow-hidden flex items-center justify-center">
+                    <div id="armor-risk-progress" class="absolute left-0 top-0 bottom-0 bg-[#00FF66]/20 transition-all duration-300" style="width: 5%"></div>
+                    <span class="text-xs font-mono font-bold text-white relative z-10" id="armor-risk-pct">5%</span>
+                  </div>
+                </div>
+
+                <div class="space-y-1.5 text-xs">
+                  <div class="flex justify-between">
+                    <span class="text-neutral-500">THREAT DESIGNATION:</span>
+                    <span class="text-white font-bold" id="armor-threat-type">NONE MATCHED</span>
+                  </div>
+                  <div class="flex justify-between">
+                    <span class="text-neutral-500">POLICY QUARANTINE:</span>
+                    <span id="armor-quarantine-status" class="badge-crypt badge-verified font-bold">PASSED</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Inline Reasoning Trace Stream -->
+              <div class="bg-[#1A1C23] border border-[#2C2F3F] p-4 text-xs">
+                <span class="text-neutral-500 uppercase tracking-widest text-[9px] block mb-2 font-bold"><i class="fa-solid fa-timeline mr-1"></i> VERIFY REASONING CHAIN TRACE</span>
+                <div id="armor-reasoning-console" class="bg-black text-[#a3a6b5] p-3 font-mono text-[10px] min-h-[160px] max-h-[220px] overflow-y-auto border border-neutral-900 space-y-1 leading-normal">
+                  <div class="text-neutral-600">Awaiting system simulation scan context...</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Existing Threats Blocked Catalog metrics -->
+          <div class="space-y-3">
+            <div class="flex justify-between items-center">
+              <span class="text-xs text-neutral-400 font-mono tracking-wider block font-bold uppercase">HISTORICAL BLOCKED INJECTIONS FEED</span>
+              <span class="text-[10px] text-neutral-500 font-mono">Telemetry audited inline by gateway</span>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="historical-blocked-container">
+              <!-- Loaded dynamically (filtered category === 'threat') -->
+            </div>
+          </div>
+        </section>
+
+        <!-- ============================================= -->
+        <!-- SCREEN 04: SETTINGS & DEEP RECOVERY HISTORY (HISTORY) -->
+        <!-- ============================================= -->
+        <section id="screen-screenhistory" class="space-y-6 hidden">
+          <div class="border-b border-[#2C2F3F] pb-4 flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div>
+              <nav class="text-xs text-neutral-500 font-mono mb-1">
+                <span>PHALANX</span> &gt; <span class="text-neutral-300">MEM-BANK STORAGE</span>
+              </nav>
+              <h2 class="text-2xl font-bold tracking-tight text-white font-mono">Durable State Memory Index</h2>
+              <p class="text-xs text-neutral-400 mt-1">
+                Settings and telemetry audit records stored inside the persistent database level. Inspect full JSON payloads matching <code class="text-[#FFB800]">POST/GET /api/memory</code>.
+              </p>
+            </div>
+            <div class="flex gap-2">
+              <button onclick="triggerSimulatedThreatLog()" class="bg-red-950/40 hover:bg-red-950 border border-red-500/40 px-3 py-1.5 text-xs text-red-200 font-mono transition">
+                <i class="fa-solid fa-triangle-exclamation mr-1 text-red-400"></i> Simulate Injection Threat
+              </button>
+              <button onclick="downloadHistoryJSON()" class="bg-neutral-800 hover:bg-neutral-700 border border-neutral-700 px-3 py-1.5 text-xs text-neutral-200 font-mono transition">
+                <i class="fa-solid fa-download mr-1"></i> Export State Memory
+              </button>
+            </div>
+          </div>
+
+          <!-- Explanation box -->
+          <div class="bg-[#1A1C23] border border-l-4 border-l-[#FFB800] border-[#2C2F3F] p-4 text-xs font-mono space-y-2">
+            <span class="text-white font-bold block uppercase text-xs">How Durable Context Persists</span>
+            <p class="text-neutral-300 font-sans leading-relaxed text-[11px]">
+              When an enterprise fleet operator provisions agents, records real-time reasoning scans, or establishes compliance handshakes, all metrics are bound to the backend database bank. These entries are completely saved inside <code class="text-amber-400">data/memory.json</code> in real JSON. When the server restarts or undergoes maintenance, state indexes remain strictly locked.
+            </p>
+          </div>
+
+          <!-- Logs Database List table -->
+          <div class="bg-[#1A1C23] border border-[#2C2F3F]">
+            <div class="border-b border-neutral-800 p-4 flex items-center justify-between">
+              <span class="text-xs text-white font-bold font-mono tracking-wider"><i class="fa-solid fa-list-check text-[#FFB800] mr-2"></i> TELEMETRY LOG STATE RECORD INDEX</span>
+              <span class="bg-neutral-800 text-[10px] text-neutral-400 px-2 py-0.5 font-mono" id="history-row-counter">0 events</span>
+            </div>
+            <div class="overflow-x-auto">
+              <table class="w-full text-left text-xs font-mono border-collapse">
+                <thead>
+                  <tr class="bg-black/30 text-neutral-500 border-b border-neutral-800 uppercase text-[10px]">
+                    <th class="p-3">Ref ID / Time</th>
+                    <th class="p-3">Category</th>
+                    <th class="p-3">Security Target Entity</th>
+                    <th class="p-3">Description</th>
+                    <th class="p-3">Verification Hash</th>
+                    <th class="p-3 text-right">Class Flag</th>
+                  </tr>
+                </thead>
+                <tbody id="history-table-body" class="divide-y divide-neutral-900 text-neutral-300">
+                  <!-- Loaded dynamically -->
+                  <tr>
+                    <td colspan="6" class="p-8 text-center text-neutral-500 font-mono">
+                      Querying secure server memory indexes...
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- FOOTER GRID -->
+  <footer class="bg-neutral-950 border-t border-[#2C2F3F] px-4 py-3 md:px-6 flex flex-col md:flex-row md:items-center md:justify-between text-[11px] text-neutral-500 font-mono relative z-20">
+    <div>
+      <span>DESIGN ARCHETYPE: TERMINAL COMPACT // LEVEL 4 AUDIT MODE</span>
+    </div>
+    <div class="mt-2 md:mt-0 flex gap-4">
+      <span>DURABLE ENGINE: NODE.JS EXPRES // PHALANX-MEM-SECURE</span>
+      <span class="text-neutral-400">&copy; 2026 PHALANX LABS INC.</span>
+    </div>
+  </footer>
+
+  <script src="/js/app.js"></script>
+</body>
+</html>

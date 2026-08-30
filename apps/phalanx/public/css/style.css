@@ -1,0 +1,172 @@
+/* Brutalist Tactical Grid UI Stylesheet */
+
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=JetBrains+Mono:wght@300;400;700&display=swap');
+
+:root {
+  --bg-color: #0D0E11;
+  --surface-color: #1A1C23;
+  --primary-color: #FFB800; /* Amber Warning */
+  --accent-color: #00FF66;  /* Safe Neon Green */
+  --danger-color: #FF3344;  /* Terminal Error Red */
+  --text-color: #F3F4F6;
+  --muted-color: #717585;
+}
+
+body {
+  font-family: 'JetBrains Mono', 'Share Tech Mono', monospace;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  overflow-x: hidden;
+  letter-spacing: -0.02em;
+}
+
+/* Hard Sharp Edges */
+* {
+  border-radius: 0px !important;
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-color);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--surface-color);
+  border: 1px solid var(--primary-color);
+}
+
+/* Tactical CRT Scanlines */
+.scanlines-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(
+    rgba(18, 16, 16, 0) 50%, 
+    rgba(0, 0, 0, 0.25) 50%
+  );
+  background-size: 100% 4px;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0.15;
+}
+
+/* Grid Background */
+.tactical-grid {
+  background-color: var(--bg-color);
+  background-image: 
+    linear-gradient(rgba(255, 184, 0, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 184, 0, 0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+/* Monolith UI Borders */
+.border-brutalist {
+  border: 1px solid var(--surface-color);
+}
+.border-primary-subtle {
+  border: 1px solid rgba(255, 184, 0, 0.3);
+}
+.border-primary-strong {
+  border: 1px dashed var(--primary-color);
+}
+.border-accent {
+  border: 1px solid var(--accent-color);
+}
+.border-danger {
+  border: 1px solid var(--danger-color);
+}
+
+/* Status Badges */
+.badge-crypt {
+  font-size: 0.70rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 2px 6px;
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid currentColor;
+}
+
+.badge-verified {
+  color: var(--accent-color);
+  background-color: rgba(0, 255, 102, 0.1);
+}
+
+.badge-quarantined {
+  color: var(--danger-color);
+  background-color: rgba(255, 51, 68, 0.1);
+}
+
+.badge-pending {
+  color: var(--primary-color);
+  background-color: rgba(255, 184, 0, 0.1);
+}
+
+.badge-system {
+  color: #3b82f6;
+  background-color: rgba(59, 130, 246, 0.1);
+}
+
+/* Interactive Scanning Animation */
+.glitch-bar {
+  height: 2px;
+  background: var(--primary-color);
+  width: 100%;
+  animation: scan 4s linear infinite;
+  box-shadow: 0 0 8px var(--primary-color);
+}
+
+@keyframes scan {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(200px); }
+  100% { transform: translateY(0); }
+}
+
+.terminal-header {
+  border-bottom: 2px solid var(--primary-color);
+}
+
+/* Custom glowing stats */
+.glow-text-yellow {
+  text-shadow: 0 0 5px rgba(255, 184, 0, 0.6);
+}
+.glow-text-green {
+  text-shadow: 0 0 5px rgba(0, 255, 102, 0.6);
+}
+
+/* Live logs printing style */
+.terminal-stream {
+  background: #050608;
+  color: #a3a6b5;
+  font-family: inherit;
+  font-size: 0.85rem;
+  line-height: 1.4;
+  border: 1px solid var(--surface-color);
+}
+
+.pulsing-dot {
+  width: 8px;
+  height: 8px;
+  background-color: var(--accent-color);
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% { opacity: 0.2; }
+  50% { opacity: 1; }
+  100% { opacity: 0.2; }
+}
+
+/* Onboarding Screen layout overrides */
+#onboarding-sec {
+  background-image: 
+    radial-gradient(ellipse at center, rgba(26, 28, 35, 0.8) 0%, rgba(13, 14, 17, 1) 100%),
+    linear-gradient(rgba(255, 184, 0, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 184, 0, 0.02) 1px, transparent 1px);
+  background-size: 100% 100%, 30px 30px;
+}
