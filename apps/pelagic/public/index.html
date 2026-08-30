@@ -1,0 +1,1377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PELAGIC // Unbounded compute on the high seas.</title>
+  <!-- Google Fonts for Brutalist Monospace vibe -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0B1011;
+      --surface: #181F22;
+      --primary: #FF5A1F; /* International Orange */
+      --accent: #00FF66;  /* Radar Green */
+      --text: #EAEAEA;
+      --border-muted: #2d3b40;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: 'Share Tech Mono', Monaco, Consolas, monospace;
+      font-size: 14px;
+      line-height: 1.5;
+      overflow-x: hidden;
+      border: 4px solid var(--primary);
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* System Header */
+    header {
+      background-color: var(--surface);
+      border-bottom: 2px solid var(--primary);
+      padding: 10px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .brand-section {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .logo-badge {
+      background-color: var(--primary);
+      color: var(--bg);
+      padding: 3px 8px;
+      font-weight: bold;
+      letter-spacing: 2px;
+      font-size: 1.2rem;
+    }
+
+    .tagline {
+      color: var(--primary);
+      text-transform: uppercase;
+      font-size: 0.9rem;
+      border-left: 2px solid var(--border-muted);
+      padding-left: 15px;
+    }
+
+    .sys-coordinates {
+      color: var(--accent);
+      font-size: 0.9rem;
+      letter-spacing: 1px;
+    }
+
+    /* Alert / Status Bar Ticker */
+    .ticker-bar {
+      background-color: #0d1214;
+      border-bottom: 1px dashed var(--border-muted);
+      padding: 5px 20px;
+      font-size: 0.8rem;
+      color: #92a4a9;
+      display: flex;
+      justify-content: space-between;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+
+    .ticker-item {
+      display: inline-block;
+      margin-right: 30px;
+    }
+
+    .ticker-accent {
+      color: var(--accent);
+    }
+
+    /* Main Grid Layout */
+    .main-workspace {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 240px 1fr;
+      overflow: hidden;
+    }
+
+    /* Sidebar Navigation */
+    aside {
+      background-color: var(--surface);
+      border-right: 2px solid var(--primary);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .nav-list {
+      list-style-type: none;
+    }
+
+    .nav-item {
+      border-bottom: 1px solid var(--border-muted);
+    }
+
+    .nav-btn {
+      width: 100%;
+      background: none;
+      border: none;
+      color: var(--text);
+      font-family: inherit;
+      font-size: 0.95rem;
+      padding: 18px 20px;
+      text-align: left;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: all 0.2s ease;
+      position: relative;
+    }
+
+    .nav-btn:hover {
+      background-color: rgba(255, 90, 31, 0.05);
+      color: var(--primary);
+    }
+
+    .nav-btn.active {
+      background-color: var(--primary);
+      color: var(--bg);
+      font-weight: bold;
+    }
+
+    .nav-btn.active::after {
+      content: "➔";
+      position: absolute;
+      right: 15px;
+    }
+
+    .sidebar-footer {
+      padding: 20px;
+      font-size: 0.75rem;
+      border-top: 1px dashed var(--border-muted);
+      background-color: rgba(0,0,0,0.2);
+    }
+
+    .sidebar-footer p {
+      margin-bottom: 5px;
+    }
+
+    /* Main Dashboard Panel */
+    .dashboard-panel {
+      padding: 20px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .panel-view {
+      display: none;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .panel-view.active-view {
+      display: flex;
+    }
+
+    /* Grid Layouts to emphasize brutalist wireframes */
+    .dash-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    @media (max-width: 900px) {
+      .dash-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Brutalist Containers */
+    .sys-box {
+      background-color: var(--surface);
+      border: 1px solid var(--border-muted);
+      padding: 15px;
+      position: relative;
+    }
+
+    .sys-box::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background-color: var(--border-muted);
+    }
+
+    .sys-box.primary-accent::before {
+      background-color: var(--primary);
+    }
+
+    .sys-box.success-accent::before {
+      background-color: var(--accent);
+    }
+
+    .box-header {
+      font-size: 0.85rem;
+      letter-spacing: 2px;
+      color: var(--primary);
+      border-bottom: 1px solid var(--border-muted);
+      padding-bottom: 8px;
+      margin-bottom: 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      text-transform: uppercase;
+    }
+
+    .box-header span.badge {
+      background-color: rgba(255,90,31,0.1);
+      border: 1px solid var(--primary);
+      padding: 1px 6px;
+      font-size: 0.75rem;
+    }
+
+    /* Spec metrics row */
+    .metrics-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 15px;
+    }
+
+    @media (max-width: 768px) {
+      .metrics-row {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .metric-card {
+      background-color: var(--surface);
+      border: 1px solid var(--border-muted);
+      padding: 15px;
+      text-align: center;
+    }
+
+    .metric-label {
+      font-size: 0.75rem;
+      letter-spacing: 1px;
+      color: #92a4a9;
+      margin-bottom: 5px;
+    }
+
+    .metric-value {
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: var(--primary);
+    }
+
+    .metric-value.accent {
+      color: var(--accent);
+    }
+
+    /* Interactive UI widgets */
+    .btn-sys {
+      background-color: transparent;
+      border: 1px solid var(--primary);
+      color: var(--primary);
+      font-family: inherit;
+      padding: 10px 20px;
+      cursor: pointer;
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      transition: all 0.2s ease;
+    }
+
+    .btn-sys:hover {
+      background-color: var(--primary);
+      color: var(--bg);
+    }
+
+    .btn-sys-accent {
+      background-color: transparent;
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      font-family: inherit;
+      padding: 10px 20px;
+      cursor: pointer;
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      transition: all 0.2s ease;
+    }
+
+    .btn-sys-accent:hover {
+      background-color: var(--accent);
+      color: var(--bg);
+    }
+
+    /* Interactive Thermal Delta Calculator */
+    .calculator-widget h3 {
+      font-size: 1.1rem;
+      color: #fff;
+      margin-bottom: 10px;
+    }
+
+    .calc-slider-box {
+      margin: 15px 0;
+    }
+
+    .calc-slider-box label {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 5px;
+      font-size: 0.85rem;
+    }
+
+    .slider {
+      -webkit-appearance: none;
+      width: 100%;
+      height: 6px;
+      background: var(--border-muted);
+      outline: none;
+      border: none;
+    }
+
+    .slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 16px;
+      height: 16px;
+      background: var(--primary);
+      cursor: pointer;
+    }
+
+    .slider::-moz-range-thumb {
+      width: 16px;
+      height: 16px;
+      background: var(--primary);
+      cursor: pointer;
+    }
+
+    .comp-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 15px;
+      font-size: 0.85rem;
+    }
+
+    .comp-table th, .comp-table td {
+      border: 1px solid var(--border-muted);
+      padding: 8px 10px;
+      text-align: left;
+    }
+
+    .comp-table th {
+      background-color: rgba(255,90,31,0.05);
+      color: var(--primary);
+    }
+
+    .comp-table tr.highlight {
+      background-color: rgba(0,255,102,0.03);
+      color: var(--accent);
+    }
+
+    /* Forms in workspace */
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+      font-size: 0.85rem;
+      letter-spacing: 1px;
+      color: #92a4a9;
+    }
+
+    .form-control {
+      width: 100%;
+      background-color: var(--bg);
+      border: 1px solid var(--border-muted);
+      color: var(--text);
+      font-family: inherit;
+      padding: 10px;
+      font-size: 0.9rem;
+      outline: none;
+    }
+
+    .form-control:focus {
+      border-color: var(--primary);
+    }
+
+    /* Canvas Radar positioning */
+    .radar-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 10px;
+      background-color: #0e1416;
+      border: 1px solid var(--border-muted);
+    }
+
+    #radarCanvas {
+      background-color: #0a0d0e;
+      border: 1px solid var(--border-muted);
+      max-width: 100%;
+    }
+
+    /* Copilot Chat Console */
+    .copilot-terminal {
+      display: flex;
+      flex-direction: column;
+      height: 380px;
+      border: 1px solid var(--border-muted);
+      background-color: #0c1112;
+    }
+
+    .terminal-body {
+      flex: 1;
+      padding: 15px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .chat-msg {
+      max-width: 85%;
+      padding: 10px 12px;
+      font-size: 0.85rem;
+      white-space: pre-line;
+    }
+
+    .chat-msg.agent {
+      background-color: rgba(255,255,255,0.03);
+      border-left: 2px solid var(--primary);
+      position: relative;
+    }
+
+    .chat-msg.agent::before {
+      content: "CO-ARCHITECT";
+      display: block;
+      font-size: 0.70rem;
+      color: var(--primary);
+      margin-bottom: 5px;
+      letter-spacing: 1px;
+    }
+
+    .chat-msg.user {
+      align-self: flex-end;
+      background-color: rgba(0, 255, 102, 0.05);
+      border-right: 2px solid var(--accent);
+      text-align: right;
+    }
+
+    .chat-msg.user::after {
+      content: "OPERATOR";
+      display: block;
+      font-size: 0.70rem;
+      color: var(--accent);
+      margin-top: 5px;
+      letter-spacing: 1px;
+    }
+
+    .terminal-suggestions {
+      display: flex;
+      gap: 10px;
+      padding: 10px 15px;
+      overflow-x: auto;
+      border-top: 1px solid var(--border-muted);
+      background-color: rgba(0,0,0,0.1);
+    }
+
+    .suggestion-chip {
+      background-color: transparent;
+      border: 1px dashed var(--border-muted);
+      color: var(--text);
+      cursor: pointer;
+      padding: 6px 12px;
+      font-size: 0.75rem;
+      font-family: inherit;
+      white-space: nowrap;
+    }
+
+    .suggestion-chip:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    .terminal-input-bar {
+      display: flex;
+      border-top: 1px solid var(--border-muted);
+    }
+
+    .terminal-prompt-lbl {
+      background-color: var(--surface);
+      color: var(--accent);
+      padding: 12px 15px;
+      font-weight: bold;
+    }
+
+    .terminal-input {
+      flex: 1;
+      background-color: transparent;
+      border: none;
+      color: var(--accent);
+      font-family: inherit;
+      font-size: 0.9rem;
+      padding: 12px;
+      outline: none;
+    }
+
+    /* Ledger memory entries */
+    .ledger-entries {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      max-height: 500px;
+      overflow-y: auto;
+      padding-right: 5px;
+    }
+
+    .ledger-card {
+      background-color: var(--surface);
+      border: 1px solid var(--border-muted);
+      padding: 15px;
+      transition: all 0.2s ease;
+    }
+
+    .ledger-card:hover {
+      border-color: var(--primary);
+    }
+
+    .ledger-meta {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.75rem;
+      color: rgba(234,234,234,0.5);
+      border-bottom: 1px dashed var(--border-muted);
+      padding-bottom: 6px;
+      margin-bottom: 10px;
+    }
+
+    .ledger-title {
+      font-weight: bold;
+      color: var(--primary);
+      margin-bottom: 8px;
+      letter-spacing: 1px;
+    }
+
+    .ledger-body {
+      font-size: 0.85rem;
+      color: #92a4a9;
+      white-space: pre-wrap;
+    }
+
+    .copilot-suggestion-alert {
+      background-color: rgba(255, 90, 31, 0.1);
+      border: 1px solid var(--primary);
+      padding: 10px;
+      margin-top: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.8rem;
+    }
+
+    .copilot-suggestion-alert button {
+      background-color: var(--primary);
+      color: var(--bg);
+      border: none;
+      font-family: inherit;
+      font-weight: bold;
+      padding: 4px 8px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- System Header -->
+  <header>
+    <div class="brand-section">
+      <div class="logo-badge">PELAGIC</div>
+      <div class="tagline">Unbounded compute on the high seas.</div>
+    </div>
+    <div class="sys-coordinates" id="coordTicker">
+      SYS_CONTROL // LAT: 37°44’28”N LON: 25°40’32”W
+    </div>
+  </header>
+
+  <!-- Status Info Bar -->
+  <div class="ticker-bar">
+    <div>
+      <span class="ticker-item">GLOBAL COMPUTE STATUS: <span class="ticker-accent">NOMINAL</span></span>
+      <span class="ticker-item">THERMAL delta: <span class="ticker-accent">Δ PUE -0.43 (PUE 1.02 vs 1.45)</span></span>
+      <span class="ticker-item">ACTIVE BARS: <span class="ticker-accent" id="activeBargeCount">2</span></span>
+    </div>
+    <div>
+      <span>SECURE ENCRYPTED LEDGER PROTOCOL ACTIVE</span>
+    </div>
+  </div>
+
+  <!-- Workspace Columns -->
+  <main class="main-workspace">
+    <!-- Navigation Sidebar -->
+    <aside>
+      <ul class="nav-list">
+        <li class="nav-item">
+          <button class="nav-btn active" onclick="switchView('SYS_MONITOR', this)">
+            [01] SYS_MONITOR
+          </button>
+        </li>
+        <li class="nav-item">
+          <button class="nav-btn" onclick="switchView('SYS_COPILOT', this)">
+            [02] SYS_COPILOT
+          </button>
+        </li>
+        <li class="nav-item">
+          <button class="nav-btn" onclick="switchView('SYS_ALLOC', this)">
+            [03] SYS_ALLOC
+          </button>
+        </li>
+        <li class="nav-item">
+          <button class="nav-btn" onclick="switchView('SYS_MEMORY_LOG', this)">
+            [04] SYS_MEMORY_LOG
+          </button>
+        </li>
+      </ul>
+
+      <div class="sidebar-footer">
+        <p style="color: var(--primary); font-weight: bold;">LEDGER STORAGE</p>
+        <p>TYPE: DURABLE MEMORY</p>
+        <p>PATH: ./memory.json</p>
+        <p style="color: var(--accent); margin-top: 8px;">CONNECTED // SECURED</p>
+      </div>
+    </aside>
+
+    <!-- Main Active Screen Context -->
+    <section class="dashboard-panel">
+
+      <!-- ==================== VIEW 1: MONITOR & METRICS ==================== -->
+      <div id="view-SYS_MONITOR" class="panel-view active-view">
+        <div class="metrics-row">
+          <div class="metric-card">
+            <div class="metric-label">GLOBAL_PUE</div>
+            <div class="metric-value accent" id="globalPue">1.02</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-label">ACTIVE_MW</div>
+            <div class="metric-value" id="activeMw">150 MW</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-label">THERMAL_SINK_TEMP</div>
+            <div class="metric-value accent">4.2°C</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-label">SYS_UPTIME</div>
+            <div class="metric-value">99.999%</div>
+          </div>
+        </div>
+
+        <div class="dash-grid">
+          <!-- Left: Telemetry & Radar -->
+          <div class="sys-box primary-accent">
+            <div class="box-header">
+              <span>Ocean Deployment Map & Active Transponders</span>
+              <span class="badge">RADAR_SWEEP</span>
+            </div>
+            <div class="radar-container">
+              <canvas id="radarCanvas" width="340" height="240"></canvas>
+              <p style="font-size: 0.75rem; color: #92a4a9; margin-top: 10px; text-align: center;">
+                BLIPS REPRESENT ACTIVE/SCHEDULED COMPUTER HULLS PLOTTED LOCALLY
+              </p>
+            </div>
+          </div>
+
+          <!-- Right: Thermal Calculator -->
+          <div class="sys-box">
+            <div class="box-header">
+              <span>Thermal Delta Calculator</span>
+              <span class="badge">ENERGY_SAVINGS</span>
+            </div>
+            <div class="calculator-widget">
+              <p style="font-size: 0.85rem; color: #92a4a9; margin-bottom: 12px;">
+                Slide to configure target megawatts. Direct ocean cooling (PUE 1.02) provides enormous gains relative to legacy land-based HVAC cooling infrastructure (average PUE 1.45).
+              </p>
+              
+              <div class="calc-slider-box">
+                <label>
+                  <span>TARGET DEPLOYMENT LOADING:</span>
+                  <span style="color: var(--primary); font-weight: bold;" id="mwSliderVal">150 MW</span>
+                </label>
+                <input type="range" min="10" max="1000" value="150" class="slider" id="mwSlider" oninput="calculateThermalDelta(this.value)">
+              </div>
+
+              <table class="comp-table">
+                <thead>
+                  <tr>
+                    <th>METRIC NAME</th>
+                    <th>LAND HVAC (PUE 1.45)</th>
+                    <th style="color: var(--accent);">PELAGIC DEEP SEA (PUE 1.02)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Total Overhead Power</td>
+                    <td id="landHvacPower">67.5 MW</td>
+                    <td style="color: var(--accent);" id="seaPower">3.0 MW</td>
+                  </tr>
+                  <tr class="highlight">
+                    <td>Immediate Efficiency Delta</td>
+                    <td>-</td>
+                    <td style="font-weight: bold;">-29.6% Total Energy Drain</td>
+                  </tr>
+                  <tr>
+                    <td>Water Consumption</td>
+                    <td>Millions of Gallons/day</td>
+                    <td style="color: var(--accent);">0.0 Gallons (Direct Thermal Loop)</td>
+                  </tr>
+                  <tr class="highlight">
+                    <td>Est. Savings / Year</td>
+                    <td>-</td>
+                    <td style="font-weight: bold;" id="savingsCalculated">$49,530,000 USD</td>
+                  </tr>
+                </tbody>
+              </table>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- Saved Deployments Section -->
+        <div class="sys-box">
+          <div class="box-header">
+            <span>Synchronized Persistent Deployments</span>
+            <span class="badge">LEDGER_STATE</span>
+          </div>
+          <div style="overflow-x: auto;">
+            <table class="comp-table" id="deploymentsTable">
+              <thead>
+                <tr>
+                  <th>DEPLOYMENT TITLE</th>
+                  <th>COORDINATES & SPECS</th>
+                  <th>SAVED TIMESTAMP</th>
+                  <th>STATUS</th>
+                </tr>
+              </thead>
+              <tbody id="deploymentsTableBody">
+                <!-- Dynamically populated -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ==================== VIEW 2: COPILOT CONSOLE ==================== -->
+      <div id="view-SYS_COPILOT" class="panel-view">
+        <div class="sys-box primary-accent">
+          <div class="box-header">
+            <span>Maritime AI Copilot Terminal</span>
+            <span class="badge">SYS_COPILOT_V1</span>
+          </div>
+          <p style="font-size: 0.85rem; color: #92a4a9; margin-bottom: 15px;">
+            Consult the Pelagic Deployment AI Architect to design ocean-water configurations, calculate seawater thermal mechanics, or navigate international maritime jurisdictions (UNCLOS regulations).
+          </p>
+
+          <div class="copilot-terminal">
+            <div class="terminal-body" id="chatOutput">
+              <div class="chat-msg agent">Greetings. I am the Pelagic Maritime AI Architect. I specialize in high-density marine cooling pipelines, maritime law, and deep thermocline energy configurations. Ask me about biofouling prevention, UNCLOS, or request a coordinate recommendation to initiate.</div>
+            </div>
+            
+            <!-- Suggestion chips -->
+            <div class="terminal-suggestions">
+              <button class="suggestion-chip" onclick="applySuggestion('What is the PUE efficiency difference between ocean cooling and land HVAC?')">Thermal Efficiency PUE</button>
+              <button class="suggestion-chip" onclick="applySuggestion('How do you prevent saltwater biofouling in the cooling tubes?')">Saltwater Biofouling</button>
+              <button class="suggestion-chip" onclick="applySuggestion('What is the recommended flag-state under UNCLOS for legal sovereign operations?')">UNCLOS Jurisdiction</button>
+              <button class="suggestion-chip" onclick="applySuggestion('Recommend a high-density placement coordinate sector.')">Placement Recommendations</button>
+            </div>
+
+            <div class="terminal-input-bar">
+              <div class="terminal-prompt-lbl">COPILOT_IN//</div>
+              <input type="text" class="terminal-input" id="terminalInput" placeholder="ENTER CO-ARCHITECT QUERY..." onkeydown="if(event.key === 'Enter') submitChat()">
+              <button class="btn-sys-accent" onclick="submitChat()" style="border: none; border-left: 1px solid var(--accent);">SEND</button>
+            </div>
+          </div>
+
+          <div id="suggestionIndicator" style="display: none;">
+            <div class="copilot-suggestion-alert">
+              <span><strong>COPILOT RECOMMENDATION ACTIVE:</strong> Ready to auto-populate provisioning logs for: <span id="suggestedConfigMeta" style="color: var(--accent);"></span></span>
+              <button onclick="applyCopilotToWorkflow()">APPLY TO PROVISIONING</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ==================== VIEW 3: WORKFLOW SUITE ==================== -->
+      <div id="view-SYS_ALLOC" class="panel-view">
+        <div class="sys-box primary-accent">
+          <div class="box-header">
+            <span>Provision Compute Hull</span>
+            <span class="badge">INITIATE_DEPLOYMENT_SEQUENCE</span>
+          </div>
+          <p style="font-size: 0.85rem; color: #92a4a9; margin-bottom: 20px;">
+            Configure parameters below. Selecting a copilot recommendation will immediately lock design geometries. Proceeding creates a persistent deployment record written to the durable `/api/memory` ledger.
+          </p>
+
+          <form id="provisionForm" onsubmit="submitProvision(event)">
+            <div class="form-group">
+              <label>PRE-SET CO-ARCHITECT RECOMMENDATION</label>
+              <select class="form-control" id="presetSelect" onchange="handlePresetChange(this.value)">
+                <option value="manual">Manual Configuration</option>
+                <option value="hull-copilot">Apply Copilot Proposal (LAT 37.74 N, LON 25.67 W // Direct-to-Chip)</option>
+              </select>
+            </div>
+
+            <div class="dash-grid">
+              <div class="form-group">
+                <label>TARGET COORDINATES (LATITUDE/LONGITUDE)</label>
+                <input type="text" class="form-control" id="formCoords" placeholder="e.g., 37.7412 N, -25.6756 W" required>
+              </div>
+
+              <div class="form-group">
+                <label>COMPUTE DENSITY (SIZE)</label>
+                <select class="form-control" id="formDensity">
+                  <option value="1,000 Nodes (50MW)">1,000 Nodes (50MW)</option>
+                  <option value="2,000 Nodes (100MW)">2,000 Nodes (100MW)</option>
+                  <option value="4,000 Nodes (200MW)">4,000 Nodes (200MW)</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>COOLING LOOP ARCHITECTURE</label>
+              <select class="form-control" id="formCooling">
+                <option value="Direct-to-Chip Deep Ocean Water">Direct-to-Chip Deep Ocean Water</option>
+                <option value="Closed-Loop Saltwater Heat Exchange">Closed-Loop Saltwater Heat Exchange</option>
+                <option value="Hybrid Surface/Deep Thermocline">Hybrid Surface/Deep Thermocline</option>
+              </select>
+            </div>
+
+            <div style="margin-top: 25px; padding: 15px; background: rgba(255,90,31,0.05); border: 1px dashed var(--primary); margin-bottom: 25px;">
+              <p style="color: var(--primary); font-weight: bold; margin-bottom: 5px;">DEPLOYMENT PROCEDURAL CONFIRMATION</p>
+              <p style="font-size: 0.8rem; color: #92a4a9;">
+                Upon queuing, parameters will be committed into memory. The server's persistent JSON file will lock this state, and raw telemetry metrics will instantly incorporate the registered MW cluster.
+              </p>
+            </div>
+
+            <div style="display: flex; gap: 15px;">
+              <button type="submit" class="btn-sys">QUEUE_HULL_DEPLOYMENT</button>
+              <button type="button" class="btn-sys-accent" onclick="resetForm()">RESET FORM</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- ==================== VIEW 4: SYSTEM MEMORY LEDGER ==================== -->
+      <div id="view-SYS_MEMORY_LOG" class="panel-view">
+        <div class="dash-grid" style="grid-template-columns: 350px 1fr;">
+          
+          <!-- Left: Save Ledger Record -->
+          <div class="sys-box primary-accent">
+            <div class="box-header">
+              <span>Commit Memory Entry</span>
+              <span class="badge">SEC_COMMIT</span>
+            </div>
+            <p style="font-size: 0.8rem; color: #92a4a9; margin-bottom: 15px;">
+              Directly insert a log, operational memo, or physical server incident into the durable `/api/memory` endpoint.
+            </p>
+
+            <form id="ledgerForm" onsubmit="submitLedgerRecord(event)">
+              <div class="form-group">
+                <label>LEDGER ENTRY TITLE</label>
+                <input type="text" class="form-control" id="ledgerTitle" placeholder="e.g., SECTOR_4_ANTENNA_UPGRADE" required>
+              </div>
+              <div class="form-group">
+                <label>LEDGER BODY / READOUT</label>
+                <textarea class="form-control" id="ledgerBody" rows="8" placeholder="Enter continuous text or structural technical logs..." required style="resize: none;"></textarea>
+              </div>
+              <button type="submit" class="btn-sys" style="width: 100%;">COMMIT_TO_LEDGER</button>
+            </form>
+          </div>
+
+          <!-- Right: Saved Memory Ledger List -->
+          <div class="sys-box success-accent">
+            <div class="box-header">
+              <span>Durable Memory Record Ledger (GET /api/memory)</span>
+              <span class="badge" id="ledgerCountBadge">0 RECORDS</span>
+            </div>
+            <p style="font-size: 0.8rem; color: #92a4a9; margin-bottom: 15px;">
+              These records are dynamically pulled from the backend JSON cluster layer. Writing directly or provisioning a compute barge commits logs directly here!
+            </p>
+
+            <div class="ledger-entries" id="ledgerContainer">
+              <!-- Dynamical elements -->
+              <p style="color: var(--accent); text-align: center; padding: 40px 0;">INTERROGATING PERSISTENT LEDGER LAYER...</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </section>
+  </main>
+
+  <script>
+    // System Memory Cache
+    let memoryCache = [];
+    
+    // Active Copilot Suggested Config
+    let activeCopilotSuggestion = null;
+
+    // RADAR DRAWING CONSTANTS
+    const canvas = document.getElementById('radarCanvas');
+    const ctx = canvas.getContext('2d');
+    let radarSweepAngle = 0;
+    let fallbackBlips = [
+      { x: 190, y: 80, name: "HULL-01", active: true },
+      { x: 80, y: 160, name: "HULL-02", active: true }
+    ];
+
+    // Initialize Page load
+    window.addEventListener('DOMContentLoaded', () => {
+      fetchMemoryLog();
+      startRadarSweep();
+      calculateThermalDelta(150);
+      
+      // Update coordinate visual ticker subtly
+      setInterval(() => {
+        const sign = Math.random() > 0.5 ? 1 : -1;
+        const offset = (Math.random() * 0.001).toFixed(4);
+        document.getElementById('coordTicker').innerText = `SYS_CONTROL // LAT: 37°44’${(28 + sign*Math.random()).toFixed(1)}”N LON: 25°40’${(32 - sign*Math.random()).toFixed(1)}”W`;
+      }, 3000);
+    });
+
+    // View Switching Navigation Router
+    function switchView(viewId, element) {
+      // Toggle nav button active highlight
+      document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+      element.classList.add('active');
+
+      // Toggle active view panel content
+      document.querySelectorAll('.panel-view').forEach(panel => panel.classList.remove('active-view'));
+      document.getElementById(`view-${viewId}`).classList.add('active-view');
+    }
+
+    // Interactive Thermal PUE Calculus
+    function calculateThermalDelta(val) {
+      document.getElementById('mwSliderVal').innerText = `${val} MW`;
+      
+      const mw = parseFloat(val);
+      const PUE_LEGACY = 1.45;
+      const PUE_SEA = 1.02;
+
+      // Overhead calc: (PUE - 1.00) * IT_Load
+      const legacyOverhead = (PUE_LEGACY - 1.00) * mw;
+      const seaOverhead = (PUE_SEA - 1.00) * mw;
+
+      document.getElementById('landHvacPower').innerText = `${legacyOverhead.toFixed(2)} MW`;
+      document.getElementById('seaPower').innerText = `${seaOverhead.toFixed(2)} MW`;
+
+      // Year-long cost calculation assuming $0.06 / kWh standard server rate
+      // 8760 hours in a year. Net MW power savings: legacyOverhead - seaOverhead
+      const mwSaved = legacyOverhead - seaOverhead;
+      const kwhSavedOfYear = mwSaved * 1000 * 24 * 365;
+      const financialSavings = kwhSavedOfYear * 0.13; // $0.13 standard commercial rate average
+      
+      // Format number to financial USD
+      const formatter = new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'USD',
+        maximumFractionDigits: 0
+      });
+
+      document.getElementById('savingsCalculated').innerText = `${formatter.format(financialSavings)} USD / Year`;
+    }
+
+    // GET /api/memory handler
+    async function fetchMemoryLog() {
+      try {
+        const response = await fetch('/api/memory');
+        const pack = await response.json();
+        
+        if (pack.status === 'success') {
+          memoryCache = pack.data;
+          renderLedger();
+          updateTelemetryAndDashboard();
+        }
+      } catch (err) {
+        console.error('Failed to communicate with durable ledger API /api/memory:', err);
+        const container = document.getElementById('ledgerContainer');
+        container.innerHTML = `
+          <div style="border: 1px solid var(--primary); padding: 15px; color: var(--primary);">
+            <strong>SYS_LEDGER_ERROR:</strong> Connection to backend server timed out. Check Node log output on console.
+          </div>
+        `;
+      }
+    }
+
+    // POST /api/memory handler (general memory additions)
+    async function submitLedgerRecord(event) {
+      event.preventDefault();
+      const titleInput = document.getElementById('ledgerTitle');
+      const bodyInput = document.getElementById('ledgerBody');
+
+      try {
+        const response = await fetch('/api/memory', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            title: titleInput.value,
+            body: bodyInput.value
+          })
+        });
+
+        const statusData = await response.json();
+        if (statusData.status === 'success') {
+          titleInput.value = '';
+          bodyInput.value = '';
+          // Refresh lists
+          await fetchMemoryLog();
+          
+          // Switch to view memory screen to see the result
+          switchView('SYS_MEMORY_LOG', document.querySelector('[onclick*="SYS_MEMORY_LOG"]'));
+        } else {
+          alert('Failed to write logic record: ' + statusData.message);
+        }
+      } catch (err) {
+        console.error('Error committing ledger event:', err);
+        alert('Server validation or filesystem error. Verify backend details.');
+      }
+    }
+
+    // POST /api/memory handler (hull provisioning form submit)
+    async function submitProvision(event) {
+      event.preventDefault();
+
+      const coords = document.getElementById('formCoords').value;
+      const density = document.getElementById('formDensity').value;
+      const cooling = document.getElementById('formCooling').value;
+      
+      const bargeName = `HULL-${10 + Math.floor(Math.random() * 89)}`;
+      const title = `DEPLOYMENT QUEUED // ${bargeName}`;
+      const body = `SPECIFICATIONS SHEET:
+- SECTOR GEOMETRY: ${coords}
+- SYSTEM DENSITY: ${density}
+- HEAT MANIFOLD: ${cooling}
+- SECURITY JURISDICTION: UNCLOS COMPLIANT SOVEREIGN OPERATION
+- OPERATIONAL DELTA PUE: NOMINAL 1.01-1.02 TARGET`;
+
+      try {
+        const response = await fetch('/api/memory', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ title, body })
+        });
+
+        const statusData = await response.json();
+        if (statusData.status === 'success') {
+          resetForm();
+          // Reset AI suggestions box
+          document.getElementById('suggestionIndicator').style.display = 'none';
+          activeCopilotSuggestion = null;
+
+          // Hydrate ledger list
+          await fetchMemoryLog();
+          
+          // Focus view on Memory Ledger to confirm submission!
+          switchView('SYS_MEMORY_LOG', document.querySelector('[onclick*="SYS_MEMORY_LOG"]'));
+        } else {
+          alert('Form error: ' + statusData.message);
+        }
+      } catch (err) {
+        console.error('Error submitting provisioning scheme to memory:', err);
+      }
+    }
+
+    // Hydrates lists, table statistics, and total megawatt counters dynamically from Memory!
+    function updateTelemetryAndDashboard() {
+      // Calculate how many active compute hulls have been deployed based on search terms 'DEPLOYMENT QUEUED' in memory!
+      let subTotalMw = 150; // Core specs starting point (HULL-01 & HULL-02 = 150MW)
+      let bargeCount = 2;
+      const activeBlips = [
+        { x: 190, y: 80, name: "HULL-01", active: true },
+        { x: 80, y: 160, name: "HULL-02", active: true }
+      ];
+
+      const deploymentsTableBody = document.getElementById('deploymentsTableBody');
+      deploymentsTableBody.innerHTML = '';
+
+      // Set baseline values inside table
+      const coreHulls = [
+        { title: "HULL-01 // CORE NORTH ATLANTIC", details: "LAT 37.74° N, LON 25.67° W // 50MW cluster // PUE 1.01", time: "Baseline Operations", status: "NOMINAL" },
+        { title: "HULL-02 // EQUATORIAL PACIFIC SYSTEM", details: "LAT 0.00° N, LON 120.00° W // 100MW cluster // PUE 1.03", time: "Baseline Operations", status: "NOMINAL" }
+      ];
+
+      coreHulls.forEach(h => {
+        deploymentsTableBody.innerHTML += `
+          <tr>
+            <td style="color: var(--primary); font-weight: bold;">${h.title}</td>
+            <td>${h.details}</td>
+            <td style="color: #92a4a9;">${h.time}</td>
+            <td><span style="color: var(--accent); font-weight: bold;">[${h.status}]</span></td>
+          </tr>
+        `;
+      });
+
+      // Filter and append elements from the memory collection
+      memoryCache.forEach((m, index) => {
+        if (m.title.startsWith("DEPLOYMENT QUEUED")) {
+          bargeCount++;
+          
+          // Parse out MW from body
+          let mwValue = 50;
+          if (m.body.includes("100MW")) mwValue = 100;
+          else if (m.body.includes("200MW")) mwValue = 200;
+          subTotalMw += mwValue;
+
+          // Parse coordinates to extract lat/lon for canvas display mapping
+          let px = 100 + (index * 35) % 150;
+          let py = 100 + (index * 45) % 100;
+          
+          activeBlips.push({
+            x: px,
+            y: py,
+            name: m.title.replace("DEPLOYMENT QUEUED // ", ""),
+            active: true
+          });
+
+          deploymentsTableBody.innerHTML += `
+            <tr>
+              <td style="color: var(--primary); font-weight: bold;">${m.title}</td>
+              <td style="font-size:0.8rem; white-space: pre-line;">${m.body.substring(0, 150)}...</td>
+              <td style="color: #92a4a9; font-size: 0.8rem;">${new Date(m.timestamp).toLocaleString()}</td>
+              <td><span style="color: var(--accent); font-weight: bold;">[ACTIVE]</span></td>
+            </tr>
+          `;
+        }
+      });
+
+      // Match variables on monitor screen
+      document.getElementById('activeBargeCount').innerText = `${bargeCount}`;
+      document.getElementById('activeMw').innerText = `${subTotalMw} MW`;
+      
+      // Calculate overall nominal global scaling PUE based on size
+      const globalMetricPue = (1.01 + (bargeCount * 0.002)).toFixed(3);
+      document.getElementById('globalPue').innerText = globalMetricPue;
+
+      // Update real local radar map blips
+      fallbackBlips = activeBlips;
+    }
+
+    // Dynamic renderer for ledger view logs
+    function renderLedger() {
+      const container = document.getElementById('ledgerContainer');
+      const badge = document.getElementById('ledgerCountBadge');
+      badge.innerText = `${memoryCache.length} LOG RECORDS`;
+
+      if (memoryCache.length === 0) {
+        container.innerHTML = `
+          <div style="border: 1px dashed var(--border-muted); padding: 40px; text-align: center; color: #92a4a9;">
+            Ledger memory is currently completely empty. Commit an entry on the form panel to activate.
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = memoryCache.map(record => `
+        <div class="ledger-card">
+          <div class="ledger-meta">
+            <span>TX_ADDR: 0x${record.id.substring(0,6).toUpperCase()}</span>
+            <span>${new Date(record.timestamp).toLocaleString()}</span>
+          </div>
+          <div class="ledger-title">${record.title}</div>
+          <div class="ledger-body">${record.body}</div>
+        </div>
+      `).join('');
+    }
+
+    // Forms handling Preset changes
+    function handlePresetChange(val) {
+      const formCoords = document.getElementById('formCoords');
+      const formDensity = document.getElementById('formDensity');
+      const formCooling = document.getElementById('formCooling');
+
+      if (val === 'hull-copilot') {
+        formCoords.value = '37.7412 N, -25.6756 W';
+        formDensity.value = '1,000 Nodes (50MW)';
+        formCooling.value = 'Direct-to-Chip Deep Ocean Water';
+      } else if (val === 'manual') {
+        formCoords.value = '';
+        formDensity.value = '1,000 Nodes (50MW)';
+        formCooling.value = 'Direct-to-Chip Deep Ocean Water';
+      }
+    }
+
+    function applyCopilotToWorkflow() {
+      if (!activeCopilotSuggestion) return;
+      
+      // Change active screen pane
+      switchView('SYS_ALLOC', document.querySelector('[onclick*="SYS_ALLOC"]'));
+      
+      // Auto-fill form inputs
+      document.getElementById('presetSelect').value = 'manual';
+      document.getElementById('formCoords').value = activeCopilotSuggestion.coordinates;
+      document.getElementById('formDensity').value = activeCopilotSuggestion.density;
+      document.getElementById('formCooling').value = activeCopilotSuggestion.cooling;
+    }
+
+    function resetForm() {
+      document.getElementById('provisionForm').reset();
+    }
+
+    // AI COPILOT LOGICS
+    async function submitChat() {
+      const input = document.getElementById('terminalInput');
+      const val = input.value.trim();
+      if (!val) return;
+
+      appendChatMessage(val, 'user');
+      input.value = '';
+
+      try {
+        const response = await fetch('/api/copilot', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ message: val })
+        });
+
+        const data = await response.json();
+        if (data.status === 'success') {
+          appendChatMessage(data.reply, 'agent');
+          if (data.suggestedConfig) {
+            activeCopilotSuggestion = data.suggestedConfig;
+            document.getElementById('suggestedConfigMeta').innerText = `${activeCopilotSuggestion.coordinates} // ${activeCopilotSuggestion.cooling}`;
+            document.getElementById('suggestionIndicator').style.display = 'block';
+          }
+        }
+      } catch (err) {
+        console.error('Chat submit fail:', err);
+        appendChatMessage('SYS_ERR: Unable to wire connection to the Maritime Decision Subagent. Please verify server state.', 'agent');
+      }
+    }
+
+    function applySuggestion(text) {
+      document.getElementById('terminalInput').value = text;
+      submitChat();
+    }
+
+    function appendChatMessage(text, sender) {
+      const chatOutput = document.getElementById('chatOutput');
+      const msgDiv = document.createElement('div');
+      msgDiv.className = `chat-msg ${sender}`;
+      msgDiv.innerText = text;
+      chatOutput.appendChild(msgDiv);
+      chatOutput.scrollTop = chatOutput.scrollHeight;
+    }
+
+    // SATELLITE CANVAS RADAR SWEEPING ANIMATION (NOMINAL)
+    function startRadarSweep() {
+      function draw() {
+        if (!ctx) return;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        const cx = canvas.width / 2;
+        const cy = canvas.height / 2;
+        const maxRadius = Math.min(cx, cy) - 15;
+
+        // Draw radial grid lines
+        ctx.strokeStyle = 'rgba(0, 255, 102, 0.1)';
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        for (let r = 40; r <= maxRadius; r += 40) {
+          ctx.arc(cx, cy, r, 0, Math.PI * 2);
+        }
+        ctx.stroke();
+
+        // Draw vertical / horizontal lines
+        ctx.beginPath();
+        ctx.moveTo(cx - maxRadius, cy);
+        ctx.lineTo(cx + maxRadius, cy);
+        ctx.moveTo(cx, cy - maxRadius);
+        ctx.lineTo(cx, cy + maxRadius);
+        ctx.stroke();
+
+        // Coordinates texts
+        ctx.fillStyle = 'rgba(0,255,102,0.4)';
+        ctx.font = '9px monospace';
+        ctx.fillText("N 00°0'0\"", cx - 18, 12);
+        ctx.fillText("S 00°0'0\"", cx - 18, canvas.height - 4);
+
+        // Sweeper sweep gradient
+        radarSweepAngle += 0.015;
+        if (radarSweepAngle >= Math.PI * 2) {
+          radarSweepAngle = 0;
+        }
+
+        ctx.save();
+        ctx.translate(cx, cy);
+        ctx.rotate(radarSweepAngle);
+        
+        const scanGrad = ctx.createRadialGradient(0, 0, 0, 0, 0, maxRadius);
+        scanGrad.addColorStop(0, 'rgba(0, 255, 102, 0.15)');
+        scanGrad.addColorStop(1, 'rgba(0, 255, 102, 0)');
+
+        ctx.fillStyle = scanGrad;
+        ctx.beginPath();
+        ctx.moveTo(0, 0);
+        ctx.arc(0, 0, maxRadius, -0.4, 0);
+        ctx.closePath();
+        ctx.fill();
+
+        // Sweep line
+        ctx.strokeStyle = 'rgba(0, 255, 102, 0.8)';
+        ctx.lineWidth = 1.5;
+        ctx.beginPath();
+        ctx.moveTo(0, 0);
+        ctx.lineTo(maxRadius, 0);
+        ctx.stroke();
+        ctx.restore();
+
+        // Render Blips inside current coordinate matrix
+        fallbackBlips.forEach(blip => {
+          ctx.beginPath();
+          ctx.arc(blip.x, blip.y, 4, 0, Math.PI * 2);
+          ctx.fillStyle = 'rgba(255, 90, 31, 0.9)'; // Active primary/orange flag blip
+          ctx.fill();
+          
+          // Outer halo warning pulse
+          const pulse = Math.abs(Math.sin(Date.now() / 400)) * 5 + 3;
+          ctx.beginPath();
+          ctx.arc(blip.x, blip.y, pulse, 0, Math.PI * 2);
+          ctx.strokeStyle = 'rgba(255, 90, 31, 0.3)';
+          ctx.lineWidth = 1;
+          ctx.stroke();
+
+          // Blip identifier label
+          ctx.fillStyle = 'rgba(234, 234, 234, 0.8)';
+          ctx.fillText(blip.name, blip.x + 8, blip.y + 3);
+        });
+
+        requestAnimationFrame(draw);
+      }
+      
+      requestAnimationFrame(draw);
+    }
+  </script>
+</body>
+</html>
