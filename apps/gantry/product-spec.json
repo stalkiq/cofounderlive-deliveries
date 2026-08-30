@@ -1,0 +1,245 @@
+{
+  "missionId": "ep_mtg5tj2q",
+  "idea": "Taskmaster: Build a complete workflow, not just a chatbot. Don't just make an agent that writes text. Make one that takes action. Find a messy, multi-step chore in your job, classes, or personal life. Build an agent that handles the details, sends the right info to the right places, and proves it can do the heavy lifting for you.",
+  "brand": {
+    "name": "Gantry",
+    "tagline": "Stop prompting. Start executing.",
+    "audience": "Operations leads drowning in multi-app manual workarounds",
+    "tone": [
+      "Industrial",
+      "Relentless",
+      "Precise"
+    ],
+    "visualConcept": "A high-contrast blueprint and terminal aesthetic featuring heavy grid lines, mechanical workflow schematics, and physical status indicators instead of soft SaaS illustrations.",
+    "layout": "A single-column pipeline layout that visually funnels the user from a live, interactive workflow simulator in the hero down through a series of connected, step-by-step integration cards.",
+    "palette": {
+      "background": "#121212",
+      "surface": "#1E2022",
+      "primary": "#FF6B00",
+      "accent": "#00E676",
+      "text": "#F5F5F7"
+    },
+    "creativeNotes": [
+      "Use a monospace font family like JetBrains Mono for all UI elements and workflow steps to emphasize the programmatic, reliable nature of the agent.",
+      "Replace generic SaaS icons with custom SVG schematics showing input nodes, processing states, and output destinations connected by animated, pulsing pipeline lines.",
+      "Build an interactive 'dry-run' simulator in the hero section where investors can trigger a 3-step workflow and watch the agent update real-time execution logs."
+    ]
+  },
+  "mvp": {
+    "name": "Gantry",
+    "workspaceLabel": "GANTRY // OPERATIONAL EXECUTION ENGINE",
+    "experience": {
+      "archetype": "terminal",
+      "device": "desktop",
+      "navigationStyle": "sidebar",
+      "density": "compact",
+      "typeStyle": "mono",
+      "radius": "sharp",
+      "motif": "High-contrast blueprint grid lines with physical status indicators [ OK ] and pulsing pipeline nodes acting as sidebar navigation"
+    },
+    "eyebrow": "GANTRY // OPERATIONAL EXECUTION ENGINE",
+    "headline": "Stop prompting. Start executing.",
+    "subheadline": "A deterministic execution engine designed to replace brittle multi-app manual workarounds with resilient, self-healing agent pipelines.",
+    "palette": {
+      "background": "#0D0E10",
+      "surface": "#16181C",
+      "primary": "#FF6B00",
+      "accent": "#00E676",
+      "text": "#F5F5F7"
+    },
+    "googleCapabilities": [
+      {
+        "service": "gemini",
+        "label": "Gantry Schema Compiler",
+        "rationale": "Translates unstructured, messy manual operations descriptions into strict, deterministic state-machine execution schemas with automated error-recovery nodes.",
+        "primaryScreen": 1,
+        "config": {
+          "assistantRole": "You are the Gantry Compiler, a precise, deterministic system architect. You convert natural language descriptions of manual operations workflows into strict, JSON-based state machine schemas with error-recovery nodes. Do not output conversational filler. Output raw, structured execution steps with input/output validation rules.",
+          "mapQuery": "",
+          "locationQuery": "",
+          "origin": "",
+          "destination": "",
+          "calendarTitle": "",
+          "analyticsLabel": "Live sample operations data",
+          "targetLanguage": "",
+          "analysisMode": "both",
+          "speechPrompt": "Compile the manual workflow into a deterministic state machine schema."
+        }
+      }
+    ],
+    "screens": [
+      {
+        "label": "NODE_LOGS",
+        "type": "table",
+        "title": "Active Pipeline Execution Logs",
+        "description": "Real-time state tracking and node execution metrics across legacy databases and modern SaaS APIs.",
+        "metrics": [
+          {
+            "label": "RUN SUCCESS RATE",
+            "value": "99.94%"
+          },
+          {
+            "label": "AVG LATENCY",
+            "value": "342ms"
+          },
+          {
+            "label": "RECOVERED FAULTS",
+            "value": "42"
+          }
+        ],
+        "items": [
+          {
+            "title": "RUN-9082 // ERP Sync & Reconciliation",
+            "detail": "Synced 142 line items from Salesforce to NetSuite. Verified checksums.",
+            "status": "[ OK ]",
+            "meta": "Node 04",
+            "value": "240ms"
+          },
+          {
+            "title": "RUN-9081 // Automated Chargeback Dispute",
+            "detail": "Stripe dispute triggered. Gathered delivery evidence from Zendesk. Submitted to portal.",
+            "status": "[ OK ]",
+            "meta": "Node 09",
+            "value": "1,120ms"
+          },
+          {
+            "title": "RUN-9080 // Legacy DB Inventory Push",
+            "detail": "PostgreSQL local inventory sync to Shopify API. Rate limit hit; auto-throttled and recovered.",
+            "status": "[ RECOVERED ]",
+            "meta": "Node 02",
+            "value": "4,210ms"
+          },
+          {
+            "title": "RUN-9079 // Vendor Onboarding Pipeline",
+            "detail": "Generated contract via DocuSign, verified tax ID, created Slack channel.",
+            "status": "[ OK ]",
+            "meta": "Node 07",
+            "value": "890ms"
+          }
+        ]
+      },
+      {
+        "label": "COMPILER",
+        "type": "assistant",
+        "title": "Deterministic Schema Compiler",
+        "description": "Describe a messy, multi-step manual chore. The Gantry compiler will generate a strict, self-healing state machine schema.",
+        "metrics": [
+          {
+            "label": "COMPILER STATUS",
+            "value": "READY"
+          },
+          {
+            "label": "SCHEMA VERSION",
+            "value": "v2.1.0-prod"
+          }
+        ],
+        "items": [
+          {
+            "title": "Example: Customer Refund Verification",
+            "detail": "When a refund is requested in Stripe, check Zendesk for customer sentiment, verify inventory in Shopify, and log to Airtable.",
+            "status": "[ READY ]",
+            "meta": "3 Nodes",
+            "value": "Compiled"
+          },
+          {
+            "title": "Example: Vendor Invoice Reconciliation",
+            "detail": "Extract PDF invoices from AP inbox, run OCR, match line items with purchase orders in SQL, and flag discrepancies.",
+            "status": "[ READY ]",
+            "meta": "4 Nodes",
+            "value": "Compiled"
+          }
+        ]
+      },
+      {
+        "label": "DRY_RUN",
+        "type": "workflow",
+        "title": "Initialize Dry-Run Pipeline",
+        "description": "Interactive State-Machine Visualizer: [Trigger Node] ---> [Validation Node] ---> [Target Node (Auto-Recovery Active)]. Configure parameters below to run a live test.",
+        "metrics": [
+          {
+            "label": "ACTIVE NODES",
+            "value": "3 / 3"
+          }
+        ],
+        "items": [
+          {
+            "title": "Visual State Machine: Node 01 (Trigger)",
+            "detail": "Listens for webhook or app event payload.",
+            "status": "[ ACTIVE ]",
+            "meta": "Step 1",
+            "value": "Pending Input"
+          },
+          {
+            "title": "Visual State Machine: Node 02 (Action)",
+            "detail": "Executes API payload delivery with self-healing retries.",
+            "status": "[ STANDBY ]",
+            "meta": "Step 2",
+            "value": "Pending Trigger"
+          }
+        ]
+      }
+    ],
+    "workflow": {
+      "title": "Configure Dry-Run Execution Node",
+      "description": "Define the input parameters, target systems, and error-handling protocols for this dry-run simulation. The visual state-machine above will update dynamically.",
+      "fields": [
+        {
+          "label": "Trigger Source App",
+          "type": "select",
+          "options": [
+            "Salesforce CRM (New Opportunity Won)",
+            "Stripe Billing (Charge Succeeded)",
+            "Zendesk Support (Ticket Escalated)",
+            "Custom Webhook (JSON Payload)"
+          ]
+        },
+        {
+          "label": "Target Destination App",
+          "type": "select",
+          "options": [
+            "NetSuite ERP (Create Invoice)",
+            "Shopify Admin (Update Inventory)",
+            "PostgreSQL Database (Insert Record)",
+            "Slack Operations Channel (Alert)"
+          ]
+        },
+        {
+          "label": "Error Recovery Protocol",
+          "type": "select",
+          "options": [
+            "Self-Healing (Auto-retry with exponential backoff)",
+            "Fallback Node (Route to secondary API endpoint)",
+            "Manual Intervention (Pause state and alert Ops Lead)"
+          ]
+        },
+        {
+          "label": "Simulated Payload Data (JSON)",
+          "type": "text",
+          "placeholder": "{ \"id\": \"tx_9082\", \"amount\": 4200, \"currency\": \"usd\" }"
+        }
+      ],
+      "buttonLabel": "INITIALIZE DRY-RUN",
+      "successTitle": "Dry-Run Initialized Successfully",
+      "successMessage": "Pipeline compiled. 3-step state machine executed in 420ms. All nodes verified. Check the NODE_LOGS tab for real-time execution logs."
+    },
+    "googleCapability": {
+      "service": "gemini",
+      "label": "Gantry Schema Compiler",
+      "rationale": "Translates unstructured, messy manual operations descriptions into strict, deterministic state-machine execution schemas with automated error-recovery nodes.",
+      "primaryScreen": 1,
+      "config": {
+        "assistantRole": "You are the Gantry Compiler, a precise, deterministic system architect. You convert natural language descriptions of manual operations workflows into strict, JSON-based state machine schemas with error-recovery nodes. Do not output conversational filler. Output raw, structured execution steps with input/output validation rules.",
+        "mapQuery": "",
+        "locationQuery": "",
+        "origin": "",
+        "destination": "",
+        "calendarTitle": "",
+        "analyticsLabel": "Live sample operations data",
+        "targetLanguage": "",
+        "analysisMode": "both",
+        "speechPrompt": "Compile the manual workflow into a deterministic state machine schema."
+      }
+    }
+  },
+  "revision": 2
+}
