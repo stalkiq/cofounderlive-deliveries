@@ -1,0 +1,261 @@
+{
+  "missionId": "ep_mtft30lw",
+  "idea": "Artificial intelligence is running out of compute. And data centers are running out of electricity and land.\n\nThe demand for data centers is insatiable. But new data centers can take years for approval and enough megawatts, and still could get killed by local government intervention.\n\nWhile communities increasingly oppose the land, the water is open.\n\nIt sounds crazy, but we think part of the answer may be to move compute offshore.\n\nThe ocean is 70% of the Earth's surface area, has abundant sunlight, no permitting process, and is an enormous natural heat sink that is already getting hit by the sun all day anyway. Think of them as compute flotillas: many standardized, modular vessels operating together as one global cloud.\n\nWe want to fund founders who are bringing the world's compute to the oceans.",
+  "brand": {
+    "name": "AEGIR",
+    "tagline": "Sovereign compute, cooled by the deep.",
+    "audience": "Deep-tech founders and sovereign investors bypassing land-grid constraints.",
+    "tone": [
+      "Hydro-industrial",
+      "Monolithic",
+      "Sovereign"
+    ],
+    "visualConcept": "A brutalist maritime-telemetry interface. Dark abyssal slate contrasted with high-visibility international orange and glowing sonar green, featuring wireframe bathymetric ocean floor maps.",
+    "layout": "A single-scroll command center dashboard. Features a massive hero statement, a real-time interactive 3D globe showing oceanic thermal currents, and a terminal-style application portal.",
+    "palette": {
+      "background": "#070c0e",
+      "surface": "#121b20",
+      "primary": "#ff4f00",
+      "accent": "#00ff66",
+      "text": "#f0f5f5"
+    },
+    "creativeNotes": [
+      "Replace standard illustrations with interactive, low-poly 3D models of modular server-barges floating on a dark, reflective WebGL ocean.",
+      "Use SVG bathymetric contour lines as structural grid dividers that warp dynamically as the user scrolls.",
+      "Incorporate a persistent 'Telemetry Feed' ticker at the top of the page displaying simulated wave heights, cooling efficiency, and latency metrics."
+    ]
+  },
+  "mvp": {
+    "name": "AEGIR",
+    "workspaceLabel": "AEGIR // COMMAND CENTER",
+    "experience": {
+      "archetype": "operations",
+      "device": "desktop",
+      "navigationStyle": "topbar",
+      "density": "compact",
+      "typeStyle": "mono",
+      "radius": "sharp",
+      "motif": "Brutalist maritime telemetry with sonar green indicators and bathymetric contour lines"
+    },
+    "eyebrow": "SYSTEM TELEMETRY: ACTIVE // LATENCY: 8MS // COOLING: 100%",
+    "headline": "Sovereign compute, cooled by the deep.",
+    "subheadline": "Deploy and monitor modular, high-density GPU server-barges in international waters.",
+    "palette": {
+      "background": "#070c0e",
+      "surface": "#121b20",
+      "primary": "#ff4f00",
+      "accent": "#00ff66",
+      "text": "#f0f5f5"
+    },
+    "googleCapabilities": [
+      {
+        "service": "maps",
+        "label": "Abyssal Fleet Coordinates",
+        "rationale": "Allows operators and sovereign investors to track active server-barges in international waters outside terrestrial jurisdictions.",
+        "primaryScreen": 0,
+        "config": {
+          "assistantRole": "Help the user complete the product's core workflow using only the supplied product context.",
+          "mapQuery": "38.7223, -27.2219",
+          "locationQuery": "38.7223, -27.2219",
+          "origin": "",
+          "destination": "",
+          "calendarTitle": "",
+          "analyticsLabel": "Live sample operations data",
+          "targetLanguage": "es",
+          "analysisMode": "both",
+          "speechPrompt": "Read this result aloud"
+        }
+      },
+      {
+        "service": "weather",
+        "label": "Deep-Sea Thermal Conditions",
+        "rationale": "Monitors ambient ocean temperatures and storm risks at the primary Atlantic deployment corridor to optimize cooling efficiency.",
+        "primaryScreen": 0,
+        "config": {
+          "assistantRole": "Help the user complete the product's core workflow using only the supplied product context.",
+          "mapQuery": "",
+          "locationQuery": "38.7223, -27.2219",
+          "origin": "",
+          "destination": "",
+          "calendarTitle": "",
+          "analyticsLabel": "Live sample operations data",
+          "targetLanguage": "es",
+          "analysisMode": "both",
+          "speechPrompt": "Read this result aloud"
+        }
+      }
+    ],
+    "screens": [
+      {
+        "label": "Fleet Map",
+        "type": "map",
+        "title": "Sovereign Fleet Telemetry",
+        "description": "Real-time positioning of modular compute vessels operating in international waters near the Mid-Atlantic Ridge.",
+        "metrics": [
+          {
+            "label": "Active Barges",
+            "value": "4 Vessels"
+          },
+          {
+            "label": "Total Compute Capacity",
+            "value": "2,048 H100s"
+          },
+          {
+            "label": "Average PUE",
+            "value": "1.02"
+          }
+        ],
+        "items": [
+          {
+            "title": "AEGIR-01 (Atlantic Alpha)",
+            "detail": "Coordinates: 38.7223° N, 27.2219° W. Operating at 94% capacity.",
+            "status": "Optimal",
+            "meta": "Temp: 11.2°C",
+            "value": "Active"
+          },
+          {
+            "title": "AEGIR-02 (Atlantic Beta)",
+            "detail": "Coordinates: 37.4512° N, 25.9102° W. Operating at 78% capacity.",
+            "status": "Optimal",
+            "meta": "Temp: 12.1°C",
+            "value": "Active"
+          }
+        ]
+      },
+      {
+        "label": "Vessel Registry",
+        "type": "table",
+        "title": "Compute Node Registry",
+        "description": "Dense operational records of active, provisioning, and transit-phase server-barges.",
+        "metrics": [
+          {
+            "label": "Fleet Latency Avg",
+            "value": "8.4ms"
+          },
+          {
+            "label": "Water Intake Temp",
+            "value": "11.4°C"
+          }
+        ],
+        "items": [
+          {
+            "title": "AEGIR-01",
+            "detail": "1024x H100 Cluster",
+            "status": "Active",
+            "meta": "PUE: 1.01",
+            "value": "94% Load"
+          },
+          {
+            "title": "AEGIR-02",
+            "detail": "512x H100 Cluster",
+            "status": "Active",
+            "meta": "PUE: 1.02",
+            "value": "78% Load"
+          },
+          {
+            "title": "AEGIR-03",
+            "detail": "512x B200 Cluster",
+            "status": "Provisioning",
+            "meta": "PUE: N/A",
+            "value": "0% Load"
+          },
+          {
+            "title": "AEGIR-04",
+            "detail": "256x H100 Cluster",
+            "status": "Transit",
+            "meta": "En Route",
+            "value": "Offline"
+          }
+        ]
+      },
+      {
+        "label": "Deploy Vessel",
+        "type": "workflow",
+        "title": "Provision Abyssal Node",
+        "description": "Initiate the deployment of a standardized, self-positioning server-barge to a designated sovereign corridor.",
+        "metrics": [
+          {
+            "label": "Available Hulls",
+            "value": "3 Units"
+          },
+          {
+            "label": "Next Launch Window",
+            "value": "48 Hours"
+          }
+        ],
+        "items": [
+          {
+            "title": "AEGIR-05 Dispatch",
+            "detail": "Target: North Atlantic Corridor Alpha. Pending final maritime clearance.",
+            "status": "Pending",
+            "meta": "ETA: 72h",
+            "value": "Awaiting Launch"
+          },
+          {
+            "title": "AEGIR-06 Assembly",
+            "detail": "Hull integration and liquid cooling pressure testing.",
+            "status": "Staged",
+            "meta": "Ready",
+            "value": "Drydock"
+          }
+        ]
+      }
+    ],
+    "workflow": {
+      "title": "Initiate Vessel Deployment",
+      "description": "Configure and dispatch a modular compute vessel to international waters.",
+      "fields": [
+        {
+          "label": "Vessel Designation",
+          "type": "text",
+          "placeholder": "e.g., AEGIR-05"
+        },
+        {
+          "label": "Target Maritime Corridor",
+          "type": "select",
+          "options": [
+            "North Atlantic Corridor Alpha (Azores)",
+            "Pacific Basin Node Beta (Hawaii)",
+            "Mediterranean Sovereign Zone"
+          ]
+        },
+        {
+          "label": "Compute Configuration",
+          "type": "select",
+          "options": [
+            "256x H100 Liquid-Cooled Cluster",
+            "512x H100 Liquid-Cooled Cluster",
+            "512x B200 Next-Gen Cluster"
+          ]
+        },
+        {
+          "label": "Target Deployment Date",
+          "type": "date",
+          "placeholder": "Select date"
+        }
+      ],
+      "buttonLabel": "Authorize Maritime Dispatch",
+      "successTitle": "Deployment Initiated",
+      "successMessage": "Vessel provisioning sequence authorized. Autonomous tugs and maritime legal clearance protocols have been activated for the selected corridor."
+    },
+    "googleCapability": {
+      "service": "maps",
+      "label": "Abyssal Fleet Coordinates",
+      "rationale": "Allows operators and sovereign investors to track active server-barges in international waters outside terrestrial jurisdictions.",
+      "primaryScreen": 0,
+      "config": {
+        "assistantRole": "Help the user complete the product's core workflow using only the supplied product context.",
+        "mapQuery": "38.7223, -27.2219",
+        "locationQuery": "38.7223, -27.2219",
+        "origin": "",
+        "destination": "",
+        "calendarTitle": "",
+        "analyticsLabel": "Live sample operations data",
+        "targetLanguage": "es",
+        "analysisMode": "both",
+        "speechPrompt": "Read this result aloud"
+      }
+    }
+  },
+  "revision": 2
+}

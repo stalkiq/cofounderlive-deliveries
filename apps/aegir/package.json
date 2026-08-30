@@ -1,0 +1,25 @@
+{
+  "name": "aegir-command-center",
+  "version": "1.0.0",
+  "description": "AEGIR - Abyssal Compute Flotilla Telemetry & Sovereign Ocean Deployment Dashboard",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "node scripts/smoke-test.mjs",
+    "smoke-test": "node scripts/smoke-test.mjs",
+    "smoke": "node scripts/smoke-test.mjs"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "cors": "^2.8.5"
+  },
+  "keywords": [
+    "aegir",
+    "maritime",
+    "sovereign-compute",
+    "gpu-barges"
+  ],
+  "author": "AEGIR Operators",
+  "license": "MIT"
+}

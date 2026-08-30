@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AEGIR // ABYSSAL DEEP-SEA COMPUTE PORTAL</title>
+  <!-- Google Fonts for premium Monospaced Telemetry appearance -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Top Brutalist Telemetry Status Bar (Persistent) -->
+  <header class="telemetry-bar">
+    <div class="telemetry-part blink-green">
+      <span class="indicator">●</span> SYSTEM TELEMETRY: ACTIVE
+    </div>
+    <div class="telemetry-part">LATENCY: <span id="telemetry-latency">8ms</span></div>
+    <div class="telemetry-part">AMB-TEMP: <span id="telemetry-temp">11.4°C</span></div>
+    <div class="telemetry-part">COOLING: 100%</div>
+    <div class="telemetry-part orange">SYS PUE: 1.02</div>
+    <div class="telemetry-part text-right hidden-mobile">SAT-LINK: SECURE [DES-CORRIDOR-A]</div>
+  </header>
+
+  <!-- Top Navigation (Hidden in Onboarding screen, visible once authorized) -->
+  <nav class="navigation-dock" id="main-nav" style="display: none;">
+    <div class="nav-brand">AEGIR // COMMAND CENTER</div>
+    <div class="nav-tabs">
+      <button class="nav-tab active" data-tab="control-deck">
+        <span class="bracket">[</span> OPERATING CONTROL DECK <span class="bracket">]</span>
+      </button>
+      <button class="nav-tab" data-tab="settings-history">
+        <span class="bracket">[</span> CONTROL TERMINAL & AUDITS <span class="bracket">]</span>
+      </button>
+    </div>
+    <div class="auth-user-badge">
+      LEVEL-4 DEPUTY ADMIRAL: <span id="operator-badge-name">SECURE</span>
+    </div>
+  </nav>
+
+  <!-- Root App Section -->
+  <main class="app-container">
+
+    <!-- SCREEN 1: ONBOARDING / SECURITIES AUTHORIZATION -->
+    <section id="onboarding-screen" class="view-screen active-screen">
+      <div class="brutalist-hero">
+        <div class="grid-water-mask"></div>
+        <div class="hero-top-eyebrow">MISSION EP_MTFT30LW // SOVEREIGN ARCHITECTURES</div>
+        <h1 class="hero-headline">Sovereign compute,<br>cooled by the deep.</h1>
+        <p class="hero-subheadline">
+          Terrestrial power grids are failing. Land approvals take years. The solution is modular high-density GPU server-barges deployed directly to sovereign international waters.
+        </p>
+
+        <!-- Dynamic Explanation Grid -->
+        <div class="onboarding-features">
+          <div class="feature-card">
+            <span class="card-num">[01]</span>
+            <h3>No Permitting Barriers</h3>
+            <p>Operate in international waters under UNCLOS Article 87. Fast-track setup without decades of terrestrial bureaucracy.</p>
+          </div>
+          <div class="feature-card">
+            <span class="card-num">[02]</span>
+            <h3>Uncapped Thermodynamics</h3>
+            <p>The open ocean is an infinite heat sink. Draw ambient 11°C sea water directly to scale Liquid-Cooled H100 and B200 clusters safely.</p>
+          </div>
+          <div class="feature-card">
+            <span class="card-num">[03]</span>
+            <h3>Solar & Wave Hybrid</h3>
+            <p>Self-sufficient, floating power flotillas generating megawatts of persistent offshore marine electricity.</p>
+          </div>
+        </div>
+
+        <!-- Terminal Login Box -->
+        <div class="terminal-auth-box">
+          <div class="terminal-header">
+            <span class="terminal-dot red"></span>
+            <span class="terminal-dot yellow"></span>
+            <span class="terminal-dot green"></span>
+            <span class="terminal-title">DEEP-SEA SECURITY AUTHENTICATION</span>
+          </div>
+          <div class="terminal-body">
+            <p class="crypto-log">>&nbsp;initializing sat-uplink connection sequence...</p>
+            <p class="crypto-log">>&nbsp;target: mid-atlantic bathymetric zone node [W-38.7]</p>
+            <p class="crypto-log">>&nbsp;<span class="green">security handshake verified</span>. enter clearance parameters:</p>
+
+            <form id="onboarding-form" class="auth-form">
+              <div class="form-row">
+                <label for="operator-callsign">OPERATOR CALLSIGN</label>
+                <input type="text" id="operator-callsign" placeholder="e.g., COMMANDER CHEN" required>
+              </div>
+
+              <div class="form-row">
+                <label for="operator-role">COMMISSION CAPACITY</label>
+                <select id="operator-role">
+                  <option value="Sovereign Sovereign-Fund Director">Sovereign Asset Director</option>
+                  <option value="Fleet Operations Chief" selected>Fleet Operations Chief (Admiral)</option>
+                  <option value="Offshore Infrastructure Engineer">Abyssal Grid Architect</option>
+                  <option value="Deep-Sea Security Auditor">Maritime Protocol Officer</option>
+                </select>
+              </div>
+
+              <div class="form-row">
+                <label for="encryption-passphrase">SECURITY SECURITY PASSPHRASE</label>
+                <input type="password" id="encryption-passphrase" placeholder="••••••••••••••" required value="OCEANIC_POWER_GRID_2026">
+              </div>
+
+              <!-- Interactive legal validation checkbox -->
+              <div class="form-checkbox-row">
+                <input type="checkbox" id="legal-ack" required checked>
+                <label for="legal-ack" class="label-small">
+                  I acknowledge international waters operational guidelines under UNCLOS regulations. I authorize sat-uplink deployment authorization keys.
+                </label>
+              </div>
+
+              <button type="submit" class="brutalist-btn btn-primary" id="btn-auth">
+                AUTHORIZE FLEET ACCESS KEY
+              </button>
+            </form>
+          </div>
+          <div class="terminal-footer">
+            WARN: UNSANCTIONED TRANSMISSIONS WILL TRIGGER AUTOMATIC SCUTTLE BALLAST DE-PRESSURIZATION
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SCREEN 2: MAIN FLOTILLA COMMAND DECK -->
+    <section id="control-deck-screen" class="view-screen" style="display: none;">
+      
+      <!-- Top banner metadata summary -->
+      <div class="dashboard-banners">
+        <div class="banner-stat">
+          <div class="banner-lbl">ACTIVE BARGES</div>
+          <div class="banner-val" id="count-active">4 Vessels</div>
+        </div>
+        <div class="banner-stat">
+          <div class="banner-lbl">COMPUTE POWER</div>
+          <div class="banner-val" id="compute-power">2,048 H100s</div>
+        </div>
+        <div class="banner-stat">
+          <div class="banner-lbl text-green">AVG SYSTEM PUE</div>
+          <div class="banner-val text-green" id="pue-val">1.02</div>
+        </div>
+        <div class="banner-stat">
+          <div class="banner-lbl">TEMPEST ADVISORIES</div>
+          <div class="banner-val text-orange">0 IN RANGE</div>
+        </div>
+      </div>
+
+      <!-- Core 3-Column Layout -->
+      <div class="control-grid-wrapper">
+
+        <!-- Column A: Radar Monitor & Weather Coordinates -->
+        <div class="deck-column column-radar">
+          <div class="column-card border-accent">
+            <div class="card-header header-accent">
+              <span class="sonar-sweep-dot"></span>
+              sonar telemetry sweep [active]
+            </div>
+            <div class="card-body container-radar">
+              <!-- Radar graphic representation with SVG -->
+              <div class="radar-outer">
+                <div class="radar-line"></div>
+                <!-- Dynamic dots injected by JS -->
+                <div class="radar-dots-container" id="sonar-dots">
+                  <!-- Aegis-01 -->
+                  <div class="radar-dot active-dot" style="top: 42%; left: 48%;" title="AEGIR-01"></div>
+                  <!-- Aegis-02 -->
+                  <div class="radar-dot active-dot" style="top: 55%; left: 52%;" title="AEGIR-02"></div>
+                  <!-- Aegis-03 -->
+                  <div class="radar-dot warning-dot" style="top: 30%; left: 35%;" title="AEGIR-03"></div>
+                  <!-- Aegis-04 -->
+                  <div class="radar-dot transit-dot" style="top: 75%; left: 20%;" title="AEGIR-04"></div>
+                </div>
+                <div class="radar-grid-lines"></div>
+                <div class="sonar-beeps">
+                  <span>FREQ: 14.2 KHZ</span>
+                  <span>RANGE: 300 NM</span>
+                </div>
+              </div>
+              <div class="radar-legend">
+                <span class="legend-item"><span class="dot g-bg"></span> Active</span>
+                <span class="legend-item"><span class="dot y-bg"></span> Setup</span>
+                <span class="legend-item"><span class="dot bl-bg"></span> Transit</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="column-card">
+            <div class="card-header">ABYSSAL DEEP-SEA METEOROLOGY</div>
+            <div class="card-body">
+              <div class="met-data-block">
+                <div class="met-row">
+                  <span class="met-lbl">DECODE LAT/LON:</span>
+                  <span class="met-val text-accent">38.7223° N, 27.2219° W</span>
+                </div>
+                <div class="met-row">
+                  <span class="met-lbl">WENT OVER WEATHER:</span>
+                  <span class="met-val">Deep-Sea Atlantic corridor</span>
+                </div>
+                <div class="met-row">
+                  <span class="met-lbl">SEA SURFACE TEMP:</span>
+                  <span class="met-val">14.2°C ambient</span>
+                </div>
+                <div class="met-row">
+                  <span class="met-lbl">INTAKE TEMPERATURE:</span>
+                  <span class="met-val text-green">11.4°C at 70 meters depth</span>
+                </div>
+                <div class="met-row">
+                  <span class="met-lbl">WAVE SPECS:</span>
+                  <span class="met-val">Height: 2.1m // Period: 8.5s</span>
+                </div>
+                <div class="met-row">
+                  <span class="met-lbl">BAROMETRIC SEAL:</span>
+                  <span class="met-val">1014.2 hPa [STABLE]</span>
+                </div>
+              </div>
+              <!-- Simulated map styling contour lines -->
+              <div class="bathymetric-contours">
+                <svg viewBox="0 0 200 80" class="contour-svg">
+                  <path d="M 0 50 Q 50 30 100 60 T 200 40" fill="none" stroke="#22333d" stroke-width="1.5" />
+                  <path d="M 0 65 Q 60 45 110 75 T 200 55" fill="none" stroke="#22333d" stroke-dasharray="2,3" stroke-width="1.2" />
+                  <path d="M 0 80 Q 70 55 120 90 T 200 70" fill="none" stroke="#10ff66" stroke-opacity="0.15" stroke-width="1" />
+                </svg>
+                <div class="contour-label">Contour spacing: 50m bathymetric segments</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Column B: Dynamic Vessel Registry -->
+        <div class="deck-column column-registry">
+          <div class="column-card flex-grow-1">
+            <div class="card-header header-accent">
+              COMPUTE NODE REGISTRY [PERSISTED]
+            </div>
+            <div class="card-body p-0">
+              <div class="table-container">
+                <table class="abyssal-table" id="vessel-table">
+                  <thead>
+                    <tr>
+                      <th>FLOTILLA COLLAR/CALLSIGN</th>
+                      <th>CAPACITY BIND</th>
+                      <th>CORRIDOR</th>
+                      <th>INTAKE</th>
+                      <th>LOAD</th>
+                      <th>STATUS</th>
+                    </tr>
+                  </thead>
+                  <tbody id="vessel-list">
+                    <!-- Loaded dynamically via GET /api/memory -->
+                  </tbody>
+                </table>
+              </div>
+              <div class="telemetry-info-text">
+                >&nbsp;Clicking items loads target satellite telemetry data focus coordinate and intake temperature details into radar feeds.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Column C: Launch / Provision Workflow Form -->
+        <div class="deck-column column-dispatch">
+          <div class="column-card border-primary">
+            <div class="card-header header-primary">
+              DEPLOY DUST-PROOF COMPUTE VESSEL
+            </div>
+            <div class="card-body">
+              <p class="section-intro">
+                Initiate the provisioning of a standardized ocean barge. Automated sea navigation systems and maritime legal security clearance coordinates will lock immediately.
+              </p>
+
+              <!-- Main Deployment Form -->
+              <form id="dispatch-form" class="brutalist-form">
+                
+                <div class="form-group">
+                  <label for="vessel-designation">VESSEL CALLSIGN / ID</label>
+                  <input type="text" id="vessel-designation" placeholder="e.g., AEGIR-05" required>
+                  <span class="field-hint">Must fit unique designation sequence.</span>
+                </div>
+
+                <div class="form-group">
+                  <label for="target-corridor">TARGET MARITIME REGION</label>
+                  <select id="target-corridor" required>
+                    <option value="North Atlantic Corridor Alpha (Azores)">North Atlantic Corridor Alpha (Azores)</option>
+                    <option value="Pacific Basin Node Beta (Hawaii)">Pacific Basin Node Beta (Hawaii)</option>
+                    <option value="Mediterranean Sovereign Zone">Mediterranean Sovereign Zone</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label for="compute-configuration">GPU CLUSTER INTENSITY</label>
+                  <select id="compute-configuration" required>
+                    <option value="256x H100 Liquid-Cooled Cluster">256x H100 Liquid-Cooled Cluster</option>
+                    <option value="512x H100 Liquid-Cooled Cluster">512x H100 Liquid-Cooled Cluster</option>
+                    <option value="512x B200 Next-Gen Cluster">512x B200 Next-Gen Cluster</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label for="target-date">DESIRED LAUNCH DATE SECURE</label>
+                  <input type="date" id="target-date" required>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" class="brutalist-btn btn-orange" id="btn-dispatch">
+                  AUTHORIZE MARITIME DISPATCH
+                </button>
+              </form>
+
+              <!-- Interactive Workflow Success Notification Module -->
+              <div id="flow-success-layer" class="launch-success-wrapper" style="display: none;">
+                <div class="success-alert-icon">⚡ LAUNCH AUTHORIZED ⚡</div>
+                <h4 id="success-header">Vessel Provisioning Sequence Activated</h4>
+                <p id="success-msg" class="success-body-text">
+                  Hydration sequence active. Tug maneuvers coordinates locking.
+                </p>
+                <div class="success-audit-tag">
+                  REF-NO: <span id="success-ref">SYSTEM-LOG-MUTED</span>
+                </div>
+                <button class="brutalist-btn btn-secondary-dim" id="btn-dismiss-success">
+                  Acknowledge & Clear Transmittor
+                </button>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SCREEN 3: CONTROL TERMINAL (SETTINGS & HISTORY AUDIT) -->
+    <section id="settings-history-screen" class="view-screen" style="display: none;">
+      <div class="settings-grid">
+        
+        <!-- Left: Critical Operations Presets -->
+        <div class="settings-card border-orange">
+          <div class="card-header header-primary">EMERGENCY PRESETS & SUBMERGE PROTOCOLS</div>
+          <div class="card-body">
+            <p class="section-intro">
+              Offshore sovereign server containers contain physical valves to flood dry compartments, scuttling or sinking the vessel in case of legal intrusion or severe storm attack vectors.
+            </p>
+
+            <form id="settings-form" class="brutalist-form">
+              <div class="form-group">
+                <label for="scuttle-depth">AUTOMATIC EMERGENCY SUBMERGE DEPTH (METERS)</label>
+                <input type="number" id="scuttle-depth" value="180" min="50" max="600" required>
+                <span class="field-hint">Vessel scuttling or depth submergence triggers dynamically if wave limits or legal intrusion indicators trip below this point.</span>
+              </div>
+
+              <div class="form-group">
+                <label for="thermal-threshold">THERMAL ALARM WARNING VALUE (°C)</label>
+                <input type="number" id="thermal-threshold" value="14.5" step="0.1" min="10" max="25" required>
+                <span class="field-hint">Triggers supplementary seawater flood pumps when average ocean manifold matches this level.</span>
+              </div>
+
+              <div class="form-group">
+                <label for="alert-target">OPERATOR PRIORITY COMMS ENDPOINT</label>
+                <input type="text" id="alert-target" value="Operations Command Terminal A" required>
+              </div>
+
+              <div class="form-group flex-row-align">
+                <input type="checkbox" id="auto-cooling-boost" checked>
+                <label for="auto-cooling-boost">ENABLE AUTO HYPER-COOLING BOOSTS IN SWELLS</label>
+              </div>
+
+              <button type="submit" class="brutalist-btn btn-orange" id="btn-save-settings">
+                SAVE TELEMETRY PRESETS
+              </button>
+            </form>
+
+            <div class="reset-zone">
+              <h4>DANGER ZONE // TELEMETRY RECORDS</h4>
+              <p>Wipe all customized flotilla logs and deployable state back to original baseline metrics.</p>
+              <button class="brutalist-btn btn-warning-red" id="btn-reset-db">
+                RESTORE FACTORY SETTINGS & BASES
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Immutable Sat-Uplink Incident Feed -->
+        <div class="settings-card">
+          <div class="card-header">SATELLITE INCIDENT LOGS (SAT-UPLINK STREAM)</div>
+          <div class="card-body flex-column flex-grow-1 p-0">
+            <div class="command-logs-header">
+              <span>STREAM: ACTIVE</span>
+              <span id="log-counter">3 TELEMETRY EVENTS RECORDED</span>
+            </div>
+            <div class="log-stream-list" id="audit-log-stream">
+              <!-- Logs injected dynamically -->
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Brutalist Footer with sound effects mock activator -->
+  <footer class="system-footer">
+    <div class="footer-block col-left">
+      AEGIR // COMMAND DECK PORTAL v4.12 // OPEN OCEAN HIGH ENERGY INITIATIVE
+    </div>
+    <div class="footer-block col-center">
+      LATENCY STABILITY RATIO: <span class="green">99.98% OPTIMAL</span>
+    </div>
+    <div class="footer-block col-right">
+      <button class="sound-toggler-btn" id="btn-sound">SOUND FX: STATIC</button>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
