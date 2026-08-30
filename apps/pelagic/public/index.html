@@ -1,0 +1,1632 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PELAGIC // SYS_CONTROL // High-Seas Sovereign Compute</title>
+  <!-- Google Fonts - Space Mono for Brutalist Monospace aesthetic -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+  
+  <style>
+    /* --- COLOR PALETTE DEFINITIONS --- */
+    :root {
+      --background: #0B1011;
+      --surface: #181F22;
+      --surface-elevated: #242D30;
+      --primary: #FF5A1F;       /* International Orange */
+      --primary-dim: #99330D;
+      --accent: #00FF66;        /* Sovereign Green */
+      --accent-dim: #007730;
+      --text: #EAEAEA;
+      --text-muted: #8E9B9E;
+      --border: #3A474B;
+      --grid-color: rgba(0, 255, 102, 0.03);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Space Mono', monospace;
+      background-color: var(--background);
+      color: var(--text);
+      overflow-x: hidden;
+      font-size: 13px;
+      line-height: 1.5;
+      /* Scanline CRT overlay effect */
+      background-image: 
+        linear-gradient(var(--grid-color) 1px, transparent 1px),
+        linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+      background-size: 20px 20px;
+    }
+
+    /* Scrollbar Styling */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: var(--background);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: var(--border);
+      border-radius: 3px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--primary);
+    }
+
+    /* --- LAYOUT STRUCTURE --- */
+    .app-container {
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      width: 100vw;
+    }
+
+    /* --- TOP TICKER & HEADER --- */
+    header {
+      background-color: var(--surface);
+      border-bottom: 2px solid var(--border);
+      padding: 10px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 10;
+    }
+
+    .brand-section {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .logo-box {
+      border: 2px solid var(--primary);
+      padding: 2px 8px;
+      font-weight: 900;
+      letter-spacing: 2px;
+      color: var(--primary);
+      background: rgba(255, 90, 31, 0.1);
+      font-size: 16px;
+    }
+
+    .header-eyebrow {
+      font-size: 10px;
+      color: var(--text-muted);
+      letter-spacing: 1px;
+    }
+
+    .system-status-led {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .led-dot {
+      width: 8px;
+      height: 8px;
+      background-color: var(--accent);
+      border-radius: 50%;
+      box-shadow: 0 0 8px var(--accent);
+      animation: pulse 1.8s infinite;
+    }
+
+    @keyframes pulse {
+      0% { opacity: 0.4; }
+      50% { opacity: 1; box-shadow: 0 0 12px var(--accent); }
+      100% { opacity: 0.4; }
+    }
+
+    .ticker-bar {
+      background: var(--background);
+      border-bottom: 1px solid var(--border);
+      padding: 4px 20px;
+      font-size: 11px;
+      color: var(--accent);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+
+    .ticker-inner {
+      display: inline-block;
+      animation: ticker-scroll 30s linear infinite;
+    }
+
+    @keyframes ticker-scroll {
+      0% { transform: translate3d(0, 0, 0); }
+      100% { transform: translate3d(-50%, 0, 0); }
+    }
+
+    /* --- BODY LAYOUT: SIDEBAR + MAIN WORKSPACE --- */
+    .main-body {
+      display: flex;
+      flex: 1;
+      overflow: hidden;
+    }
+
+    /* Sidebar controls */
+    .sidebar {
+      width: 260px;
+      background-color: var(--surface);
+      border-right: 2px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      flex-shrink: 0;
+    }
+
+    .sidebar-menu {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .sidebar-menu-title {
+      font-size: 10px;
+      color: var(--text-muted);
+      padding: 15px 20px 5px 20px;
+      letter-spacing: 1.5px;
+      border-bottom: 1px solid rgba(58, 71, 75, 0.3);
+    }
+
+    .nav-btn {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-family: inherit;
+      font-size: 12px;
+      text-align: left;
+      padding: 15px 20px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border-bottom: 1px solid rgba(58, 71, 75, 0.3);
+      transition: all 0.2s ease;
+      position: relative;
+    }
+
+    .nav-btn:hover {
+      background-color: rgba(255, 90, 31, 0.05);
+      color: var(--text);
+    }
+
+    .nav-btn.active {
+      color: var(--primary);
+      background-color: rgba(255, 90, 31, 0.08);
+      font-weight: bold;
+    }
+
+    .nav-btn.active::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 4px;
+      background-color: var(--primary);
+    }
+
+    .nav-btn-icon {
+      font-weight: bold;
+      color: var(--primary);
+    }
+
+    .nav-btn.active .nav-btn-icon {
+      color: var(--accent);
+    }
+
+    .sidebar-footer {
+      padding: 15px 20px;
+      border-top: 1px solid var(--border);
+      font-size: 10px;
+      color: var(--text-muted);
+      background-color: var(--background);
+    }
+
+    .sidebar-footer code {
+      color: var(--accent);
+    }
+
+    /* Main Workspace Panels */
+    .workspace {
+      flex: 1;
+      padding: 25px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .panel-container {
+      display: none; /* Controlled via JS tabs */
+      animation: panel-fade 0.2s ease-in-out forwards;
+    }
+
+    .panel-container.active {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    @keyframes panel-fade {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* --- REUSABLE BRUTALIST GRID & CARD COMPONENTS --- */
+    .section-eyebrow {
+      color: var(--primary);
+      font-size: 10px;
+      font-weight: bold;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 5px;
+    }
+
+    .section-title {
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 12px;
+    }
+
+    .section-title::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background-color: var(--border);
+    }
+
+    .section-desc {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+      max-width: 800px;
+    }
+
+    /* Grid layout utils */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    @media (max-width: 1000px) {
+      .grid-2 {
+         grid-template-columns: 1fr;
+      }
+    }
+
+    /* Industrial Card wrapper */
+    .intel-card {
+      background-color: var(--surface);
+      border: 1px solid var(--border);
+      position: relative;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    /* Corner brackets for technological steel aesthetic */
+    .intel-card::before {
+      content: "";
+      position: absolute;
+      top: -1px;
+      left: -1px;
+      width: 10px;
+      height: 10px;
+      border-top: 2px solid var(--primary);
+      border-left: 2px solid var(--primary);
+    }
+
+    .intel-card::after {
+      content: "";
+      position: absolute;
+      bottom: -1px;
+      right: -1px;
+      width: 10px;
+      height: 10px;
+      border-bottom: 2px solid var(--accent);
+      border-right: 2px solid var(--accent);
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(58, 71, 75, 0.6);
+      padding-bottom: 10px;
+    }
+
+    .card-title {
+      font-size: 12px;
+      font-weight: bold;
+      letter-spacing: 1.5px;
+      color: var(--text);
+    }
+
+    .card-meta {
+      font-size: 9px;
+      color: var(--accent);
+      background-color: rgba(0, 255, 102, 0.08);
+      padding: 2px 6px;
+      border: 1px solid rgba(0, 255, 102, 0.2);
+    }
+
+    .card-body {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    /* --- SYS_MONITOR WIDGETS --- */
+    .metric-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 15px;
+    }
+
+    @media (max-width: 768px) {
+      .metric-row {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .metric-card {
+      background-color: var(--surface);
+      border-left: 3px solid var(--primary);
+      border-top: 1px solid var(--border);
+      border-right: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 12px 15px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .metric-label {
+      font-size: 10px;
+      color: var(--text-muted);
+      letter-spacing: 1px;
+    }
+
+    .metric-val {
+      font-size: 24px;
+      font-weight: bold;
+      color: var(--text);
+      letter-spacing: -1px;
+    }
+
+    .metric-val.green {
+      color: var(--accent);
+    }
+
+    /* --- canvas globe --- */
+    .globe-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(circle, #1a2529 0%, #0B1011 100%);
+      border: 1px solid var(--border);
+      height: 380px;
+      position: relative;
+    }
+
+    #globeCanvas {
+      max-width: 100%;
+      height: 340px;
+    }
+
+    .globe-overlay {
+      position: absolute;
+      top: 15px;
+      left: 15px;
+      font-size: 10px;
+      color: var(--accent);
+      background: rgba(11, 16, 17, 0.85);
+      border: 1px solid var(--border);
+      padding: 6px 10px;
+      pointer-events: none;
+    }
+
+    /* --- THERMAL CALCULATOR WIDGET --- */
+    .calc-slider-group {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .calc-label-bar {
+      display: flex;
+      justify-content: space-between;
+      font-size: 11px;
+    }
+
+    .slider-input {
+      -webkit-appearance: none;
+      width: 100%;
+      height: 8px;
+      background: var(--background);
+      outline: none;
+      border: 1px solid var(--border);
+    }
+
+    .slider-input::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 16px;
+      height: 16px;
+      background: var(--primary);
+      cursor: pointer;
+      border: 1px solid var(--text);
+    }
+
+    .calc-metrics {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      background-color: var(--background);
+      padding: 12px;
+      border: 1px dashed var(--border);
+    }
+
+    .calc-res-label {
+      font-size: 10px;
+      color: var(--text-muted);
+    }
+
+    .calc-res-val {
+      font-size: 16px;
+      font-weight: bold;
+      color: var(--accent);
+    }
+
+    /* --- SYS_COPILOT CHAT INTERFACE --- */
+    .chat-layout {
+      height: 480px;
+      display: flex;
+      flex-direction: column;
+      border: 1px solid var(--border);
+    }
+
+    .chat-history {
+      flex: 1;
+      padding: 15px;
+      overflow-y: auto;
+      background-color: var(--background);
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .chat-bubble {
+      max-width: 85%;
+      padding: 12px 15px;
+      border-radius: 2px;
+      line-height: 1.4;
+      white-space: pre-wrap;
+    }
+
+    .chat-bubble.assistant {
+      align-self: flex-start;
+      background-color: var(--surface);
+      border-left: 3px solid var(--primary);
+      color: var(--text);
+    }
+
+    .chat-bubble.user {
+      align-self: flex-end;
+      background-color: var(--surface-elevated);
+      border-right: 3px solid var(--accent);
+      color: var(--text);
+    }
+
+    .chat-presets {
+      display: flex;
+      gap: 10px;
+      padding: 10px;
+      background-color: var(--surface-elevated);
+      overflow-x: auto;
+      border-top: 1px solid var(--border);
+    }
+
+    .preset-btn {
+      background-color: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 6px 12px;
+      font-family: inherit;
+      font-size: 11px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.2s ease;
+    }
+
+    .preset-btn:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    .chat-input-area {
+      display: flex;
+      background-color: var(--surface);
+      border-top: 2px solid var(--border);
+    }
+
+    .chat-msg-input {
+      flex: 1;
+      background: none;
+      border: none;
+      outline: none;
+      color: var(--text);
+      font-family: inherit;
+      padding: 15px;
+      font-size: 13px;
+    }
+
+    .chat-send-btn {
+      background-color: var(--primary);
+      color: var(--background);
+      border: none;
+      font-family: inherit;
+      font-weight: bold;
+      padding: 0 25px;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+    }
+
+    .chat-send-btn:hover {
+      background-color: #ff7442;
+    }
+
+    /* Markdown inside assistant bubbles styling */
+    .chat-bubble.assistant h3 {
+      font-size: 12px;
+      color: var(--primary);
+      margin-bottom: 6px;
+      border-bottom: 1px dashed var(--border);
+      padding-bottom: 2px;
+    }
+
+    .chat-bubble.assistant ul {
+      margin-left: 15px;
+      margin-top: 5px;
+    }
+
+    .adopt-spec-link {
+      display: inline-block;
+      margin-top: 10px;
+      font-size: 10px;
+      background: var(--accent-dim);
+      color: var(--text);
+      border: 1px solid var(--accent);
+      padding: 4px 8px;
+      cursor: pointer;
+    }
+
+    .adopt-spec-link:hover {
+      background-color: var(--accent);
+      color: var(--background);
+    }
+
+    /* --- WORKFLOW: SYS_ALLOC FORM --- */
+    .form-layout {
+      max-width: 650px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 20px;
+    }
+
+    .form-label {
+      font-size: 11px;
+      font-weight: bold;
+      color: var(--primary);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .form-input, .form-select {
+      background-color: var(--surface-elevated);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-family: inherit;
+      padding: 12px;
+      font-size: 13px;
+      outline: none;
+    }
+
+    .form-input:focus, .form-select:focus {
+      border-color: var(--primary);
+    }
+
+    .form-btn {
+      background-color: var(--primary);
+      color: #000;
+      font-weight: 700;
+      border: none;
+      font-family: inherit;
+      padding: 15px;
+      font-size: 13px;
+      cursor: pointer;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      transition: all 0.2s ease;
+    }
+
+    .form-btn:hover {
+      background-color: #ff7f4d;
+      box-shadow: 0 0 10px rgba(255, 90, 31, 0.4);
+    }
+
+    /* --- MEMORY DEPLOYMENTS LIST --- */
+    .db-logs-container {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .db-header-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: var(--surface-elevated);
+      border: 1px solid var(--border);
+      padding: 8px 15px;
+      font-size: 11px;
+    }
+
+    .clean-db-btn {
+      background: none;
+      border: 1px dashed var(--primary);
+      color: var(--primary);
+      font-family: inherit;
+      font-size: 10px;
+      padding: 3px 8px;
+      cursor: pointer;
+    }
+
+    .clean-db-btn:hover {
+      background-color: var(--primary);
+      color: var(--background);
+    }
+
+    .vessel-record {
+      background-color: var(--surface);
+      border-left: 3px solid var(--accent);
+      border-top:1px solid var(--border);
+      border-right:1px solid var(--border);
+      border-bottom:1px solid var(--border);
+      padding: 15px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      position: relative;
+    }
+
+    .vessel-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+
+    .vessel-title {
+      font-size: 13px;
+      font-weight: bold;
+      color: var(--accent);
+    }
+
+    .vessel-time {
+      font-size: 10px;
+      color: var(--text-muted);
+    }
+
+    .vessel-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 15px;
+      background-color: var(--background);
+      padding: 10px;
+      border: 1px solid var(--border);
+    }
+
+    @media (max-width: 600px) {
+      .vessel-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .vessel-data-item {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .vessel-data-label {
+      font-size: 9px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+
+    .vessel-data-val {
+      font-size: 11px;
+      font-weight: bold;
+    }
+
+    .vessel-delete-btn {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-family: inherit;
+      cursor: pointer;
+      font-size: 11px;
+    }
+
+    .vessel-delete-btn:hover {
+      color: #ff3c3c;
+    }
+
+    .empty-db-state {
+      text-align: center;
+      padding: 40px;
+      font-style: italic;
+      color: var(--text-muted);
+      border: 1px dashed var(--border);
+    }
+
+    /* Status badges */
+    .status-badge {
+      display: inline-block;
+      padding: 1px 6px;
+      font-size: 9px;
+      font-weight: bold;
+      letter-spacing: 0.5px;
+    }
+    .status-badge.active {
+      background-color: rgba(0, 255, 102, 0.15);
+      border: 1px solid var(--accent);
+      color: var(--accent);
+    }
+    .status-badge.pending {
+      background-color: rgba(255, 90, 31, 0.15);
+      border: 1px solid var(--primary);
+      color: var(--primary);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="app-container">
+
+    <!-- HEADER BLOCK -->
+    <header>
+      <div class="brand-section">
+        <div class="logo-box">PELAGIC</div>
+        <div>
+          <h2 style="font-size: 13px; font-weight: bold; letter-spacing: 0.5px;">SYS_CONTROL // COFOUNDER_OPS</h2>
+          <div class="header-eyebrow">CO-FOUNDING THE OCEANIC COMPUTE LAYER</div>
+        </div>
+      </div>
+      
+      <div class="system-status-led">
+        <div class="led-dot"></div>
+        <span style="font-size: 11px; font-weight: bold; color: var(--accent);">SYS_ACTIVE // EEZ_LINK_NOMINAL</span>
+      </div>
+    </header>
+
+    <!-- LIVE REAL-TIME COORDINATES TICKER -->
+    <div class="ticker-bar">
+      <div class="ticker-inner">
+        &bull; SYS_COORDS: LAT: 37°44’02”N LON: 122°24’01”W &bull; ACTIVE HULLS: 02 &bull; POWER LOAD: 150 MW &bull; AMBIENT DEEP SEA TEMP: 4.2°C &bull; UNCLOS ARTICLES COMPLIANT &bull; HULL-01 STATUS: NOMINAL (LAT 37.74° N, LON 25.67° W) &bull; HULL-02 STATUS: NOMINAL (LAT 0.00° N, LON 120.00° W) &bull; NET PUE: 1.02 &bull; HIGH-DENSITY SOVEREIGN AI CLUSTERS READY FOR PROVISIONING &bull;
+      </div>
+    </div>
+
+    <!-- MAIN GRID CONTAINER -->
+    <div class="main-body">
+      
+      <!-- SIDEBAR -->
+      <nav class="sidebar">
+        <div class="sidebar-menu">
+          <div class="sidebar-menu-title">CORE INTERFACES</div>
+          
+          <button class="nav-btn active" onclick="switchTab('sys-monitor', this)">
+            <span class="nav-btn-icon">[⚡]</span> SYS_MONITOR
+          </button>
+          
+          <button class="nav-btn" onclick="switchTab('sys-copilot', this)">
+            <span class="nav-btn-icon">[🤖]</span> SYS_COPILOT
+          </button>
+          
+          <button class="nav-btn" onclick="switchTab('sys-alloc', this)">
+            <span class="nav-btn-icon">[⚓]</span> SYS_ALLOC (PROVISION)
+          </button>
+
+          <button class="nav-btn" onclick="switchTab('sys-db', this)" id="nav-db-btn">
+            <span class="nav-btn-icon">[💾]</span> DURABLE_Vessels (<span id="db-counter">0</span>)
+          </button>
+        </div>
+
+        <div class="sidebar-footer">
+          <div>USER_TOKEN: <code>SOVEREIGN_OPERATOR</code></div>
+          <div style="margin-top: 5px;">VER: <code>V2.19.REVISION_2</code></div>
+        </div>
+      </nav>
+
+      <!-- MAIN WORKSPACE -->
+      <main class="workspace">
+
+        <!-- PANEL 1: SYS_MONITOR -->
+        <div id="sys-monitor" class="panel-container active">
+          <div>
+            <div class="section-eyebrow">Real-Time Metrics & Telemetry</div>
+            <h1 class="section-title">Flotilla Telemetry & Thermal Delta</h1>
+            <p class="section-desc">Performance of sovereign hardware hulls operating in international waters. Using high-density direct ocean water cooling loop mechanics with sub-1.03 Net PUE.</p>
+          </div>
+
+          <!-- TOP METRIC CARDS -->
+          <div class="metric-row">
+            <div class="metric-card">
+              <span class="metric-label">GLOBAL_PUE</span>
+              <span class="metric-val green">1.02</span>
+            </div>
+            <div class="metric-card">
+              <span class="metric-label">ACTIVE_MW</span>
+              <span class="metric-val" id="total-mw">150 MW</span>
+            </div>
+            <div class="metric-card">
+              <span class="metric-label">THERMAL_SINK_TEMP</span>
+              <span class="metric-val">4.2°C</span>
+            </div>
+            <div class="metric-card">
+              <span class="metric-label">ACTIVE_HULLS</span>
+              <span class="metric-val" id="active-hulls-count">2</span>
+            </div>
+          </div>
+
+          <!-- 3D GLOBE ROW & MATH WIDGET -->
+          <div class="grid-2">
+            
+            <!-- CANVAS WIREFRAME GLOBE -->
+            <div class="globe-section">
+              <div class="globe-overlay" id="globe-status-ticker">SYS_TELEMETRY: SCANNING HIGH SEAS COORDINATES...</div>
+              <canvas id="globeCanvas"></canvas>
+            </div>
+
+            <!-- THERMAL DELTA CALCULATOR WIDGET -->
+            <div class="intel-card">
+              <div class="card-header">
+                <span class="card-title">THERMAL DELTA BENEFITS CALCULATOR</span>
+                <span class="card-meta">PUE EFFICIENCY MATH</span>
+              </div>
+              <div class="card-body">
+                <p style="font-size: 11px; color: var(--text-muted); margin-bottom: 5px;">Adjust metrics to calculate prompt ocean water power savings metrics compared to state-of-the-art land HVAC datacenters.</p>
+                
+                <!-- Sliders -->
+                <div class="calc-slider-group">
+                  <div class="calc-label-bar">
+                    <span>Core Platform Capacity (MW)</span>
+                    <span id="capacity-val" style="color: var(--primary);">100 MW</span>
+                  </div>
+                  <input type="range" min="10" max="1000" value="100" class="slider-input" id="slide-capacity" oninput="recalcDelta()">
+                </div>
+
+                <div class="calc-slider-group">
+                  <div class="calc-label-bar">
+                    <span>Seawater Depth Temperature (°C)</span>
+                    <span id="seatemp-val" style="color: var(--primary);">4.2 °C</span>
+                  </div>
+                  <input type="range" min="2" max="18" value="4.2" step="0.2" class="slider-input" id="slide-seatemp" oninput="recalcDelta()">
+                </div>
+
+                <div class="calc-slider-group">
+                  <div class="calc-label-bar">
+                    <span>Land Power Cost ($/MWh equivalent)</span>
+                    <span id="landcost-val" style="color: var(--primary);">$120</span>
+                  </div>
+                  <input type="range" min="40" max="350" value="120" class="slider-input" id="slide-landcost" oninput="recalcDelta()">
+                </div>
+
+                <!-- Math Outputs -->
+                <div class="calc-metrics">
+                  <div class="vessel-data-item">
+                    <span class="calc-res-label">LAND-BASED HVAC PUE</span>
+                    <span class="calc-res-val" style="color: #ff3c3c;">1.45</span>
+                  </div>
+                  <div class="vessel-data-item">
+                    <span class="calc-res-label">PELAGIC OCEAN PUE</span>
+                    <span class="calc-res-val" id="calc-ocean-pue">1.021</span>
+                  </div>
+                </div>
+
+                <div class="calc-metrics" style="border-color: var(--accent);">
+                  <div class="vessel-data-item">
+                    <span class="calc-res-label">ENERGY SAVINGS RATIONALE</span>
+                    <span class="calc-res-val" id="calc-energy-savings">29.6%</span>
+                  </div>
+                  <div class="vessel-data-item">
+                    <span class="calc-res-label">EST. MONTHLY POWER GAIN</span>
+                    <span class="calc-res-val" id="calc-financial-savings" style="color: var(--primary);">$1,120,400</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- ACTIVE HULL METRICS GRID -->
+          <div>
+            <div style="font-size: 11px; color: var(--primary); font-weight: bold; margin-bottom: 8px; letter-spacing: 1px;">ACTIVE OCEAN HULL METRICS</div>
+            <div class="grid-2" id="dashboard-hulls-display">
+              <!-- Dynamically populated via JS -->
+            </div>
+          </div>
+        </div>
+
+        <!-- PANEL 2: SYS_COPILOT -->
+        <div id="sys-copilot" class="panel-container">
+          <div>
+            <div class="section-eyebrow">Pelagic AI Architect</div>
+            <h1 class="section-title">Maritime Deployment Copilot</h1>
+            <p class="section-desc">Query the Pelagic Oceanic AI Engine for UNCLOS maritime law protocols, deep sea heat sink design configurations, flag-state registration strategies, or biofouling cupronickel piping schematics.</p>
+          </div>
+
+          <div class="chat-layout">
+            <!-- Intercom Window -->
+            <div class="chat-history" id="chat-history-box">
+              <div class="chat-bubble assistant">✨ System Copilot online. 
+Ask me about how to configure, protect, and legally govern your compute barge.
+
+*Example prompts below are available for rapid telemetry sync.*</div>
+            </div>
+
+            <!-- Preset prompt pills -->
+            <div class="chat-presets">
+              <button class="preset-btn" onclick="sendPreset('What flag-state jurisdiction is recommended for sovereign data hosting?')">Sovereign Flag-State / UNCLOS Rules</button>
+              <button class="preset-btn" onclick="sendPreset('How does the saltwater thermal exchange loop prevent biofouling?')">Biofouling Control & PUE Loop</button>
+              <button class="preset-btn" onclick="sendPreset('Recommend a high-density deployment configuration for LLM training.')">Compute Capacity Setup</button>
+            </div>
+
+            <!-- Form sending input -->
+            <form class="chat-input-area" onsubmit="submitChat(event)">
+              <input type="text" class="chat-msg-input" id="chat-input-field" placeholder="Draft query to Pelagic Copilot (eg: 'What are the UNCLOS parameters around EEZ boundaries?')..." required>
+              <button type="submit" class="chat-send-btn" id="chat-btn-submit">TRANSMIT</button>
+            </form>
+          </div>
+        </div>
+
+        <!-- PANEL 3: SYS_ALLOC FORM -->
+        <div id="sys-alloc" class="panel-container">
+          <div>
+            <div class="section-eyebrow">Interactive Workflow</div>
+            <h1 class="section-title">Provision Sovereign Compute Hull</h1>
+            <p class="section-desc">Configure and register a new high-power modular data barge deployment in international waters. Coordinates will be synced to the global fleet ledger.</p>
+          </div>
+
+          <div class="intel-card form-layout">
+            <div class="card-header">
+              <span class="card-title">INITIATE DEPLOYMENT SEQUENCE</span>
+              <span class="card-meta">SYS_ALLOC_V1</span>
+            </div>
+            <form onsubmit="submitAlloc(event)" class="card-body">
+              
+              <!-- Setup auto populate -->
+              <div class="form-group">
+                <label class="form-label">Auto-Populate Specs from Copilot Selection</label>
+                <select class="form-select" id="form-copilot-auto" onchange="autoPopulateForm(this.value)">
+                  <option value="manual">-- Manual Configuration --</option>
+                  <option value="copilot-atlantic">Atlantic Basin (LAT 37.74 N, LON 25.67 W // 1,000 Nodes // Direct-to-Chip)</option>
+                  <option value="copilot-pacific">Equatorial Pacific (LAT 0.00 N, LON 120.00 W // 2,000 Nodes // Closed-Loop)</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="form-title">Vessel Codename / Name</label>
+                <input type="text" class="form-input" id="form-title" placeholder="e.g. HULL-03 // INDIAN_OCEAN" required>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="form-coords">Target Coordinates (LAT/LON)</label>
+                <input type="text" class="form-input" id="form-coords" placeholder="e.g. LAT 12.3456 N, LON 45.6789 E" required>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="form-density">Compute Density</label>
+                <select class="form-select" id="form-density">
+                  <option value="1,000 Nodes (50MW)">1,000 Nodes (50MW)</option>
+                  <option value="2,000 Nodes (100MW)">2,000 Nodes (100MW)</option>
+                  <option value="4,000 Nodes (200MW)">4,000 Nodes (200MW)</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="form-cooling">Cooling Loop Architecture</label>
+                <select class="form-select" id="form-cooling">
+                  <option value="Direct-to-Chip Deep Ocean Water">Direct-to-Chip Deep Ocean Water</option>
+                  <option value="Closed-Loop Saltwater Heat Exchange">Closed-Loop Saltwater Heat Exchange</option>
+                  <option value="Hybrid Surface/Deep Thermocline">Hybrid Surface/Deep Thermocline</option>
+                </select>
+              </div>
+
+              <button type="submit" class="form-btn">QUEUE_HULL_DEPLOYMENT</button>
+            </form>
+          </div>
+        </div>
+
+        <!-- PANEL 4: SYS_DB (DURABLE DEPLOYMENTS IN MEMORY) -->
+        <div id="sys-db" class="panel-container">
+          <div>
+            <div class="section-eyebrow">Durable Database Storage Logs</div>
+            <h1 class="section-title">Fleet Ledger Storage</h1>
+            <p class="section-desc">Active configurations synchronized dynamically with our Express backend file-system store. These items persist through system restarts.</p>
+          </div>
+
+          <div class="db-header-bar">
+            <span>DWELLING ENTRIES INDEXED: <strong id="db-ledgers-count" style="color: var(--accent);">0</strong></span>
+            <span style="color: var(--text-muted);">PERSISTENCE PATH: <code style="color: var(--primary);">/api/memory</code></span>
+          </div>
+
+          <div class="db-logs-container" id="memory-entries-list">
+            <!-- Dynamically populated via fetch('/api/memory') -->
+          </div>
+        </div>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- CORE JS LOGIC -->
+  <script>
+    // System level state
+    let activeHulls = [];
+
+    // --- TAB NAVIGATION SWITCHER ---
+    function switchTab(tabId, el) {
+      document.querySelectorAll('.panel-container').forEach(panel => {
+        panel.classList.remove('active');
+      });
+      document.querySelectorAll('.nav-btn').forEach(btn => {
+        btn.classList.remove('active');
+      });
+      
+      document.getElementById(tabId).classList.add('active');
+      if (el) {
+        el.classList.add('active');
+      } else {
+        // Find matching sidebar button
+        const buttons = document.querySelectorAll('.nav-btn');
+        buttons.forEach(btn => {
+          if (btn.innerText.includes(tabId.toUpperCase().replace('-', '_'))) {
+            btn.classList.add('active');
+          }
+        });
+      }
+    }
+
+    // --- AUTPOPULATE COPILOT CHOICES INTO THE SEQUENCE FORM ---
+    function autoPopulateForm(val) {
+      if (val === 'copilot-atlantic') {
+        document.getElementById('form-title').value = "HULL-03 // AZORES_SEC_C";
+        document.getElementById('form-coords').value = "LAT 37.7412 N, LON 25.6756 W";
+        document.getElementById('form-density').value = "1,000 Nodes (50MW)";
+        document.getElementById('form-cooling').value = "Direct-to-Chip Deep Ocean Water";
+      } else if (val === 'copilot-pacific') {
+        document.getElementById('form-title').value = "HULL-04 // EQU_RESERVE_B";
+        document.getElementById('form-coords').value = "LAT 0.0000 N, LON 120.0000 W";
+        document.getElementById('form-density').value = "2,000 Nodes (100MW)";
+        document.getElementById('form-cooling').value = "Closed-Loop Saltwater Heat Exchange";
+      }
+    }
+
+    function adoptCopilotSpecs(title, coords, density, cooling) {
+      switchTab('sys-alloc');
+      document.getElementById('form-title').value = title;
+      document.getElementById('form-coords').value = coords;
+      document.getElementById('form-density').value = density;
+      document.getElementById('form-cooling').value = cooling;
+      document.getElementById('form-copilot-auto').value = "manual";
+      
+      // Flash the form panel briefly
+      const block = document.querySelector('.form-layout');
+      block.style.border = "2px solid var(--accent)";
+      setTimeout(() => { block.style.border = "1px solid var(--border)"; }, 1500);
+    }
+
+    // --- THERMAL DELTA MATH CALCULATIONS ---
+    function recalcDelta() {
+      const cap = parseFloat(document.getElementById('slide-capacity').value);
+      const seaTemp = parseFloat(document.getElementById('slide-seatemp').value);
+      const landCost = parseFloat(document.getElementById('slide-landcost').value);
+
+      document.getElementById('capacity-val').innerText = `${cap} MW`;
+      document.getElementById('seatemp-val').innerText = `${seaTemp} °C`;
+      document.getElementById('landcost-val').innerText = `$${landCost}`;
+
+      // Simulate seawater cooling efficiency drop with temperature climb
+      // Baseline 1.012 PUE at 4°C, +0.001 per °C temperature increase
+      const oceanPUE = (1.012 + (seaTemp - 4) * 0.0012).toFixed(3);
+      document.getElementById('calc-ocean-pue').innerText = oceanPUE;
+
+      // Energy Savings is: (1.45 - oceanPUE) / 1.45 = %
+      const energyPct = ((1.45 - parseFloat(oceanPUE)) / 1.45 * 100).toFixed(1);
+      document.getElementById('calc-energy-savings').innerText = `${energyPct}%`;
+
+      // Financial model (Rough calculation)
+      // Land HVAC power waste vs Sea water loop power waste
+      // MW * Hours * PUE_Waste = Waste MW.
+      // Savings = (LandWaste - SeaWaste) in MW * Cost per MWh
+      const landPUEWaste = cap * (1.45 - 1.0);
+      const seaPUEWaste = cap * (parseFloat(oceanPUE) - 1.0);
+      const hourlyMWSaved = landPUEWaste - seaPUEWaste;
+      const monthlyMWhSaved = hourlyMWSaved * 24 * 30.5;
+      const moneySaved = Math.round(monthlyMWhSaved * landCost);
+
+      const formatter = new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'USD',
+        maximumFractionDigits: 0
+      });
+      document.getElementById('calc-financial-savings').innerText = formatter.format(moneySaved);
+    }
+
+    // --- EXPRESS BACKEND SYNC (GET/POST /api/memory) ---
+    async function loadVesselsFromMemory() {
+      try {
+        const res = await fetch('/api/memory');
+        if (!res.ok) throw new Error("HTTP connection failed");
+        
+        activeHulls = await res.json();
+        renderVesselsList();
+        renderDashboardHulls();
+      } catch (err) {
+        console.error("Fetch memory database failed:", err);
+      }
+    }
+
+    function renderVesselsList() {
+      const container = document.getElementById('memory-entries-list');
+      const counterEl = document.getElementById('db-counter');
+      const counterLedgerEl = document.getElementById('db-ledgers-count');
+      
+      counterEl.innerText = activeHulls.length;
+      counterLedgerEl.innerText = activeHulls.length;
+
+      if (activeHulls.length === 0) {
+        container.innerHTML = `
+          <div class="empty-db-state">No hulls listed in memory ledger. Provision a new hull inside the control console.</div>
+        `;
+        return;
+      }
+
+      container.innerHTML = "";
+      activeHulls.forEach(hull => {
+        let parsedBody = {};
+        try {
+          parsedBody = JSON.parse(hull.body);
+        } catch(e) {
+          parsedBody = { coordinates: "Unknown", density: "Unknown", cooling: "Unknown" };
+        }
+
+        const dateString = new Date(hull.createdAt).toLocaleString();
+        
+        const cardHTML = `
+          <div class="vessel-record">
+            <button class="vessel-delete-btn" onclick="deleteVessel('${hull.id}')">[ WIPE_MEMORY ]</button>
+            <div class="vessel-top">
+              <div>
+                <span class="vessel-title">${hull.title}</span>
+                <div style="font-size:9px; color: var(--text-muted); margin-top:2px;">DB_RECORD_ID: ${hull.id}</div>
+              </div>
+              <span class="status-badge active">NOMINAL // EEZ_LINKED</span>
+            </div>
+
+            <div class="vessel-grid">
+              <div class="vessel-data-item">
+                <span class="vessel-data-label">Coordinates</span>
+                <span class="vessel-data-val">${parsedBody.coordinates || 'N/A'}</span>
+              </div>
+              <div class="vessel-data-item">
+                <span class="vessel-data-label">Compute Capacity</span>
+                <span class="vessel-data-val">${parsedBody.density || 'N/A'}</span>
+              </div>
+              <div class="vessel-data-item">
+                <span class="vessel-data-label">Cooling Loop</span>
+                <span class="vessel-data-val">${parsedBody.cooling || 'N/A'}</span>
+              </div>
+            </div>
+
+            <div class="vessel-time">LAUNCH_SEQUENCE_SYNCHRONIZED: ${dateString}</div>
+          </div>
+        `;
+        container.innerHTML += cardHTML;
+      });
+    }
+
+    function renderDashboardHulls() {
+      const container = document.getElementById('dashboard-hulls-display');
+      const activeCountEl = document.getElementById('active-hulls-count');
+      const totalMwEl = document.getElementById('total-mw');
+      
+      activeCountEl.innerText = activeHulls.length;
+
+      // Calculate total scale load MW
+      let totalMW = 0;
+      activeHulls.forEach(hull => {
+        let density = "";
+        try {
+          density = JSON.parse(hull.body).density || "";
+        } catch(e){}
+        if (density.includes('200MW')) totalMW += 200;
+        else if (density.includes('100MW')) totalMW += 100;
+        else totalMW += 50; // default/50MW fallback
+      });
+      totalMwEl.innerText = `${totalMW} MW`;
+
+      if (activeHulls.length === 0) {
+        container.innerHTML = `
+          <div style="grid-column: span 2; text-align: center; color: var(--text-muted); padding: 20px; border: 1px dashed var(--border);">
+            No hulls are active on the marine ledger. Go to SYS_ALLOC to configure a barge.
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = "";
+      // Only display the first 4 on the telemetry status monitor dashboard
+      activeHulls.slice(0, 4).forEach(hull => {
+        let stats = {};
+        try {
+          stats = JSON.parse(hull.body);
+        } catch(e) {}
+
+        const itemHTML = `
+          <div class="intel-card">
+            <div class="card-header">
+              <span class="card-title">${hull.title}</span>
+              <span class="card-meta">OPERATIONAL</span>
+            </div>
+            <div class="card-body">
+              <div style="font-size: 11px; color: var(--accent); font-weight: bold;">${stats.coordinates || 'COORDS DETECTED'}</div>
+              <div style="font-size: 12px; margin-top: 5px;">
+                Direct deep-water cooling running at 4.2°C ambient intake. PUE optimized grid loop.
+              </div>
+              <div style="display:flex; justify-content:space-between; margin-top:10px; font-size:10px; border-top:1px dashed var(--border); padding-top:8px;">
+                <span>DENSITY: ${stats.density || '50MW'}</span>
+                <span style="color: var(--primary);">PUE: 1.02</span>
+              </div>
+            </div>
+          </div>
+        `;
+        container.innerHTML += itemHTML;
+      });
+    }
+
+    // Submit a new allocated hull configuration
+    async function submitAlloc(e) {
+      e.preventDefault();
+      
+      const title = document.getElementById('form-title').value.trim();
+      const coords = document.getElementById('form-coords').value.trim();
+      const density = document.getElementById('form-density').value;
+      const cooling = document.getElementById('form-cooling').value;
+
+      // Pack the JSON configuration payload
+      const payload = {
+        title: title,
+        body: JSON.stringify({
+          coordinates: coords,
+          density: density,
+          cooling: cooling,
+          status: "LAUNCH_QUEUE_READY"
+        })
+      };
+
+      try {
+        const res = await fetch('/api/memory', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        if (!res.ok) throw new Error("Could not register memory entry");
+        
+        // Reset form controls
+        document.getElementById('form-title').value = "";
+        document.getElementById('form-coords').value = "";
+        document.getElementById('form-copilot-auto').value = "manual";
+
+        // Refresh lists and change tab
+        await loadVesselsFromMemory();
+        switchTab('sys-db');
+        
+      } catch (err) {
+        alert("Provision sequence failed: " + err.message);
+      }
+    }
+
+    // Delete a vessel record from durable storage
+    async function deleteVessel(id) {
+      if (!confirm("Are you sure you want to trigger physical security purge and wipe this vessel registration file from memory?")) {
+        return;
+      }
+
+      try {
+        const res = await fetch(`/api/memory/${id}`, {
+          method: 'DELETE'
+        });
+
+        if (!res.ok) throw new Error("Delete failed");
+        
+        await loadVesselsFromMemory();
+      } catch (err) {
+        alert("Operation abort failed: " + err.message);
+      }
+    }
+
+    // --- SYS_COPILOT TRANSMISSION LOOP ---
+    async function submitChat(e) {
+      if (e) e.preventDefault();
+      const inputEl = document.getElementById('chat-input-field');
+      const text = inputEl.value.trim();
+      if (!text) return;
+
+      appendChatBubble(text, 'user');
+      inputEl.value = "";
+
+      // Disable inputs during transmission
+      const submitBtn = document.getElementById('chat-btn-submit');
+      submitBtn.innerText = "LINKING...";
+      submitBtn.disabled = true;
+
+      try {
+        const res = await fetch('/api/copilot', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ message: text })
+        });
+        
+        if (!res.ok) throw new Error("Transmission path offline");
+        const data = await res.json();
+        
+        appendChatBubble(data.response, 'assistant');
+      } catch (err) {
+        appendChatBubble(`### [TRANSMISSION INTERRUPTED]\nFailed to connect with Pelagic Deployment Copilot: ${err.message}. Please verify local environment state.`, 'assistant');
+      } finally {
+        submitBtn.innerText = "TRANSMIT";
+        submitBtn.disabled = false;
+      }
+    }
+
+    function sendPreset(text) {
+      document.getElementById('chat-input-field').value = text;
+      submitChat();
+    }
+
+    function appendChatBubble(text, sender) {
+      const container = document.getElementById('chat-history-box');
+      const bubble = document.createElement('div');
+      bubble.className = `chat-bubble ${sender}`;
+
+      if (sender === 'assistant') {
+        // Simple client-side Markdown rendering for rich terminal display
+        let html = text
+          .replace(/### (.*)/g, '<h3>$1</h3>')
+          .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+          .replace(/\*(.*?)\*/g, '<em>$1</em>')
+          .replace(/\n\* (.*)/g, '<br>&bull; $1')
+          .replace(/\n- (.*)/g, '<br>&bull; $1');
+        
+        // Embed specs adoption injection link dynamically if telemetry specs are suggested in model output
+        if (text.includes('LAT') && text.includes('LON')) {
+          // Attempt extraction of coordinate coordinates and suggestions
+          const latGroup = text.match(/LAT\s*(-?\d+\.?\d*)\s*[N|S]?/i);
+          const lonGroup = text.match(/LON\s*(-?\d+\.?\d*)\s*[W|E]?/i);
+          
+          let sublat = latGroup ? `LAT ${latGroup[1]} N` : "LAT 37.7412 N";
+          let sublon = lonGroup ? `LON ${lonGroup[1]} W` : "LON 25.6756 W";
+          let coordinatesStr = `${sublat}, ${sublon}`;
+
+          let densityStr = text.includes('2,000') || text.includes('100MW') ? "2,000 Nodes (100MW)" : "1,000 Nodes (50MW)";
+          let coolingStr = text.includes('Closed-Loop') ? "Closed-Loop Saltwater Heat Exchange" : "Direct-to-Chip Deep Ocean Water";
+
+          // Inject button
+          html += `<br><br><button class="adopt-spec-link" onclick="adoptCopilotSpecs('HULL-${Math.floor(100+Math.random()*900)} // COPILOT_VECTORS', '${coordinatesStr}', '${densityStr}', '${coolingStr}')">
+            ⚡ ADOPT FLOTILLA ARCHITECTURE FOR PROVISIONING FORM
+          </button>`;
+        }
+        
+        bubble.innerHTML = html;
+      } else {
+        bubble.textContent = text;
+      }
+
+      container.appendChild(bubble);
+      container.scrollTop = container.scrollHeight;
+    }
+
+    // --- CANVAS-DRAWN ROTATING MARITIME 3D GLOBAL GRID WIREFRAME ---
+    const canvas = document.getElementById('globeCanvas');
+    const ctx = canvas.getContext('2d');
+    
+    // Wireframe properties
+    let rotationAngle = 0;
+    const globeRadius = 130;
+    let width = canvas.width = canvas.parentElement.clientWidth;
+    let height = canvas.height = 340;
+
+    window.addEventListener('resize', () => {
+      if (canvas.parentElement) {
+        width = canvas.width = canvas.parentElement.clientWidth;
+        height = canvas.height = 340;
+      }
+    });
+
+    // 3D projection helper
+    function get3DPoint(lat, lon, r, alpha) {
+      const radLat = lat * Math.PI / 180;
+      const radLon = (lon + alpha) * Math.PI / 180;
+
+      // Calculations in standard sphere space
+      const x = r * Math.cos(radLat) * Math.sin(radLon);
+      const y = r * Math.sin(radLat);
+      const z = r * Math.cos(radLat) * Math.cos(radLon);
+
+      return { x, y, z };
+    }
+
+    function drawTelemetryGlobe() {
+      ctx.clearRect(0, 0, width, height);
+      
+      const cx = width / 2;
+      const cy = height / 2;
+      
+      ctx.lineWidth = 1;
+      
+      // Rotate slowly over time
+      rotationAngle += 0.45;
+
+      // 1) Draw ambient grid lines (Parallel circles)
+      ctx.strokeStyle = 'rgba(0, 255, 102, 0.08)';
+      for (let lat = -75; lat <= 75; lat += 15) {
+        ctx.beginPath();
+        let first = true;
+        for (let lon = 0; lon <= 360; lon += 5) {
+          const pt = get3DPoint(lat, lon, globeRadius, rotationAngle);
+          
+          // Only render wireframe points facing the screen (z > 0)
+          if (pt.z >= -10) {
+            const screenX = cx + pt.x;
+            const screenY = cy - pt.y;
+            if (first) {
+              ctx.moveTo(screenX, screenY);
+              first = false;
+            } else {
+              ctx.lineTo(screenX, screenY);
+            }
+          }
+        }
+        ctx.stroke();
+      }
+
+      // 2) Draw Meridian circles (Longitude lines)
+      for (let lon = 0; lon < 360; lon += 22.5) {
+        ctx.beginPath();
+        let first = true;
+        for (let lat = -90; lat <= 90; lat += 5) {
+          const pt = get3DPoint(lat, lon, globeRadius, rotationAngle);
+          
+          if (pt.z >= -10) {
+            const screenX = cx + pt.x;
+            const screenY = cy - pt.y;
+            if (first) {
+              ctx.moveTo(screenX, screenY);
+              first = false;
+            } else {
+              ctx.lineTo(screenX, screenY);
+            }
+          }
+        }
+        ctx.stroke();
+      }
+
+      // 3) Draw Outer sphere boundary rim
+      ctx.strokeStyle = 'rgba(255, 90, 31, 0.25)';
+      ctx.lineWidth = 1.6;
+      ctx.beginPath();
+      ctx.arc(cx, cy, globeRadius + 2, 0, 2 * Math.PI);
+      ctx.stroke();
+
+      // 4) Plot active hulls from memory database
+      activeHulls.forEach((hull, i) => {
+        let stats = {};
+        try {
+          stats = JSON.parse(hull.body);
+        } catch(e){}
+        
+        let targetLat = 0;
+        let targetLon = 0;
+        
+        // Parse numerical latitude and longitude from user text string (e.g. LAT 37.74 N, LON 25.67 W)
+        if (stats.coordinates) {
+          const latMatch = stats.coordinates.match(/LAT\s*(-?\d+\.?\d*)/i);
+          const lonMatch = stats.coordinates.match(/LON\s*(-?\d+\.?\d*)/i);
+          if (latMatch) targetLat = parseFloat(latMatch[1]);
+          if (lonMatch) targetLon = parseFloat(lonMatch[1]);
+          // Adjust directions
+          if (stats.coordinates.toLowerCase().includes('s')) targetLat = -targetLat;
+          if (stats.coordinates.toLowerCase().includes('w')) targetLon = -targetLon;
+        } else {
+          // Alternate distribution fallback locations
+          targetLat = (i * 30 - 15) % 80;
+          targetLon = (i * 90 - 45) % 180;
+        }
+
+        const point = get3DPoint(targetLat, targetLon, globeRadius, rotationAngle);
+        
+        // Only display if vessel faces front hemisphere of rotation view screen
+        if (point.z > 0) {
+          const sx = cx + point.x;
+          const sy = cy - point.y;
+          
+          // Outer ping ring
+          const waveRadius = (Date.now() / 25 + i * 15) % 25;
+          ctx.strokeStyle = i % 2 === 0 ? 'rgba(0, 255, 102, 0.45)' : 'rgba(255, 90, 31, 0.55)';
+          ctx.lineWidth = 1;
+          ctx.beginPath();
+          ctx.arc(sx, sy, waveRadius, 0, 2 * Math.PI);
+          ctx.stroke();
+
+          // Core led pin dot
+          ctx.fillStyle = i % 2 === 0 ? 'var(--accent)' : 'var(--primary)';
+          ctx.beginPath();
+          ctx.arc(sx, sy, 5, 0, 2 * Math.PI);
+          ctx.fill();
+
+          // Node Text Flag Identifier
+          ctx.font = '9px Space Mono';
+          ctx.fillStyle = 'var(--text)';
+          ctx.fillText(`⚡ ${hull.title.split('//')[0].trim() || 'HULL_ID'} [LAT: ${targetLat}°]`, sx + 10, sy + 3);
+        }
+      });
+
+      // Continue draw loop
+      requestAnimationFrame(drawTelemetryGlobe);
+    }
+
+    // --- INITIALIZATION PROC ---
+    window.addEventListener('DOMContentLoaded', async () => {
+      // Establish layout starting configurations
+      recalcDelta();
+      
+      // Fetch initial datasets
+      await loadVesselsFromMemory();
+      
+      // Start rotating spatial graphic
+      drawTelemetryGlobe();
+      
+      // Periodically poll memory logs to keep in sync with active cluster states
+      setInterval(loadVesselsFromMemory, 12000);
+    });
+  </script>
+</body>
+</html>
