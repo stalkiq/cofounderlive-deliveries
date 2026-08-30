@@ -1,0 +1,219 @@
+{
+  "missionId": "ep_mtfqsdc0",
+  "idea": "Artificial intelligence is running out of compute. And data centers are running out of electricity and land.\n\nThe demand for data centers is insatiable. But new data centers can take years for approval and enough megawatts, and still could get killed by local government intervention.\n\nWhile communities increasingly oppose the land, the water is open.\n\nIt sounds crazy, but we think part of the answer may be to move compute offshore.\n\nThe ocean is 70% of the Earth's surface area, has abundant sunlight, no permitting process, and is an enormous natural heat sink that is already getting hit by the sun all day anyway. Think of them as compute flotillas: many standardized, modular vessels operating together as one global cloud.\n\nWe want to fund founders who are bringing the world's compute to the oceans.",
+  "brand": {
+    "name": "PELAGIC",
+    "tagline": "Unbounded compute on the high seas.",
+    "audience": "Sovereign AI founders and infrastructure engineers seeking unconstrained, high-density compute.",
+    "tone": [
+      "Industrial",
+      "Sovereign",
+      "Brutalist"
+    ],
+    "visualConcept": "Industrial maritime engineering meets high-density hardware: raw steel textures, radar grids, and international orange accents instead of clean SaaS gradients.",
+    "layout": "A brutalist, terminal-inspired dashboard featuring a prominent, real-time interactive 3D globe tracking mock 'flotilla telemetry' and thermal heat sink efficiency.",
+    "palette": {
+      "background": "#0B1011",
+      "surface": "#181F22",
+      "primary": "#FF5A1F",
+      "accent": "#00FF66",
+      "text": "#EAEAEA"
+    },
+    "creativeNotes": [
+      "Use raw SVG grid overlays and real-time latitude/longitude coordinate tickers instead of standard card borders to emphasize maritime sovereignty.",
+      "Incorporate an interactive 'Thermal Delta' calculator showing the immediate PUE (Power Usage Effectiveness) advantages of ocean-water cooling vs. land-based HVAC.",
+      "Replace generic tech icons with high-fidelity technical schematics of modular barge hulls, liquid-cooling loops, and marine fiber-optic tethers."
+    ]
+  },
+  "mvp": {
+    "name": "PELAGIC",
+    "workspaceLabel": "SYS_CONTROL // LAT: 00°00’00”N LON: 00°00’00”W",
+    "experience": {
+      "archetype": "operations",
+      "device": "desktop",
+      "navigationStyle": "sidebar",
+      "density": "compact",
+      "typeStyle": "mono",
+      "radius": "sharp",
+      "motif": "Raw steel grids, radar sweeps, and international orange tickers."
+    },
+    "eyebrow": "CO-FOUNDING THE OCEANIC COMPUTE LAYER",
+    "headline": "Unbounded compute on the high seas.",
+    "subheadline": "We deploy sovereign, modular AI data center flotillas in international waters with direct ocean-water cooling, zero land-permitting bottlenecks, and raw megawatt density.",
+    "palette": {
+      "background": "#0B1011",
+      "surface": "#181F22",
+      "primary": "#FF5A1F",
+      "accent": "#00FF66",
+      "text": "#EAEAEA"
+    },
+    "googleCapabilities": [
+      {
+        "service": "gemini",
+        "label": "Pelagic Deployment Copilot",
+        "rationale": "Allows sovereign AI founders to generate optimal maritime deployment configurations, thermal exchange profiles, and international waters regulatory checklists based on target latency and compute load.",
+        "primaryScreen": 1,
+        "config": {
+          "assistantRole": "You are the Pelagic Maritime AI Architect. You specialize in calculating deep-water thermal delta efficiencies, ocean-water cooling loop designs, and international maritime law (UNCLOS) compliance for high-density GPU deployment on modular barge hulls.",
+          "mapQuery": "",
+          "locationQuery": "",
+          "origin": "",
+          "destination": "",
+          "calendarTitle": "",
+          "analyticsLabel": "Live sample operations data",
+          "targetLanguage": "",
+          "analysisMode": "both",
+          "speechPrompt": "Read the thermal delta analysis and UNCLOS compliance report aloud."
+        }
+      }
+    ],
+    "screens": [
+      {
+        "label": "SYS_MONITOR",
+        "type": "dashboard",
+        "title": "Flotilla Telemetry & Thermal Delta",
+        "description": "Real-time performance metrics of active oceanic compute nodes operating in international waters, featuring a real-time PUE comparison between ocean-water cooling and land-based HVAC.",
+        "metrics": [
+          {
+            "label": "GLOBAL_PUE",
+            "value": "1.02"
+          },
+          {
+            "label": "ACTIVE_MW",
+            "value": "150 MW"
+          },
+          {
+            "label": "THERMAL_SINK_TEMP",
+            "value": "4.2°C"
+          },
+          {
+            "label": "SYS_UPTIME",
+            "value": "99.999%"
+          }
+        ],
+        "items": [
+          {
+            "title": "THERMAL DELTA CALCULATOR (WIDGET)",
+            "detail": "Ocean-water cooling (PUE 1.02) vs. Land-based HVAC (PUE 1.45). Net energy savings: 29.6% per 50MW deployment.",
+            "status": "NOMINAL",
+            "meta": "REAL-TIME COMPARISON",
+            "value": "Δ PUE: -0.43"
+          },
+          {
+            "title": "HULL-01 // NORTH_ATLANTIC",
+            "detail": "50MW high-density cluster. Direct-to-chip liquid cooling active.",
+            "status": "NOMINAL",
+            "meta": "LAT 37.74° N, LON 25.67° W",
+            "value": "PUE 1.01"
+          },
+          {
+            "title": "HULL-02 // EQUATORIAL_PACIFIC",
+            "detail": "50MW sovereign LLM training node. Solar array deploying.",
+            "status": "NOMINAL",
+            "meta": "LAT 0.00° N, LON 120.00° W",
+            "value": "PUE 1.03"
+          }
+        ]
+      },
+      {
+        "label": "SYS_COPILOT",
+        "type": "assistant",
+        "title": "Maritime Deployment Copilot",
+        "description": "Query the Pelagic AI engine for routing, thermal delta projections, and flag-state compliance protocols. Recommended configurations can be directly pushed to the provisioning workflow.",
+        "metrics": [
+          {
+            "label": "MODEL",
+            "value": "PELAGIC-OCEANIC-V1"
+          },
+          {
+            "label": "LATENCY",
+            "value": "45ms"
+          }
+        ],
+        "items": [
+          {
+            "title": "How does the saltwater thermal exchange loop prevent biofouling?",
+            "detail": "Our proprietary schematics utilize cupronickel alloy piping and localized electrolytic chlorination within the intake manifold to prevent marine growth without chemical discharge.",
+            "status": "SCHEMATIC_READY",
+            "meta": "THERMAL_LOOP_V4",
+            "value": "99.8% Efficiency"
+          },
+          {
+            "title": "What flag-state jurisdiction is recommended for sovereign data hosting?",
+            "detail": "We recommend registering hulls under maritime frameworks that recognize digital sovereignty and offer robust exclusive economic zone (EEZ) protections.",
+            "status": "COMPLIANT",
+            "meta": "UNCLOS_SEC_8",
+            "value": "Sovereign"
+          }
+        ]
+      },
+      {
+        "label": "SYS_ALLOC",
+        "type": "workflow",
+        "title": "Provision Compute Hull",
+        "description": "Configure and queue a new 50MW modular compute barge for deployment to international waters. Fields can be auto-populated using recommendations generated in SYS_COPILOT.",
+        "metrics": [],
+        "items": []
+      }
+    ],
+    "workflow": {
+      "title": "INITIATE_DEPLOYMENT_SEQUENCE",
+      "description": "Specify target deployment coordinates, compute density, and cooling loop architecture. Use the Copilot integration to auto-populate values from your active session.",
+      "fields": [
+        {
+          "label": "Auto-Populate from Copilot Recommendation",
+          "type": "select",
+          "options": [
+            "Apply Copilot Recommendation (LAT 37.74 N, LON 25.67 W // Direct-to-Chip)",
+            "Manual Configuration"
+          ]
+        },
+        {
+          "label": "Target Coordinates (Latitude/Longitude)",
+          "type": "text",
+          "placeholder": "e.g., 37.7412 N, -25.6756 W"
+        },
+        {
+          "label": "Compute Density (H100/B200 Equivalents)",
+          "type": "select",
+          "options": [
+            "1,000 Nodes (50MW)",
+            "2,000 Nodes (100MW)",
+            "4,000 Nodes (200MW)"
+          ]
+        },
+        {
+          "label": "Cooling Loop Architecture",
+          "type": "select",
+          "options": [
+            "Direct-to-Chip Deep Ocean Water",
+            "Closed-Loop Saltwater Heat Exchange",
+            "Hybrid Surface/Deep Thermocline"
+          ]
+        }
+      ],
+      "buttonLabel": "QUEUE_HULL_DEPLOYMENT",
+      "successTitle": "DEPLOYMENT_QUEUED // SEC_PROTO_ACTIVE",
+      "successMessage": "The modular hull configuration has been locked. Coordinates, thermal delta targets, and UNCLOS compliance parameters have been synchronized with the deployment copilot."
+    },
+    "googleCapability": {
+      "service": "gemini",
+      "label": "Pelagic Deployment Copilot",
+      "rationale": "Allows sovereign AI founders to generate optimal maritime deployment configurations, thermal exchange profiles, and international waters regulatory checklists based on target latency and compute load.",
+      "primaryScreen": 1,
+      "config": {
+        "assistantRole": "You are the Pelagic Maritime AI Architect. You specialize in calculating deep-water thermal delta efficiencies, ocean-water cooling loop designs, and international maritime law (UNCLOS) compliance for high-density GPU deployment on modular barge hulls.",
+        "mapQuery": "",
+        "locationQuery": "",
+        "origin": "",
+        "destination": "",
+        "calendarTitle": "",
+        "analyticsLabel": "Live sample operations data",
+        "targetLanguage": "",
+        "analysisMode": "both",
+        "speechPrompt": "Read the thermal delta analysis and UNCLOS compliance report aloud."
+      }
+    }
+  },
+  "revision": 2
+}

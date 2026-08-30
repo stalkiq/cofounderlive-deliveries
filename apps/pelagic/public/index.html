@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PELAGIC // Sovereign Oceanic Compute Control</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- System scan line overlay for retro terminal effect -->
+  <div class="scanlines"></div>
+
+  <!-- Main Grid Container -->
+  <div class="terminal-container">
+    
+    <!-- Top Control Bar / Ticker -->
+    <header class="sys-header">
+      <div class="header-left">
+        <h1 class="brand-title">PELAGIC</h1>
+        <div class="terminal-ticker">
+          <span class="ticker-label">SYS_CONTROL</span>
+          <span class="ticker-coords" id="hdr-coords">LAT: 37°44'12.2"N || LON: 25°40'32.6"W</span>
+        </div>
+      </div>
+      <div class="header-right">
+        <div class="status-indicator">
+          <span class="indicator-dot blinking"></span>
+          <span class="indicator-text">SATELLITE_TETHER_ONLINE</span>
+        </div>
+        <div class="time-stamp" id="sys-clock">UTC 2026-08-30 // 11:47:30</div>
+      </div>
+    </header>
+
+    <!-- Sub-header Ribbon -->
+    <div class="header-ribbon">
+      <span class="ribbon-eyebrow">CO-FOUNDING THE OCEANIC COMPUTE LAYER</span>
+      <span class="ribbon-divider">//</span>
+      <span class="ribbon-tagline">UNBOUNDED COMPUTE ON THE HIGH SEAS</span>
+    </div>
+
+    <!-- Dashboard Layout Grid -->
+    <main class="dashboard-grid">
+      
+      <!-- LEFT COLUMN -->
+      <section class="grid-column flex-column">
+        
+        <!-- SYS_MONITOR Telemetry Metrics -->
+        <div class="panel" id="telemetry-panel">
+          <div class="panel-header">
+            <span class="panel-num">SYS_MONITOR_01</span>
+            <span class="panel-title">FLOTILLA TELEMETRY & THERMAL DELTA</span>
+          </div>
+          <div class="panel-body">
+            <div class="metrics-grid">
+              <div class="metric-card">
+                <span class="metric-label">GLOBAL_PUE</span>
+                <span class="metric-value text-accent" id="m-pue">1.02</span>
+                <span class="metric-sub">LAND AVG: 1.45</span>
+              </div>
+              <div class="metric-card">
+                <span class="metric-label">ACTIVE_MW</span>
+                <span class="metric-value text-primary" id="m-mw">150 MW</span>
+                <span class="metric-sub">AVAILABLE: 2.4 GW</span>
+              </div>
+              <div class="metric-card">
+                <span class="metric-label">THERMAL_SINK_TEMP</span>
+                <span class="metric-value text-accent" id="m-temp">4.2°C</span>
+                <span class="metric-sub">DEPTH: 200M</span>
+              </div>
+              <div class="metric-card">
+                <span class="metric-label">SYS_UPTIME</span>
+                <span class="metric-value text-normal" id="m-uptime">99.999%</span>
+                <span class="metric-sub text-accent">SECURE_PROTO_1</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- THERMAL DELTA CALCULATOR (Interactive Widget) -->
+        <div class="panel" id="calculator-panel">
+          <div class="panel-header">
+            <span class="panel-num">SYS_MONITOR_02</span>
+            <span class="panel-title">THERMAL DELTA CALC // OCEAN-WATER COOLING ADVANTAGE</span>
+          </div>
+          <div class="panel-body">
+            <p class="panel-intro-text">
+              Compare the instant thermodynamic power usage effectiveness (PUE) of deep oceanic water sink vs expensive land-based HVAC cooling loops.
+            </p>
+            <div class="calculator-controls">
+              <div class="slider-group">
+                <div class="slider-header">
+                  <span class="slider-label">COMPUTE CAPACITY DEPLOYED</span>
+                  <span class="slider-value" id="calc-capacity-val">50 MW</span>
+                </div>
+                <input type="range" id="calc-capacity" min="10" max="500" value="50" step="10">
+              </div>
+              
+              <div class="calc-results">
+                <div class="calc-row">
+                  <span>Ocean cooling loop overhead (PUE 1.02)</span>
+                  <span class="text-accent" id="calc-pelagic-power">1.0 MW</span>
+                </div>
+                <div class="calc-row">
+                  <span>Terrestrial facility HVAC overhead (PUE 1.45)</span>
+                  <span class="text-error" id="calc-land-power">22.5 MW</span>
+                </div>
+                <div class="calc-row result-total">
+                  <span>NET MW POWER CONSERVED</span>
+                  <span class="text-primary highlight" id="calc-saved-power">21.5 MW (29.6% Savings)</span>
+                </div>
+                <div class="calc-row result-total">
+                  <span>ESTIMATED CARBON TONNAGE SLAShed / YEAR</span>
+                  <span class="text-accent" id="calc-carbon-saved">94,170 TONS</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- STRUCTURAL MAP & RADAR SCANNER -->
+        <div class="panel" id="radar-panel">
+          <div class="panel-header">
+            <span class="panel-num">SYS_MONITOR_03</span>
+            <span class="panel-title">ACOUSTIC RADAR & FLOTILLA GEOLOCATION VECTOR</span>
+          </div>
+          <div class="panel-body radar-box">
+            <div class="radar-container">
+              <canvas id="radarCanvas" width="300" height="300"></canvas>
+              <div class="radar-legend">
+                <div class="legend-item"><span class="legend-dot active-dot"></span><span>ACTIVE NODE</span></div>
+                <div class="legend-item"><span class="legend-dot queued-dot"></span><span>QUEUED BARGE</span></div>
+              </div>
+            </div>
+            <div class="schematic-container">
+              <div class="schematic-title">MODULAR HULL // DEEP SINK LOOP V4</div>
+              <pre class="schematic-ascii">
+   +======================================+
+   |  [SOLAR DEPLOY PV]                   |
+   |   / \ / \ / \ / \                    |
+ --+--+---+---+---+---+------------------+--+--
+~~~~~| | [GPU BLADES // 25MW COMPUTE]     |  ~~~~
+     | | [GPU BLADES // 25MW COMPUTE]     |
+     | | [BATTERY BANK STABILITY]         |
+     +--+---------+-------------+---------+
+        | Seawater| Cold Intake | Seawater
+        | Outfall |   (4.2°C)   | Outfall
+        v         ^             v
+                 [|] 200M PIPE
+              </pre>
+              <div class="schematic-stats">
+                <span>INTAKE: C70600 CUPRONICKEL</span>
+                <span>CHLORINATOR: 0.18 PPM</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PROVISION COMPUTE HULL WORKFLOW (Form) -->
+        <div class="panel" id="alloc-panel">
+          <div class="panel-header">
+            <span class="panel-num">SYS_ALLOC_01</span>
+            <span class="panel-title">PROVISION COMPUTE HULL // INITIALIZE DEPLOYMENT SEQUENCE</span>
+          </div>
+          <div class="panel-body">
+            <form id="deployment-form" class="workflow-form">
+              
+              <div class="form-group">
+                <label for="copilot-recom">COPILOT SYSTEM AUTO-RECOMMENDATIONS</label>
+                <select id="copilot-recom" class="terminal-input">
+                  <option value="manual">-- MANUAL COORDINATE ENTRY --</option>
+                  <option value="azores">Azores High Fleet Alpha (LAT 37.74 N, LON 25.67 W // Direct-to-Chip)</option>
+                  <option value="pacific">Equatorial Pacific Fleet Beta (LAT 0.00 N, LON 120.00 W // Closed-Loop)</option>
+                  <option value="subpolar">Sub-Polar Pacific Fleet Gamma (LAT 50.00 N, LON 165.00 W // Deep Hybrid)</option>
+                </select>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="form-lat">TARGET LATITUDE</label>
+                  <input type="text" id="form-lat" placeholder="e.g. 37.7412 N" required class="terminal-input">
+                </div>
+                <div class="form-group">
+                  <label for="form-lon">TARGET LONGITUDE</label>
+                  <input type="text" id="form-lon" placeholder="e.g. -25.6756 W" required class="terminal-input">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="form-density">COMPUTE DENSITY</label>
+                <select id="form-density" class="terminal-input">
+                  <option value="1,000 Nodes (50MW)">1,000 Nodes (50MW Capacity)</option>
+                  <option value="2,000 Nodes (100MW)">2,000 Nodes (100MW Capacity)</option>
+                  <option value="4,000 Nodes (200MW)">4,000 Nodes (200MW Capacity)</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="form-cooling">COOLING LOOP ARCHITECTURE</label>
+                <select id="form-cooling" class="terminal-input">
+                  <option value="Direct-to-Chip Deep Ocean Water">Direct-to-Chip Deep Ocean Water</option>
+                  <option value="Closed-Loop Saltwater Heat Exchange">Closed-Loop Saltwater Heat Exchange</option>
+                  <option value="Hybrid Surface/Deep Thermocline">Hybrid Surface/Deep Thermocline</option>
+                </select>
+              </div>
+
+              <button type="submit" class="btn-primary" id="btn-submit-deployment">
+                QUEUE_HULL_DEPLOYMENT <span class="arrow">>></span>
+              </button>
+            </form>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- RIGHT COLUMN -->
+      <section class="grid-column flex-column">
+        
+        <!-- SYS_COPILOT (AI Assistant Screen) -->
+        <div class="panel flex-grow" id="copilot-panel">
+          <div class="panel-header">
+            <span class="panel-num">SYS_COPILOT_01</span>
+            <span class="panel-title">MARITIME DEPLOYMENT AI ARCHITECT</span>
+          </div>
+          <div class="panel-body copilot-body flex-column">
+            <div class="copilot-meta">
+              <span class="meta-item">MODEL: PELAGIC-OCEANIC-V1</span>
+              <span class="meta-item">LATENCY: 45ms</span>
+              <span class="meta-item text-accent">COGNITIVE_GRID_ACTIVE</span>
+            </div>
+
+            <!-- Pre-programmed hot-links to instantly inject technical inquiries -->
+            <div class="copilot-chips">
+              <button class="copilot-chip" data-query="How does the saltwater thermal exchange loop prevent biofouling?">BIOFOULING CONTROL</button>
+              <button class="copilot-chip" data-query="What flag-state jurisdiction is recommended for sovereign data hosting?">UNCLOS SOVEREIGNTY</button>
+              <button class="copilot-chip" data-query="Compare the thermal delta efficiency and energy reduction of deep-ocean vs land HVAC.">PUE THERMAL DELTA</button>
+              <button class="copilot-chip" data-query="What coordinates in Atlantic and Pacific are optimal for deployment?">OPTIMAL GEOLOCATIONS</button>
+            </div>
+
+            <!-- Chat message logs -->
+            <div class="chat-terminal" id="chat-logs">
+              <div class="system-chat-message">
+                <span class="chat-timestamp">[11:47:30]</span>
+                <span class="chat-role text-primary">PELAGIC_AI_ARCHITECT:</span>
+                <span class="chat-text">Welcome, engineer. Standard high-density compute deployment sequences are active. Query our systems concerning thermo-intakes, UNCLOS sovereign buffers, or barge hull metallurgy. Ready to assist in populating deployment workflows.</span>
+              </div>
+            </div>
+
+            <!-- Chat input bar -->
+            <form id="copilot-chat-form" class="chat-input-area">
+              <span class="prompt-sym">></span>
+              <input type="text" id="chat-input" placeholder="Inquire about biofouling control, sovereign flag state, thermal delta math..." autocomplete="off" class="terminal-input chat-input-field">
+              <button type="submit" class="btn-terminal-send">EXECUTE</button>
+            </form>
+          </div>
+        </div>
+
+        <!-- PERSISTENT REGISTER - ACTIVE & QUEUED DEPLOYMENTS (Durable Store GET/POST) -->
+        <div class="panel" id="memory-list-panel">
+          <div class="panel-header">
+            <span class="panel-num">SYS_STORE_03</span>
+            <span class="panel-title">DURABLE COMPUTE MEMORY REGISTER (PERSISTED AT /API/MEMORY)</span>
+          </div>
+          <div class="panel-body">
+            <p class="panel-intro-text">
+              Real-time synchronization with isolated sqlite/file store on Node.js container. Submitting the form writes metadata into the durable registry.
+            </p>
+            <div class="memory-register-box">
+              <div id="memory-loading" class="loading-indicator text-accent blinking">READING_DURABLE_SECTOR_MEMORY_REGISTERS...</div>
+              <div id="memory-list" class="memory-list-container">
+                <!-- Injected dynamically via app.js -->
+              </div>
+            </div>
+            <div class="memory-footer-actions">
+              <button type="button" class="btn-secondary" id="btn-refresh-memory">
+                SYNC_REGISTER_STORE_CACHE
+              </button>
+              <span class="status-success" id="sync-status">SYNCHRONIZED</span>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+    </main>
+
+    <!-- Footer System Log -->
+    <footer class="sys-footer">
+      <div class="footer-block font-mono">SYS_STATUS: <span class="text-accent">ONLINE_NOMINAL</span></div>
+      <div class="footer-block font-mono">ENCRYPTION: <span class="text-accent">AES_256_GCM</span></div>
+      <div class="footer-block font-mono">INTELLIGENCE_LAYER: <span class="text-accent">GEMINI-1.5-FLASH</span></div>
+      <div class="footer-block text-right">SECURE CONTROL PORTAL // PELAGIC GROUP INTERNATIONAL</div>
+    </footer>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
