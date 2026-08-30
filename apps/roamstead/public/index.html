@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Roamstead — Co-Pilot for life on the open road</title>
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts for Vintage Look -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Lora:ital,wght@0,400..700;1,400..700&family=Special+Elite&family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+  
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            roamBg: '#FDFBF7',
+            roamSurface: '#F0EAE1',
+            roamPrimary: '#1B3B2B',
+            roamAccent: '#C85A32',
+            roamText: '#1E1E1E',
+          },
+          fontFamily: {
+            serif: ['Lora', 'serif'],
+            display: ['Libre Baskerville', 'serif'],
+            typewriter: ['Special Elite', 'monospace'],
+            sans: ['Plus Jakarta Sans', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Vintage Paper Grain Simulation */
+    .grain-overlay {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      pointer-events: none;
+      opacity: 0.055;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%2523noise)'/%3E%3C/svg%3E");
+    }
+
+    /* Customize scrollbars for a rugged, neat look */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #F0EAE1;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #1B3B2B;
+      border-radius: 3px;
+    }
+
+    /* Custom analog switch style */
+    .retro-switch-checkbox:checked + .retro-switch-label {
+      background-color: #1B3B2B;
+    }
+    .retro-switch-checkbox:checked + .retro-switch-label .retro-switch-knob {
+      transform: translateX(1.5rem);
+      background-color: #FDFBF7;
+      box-shadow: inset 0 -3px 0 #C85A32;
+    }
+
+    /* Distressed borders */
+    .border-double-rugged {
+      border: 4px double #1B3B2B;
+    }
+    .border-rustic-post {
+      border: 3px solid #1B3B2B;
+      box-shadow: 4px 4px 0px #C85A32;
+    }
+
+    /* Custom path glow */
+    .route-path {
+      stroke-dasharray: 8;
+      animation: dash 35s linear infinite;
+    }
+    @keyframes dash {
+      to {
+        stroke-dashoffset: -1000;
+      }
+    }
+  </style>
+</head>
+<body class="bg-[#121A15] text-roamText font-serif antialiased min-h-screen py-6 px-4 flex flex-col items-center justify-center">
+
+  <!-- Desktop frame wrapper mimicking a high-fidelity mobile device / heavy-duty travel tablet -->
+  <div class="relative w-full max-w-md bg-roamBg rounded-[28px] overflow-hidden border-[10px] border-[#2C3830] shadow-2xl flex flex-col h-[820px]">
+    
+    <!-- Grain overlay to capture the vintage printing aspect -->
+    <div class="grain-overlay z-50"></div>
+
+    <!-- Status Bar / Wilderness Telemetry Header -->
+    <div class="bg-roamPrimary text-roamSurface text-xs flex justify-between items-center px-5 py-2 z-10 font-sans tracking-wider border-b border-roamAccent/30">
+      <div class="flex items-center space-x-2">
+        <span class="inline-block w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
+        <span class="font-bold tracking-widest text-[10px] uppercase">CO-PILOT GPS</span>
+      </div>
+      <div class="flex items-center space-x-3 text-[10px]">
+        <span>BOONDOCKING CACHE: ENABLED</span>
+        <span class="font-bold">12.6V</span>
+      </div>
+    </div>
+
+    <!-- Main Core Scrollable Content Area -->
+    <div class="flex-1 overflow-y-auto pb-20 relative bg-roamBg">
+
+      <!-- Poster Header Card (Inspired by Vintage WPA National Park Poster) -->
+      <div class="relative bg-roamPrimary text-roamSurface px-6 pt-8 pb-10 flex flex-col justify-between overflow-hidden border-b-4 border-roamAccent">
+        <!-- Sunburst SVG background graphic -->
+        <div class="absolute inset-0 opacity-15 pointer-events-none">
+          <svg class="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
+            <line x1="50" y1="100" x2="0" y2="0" stroke="#FDFBF7" stroke-width="2" />
+            <line x1="50" y1="100" x2="20" y2="0" stroke="#FDFBF7" stroke-width="2" />
+            <line x1="50" y1="100" x2="40" y2="0" stroke="#FDFBF7" stroke-width="2" />
+            <line x1="50" y1="100" x2="60" y2="0" stroke="#FDFBF7" stroke-width="2" />
+            <line x1="50" y1="100" x2="80" y2="0" stroke="#FDFBF7" stroke-width="2" />
+            <line x1="50" y1="100" x2="100" y2="0" stroke="#FDFBF7" stroke-width="2" />
+          </svg>
+        </div>
+
+        <div class="relative z-10">
+          <span class="font-typewriter text-xs text-roamAccent tracking-widest block mb-1">FIELD DISPATCH NO. 1</span>
+          <h1 class="font-display text-3xl font-bold tracking-tight leading-none mb-1 text-roamBg">Roamstead</h1>
+          <p class="font-sans text-xs italic tracking-wider text-roamSurface/80 uppercase">The ultimate co-pilot for life on the open road</p>
+        </div>
+
+        <!-- Styled graphic of mountains and sun -->
+        <div class="relative z-10 mt-6 flex justify-between items-end">
+          <div class="max-w-[70%]">
+            <p class="text-[11px] leading-relaxed font-sans text-roamSurface/90">
+              A rugged, offline-first digital field guide designed for heavy Class A & B motorhomes navigating clearances, dead zones, and remote camping.
+            </p>
+          </div>
+          <div class="h-16 w-16 rounded-full bg-roamAccent/90 border border-roamBg/40 shadow-inner flex items-center justify-center flex-shrink-0">
+            <svg class="h-9 w-9 text-roamBg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12.75 3.03v.568c0 .334.148.65.405.864l4.038 3.332a.75.75 0 0 1 .286.581v8.623a1.5 1.5 0 0 1-1.5 1.5h-2.25a.75.75 0 0 1-.75-.75V15h-2.25v2.25c0 .414-.336.75-.75.75H6a1.5 1.5 0 0 1-1.5-1.5V11.25H3a.75.75 0 0 1-.502-1.258l9.02-8.125a.75.75 0 0 1 1.233.163Z" />
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- SCREEN 1: Scenic Route Navigator -->
+      <div id="screen-scenic" class="p-5 space-y-5">
+        <div class="flex justify-between items-center pb-2 border-b-2 border-roamPrimary/20">
+          <div>
+            <h2 class="font-display text-xl font-bold text-roamPrimary">RV-Safe Navigator</h2>
+            <p class="text-xs text-roamText/60">Moab, UT to Zion National Park, UT</p>
+          </div>
+          <span class="font-typewriter text-xs text-roamAccent bg-roamSurface px-2.5 py-1 rounded border border-roamPrimary/20">ACTIVE GPX</span>
+        </div>
+
+        <!-- Custom Interactive Map Mockup representing Moab to Zion -->
+        <div class="relative bg-roamSurface h-48 rounded-lg overflow-hidden border-2 border-roamPrimary p-3 flex flex-col justify-between">
+          <!-- Stylized map curves and symbols -->
+          <div class="absolute inset-0 z-0">
+            <svg class="h-full w-full opacity-30" viewBox="0 0 300 180">
+              <!-- Topographic terrain contours -->
+              <path d="M 0 50 Q 80 40 120 70 T 260 80 T 300 40" fill="none" stroke="#1B3B2B" stroke-width="1"/>
+              <path d="M 0 90 Q 50 110 100 85 T 190 120 T 300 100" fill="none" stroke="#1B3B2B" stroke-width="1"/>
+              <path d="M 0 130 Q 90 150 160 120 T 300 150" fill="none" stroke="#1B3B2B" stroke-width="1"/>
+              
+              <!-- Route (GPS Line) -->
+              <path d="M 40 140 Q 60 70 140 100 T 240 50" fill="none" stroke="#C85A32" stroke-width="3" stroke-linecap="round" class="route-path" />
+              
+              <!-- Map Points -->
+              <circle cx="40" cy="140" r="5" fill="#1B3B2B" />
+              <text x="25" y="155" font-family="monospace" font-size="8" font-weight="bold" fill="#1B3B2B">MOAB</text>
+
+              <circle cx="240" cy="50" r="5" fill="#C85A32" />
+              <text x="220" y="42" font-family="monospace" font-size="8" font-weight="bold" fill="#C85A32">ZION</text>
+
+              <!-- Tunnel warning pin -->
+              <polygon points="144,103 149,112 139,112" fill="#C85A32" />
+            </svg>
+          </div>
+
+          <div class="relative z-10 flex justify-between items-start">
+            <span class="text-[10px] font-sans font-bold tracking-widest text-roamPrimary bg-roamBg px-2 py-0.5 rounded border border-roamPrimary/20">LIVE SCENIC ROUTE</span>
+            <div class="bg-roamBg px-2 py-1 rounded text-right space-y-0.5 border border-roamPrimary/10 shadow-sm">
+              <p class="text-[9px] font-sans text-roamText/60 leading-none">CELL SIGNAL</p>
+              <p class="text-[11px] font-bold text-roamAccent leading-none">POOR (DEAD ZONES AHEAD)</p>
+            </div>
+          </div>
+
+          <div class="relative z-10 bg-roamBg/95 p-2 rounded border border-roamAccent/30 shadow-md">
+            <p class="text-xs font-sans text-roamText font-semibold leading-snug">Avoiding low-clearance bridges, propane-restricted tunnels, and steep mountain passes.</p>
+          </div>
+        </div>
+
+        <!-- Metrics Row -->
+        <div class="grid grid-cols-3 gap-2.5">
+          <div class="bg-roamSurface p-2.5 rounded-lg border border-roamPrimary/20 text-center">
+            <p class="text-[9px] font-sans text-roamText/55 tracking-wider uppercase">Distance</p>
+            <p class="text-base font-display font-bold text-roamPrimary mt-0.5">342 Miles</p>
+          </div>
+          <div class="bg-roamSurface p-2.5 rounded-lg border border-roamPrimary/20 text-center">
+            <p class="text-[9px] font-sans text-roamText/55 tracking-wider uppercase">Safety Clearance</p>
+            <p class="text-base font-display font-bold text-roamPrimary mt-0.5">&gt; 13'6"</p>
+          </div>
+          <div class="bg-roamSurface p-2.5 rounded-lg border border-roamPrimary/20 text-center">
+            <p class="text-[9px] font-sans text-roamText/55 tracking-wider uppercase">Elevation Peak</p>
+            <p class="text-base font-display font-bold text-roamAccent mt-0.5">7,420 ft</p>
+          </div>
+        </div>
+
+        <!-- Route Checklist -->
+        <div class="space-y-3">
+          <h3 class="font-sans font-bold text-xs uppercase tracking-widest text-roamPrimary">Active Route Checklist</h3>
+          
+          <div class="bg-roamBg p-3 rounded-lg border border-roamPrimary/10 shadow-sm flex items-start justify-between space-x-3">
+            <div class="space-y-1">
+              <span class="inline-block text-[9px] font-sans px-1.5 py-0.5 rounded font-bold bg-emerald-100 text-emerald-800 uppercase tracking-widest">Safe</span>
+              <h4 class="font-display font-bold text-sm text-roamPrimary">I-70 Westbound Clearance Check</h4>
+              <p class="text-xs text-roamText/70">All overpasses verified above 14'0\". Safe for big Class A rigs.</p>
+            </div>
+            <span class="font-typewriter text-xs text-emerald-800 bg-emerald-50 px-2 py-1 rounded">CLEAR</span>
+          </div>
+
+          <div class="bg-roamBg p-3 rounded-lg border border-roamPrimary/10 shadow-sm flex items-start justify-between space-x-3">
+            <div class="space-y-1">
+              <span class="inline-block text-[9px] font-sans px-1.5 py-0.5 rounded font-bold bg-amber-100 text-amber-800 uppercase tracking-widest">Warning</span>
+              <h4 class="font-display font-bold text-sm text-roamPrimary">Zion Mount Carmel Tunnel</h4>
+              <p class="text-xs text-roamText/70">Requires escort permit ($15) for vehicles over 11'4\" tall or 7'10\" wide.</p>
+            </div>
+            <span class="font-typewriter text-xs text-amber-800 bg-amber-50 px-2 py-1 rounded text-center leading-none">PERMIT<br><span class="text-[9px]">REQ.</span></span>
+          </div>
+
+          <div class="bg-roamBg p-3 rounded-lg border border-roamPrimary/10 shadow-sm flex items-start justify-between space-x-3">
+            <div class="space-y-1">
+              <span class="inline-block text-[9px] font-sans px-1.5 py-0.5 rounded font-bold bg-roamAccent/10 text-roamAccent uppercase tracking-widest">Advisory</span>
+              <h4 class="font-display font-bold text-sm text-roamPrimary">Virgin River Canyon High Winds</h4>
+              <p class="text-xs text-roamText/70">Crosswinds exceeding 25mph expected in afternoon. Keep both hands on the wheel.</p>
+            </div>
+            <span class="font-typewriter text-xs text-roamAccent bg-orange-50 px-2 py-1 rounded text-center leading-none">WIND<br><span class="text-[9px]">ALERT</span></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- SCREEN 2: The Dashboard & Telemetry -->
+      <div id="screen-dashboard" class="p-5 space-y-6 hidden">
+        <div class="flex justify-between items-center pb-2 border-b-2 border-roamPrimary/20">
+          <div>
+            <h2 class="font-display text-xl font-bold text-roamPrimary">Rig Telemetry</h2>
+            <p class="text-xs text-roamText/60">Analog monitoring instruments</p>
+          </div>
+          <span class="font-sans font-bold text-[10px] text-emerald-800 bg-emerald-50 border border-emerald-300 px-2.5 py-1 rounded-full uppercase tracking-wider">ALL SYSTEMS GO</span>
+        </div>
+
+        <!-- 4 Circular Vintage Meters Grid -->
+        <div class="grid grid-cols-2 gap-4">
+          <!-- House Battery Gauge -->
+          <div class="bg-roamSurface p-4 rounded-xl border border-roamPrimary/15 flex flex-col items-center justify-center text-center relative overflow-hidden">
+            <h4 class="font-sans font-bold text-[10px] uppercase tracking-wider text-roamText/70 mb-2">Battery Bank</h4>
+            <div class="relative w-24 h-24 flex items-center justify-center">
+              <!-- Radial background trail -->
+              <svg class="absolute inset-0 transform -rotate-90" viewBox="0 0 100 100">
+                <circle cx="50" cy="50" r="40" fill="none" stroke="#E6DEC9" stroke-width="8" stroke-dasharray="190 250" stroke-linecap="round"/>
+                <circle id="gauge-battery" cx="50" cy="50" r="40" fill="none" stroke="#1B3B2B" stroke-width="8" stroke-dasharray="175 250" stroke-linecap="round"/>
+              </svg>
+              <div class="z-10 text-center">
+                <span class="font-display font-bold text-lg text-roamPrimary block" id="val-battery">12.6V</span>
+                <span class="text-[9px] font-sans text-roamText/60">CAPACITY: 92%</span>
+              </div>
+            </div>
+            <p class="text-[10px] font-typewriter text-roamPrimary mt-2 uppercase">Deep Cycle AGM</p>
+          </div>
+
+          <!-- Gen Hours Gauge -->
+          <div class="bg-roamSurface p-4 rounded-xl border border-roamPrimary/15 flex flex-col items-center justify-center text-center relative overflow-hidden">
+            <h4 class="font-sans font-bold text-[10px] uppercase tracking-wider text-roamText/70 mb-2">Generator Cycle</h4>
+            <div class="relative w-24 h-24 flex items-center justify-center">
+              <svg class="absolute inset-0 transform -rotate-90" viewBox="0 0 100 100">
+                <circle cx="50" cy="50" r="40" fill="none" stroke="#E6DEC9" stroke-width="8" stroke-dasharray="210 250" stroke-linecap="round"/>
+                <circle id="gauge-generator" cx="50" cy="50" r="40" fill="none" stroke="#C85A32" stroke-width="8" stroke-dasharray="142 250" stroke-linecap="round"/>
+              </svg>
+              <div class="z-10 text-center">
+                <span class="font-display font-bold text-base text-roamPrimary block" id="val-generator">142.5 h</span>
+                <span class="text-[8px] tracking-tight font-sans text-roamText/60">LIMIT: 150h</span>
+              </div>
+            </div>
+            <p class="text-[10px] font-typewriter text-roamAccent mt-2 uppercase">ONAN QG 4000</p>
+          </div>
+
+          <!-- Fresh Water Gauge -->
+          <div class="bg-roamSurface p-4 rounded-xl border border-roamPrimary/15 flex flex-col items-center justify-center text-center relative overflow-hidden">
+            <h4 class="font-sans font-bold text-[10px] uppercase tracking-wider text-roamText/70 mb-2">Fresh Water Tank</h4>
+            <div class="relative w-24 h-24 flex items-center justify-center">
+              <svg class="absolute inset-0 transform -rotate-90" viewBox="0 0 100 100">
+                <circle cx="50" cy="50" r="40" fill="none" stroke="#E6DEC9" stroke-width="8" stroke-dasharray="250" />
+                <circle id="gauge-fresh" cx="50" cy="50" r="40" fill="none" stroke="#0284c7" stroke-width="8" stroke-dasharray="162 251" />
+              </svg>
+              <div class="z-10 text-center">
+                <span class="font-display font-semibold text-xl text-sky-800 block" id="val-fresh">65%</span>
+                <span class="text-[9px] font-sans text-roamText/60">48 GALLONS</span>
+              </div>
+            </div>
+            <p class="text-[10px] font-sans font-semibold text-sky-800 mt-2 uppercase tracking-wide">Potable</p>
+          </div>
+
+          <!-- Grey Water Gauge -->
+          <div class="bg-roamSurface p-4 rounded-xl border border-roamPrimary/15 flex flex-col items-center justify-center text-center relative overflow-hidden">
+            <h4 class="font-sans font-bold text-[10px] uppercase tracking-wider text-roamText/70 mb-2">Grey Waste Tank</h4>
+            <div class="relative w-24 h-24 flex items-center justify-center">
+              <svg class="absolute inset-0 transform -rotate-90" viewBox="0 0 100 100">
+                <circle cx="50" cy="50" r="40" fill="none" stroke="#E6DEC9" stroke-width="8" stroke-dasharray="250" />
+                <circle id="gauge-grey" cx="50" cy="50" r="40" fill="none" stroke="#475569" stroke-width="8" stroke-dasharray="105 251" />
+              </svg>
+              <div class="z-10 text-center">
+                <span class="font-display font-semibold text-xl text-slate-700 block" id="val-grey">42%</span>
+                <span class="text-[9px] font-sans text-roamText/60">28 GALLONS</span>
+              </div>
+            </div>
+            <p class="text-[10px] font-sans font-semibold text-slate-600 mt-2 uppercase tracking-wide">Galley Waste</p>
+          </div>
+        </div>
+
+        <!-- Maintenance Checklist with Tactile Analog Toggles & Dials -->
+        <div class="space-y-4">
+          <h3 class="font-sans font-bold text-xs uppercase tracking-widest text-roamPrimary">Analog Switches & Calibration</h3>
+          
+          <div class="bg-roamBg p-3.5 rounded-lg border border-roamPrimary/10 shadow-sm flex items-center justify-between">
+            <div class="space-y-1 max-w-[70%]">
+              <div class="flex items-center space-x-2">
+                <span class="h-2 w-2 rounded-full bg-amber-500"></span>
+                <span class="text-[10px] font-sans uppercase font-bold text-amber-800">DUE SOON</span>
+              </div>
+              <h4 class="font-display font-bold text-sm text-roamPrimary">Generator Service</h4>
+              <p class="text-xs text-roamText/70">Cycle filter change required every 150 hours to clear warranty schedule.</p>
+            </div>
+            <div class="flex flex-col items-center">
+              <button onclick="simulateGenService()" class="text-[10px] uppercase font-sans font-extrabold bg-roamAccent text-white px-3 py-1.5 rounded shadow hover:bg-roamAccent/90 transition-colors">RESET DIAL</button>
+              <span class="text-[9px] font-typewriter text-roamText/50 mt-1">7.5h Remain</span>
+            </div>
+          </div>
+
+          <div class="bg-roamBg p-3.5 rounded-lg border border-roamPrimary/10 shadow-sm flex items-center justify-between">
+            <div class="space-y-1 max-w-[70%]">
+              <div class="flex items-center space-x-2">
+                <span class="h-2 w-2 rounded-full bg-emerald-500"></span>
+                <span class="text-[10px] font-sans uppercase font-bold text-emerald-800 font-extrabold">COMPLETED</span>
+              </div>
+              <h4 class="font-display font-bold text-sm text-roamPrimary">Chassis Suspension Calibration</h4>
+              <p class="text-xs text-roamText/70">Verify front chassis grease nipples and tie rod ends lubrication.</p>
+            </div>
+            <div class="flex items-center">
+              <!-- Vintage checkbox toggle -->
+              <div class="relative inline-block w-12 h-6 transition duration-200 ease-linear">
+                <input type="checkbox" id="toggle-chassis" checked class="retro-switch-checkbox opacity-0 absolute w-0 h-0" onchange="updateDashColors()"/>
+                <label for="toggle-chassis" class="retro-switch-label block overflow-hidden h-6 rounded-full bg-neutral-300 cursor-pointer p-0.5 transition-colors duration-250">
+                  <span class="retro-switch-knob block w-5 h-5 rounded-full bg-white shadow-md transform transition-transform duration-250"></span>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-roamBg p-3.5 rounded-lg border border-roamPrimary/10 shadow-sm flex items-center justify-between">
+            <div class="space-y-1 max-w-[70%]">
+              <div class="flex items-center space-x-2">
+                <span class="h-2 w-2 rounded-full bg-neutral-400"></span>
+                <span class="text-[10px] font-sans uppercase font-bold text-neutral-500">STANDBY</span>
+              </div>
+              <h4 class="font-display font-bold text-sm text-roamPrimary">LP Propane Gauge Link</h4>
+              <p class="text-xs text-roamText/70">Recalibrate dashboard analog display with physical valve resistance sensors.</p>
+            </div>
+            <div class="flex items-center">
+              <!-- Vintage checkbox toggle -->
+              <div class="relative inline-block w-12 h-6 transition duration-200 ease-linear">
+                <input type="checkbox" id="toggle-lp" class="retro-switch-checkbox opacity-0 absolute w-0 h-0" onchange="updateDashColors()"/>
+                <label for="toggle-lp" class="retro-switch-label block overflow-hidden h-6 rounded-full bg-neutral-300 cursor-pointer p-0.5 transition-colors duration-250">
+                  <span class="retro-switch-knob block w-5 h-5 rounded-full bg-white shadow-md transform transition-transform duration-250"></span>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SCREEN 3: Campfire Dispatch (Submission & Listings) -->
+      <div id="screen-campfire" class="p-5 space-y-6 hidden">
+        <div class="flex justify-between items-center pb-2 border-b-2 border-roamPrimary/20">
+          <div>
+            <h2 class="font-display text-xl font-bold text-roamPrimary">Campfire Dispatch</h2>
+            <p class="text-xs text-roamText/60">Offline-first peer road-ledger</p>
+          </div>
+          <div class="flex items-center space-x-1 font-typewriter text-xs text-roamAccent bg-roamSurface px-2 py-1 rounded border border-roamPrimary/25">
+            <span class="h-1.5 w-1.5 rounded-full bg-amber-500 animate-ping"></span>
+            <span>SYNC-READY</span>
+          </div>
+        </div>
+
+        <p class="text-xs leading-relaxed text-roamText/80">
+          Broadcast hazardous clearances, cellular dead zones, or remote boondocking conditions with your immediate area travelers. Your report is persisted in local cache storage and synchronized over peer networks.
+        </p>
+
+        <!-- Broadcast Manifest Form -->
+        <form id="dispatchForm" class="bg-roamSurface p-4 rounded-xl border-rustic-post space-y-4 relative" onsubmit="handleFormSubmit(event)">
+          <h3 class="font-display font-bold text-base text-roamPrimary border-b border-roamPrimary/10 pb-1.5">Broadcast Road Report</h3>
+          
+          <!-- Dropdown report type selection -->
+          <div class="space-y-1">
+            <label for="reportType" class="block font-sans text-[11px] font-bold uppercase tracking-wider text-roamPrimary">Report Type</label>
+            <select id="reportType" required class="w-full bg-roamBg border border-roamPrimary/20 rounded px-3 py-2 text-xs font-sans text-roamText focus:outline-none focus:border-roamAccent focus:ring-1 focus:ring-roamAccent">
+              <text>Select Category</text>
+              <option value="Low Clearance Hazard (< 13'6\")">Low Clearance Hazard (&lt; 13'6")</option>
+              <option value="Cellular Dead Zone">Cellular Dead Zone</option>
+              <option value="Verified Boondocking (Dry Camping) Spot">Verified Boondocking (Dry Camping) Spot</option>
+              <option value="Steep Grade (> 8%)">Steep Grade (&gt; 8%)</option>
+              <option value="Road Obstruction / Construction">Road Obstruction / Construction</option>
+            </select>
+          </div>
+
+          <!-- Location Name / MM text input -->
+          <div class="space-y-1">
+            <label for="location" class="block font-sans text-[11px] font-bold uppercase tracking-wider text-roamPrimary">Location / Nearest Mile Marker</label>
+            <input type="text" id="location" required placeholder="e.g., US-191 South, Mile Marker 124" class="w-full bg-roamBg border border-roamPrimary/20 rounded px-3 py-2 text-xs font-sans text-roamText placeholder-roamText/40 focus:outline-none focus:border-roamAccent focus:ring-1 focus:ring-roamAccent" />
+          </div>
+
+          <!-- Details text input -->
+          <div class="space-y-1">
+            <label for="details" class="block font-sans text-[11px] font-bold uppercase tracking-wider text-roamPrimary">Observed Clearance or Details</label>
+            <input type="text" id="details" required placeholder="e.g., Unmarked bridge, measured low at 12'8\"" class="w-full bg-roamBg border border-roamPrimary/20 rounded px-3 py-2 text-xs font-sans text-roamText placeholder-roamText/40 focus:outline-none focus:border-roamAccent focus:ring-1 focus:ring-roamAccent" />
+          </div>
+
+          <!-- Date Observed -->
+          <div class="space-y-1">
+            <label for="dateObserved" class="block font-sans text-[11px] font-bold uppercase tracking-wider text-roamPrimary">Date Observed</label>
+            <input type="date" id="dateObserved" required class="w-full bg-roamBg border border-roamPrimary/20 rounded px-3 py-2 text-xs font-sans text-roamText focus:outline-none focus:border-roamAccent focus:ring-1 focus:ring-roamAccent" />
+          </div>
+
+          <!-- Broadcast submission button -->
+          <button type="submit" class="w-full bg-roamPrimary text-roamBg font-sans font-extrabold uppercase tracking-widest text-xs py-3 rounded shadow-md hover:bg-roamAccent/90 hover:text-white transition-all duration-150 flex items-center justify-center space-x-2">
+            <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12.75 3.03v.568c0 .334.148.65.405.864l4.038 3.332a.75.75 0 0 1 .286.581v8.623a1.5 1.5 0 0 1-1.5 1.5h-2.25a.75.75 0 0 1-.75-.75V15h-2.25v2.25c0 .414-.336.75-.75.75H6a1.5 1.5 0 0 1-1.5-1.5V11.25H3a.75.75 0 0 1-.502-1.258l9.02-8.125a.75.75 0 0 1 1.233.163Z" />
+            </svg>
+            <span>Broadcast to Campfire Map</span>
+          </button>
+        </form>
+
+        <!-- Broadcast Manifest timeline listing -->
+        <div class="space-y-4">
+          <div class="flex justify-between items-center">
+            <h3 class="font-sans font-bold text-xs uppercase tracking-widest text-roamPrimary">Active Community Dispatches</h3>
+            <span class="text-[10px] font-typewriter text-roamAccent" id="dispatch-count">2 Submissions</span>
+          </div>
+
+          <div id="timeline-list" class="space-y-4">
+            <!-- Dynamically populated timeline logs -->
+            <div class="text-center py-6 text-sm text-roamText/50">Fetching log cache...</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Retro Bottom Navigation Menu Structure -->
+    <div class="absolute bottom-0 inset-x-0 bg-roamSurface border-t-4 border-roamPrimary h-20 flex z-30 shadow-[0_-5px_15px_rgba(0,0,0,0.1)]">
+      
+      <!-- Button Tab 1 -->
+      <button onclick="navigate('scenic')" id="nav-scenic" class="flex-1 flex flex-col items-center justify-center space-y-1 border-r border-roamPrimary/10 text-roamPrimary relative">
+        <div class="absolute top-0 inset-x-0 h-1 bg-roamAccent hidden" id="indicator-scenic"></div>
+        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 6.75V15m6-6v8.25m.503-3.46 1.424-1.424a1.75 1.75 0 1 1 2.474 2.474l-1.424 1.424m-12.01 0-1.424-1.424a1.75 1.75 0 0 1 2.474-2.474l1.424 1.424m10.701-10.701L14.73 3.645a2.5 2.5 0 0 0-3.46 0L3.645 11.27a2.5 2.5 0 0 0 0 3.46l7.625 7.625a2.5 2.5 0 0 0 3.46 0l7.625-7.625a2.5 2.5 0 0 0 0-3.46L14.73 3.645z" />
+        </svg>
+        <span class="font-sans font-bold text-[9px] uppercase tracking-wider">Scenic Route</span>
+      </button>
+
+      <!-- Button Tab 2 -->
+      <button onclick="navigate('dashboard')" id="nav-dashboard" class="flex-1 flex flex-col items-center justify-center space-y-1 border-r border-roamPrimary/10 text-roamPrimary/50 relative">
+        <div class="absolute top-0 inset-x-0 h-1 bg-roamAccent hidden" id="indicator-dashboard"></div>
+        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6a7.5 7.5 0 1 0 7.5 7.5h-7.5V6z" />
+          <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 10.5H21A7.5 7.5 0 0 0 13.5 3v7.5z" />
+        </svg>
+        <span class="font-sans font-bold text-[9px] uppercase tracking-wider">Dashboard</span>
+      </button>
+
+      <!-- Button Tab 3 -->
+      <button onclick="navigate('campfire')" id="nav-campfire" class="flex-1 flex flex-col items-center justify-center space-y-1 text-roamPrimary/50 relative">
+        <div class="absolute top-0 inset-x-0 h-1 bg-roamAccent hidden" id="indicator-campfire"></div>
+        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15.362 5.214A8.252 8.252 0 0 1 12 21 8.25 8.25 0 0 1 6.038 7.047 8.287 8.287 0 0 0 9 9.601a8.983 8.983 0 0 1 3.361-6.867 8.21 8.21 0 0 0 3 2.48z" />
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 18a3.75 3.75 0 0 0 .495-7.467 5.99 5.99 0 0 0-1.925 3.546 5.974 5.974 0 0 1-2.133-1A3.75 3.75 0 0 0 12 18z" />
+        </svg>
+        <span class="font-sans font-bold text-[9px] uppercase tracking-wider">Campfire</span>
+      </button>
+
+    </div>
+
+    <!-- Success Stamped Notification Overlay Card -->
+    <div id="successModal" class="absolute inset-0 bg-roamPrimary/85 backdrop-blur-sm z-50 flex items-center justify-center p-6 hidden">
+      <div id="successContent" class="bg-roamBg rounded-xl p-6 border-double-rugged max-w-[90%] text-center space-y-4 transform scale-95 transition-all duration-300 relative">
+        <span class="absolute top-2 right-3 text-roamAccent font-typewriter cursor-pointer select-none text-lg font-bold" onclick="closeSuccessModal()">[X]</span>
+        <div class="mx-auto w-16 h-16 rounded-full bg-roamAccent/15 border-2 border-roamAccent flex items-center justify-center">
+          <svg class="h-8 w-8 text-roamAccent" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+          </svg>
+        </div>
+        <h3 class="font-display font-bold text-xl text-roamPrimary leading-tight uppercase" id="successTitle">Dispatch Received</h3>
+        <p class="font-serif text-sm text-roamText/85 leading-relaxed" id="successMessage">
+          Your rugged road report has been logged locally in memory. Thank you for keeping the open wilderness paths secure!
+        </p>
+        <button onclick="closeSuccessModal()" class="font-sans font-extrabold text-xs uppercase tracking-widest bg-roamPrimary text-roamBg px-5 py-2.5 rounded shadow hover:bg-roamAccent hover:text-white transition-colors">
+          Return to Trail Guide
+        </button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- App Metadata Footer Details -->
+  <p class="text-neutral-500 text-xs mt-4 font-sans text-center">
+    Roamstead GPS Core. Designed to run offline in remote locations with Zero Connectivity.
+  </p>
+
+  <script>
+    // Local state variables for simulated telemetry change
+    let batteryVolts = 12.6;
+    let genHours = 142.5;
+    let freshPercent = 65;
+    let greyPercent = 42;
+
+    // Load active date to default format
+    document.addEventListener("DOMContentLoaded", () => {
+      const today = new Date().toISOString().split('T')[0];
+      document.getElementById('dateObserved').value = today;
+      
+      // Load current memory database timeline logs
+      fetchMemoryLogs();
+      // Set active indicators
+      navigate('scenic');
+    });
+
+    // Simple single-page routing between bottom navigation items
+    function navigate(screenName) {
+      const screens = ['scenic', 'dashboard', 'campfire'];
+      screens.forEach(s => {
+        document.getElementById(`screen-${s}`).classList.add('hidden');
+        // Unhighlight tabs
+        const tabBtn = document.getElementById(`nav-${s}`);
+        if (tabBtn) {
+          tabBtn.classList.remove('text-roamPrimary');
+          tabBtn.classList.add('text-roamPrimary/50');
+        }
+        const indicator = document.getElementById(`indicator-${s}`);
+        if (indicator) indicator.classList.add('hidden');
+      });
+
+      // Target active tab
+      document.getElementById(`screen-${screenName}`).classList.remove('hidden');
+      const activeBtn = document.getElementById(`nav-${screenName}`);
+      if (activeBtn) {
+        activeBtn.classList.add('text-roamPrimary');
+        activeBtn.classList.remove('text-roamPrimary/50');
+      }
+      const activeIndicator = document.getElementById(`indicator-${screenName}`);
+      if (activeIndicator) activeIndicator.classList.remove('hidden');
+    }
+
+    // Interactive maintenance function: Reset Generator service dial
+    function simulateGenService() {
+      genHours = Number((genHours + 7.5).toFixed(1)); // Make it exactly 150 hours scheduled cycle
+      document.getElementById('val-generator').textContent = `${genHours} h`;
+      // Update dash helper percentage
+      const newDashVal = Math.min(250, (genHours / 150) * 210);
+      document.getElementById('gauge-generator').setAttribute('stroke-dasharray', `${newDashVal} 250`);
+      
+      // Update success overlay elements
+      showModal(
+        "Generator Service Dial Calibrated", 
+        "ONAN generator checklist successfully marked as complete! Dial index has been set back to baseline telemetry. Keep rolling safety first."
+      );
+    }
+
+    // Toggle interaction listener updates colors
+    function updateDashColors() {
+      // Just some visual feedback for the retro switches!
+      const isChassisLube = document.getElementById('toggle-chassis').checked;
+      const isLpLink = document.getElementById('toggle-lp').checked;
+      
+      if (isLpLink) {
+        // Toggle battery standard calibration
+        document.getElementById('val-battery').textContent = "12.8V";
+        document.getElementById('gauge-battery').setAttribute('stroke-dasharray', `185 250`);
+      } else {
+        document.getElementById('val-battery').textContent = "12.6V";
+        document.getElementById('gauge-battery').setAttribute('stroke-dasharray', `175 250`);
+      }
+    }
+
+    // Open & Close success feedback dialog overlays
+    function showModal(title, msg) {
+      document.getElementById('successTitle').textContent = title;
+      document.getElementById('successMessage').textContent = msg;
+      
+      const modal = document.getElementById('successModal');
+      modal.classList.remove('hidden');
+      // Adding animated scale bounce effect
+      setTimeout(() => {
+        document.getElementById('successContent').classList.remove('scale-95');
+        document.getElementById('successContent').classList.add('scale-100');
+      }, 50);
+    }
+
+    function closeSuccessModal() {
+      const modal = document.getElementById('successModal');
+      document.getElementById('successContent').classList.remove('scale-100');
+      document.getElementById('successContent').classList.add('scale-95');
+      setTimeout(() => {
+        modal.classList.add('hidden');
+      }, 200);
+    }
+
+    // FETCH operations on /api/memory GET: Retrieve database dispatches
+    async function fetchMemoryLogs() {
+      const listContainer = document.getElementById('timeline-list');
+      try {
+        const response = await fetch('/api/memory');
+        if (!response.ok) {
+          throw new Error('Trouble getting log archives.');
+        }
+        const logs = await response.json();
+        
+        // Render logs dynamically
+        listContainer.innerHTML = '';
+        document.getElementById('dispatch-count').textContent = `${logs.length} Submissions`;
+
+        if (logs.length === 0) {
+          listContainer.innerHTML = `<p class="text-center py-6 text-xs text-roamText/40">No entries recorded on current offline channel.</p>`;
+          return;
+        }
+
+        logs.forEach(log => {
+          let dateStr = "";
+          try {
+            dateStr = new Date(log.timestamp).toLocaleDateString(undefined, { 
+              month: 'short', 
+              day: 'numeric', 
+              year: 'numeric' 
+            });
+          } catch(e) {
+            dateStr = log.timestamp || "Active";
+          }
+
+          // Identify kind of safety category
+          let borderTheme = "border-roamPrimary/20";
+          let badgeTheme = "bg-roamSurface text-roamPrimary";
+          if (log.title.includes("Low Clearance")) {
+            borderTheme = "border-roamAccent/40";
+            badgeTheme = "bg-roamAccent text-roamBg";
+          } else if (log.title.includes("Dead Zone")) {
+            borderTheme = "border-slate-500/40";
+            badgeTheme = "bg-slate-700 text-white";
+          } else if (log.title.includes("Boondocking")) {
+            borderTheme = "border-emerald-600/40";
+            badgeTheme = "bg-emerald-800 text-white";
+          }
+
+          const card = document.createElement('div');
+          card.className = `bg-roamBg p-3.5 rounded-lg border-2 ${borderTheme} shadow-sm space-y-2 relative overflow-hidden`;
+          card.innerHTML = `
+            <div class="flex justify-between items-start space-x-2">
+              <span class="inline-block text-[9px] font-typewriter uppercase px-2 py-0.5 rounded ${badgeTheme}">
+                Log No. ${log.id ? log.id.slice(-4) : 'RPT'}
+              </span>
+              <span class="font-sans text-[10px] text-roamText/50 tracking-wider">${dateStr}</span>
+            </div>
+            <div class="space-y-1">
+              <h4 class="font-display font-extrabold text-sm text-roamPrimary leading-tight">${escapeHTML(log.title)}</h4>
+              <p class="text-xs text-roamText/80 leading-relaxed">${escapeHTML(log.body)}</p>
+            </div>
+          `;
+          listContainer.appendChild(card);
+        });
+
+      } catch (err) {
+        console.error(err);
+        listContainer.innerHTML = `<p class="text-center py-6 text-xs text-roamAccent font-semibold leading-relaxed">Failed to establish connection to local memory cache.<br><span class="text-[9px] font-sans font-normal text-roamText">Retry active port.</span></p>`;
+      }
+    }
+
+    // Handles form submit with FETCH /api/memory POST: Create database dispatch
+    async function handleFormSubmit(event) {
+      event.preventDefault();
+
+      const reportType = document.getElementById('reportType').value;
+      const location = document.getElementById('location').value;
+      const details = document.getElementById('details').value;
+      const dateObserved = document.getElementById('dateObserved').value;
+
+      // Map values directly into specified core `{title, body}` object syntax
+      const title = `${reportType} at ${location}`;
+      const body = `${details} (Date observed: ${dateObserved})`;
+
+      try {
+        const response = await fetch('/api/memory', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ title, body })
+        });
+
+        if (!response.ok) {
+          throw new Error('Connection failed to broadcast.');
+        }
+
+        const data = await response.json();
+        
+        // Show delightful vintage success feedback manifesto modal!
+        showModal(
+          "Dispatch Logged Successfully",
+          "Your report has been logged locally in durable co-pilot database and will sync with peer rigs on proximity. Thank you for contributing to road map safety!"
+        );
+
+        // Reset inputs
+        document.getElementById('location').value = '';
+        document.getElementById('details').value = '';
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('dateObserved').value = today;
+
+        // Force reload logs feed and count
+        await fetchMemoryLogs();
+
+      } catch (err) {
+        console.error(err);
+        alert("Telemetry error: Failed to save report locally. Check local database file status.");
+      }
+    }
+
+    // Simple sanitization helper to block XSS on user inputs
+    function escapeHTML(str) {
+      return str.replace(/[&<>'"]/g, 
+        tag => ({
+          '&': '&amp;',
+          '<': '&lt;',
+          '>': '&gt;',
+          "'": '&#39;',
+          '"': '&quot;'
+        }[tag] || tag)
+      );
+    }
+  </script>
+</body>
+</html>

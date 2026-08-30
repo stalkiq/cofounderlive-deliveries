@@ -1,0 +1,17 @@
+{
+  "name": "roamstead-co-pilot",
+  "version": "1.0.0",
+  "description": "The ultimate co-pilot for life on the open road. Vintage-inspired field guide & RV co-pilot.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "private": true
+}
