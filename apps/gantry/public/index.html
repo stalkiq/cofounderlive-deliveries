@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GANTRY // Operational Execution Pipeline</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <!-- Google Sign-In SDK client loaded for real capability integration -->
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+</head>
+<body>
+
+  <!-- Background blueprint matrix grid overlay -->
+  <div class="blueprint-grid-overlay"></div>
+
+  <!-- Main System Wrapper -->
+  <div class="gantry-wrapper">
+
+    <!-- TOP HEADER PIPELINE STATUS BAR -->
+    <header class="gantry-header">
+      <div class="gantry-title-container">
+        <span class="pulsing-led online"></span>
+        <span class="eyebrow-text">GANTRY // INDUSTRIAL PIPELINE INTERFACE</span>
+        <h1 class="logo-text">GANTRY <span class="version-tag">v2.1.0-PROD</span></h1>
+      </div>
+      
+      <!-- System Telemetry metrics -->
+      <div class="header-telemetry">
+        <div class="telemetry-node">
+          <span class="tel-label">RUN SUCCESS RATE</span>
+          <span class="tel-val highlight-green" id="success-rate-val">99.94%</span>
+        </div>
+        <div class="telemetry-node">
+          <span class="tel-label">AVG LATENCY</span>
+          <span class="tel-val highlight-orange" id="latency-val">342ms</span>
+        </div>
+        <div class="telemetry-node">
+          <span class="tel-label">RECOVERED FAULTS</span>
+          <span class="tel-val highlight-green" id="recovered-faults-val">42</span>
+        </div>
+        <div class="telemetry-node status-node">
+          <span class="tel-label">SYSTEM_STATUS</span>
+          <span class="status-indicator" id="system-status-indicator">[ OK ]</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- CONTENT LAYOUT -->
+    <div class="gantry-main-container">
+      
+      <!-- Left sidebar navigation mimicking connected physical hardware pipelines -->
+      <aside class="sidebar-nav">
+        <div class="sidebar-sec-title">PIPELINE CHANNELS</div>
+        
+        <nav class="nav-links">
+          <button class="nav-btn active" id="btn-onboarding" onclick="switchScreen('onboarding')">
+            <span class="step-num">01</span>
+            <span class="btn-title">SYS_ONBOARDING</span>
+            <span class="btn-status">[ ACTIVE ]</span>
+          </button>
+          
+          <button class="nav-btn" id="btn-compiler" onclick="switchScreen('compiler')">
+            <span class="step-num">02</span>
+            <span class="btn-title">SCHEMA_COMPILER</span>
+            <span class="btn-status">[ STANDBY ]</span>
+          </button>
+          
+          <button class="nav-btn" id="btn-logs" onclick="switchScreen('logs')">
+            <span class="step-num">03</span>
+            <span class="btn-title">NODE_LOGS_HISTORY</span>
+            <span class="btn-status">[ DATA ]</span>
+          </button>
+        </nav>
+
+        <!-- Sidebar operator card -->
+        <div class="operator-profile-card">
+          <div class="card-header">OPERATOR METRICS</div>
+          <div id="operator-info">
+            <div class="unauthenticated-prompt">
+              <span class="warn-color">🔒 UNAUTHENTICATED</span>
+              <p>Please log in using Google Identity Services on Screen 01.</p>
+            </div>
+            <div class="authenticated-profile hidden" id="user-profile-widget">
+              <img src="" id="user-profile-img" class="profile-pic" alt="User">
+              <div class="profile-details">
+                <span class="user-name" id="user-display-name">Loading...</span>
+                <span class="user-role" id="user-display-role">Lead Architect</span>
+                <span class="user-email" id="user-display-email"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="terminal-footer-info">
+          <div>LOC // PORT 3000</div>
+          <div>DURABLE_MEM_NET // CONNECTED</div>
+        </div>
+      </aside>
+
+      <!-- PRIMARY SCREEN DISPLAY AREA -->
+      <main class="gantry-content-area">
+
+        <!-- ==================== SCREEN 1: ONBOARDING ==================== -->
+        <section class="screen-panel" id="screen-onboarding">
+          <div class="section-hero">
+            <div class="sys-code-banner">INIT // CONFIGURATION_PHASE_01</div>
+            <h2>Stop prompting. Start executing.</h2>
+            <p class="subtitle-text">Gantry replaces fragile SaaS integrations with self-assembling, self-healing pipeline schemas powered by deterministic execution models.</p>
+          </div>
+
+          <div class="grid-2-col">
+            <!-- Google Auth Boarding Panel -->
+            <div class="card panel-card highlight-border">
+              <div class="card-led-indicator"></div>
+              <h3>[ SECURITY_GATEWAY_AUTH ]</h3>
+              <p class="card-desc">In order to access compiler, memory logs, and simulation nodes, authorize with Google SSO core services.</p>
+              
+              <div class="auth-box-container">
+                <!-- Standard Google login rendering placeholder -->
+                <div class="google-sign-in-btn-wrapper">
+                  <div id="g_id_onload"
+                       data-client_id="YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com"
+                       data-context="signin"
+                       data-ux_mode="popup"
+                       data-callback="handleGoogleSignInResponse"
+                       data-auto_prompt="false">
+                  </div>
+                  <div class="g_id_signin"
+                       data-type="standard"
+                       data-shape="rectangular"
+                       data-theme="filled_black"
+                       data-text="signin_with"
+                       data-size="large"
+                       data-logo_alignment="left">
+                  </div>
+                </div>
+
+                <div class="auth-divider">OR USE DEVELOPER SANBOX BYPASS</div>
+
+                <div class="mock-auth-controls">
+                  <label for="mock-username">Operator Name:</label>
+                  <input type="text" id="mock-username" class="terminal-input" value="Theodore Gantry">
+                  
+                  <label for="mock-email">System Email:</label>
+                  <input type="email" id="mock-email" class="terminal-input" value="ops.director@gantry.io">
+                  
+                  <label for="mock-role">Operations Role:</label>
+                  <select id="mock-role" class="terminal-select">
+                    <option value="lead-ops">Lead Ops Engineer</option>
+                    <option value="site-reliability">Site Reliability Architect</option>
+                    <option value="financial-controller">Financial Systems Lead</option>
+                  </select>
+
+                  <button class="terminal-btn btn-primary" onclick="simulateDeveloperAuth()">
+                    AUTHORIZE AS DEVELOPER OPERATOR →
+                  </button>
+                </div>
+              </div>
+
+              <!-- Security Status -->
+              <div class="auth-footer-badge" id="auth-banner-status">
+                <span class="badge-tag danger">[ AUTHENTICATION REQUIRED ]</span> Initialize sandbox bypass or feed standard credentials to proceed.
+              </div>
+            </div>
+
+            <!-- Profile & Config Settings -->
+            <div class="card panel-card">
+              <h3>[ SYSTEM_PREFERENCES ]</h3>
+              <p class="card-desc">Configure operational thresholds, environment boundaries, and durable pipeline notification sinks.</p>
+
+              <form id="onboarding-settings-form" onsubmit="savePreferences(event)">
+                <div class="form-group">
+                  <label>PRIMARY DRI_LEAD TELEMETRY EMAIL</label>
+                  <input type="email" id="pref-email" class="terminal-input" placeholder="dri.ops@gantry.io" readonly>
+                  <span class="input-hint">Dynamically tied to active authenticated operator.</span>
+                </div>
+
+                <div class="form-group row-group">
+                  <div>
+                    <label>TELEMETRY NOTIFICATION SINK</label>
+                    <select id="pref-notifications" class="terminal-select">
+                      <option value="Slack Alerts">Slack Alerts channel (#ops-pipeline)</option>
+                      <option value="Microsoft Teams">Microsoft Teams Webhook</option>
+                      <option value="Discord Webhook">Discord Webhook</option>
+                      <option value="SMS Dispatch">Direct SMS Dispatch (P1 Alert)</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label>MAX HEALING RETRIES</label>
+                    <select id="pref-retries" class="terminal-select">
+                      <option value="3">3 Attempts</option>
+                      <option value="5" selected>5 Attempts (Default)</option>
+                      <option value="10">10 Attempts (High Criticality)</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label>OPERATIONAL BOUNDARY FOCUS</label>
+                  <div class="checkbox-group">
+                    <label class="checkbox-container">
+                      <input type="checkbox" checked value="saas-reconciliation"> SaaS & Financial Reconciliation
+                      <span class="checkmark"></span>
+                    </label>
+                    <label class="checkbox-container">
+                      <input type="checkbox" checked value="database-reporters"> Legacy Master DB Synchronization
+                      <span class="checkmark"></span>
+                    </label>
+                    <label class="checkbox-container">
+                      <input type="checkbox" value="automated-notifications"> Direct Action Notification Schemas
+                      <span class="checkmark"></span>
+                    </label>
+                  </div>
+                </div>
+
+                <button type="submit" class="terminal-btn btn-secondary" id="save-config-btn">
+                  SAVE OPERATIONAL BOUNDARIES
+                </button>
+              </form>
+            </div>
+          </div>
+
+          <!-- Feature highlight pipeline cards -->
+          <div class="onboarding-footer-diagram">
+            <h3>DETERMINISTIC PIPELINE ARCHITECTURE</h3>
+            <div class="pipeline-visual-flow">
+              <div class="step-card">
+                <span class="step-badge">INPUT</span>
+                <span class="step-title">1. Raw Messy Workflow Description</span>
+              </div>
+              <div class="step-connector">====►</div>
+              <div class="step-card pulse-border">
+                <span class="step-badge highlight">COMPILER</span>
+                <span class="step-title">2. Gantry Schema Translation</span>
+              </div>
+              <div class="step-connector">====►</div>
+              <div class="step-card">
+                <span class="step-badge info">EXECUTION</span>
+                <span class="step-title">3. Self-healing state machines on Docker</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+
+        <!-- ==================== SCREEN 2: MAIN WORKFLOW COMPILER ==================== -->
+        <section class="screen-panel hidden" id="screen-compiler">
+          <div class="section-title-box">
+            <span class="sys-code-banner">STAGE_02 // SYSTEM_TRANSITION_ENGINE</span>
+            <h2>Deterministic Schema Compiler</h2>
+            <p>Describe any messy, multi-step chore in normal human English text. The Gantry compiler converts your natural inputs into a concrete, self-healing state machine, mapping triggers, recovery triggers, values, and targets.</p>
+          </div>
+
+          <!-- Quick presets to test readily -->
+          <div class="presets-container">
+            <span class="presets-label">QUICK COMPILATION TEMPLATES:</span>
+            <button class="preset-btn" onclick="applyPreset('refund')">Stripe Refund Verification</button>
+            <button class="preset-btn" onclick="applyPreset('invoice')">Vendor Invoice OCR Reconciliation</button>
+            <button class="preset-btn" onclick="applyPreset('customer')">Premium Customer Renewal Sync</button>
+          </div>
+
+          <div class="grid-2-col-asymmetric">
+            
+            <!-- LHS: Input Descriptor Form -->
+            <div class="card panel-card flex-form-panel">
+              <h3>[ GANTRY_BLUEPRINT_INPUT ]</h3>
+              <p class="card-desc">State machine compilation parameters mapping integration APIs, fault tolerance targets, and workflows.</p>
+
+              <div class="form-group">
+                <label for="compiler-description">DESCRIBE MESSY MANUAL WORKFLOW OPERATING PROCEDURES</label>
+                <textarea id="compiler-description" class="terminal-textarea" placeholder="E.g., When a premium client is won in Salesforce, generate a customer-success Slack channel, retrieve company logo URLs from Clearbit, and write a verification record into Postgres..."></textarea>
+              </div>
+
+              <div class="form-group row-group">
+                <div>
+                  <label for="compiler-trigger">TRIGGER SOURCE APP</label>
+                  <select id="compiler-trigger" class="terminal-select">
+                    <option value="Salesforce CRM (New Opportunity Won)">Salesforce CRM (New Opportunity Won)</option>
+                    <option value="Stripe Billing (Charge Succeeded)">Stripe Billing (Charge Succeeded)</option>
+                    <option value="Zendesk Support (Ticket Escalated)">Zendesk Support (Ticket Escalated)</option>
+                    <option value="Custom Webhook (JSON Payload)" selected>Custom Webhook (JSON Payload)</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label for="compiler-target">TARGET DESTINATION APP</label>
+                  <select id="compiler-target" class="terminal-select">
+                    <option value="NetSuite ERP (Create Invoice)">NetSuite ERP (Create Invoice)</option>
+                    <option value="Shopify Admin (Update Inventory)">Shopify Admin (Update Inventory)</option>
+                    <option value="PostgreSQL Database (Insert Record)">PostgreSQL Database (Insert Record)</option>
+                    <option value="Slack Operations Channel (Alert)" selected>Slack Operations Channel (Alert)</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="compiler-recovery">ERROR RECOVERY PROTOCOL</label>
+                <select id="compiler-recovery" class="terminal-select">
+                  <option value="Self-Healing (Auto-retry with exponential backoff)" selected>Self-Healing (Auto-retry with exponential backoff)</option>
+                  <option value="Fallback Node (Route to secondary API endpoint)">Fallback Node (Route to secondary API endpoint)</option>
+                  <option value="Manual Intervention (Pause state and alert Ops Lead)">Manual Intervention (Pause state and alert Ops Lead)</option>
+                </select>
+              </div>
+
+              <button class="terminal-btn btn-primary spacing-top" id="btn-compile-schema" onclick="compilePipelineSchema()">
+                COMPILE WORKFLOW SCHEMA & REGISTER →
+              </button>
+            </div>
+
+            <!-- RHS: Schema Outputs & Interactive State Machine Dry-Run Visualizer -->
+            <div class="card panel-card right-output-panel">
+              <div class="panel-header-toolbar">
+                <h3>[ PIPELINE_VIRTUAL_MACHINE_COMPILER ]</h3>
+                <span class="compiler-badge animate-blink" id="compilation-state-tag">COMPILER IDLE</span>
+              </div>
+
+              <!-- Live visual pipeline diagram container -->
+              <div class="visualstate-machine-box">
+                <div class="gantry-pathway-lines">
+                  <div class="line-segment line-1"></div>
+                  <div class="line-segment line-2"></div>
+                </div>
+
+                <div class="state-nodes-row">
+                  <!-- Node 1: Trigger -->
+                  <div class="v-node active" id="node-slot-1">
+                    <div class="node-icon">⚡</div>
+                    <div class="node-label">NODE 01 [TRIGGER]</div>
+                    <div class="node-title" id="vis-node-01-title">Trigger Node</div>
+                    <div class="node-status-badge" id="vis-node-01-status">[ STANDBY ]</div>
+                  </div>
+
+                  <!-- Node 2: Action Core -->
+                  <div class="v-node" id="node-slot-2">
+                    <div class="node-icon">⚙️</div>
+                    <div class="node-label">NODE 02 [ACTION]</div>
+                    <div class="node-title" id="vis-node-02-title">Validation Node</div>
+                    <div class="node-status-badge" id="vis-node-02-status">[ STANDBY ]</div>
+                  </div>
+
+                  <!-- Node 3: Target -->
+                  <div class="v-node" id="node-slot-3">
+                    <div class="node-icon">🎯</div>
+                    <div class="node-label">NODE 03 [TARGET]</div>
+                    <div class="node-title" id="vis-node-03-title">Destination Dispatch</div>
+                    <div class="node-status-badge" id="vis-node-03-status">[ STANDBY ]</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Dry run trigger options -->
+              <div class="dry-run-parameters-box">
+                <h4>DRY-RUN PARAMETERS & TEST PAYLOAD</h4>
+                <div class="form-group compact-group">
+                  <label>SIMULATED PAYLOAD DATA (JSON)</label>
+                  <textarea id="simulation-payload-json" class="terminal-textarea text-mono code-fontsize" rows="3">{ "id": "tx_9082", "amount": 4200, "currency": "usd", "is_disputed": true }</textarea>
+                </div>
+
+                <div class="dryrun-actions">
+                  <button class="terminal-btn btn-accent full-width" id="btn-run-simulation" onclick="executeDryRunSimulation()" disabled>
+                    INITIALIZE DRY-RUN PIPELINE (REQUIRES ACTIVE BLUEPRINT)
+                  </button>
+                </div>
+              </div>
+
+              <!-- Live execution output terminal console -->
+              <div class="console-box mt-3">
+                <div class="console-header">DURABLE STREAM CONSOLE // OUTPUT LOGS</div>
+                <div class="console-lines" id="sim-console-output">
+                  <span class="console-ln-sys">SYSTEM // Ready for pipeline schema generation. Select template or describe chore.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+
+        <!-- ==================== SCREEN 3: NODE LOGS & MEMORY HISTORIAN ==================== -->
+        <section class="screen-panel hidden" id="screen-logs">
+          <div class="section-title-box">
+            <span class="sys-code-banner">STAGE_03 // DATA_JOURNAL</span>
+            <h2>Active Pipeline Execution Logs</h2>
+            <p>Inspect deep real-time metrics, node latency execution profiles, self-healed event buffers, and historical state schemas pulled directly from Gantry's Durable Memory storage endpoints.</p>
+          </div>
+
+          <div class="grid-2-col-asymmetric reversed-col">
+            
+            <!-- LHS: Log detail inspect panel -->
+            <div class="card panel-card overflow-json-inspect">
+              <h3>[ DUPLICATE_STATE_INSPECTOR ]</h3>
+              <p class="card-desc">Decoded durable memory execution schema currently stored inside Gantry index. Verifies complete deterministic execution proof.</p>
+              
+              <div class="json-viewer-box">
+                <div class="json-viewer-header">
+                  <span class="file-name" id="selected-log-id">STATE_STREAMS_DUMP</span>
+                  <button class="copy-json-btn" onclick="copyCurrentLogJSON()">COPY SCHEMATICS</button>
+                </div>
+                <pre class="json-viewer-pre"><code id="selected-log-json-output">// Select an execution log row in the right table to inspect the active Gantry state machine JSON parameters stored in the database.</code></pre>
+              </div>
+
+              <div class="card-footer-notice-box">
+                <h4>🛡️ DURABLE STATE PROOF</h4>
+                <p>Because Gantry records schemas, configurations, and transaction metrics directly to <code>/api/memory</code>, state structures endure regardless of host system restarts.</p>
+              </div>
+            </div>
+
+            <!-- RHS: Execution logs list table -->
+            <div class="card panel-card">
+              <div class="card-title-combo">
+                <h3>[ GLOBAL_LIVE_PIPELINE_RUNS ]</h3>
+                <span class="subtext">REFRESHES AUTOMATICALLY ON SIMULATIONS</span>
+              </div>
+
+              <div class="table-container">
+                <table class="terminal-table" id="runs-history-table">
+                  <thead>
+                    <tr>
+                      <th class="col-id">RUN_ID</th>
+                      <th class="col-title">PIPELINE NAME & ACTION</th>
+                      <th class="col-node">COMPLEXITY</th>
+                      <th class="col-latency">LATENCY</th>
+                      <th class="col-status">HEALTH STATUS</th>
+                    </tr>
+                  </thead>
+                  <tbody id="runs-table-body">
+                    <!-- Loaded dynamically via fetch('/api/memory') -->
+                    <tr>
+                      <td colspan="5" class="table-loading-row">Querying durable operational memory indices...</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div class="metrics-grid-bottom mt-3">
+                <div class="footer-summary-node">
+                  <span class="tag">ACTIVE SCHEMA COUNT</span>
+                  <span id="stat-schema-count" class="val">1</span>
+                </div>
+                <div class="footer-summary-node">
+                  <span class="tag">TOTAL SYSTEM EVENTS HANDLED</span>
+                  <span id="stat-runs-count" class="val">4</span>
+                </div>
+                <div class="footer-summary-node">
+                  <button class="terminal-btn btn-secondary compact-btn" onclick="purgeMemoryStore()">
+                    PURGE ALL RUN ARCHIVES
+                  </button>
+                </div>
+              </div>
+            </div>
+            
+          </div>
+        </section>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- Notification Banner -->
+  <div id="system-notification" class="sys-toast hidden">
+    <span class="toast-title">// NOTIFICATION</span>
+    <span class="toast-desc" id="system-notification-message">Default diagnostic message.</span>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

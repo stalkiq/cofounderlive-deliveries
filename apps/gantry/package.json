@@ -1,0 +1,26 @@
+{
+  "name": "gantry-execution-engine",
+  "version": "1.0.0",
+  "description": "Gantry // Operational Execution Engine. Stop prompting. Start executing.",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "smoke-test": "node scripts/smoke-test.mjs",
+    "smoke/test": "node scripts/smoke-test.mjs",
+    "smoke": "node scripts/smoke-test.mjs",
+    "test": "npm run smoke"
+  },
+  "dependencies": {
+    "@google/generative-ai": "^0.11.0",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2"
+  },
+  "devDependencies": {
+    "node-fetch": "^3.3.2"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "private": true
+}
