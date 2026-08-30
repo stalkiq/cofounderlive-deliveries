@@ -1,0 +1,25 @@
+{
+  "name": "ample-plate-builder",
+  "version": "1.0.0",
+  "description": "Ample - The Satiety-First, Shame-Free Plate Planner with Warm Hearth aesthetics.",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "test": "node scripts/smoke-test.mjs",
+    "smoke": "node scripts/smoke-test.mjs"
+  },
+  "keywords": [
+    "anti-diet",
+    "meal-planner",
+    "satiety",
+    "hearth"
+  ],
+  "author": "Antigravity",
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2"
+  }
+}

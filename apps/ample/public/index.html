@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ample — Satiety-First, Shame-Free Plate Planner</title>
+  <!-- Google Fonts for Serif headings and comfortable body reading -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Lucide icons for gorgeous icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Mobile Device Container -->
+  <div class="phone-wrapper">
+    <!-- Phone Header -->
+    <header class="app-header">
+      <div class="logo">
+        <span class="fire-icon">🔥</span>
+        <h1>Ample</h1>
+      </div>
+      <div class="user-profile" id="user-header-profile" style="display: none;">
+        <span class="user-name">Morgan</span>
+        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=150" alt="Google Profile" class="avatar" id="avatar-img">
+      </div>
+    </header>
+
+    <!-- Main Screens Container -->
+    <main class="screens-container">
+
+      <!-- SCREEN 1: Welcome / Onboarding -->
+      <section id="screen-welcome" class="screen active">
+        <div class="hero-content">
+          <span class="eyebrow">The Anti-Diet Plate Builder</span>
+          <h2 class="serif-title headline">No shame.<br>No counting.<br>Just better plates.</h2>
+          <p class="subheadline">Skip the tracking. Gather around a warmer way to eat. Build your perfect plate in one click with a nourishing, stress-free meal planner designed for satisfying, hearth-cooked volume without the psychological toll of calorie tracking.</p>
+        </div>
+
+        <!-- Spec stats / metrics -->
+        <div class="metrics-grid">
+          <div class="metric-card">
+            <span class="metric-value">3 Seconds</span>
+            <span class="metric-label">Onboarding Time</span>
+          </div>
+          <div class="metric-card">
+            <span class="metric-value">No Calories</span>
+            <span class="metric-label">Privacy & Mindset</span>
+          </div>
+        </div>
+
+        <div class="action-card">
+          <div class="action-info">
+            <h4>Continue with Google</h4>
+            <p>One-click secure sign-in to instantly bypass onboarding and sync your personalized plate preferences.</p>
+          </div>
+          <!-- Real-looking Google One-Tap component Simulator -->
+          <button class="google-btn" id="btn-google-signin">
+            <svg class="google-icon" viewBox="0 0 24 24">
+              <path fill="#EA4335" d="M12 5.04c1.66 0 3.2.57 4.38 1.69l3.27-3.27C17.67 1.47 15.01 1 12 1 7.24 1 3.25 3.76 1.39 7.78l3.9 3.02C6.22 7.76 8.88 5.04 12 5.04z"/>
+              <path fill="#4285F4" d="M23.49 12.27c0-.81-.07-1.59-.2-2.36H12v4.51h6.43c-.28 1.44-1.1 2.67-2.33 3.5l3.61 2.8c2.11-1.95 3.78-4.83 3.78-8.45z"/>
+              <path fill="#FBBC05" d="M5.29 14.76c-.24-.72-.38-1.5-.38-2.31s.14-1.59.38-2.31L1.39 7.13C.5 8.93 0 10.91 0 13s.5 4.07 1.39 5.87l3.9-3.11z"/>
+              <path fill="#34A853" d="M12 23c3.24 0 5.97-1.07 7.96-2.91l-3.61-2.8c-1.1.74-2.5 1.18-4.35 1.18-3.12 0-5.78-2.72-6.71-5.76l-3.9 3.02C3.25 20.24 7.24 23 12 23z"/>
+            </svg>
+            <span>Sign In with Google</span>
+          </button>
+          <div class="status-badge">🟢 Recommended &bull; Secure Auth</div>
+        </div>
+
+        <div class="philosophy-teaser">
+          <h3>The Ample Way</h3>
+          <ul class="teaser-list">
+            <li><strong>✨ Visual Plates:</strong> Split meals into intuitive, eye-balled zones. No food weighing.</li>
+            <li><strong>🌱 Satiety-Focused:</strong> Maximize nutrient volume so hunger never backfires.</li>
+            <li><strong>🤎 Red-Hearth Comfort:</strong> Warm, wholesome suggestions suited for home kitchens.</li>
+          </ul>
+        </div>
+      </section>
+
+
+      <!-- SCREEN 2: One-Click Plan -->
+      <section id="screen-planner" class="screen">
+        <div class="section-title">
+          <span class="section-eyebrow">Instant Nourishment</span>
+          <h2 class="serif-title">Hearthside Plate Planner</h2>
+          <p class="description">No calculations, just comfort. Tap your current hunger level to scale your perfect plate instantly with the warmth of a home-cooked meal.</p>
+        </div>
+
+        <!-- Metrics bar -->
+        <div class="instant-metric">
+          <div class="metric-pill">
+            <span class="dot pulse"></span> Scaling Speed: <strong>Instant</strong>
+          </div>
+        </div>
+
+        <!-- Hunger Scale Cards -->
+        <div class="hunger-scale-container">
+          <!-- Item 1: Peckish -->
+          <div class="hunger-card" data-hunger="Lightly peckish" data-goal="Quick & minimal prep">
+            <div class="hunger-header">
+              <span class="hunger-badge light">Light Volume</span>
+              <span class="satiety-meta">Satiety 6/10</span>
+            </div>
+            <h3>Peckish</h3>
+            <p>Light, satisfying bite to tide you over with zero stress.</p>
+            <button class="select-volume-btn">Select Peckish</button>
+          </div>
+
+          <!-- Item 2: Ready to Eat -->
+          <div class="hunger-card highlighted" data-hunger="Ready for a full meal" data-goal="Warm & comforting">
+            <div class="hunger-header">
+              <span class="hunger-badge balanced">Balanced Volume</span>
+              <span class="satiety-meta">Satiety 8/10</span>
+            </div>
+            <h3>Ready to Eat</h3>
+            <p>Standard balanced plate focusing on comforting volume and warm protein.</p>
+            <button class="select-volume-btn active">Select Balanced</button>
+          </div>
+
+          <!-- Item 3: Starving -->
+          <div class="hunger-card" data-hunger="Extremely hungry (need high volume)" data-goal="Warm & comforting">
+            <div class="hunger-header">
+              <span class="hunger-badge max">Max Volume</span>
+              <span class="satiety-meta">Satiety 10/10</span>
+            </div>
+            <h3>Starving</h3>
+            <p>High-volume, fiber-rich plate to satisfy deep hunger safely without counting.</p>
+            <button class="select-volume-btn">Select Starving</button>
+          </div>
+        </div>
+
+        <!-- Custom Cravings prompt transition card -->
+        <div class="craving-shortcut-card">
+          <div class="shortcut-icon">💭</div>
+          <div class="shortcut-content">
+            <h4>Have specific ingredients?</h4>
+            <p>Transition to our custom model and input exactly what you're craving or have in your pantry.</p>
+            <button class="text-link-btn" onclick="navigateToTab('assistant')">Go to Hearth Assistant &rarr;</button>
+          </div>
+        </div>
+      </section>
+
+
+      <!-- SCREEN 3: Build Plate / Hearth Assistant -->
+      <section id="screen-assistant" class="screen">
+        <div class="section-title">
+          <span class="section-eyebrow">Hearthside Creator</span>
+          <h2 class="serif-title">The Hearth Assistant</h2>
+          <p class="description">Tell us what you're craving or what's in your pantry. We'll design a warm, nourishing, satisfying plate without calorie tracking.</p>
+        </div>
+
+        <!-- Assistant Metrics -->
+        <div class="metrics-row">
+          <div class="small-pill">🎯 Satiety Focus: High Volume</div>
+          <div class="small-pill">🧠 Mindset: No Counting</div>
+        </div>
+
+        <!-- WORKFLOW FORM -->
+        <div class="workflow-box">
+          <h3 class="workflow-heading">Generate Your Next Plate</h3>
+          <p class="workflow-subtext">Select your current state. We'll handle the portion scaling instantly.</p>
+
+          <form id="plate-builder-form">
+            <div class="form-group">
+              <label for="craving-input">What are you craving?</label>
+              <input type="text" id="craving-input" placeholder="e.g., warm pasta, fresh crunchy salad, savory chicken" required>
+            </div>
+
+            <div class="form-group">
+              <label for="hunger-select">Current Hunger Level</label>
+              <select id="hunger-select" required>
+                <option value="Lightly peckish">Lightly peckish</option>
+                <option value="Ready for a full meal" selected>Ready for a full meal</option>
+                <option value="Extremely hungry (need high volume)">Extremely hungry (need high volume)</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="goal-select">Primary Goal</label>
+              <select id="goal-select" required>
+                <option value="Warm & comforting" selected>Warm & comforting</option>
+                <option value="Fresh & energizing">Fresh & energizing</option>
+                <option value="Quick & minimal prep">Quick & minimal prep</option>
+              </select>
+            </div>
+
+            <button type="submit" class="submit-btn" id="build-plate-btn">
+              <span id="btn-text">🔥 Build My Plate</span>
+              <span id="btn-spinner" class="spinner" style="display: none;"></span>
+            </button>
+          </form>
+        </div>
+
+        <!-- Generated Result Section (Shown after generating) -->
+        <div id="latest-result-container" class="latest-plate-card" style="display: none;">
+          <div class="success-banner">
+            <i data-lucide="check-circle-2" class="success-icon"></i>
+            <div>
+              <h4 id="success-title">Plate Built!</h4>
+              <p id="success-message">Your balanced plate has been scaled for optimal satiety.</p>
+            </div>
+          </div>
+
+          <div class="plate-render-box">
+            <div class="plate-visual-guide animate-pulse">
+              <div class="plate-slice portion-veg">
+                <span>🥗 50% fiber volume</span>
+              </div>
+              <div class="plate-split-right">
+                <div class="plate-slice portion-protein">
+                  <span>🍗 25% rich protein</span>
+                </div>
+                <div class="plate-slice portion-grain">
+                  <span>🍞 25% healthy fiber carb</span>
+                </div>
+              </div>
+            </div>
+            <div class="visual-caption">Estimated visual distribution on your 10" plate</div>
+          </div>
+
+          <div class="plate-content">
+            <div class="plate-meta">
+              <span class="style-badge" id="result-status">Comforting</span>
+              <span class="satiety-badge" id="result-score">Satiety Score: 9.5/10</span>
+            </div>
+            <h3 id="result-title" class="serif-title">Slow-Simmered Tomato & White Bean Stew</h3>
+            <p id="result-detail">1/2 plate rich tomato-herb broth & wilted greens, 1/4 plate creamy white beans, 1/4 plate crusty sourdough with a drizzle of olive oil.</p>
+            
+            <div class="plate-footer">
+              <span class="time-stamp" id="result-time">Just now</span>
+              <button class="save-status-indicator" disabled>💾 Saved to Kitchen Ledger</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Editorial presets (Always visible for onboarding preview) -->
+        <div class="editorial-divider">
+          <span>Our Hearth Philosophy Presets</span>
+        </div>
+
+        <div class="presets-gallery">
+          <div class="preset-card">
+            <div class="preset-header">
+              <span class="badge balanced">Balanced</span>
+              <span class="score">Satiety: 9.5/10</span>
+            </div>
+            <h4>Slow-Simmered Tomato & White Bean Stew</h4>
+            <p>1/2 plate rich tomato-herb broth & wilted greens, 1/4 plate creamy white beans, 1/4 plate crusty sourdough with a drizzle of olive oil.</p>
+          </div>
+
+          <div class="preset-card">
+            <div class="preset-header">
+              <span class="badge comforting">Comforting</span>
+              <span class="score">Satiety: 9/10</span>
+            </div>
+            <h4>Roasted Red Pepper & Lentil Bowl</h4>
+            <p>Generous bed of roasted peppers, zucchini, and spinach, topped with warm spiced lentils and a dollop of creamy garlic tahini.</p>
+          </div>
+        </div>
+      </section>
+
+
+      <!-- SCREEN 4: Journal & Kitchen History -->
+      <section id="screen-journal" class="screen">
+        <div class="section-title">
+          <span class="section-eyebrow">Your Hearthside Log</span>
+          <h2 class="serif-title">Hearth History & Settings</h2>
+          <p class="description">Every satisfying plate scaled to match your appetite is recorded below. No judgment, no macros, just your gentle meal journal.</p>
+        </div>
+
+        <!-- Interactive Memory Stats -->
+        <div class="journal-stats">
+          <div class="stat-box">
+            <span class="stat-number" id="stats-total-meals">0</span>
+            <span class="stat-name">Satiety Plates</span>
+          </div>
+          <div class="stat-box">
+            <span class="stat-number" id="stats-avg-satiety">9.3/10</span>
+            <span class="stat-name">Avg Hunger Care</span>
+          </div>
+        </div>
+
+        <div class="ledger-header">
+          <h3>Kitchen Ledger Memory</h3>
+          <button id="btn-clear-demo" class="secondary-action-btn">
+            <i data-lucide="refresh-cw"></i> Reload Seed Entries
+          </button>
+        </div>
+
+        <!-- History stream loaded from GET /api/memory -->
+        <div class="history-stream" id="history-stream-container">
+          <!-- Skeleton Loader -->
+          <div class="history-placeholder">
+            <p>Loading your plate memory from kitchen ledger...</p>
+          </div>
+        </div>
+
+        <!-- Quick Settings inside History screen -->
+        <div class="settings-segment">
+          <h3>Hearth Environment Settings</h3>
+          <div class="settings-card">
+            <div class="setting-item">
+              <div class="setting-info">
+                <strong>Anti-Diet Mode</strong>
+                <p>Ensures calories, macros, or numbers never reveal themselves.</p>
+              </div>
+              <label class="toggle-switch">
+                <input type="checkbox" checked disabled>
+                <span class="slider"></span>
+              </label>
+            </div>
+
+            <div class="setting-item">
+              <div class="setting-info">
+                <strong>Hearth Voice Tone</strong>
+                <p>Speak plate layouts using comforting crackling ambiance.</p>
+              </div>
+              <label class="toggle-switch">
+                <input type="checkbox" id="voice-tone-toggle">
+                <span class="slider"></span>
+              </label>
+            </div>
+
+            <div class="setting-item">
+              <div class="setting-info">
+                <strong>Google One-Tap Link</strong>
+                <p>Maintain session state permanently across devices.</p>
+              </div>
+              <div class="status-indicator linked">Linked</div>
+            </div>
+          </div>
+
+          <div class="technical-meta">
+            <p>Workspace: <code class="code-badge">Ample Plate Builder</code></p>
+            <p>Durable Store: <code class="code-badge">/api/memory</code></p>
+            <p class="system-status">System Operational &bull; Secure Google sandbox mode enabled</p>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Bottom Navigation Bar for Mobile Archetype -->
+    <nav class="bottom-nav">
+      <button class="nav-btn active" id="nav-welcome" onclick="navigateToTab('welcome')">
+        <i data-lucide="home"></i>
+        <span>Welcome</span>
+      </button>
+      <button class="nav-btn" id="nav-planner" onclick="navigateToTab('planner')">
+        <i data-lucide="sparkles"></i>
+        <span>One-Click</span>
+      </button>
+      <button class="nav-btn" id="nav-assistant" onclick="navigateToTab('assistant')">
+        <i data-lucide="chef-hat"></i>
+        <span>Build Plate</span>
+      </button>
+      <button class="nav-btn" id="nav-journal" onclick="navigateToTab('journal')">
+        <i data-lucide="book-heart"></i>
+        <span>History</span>
+      </button>
+    </nav>
+  </div>
+
+  <!-- Notification Toast -->
+  <div id="toast" class="toast">
+    <span id="toast-text">Success message here!</span>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
