@@ -1,0 +1,28 @@
+{
+  "name": "home-screen-portal",
+  "version": "1.0.4",
+  "description": "Terminal portal tracking the deflationary cost-curve of consumer intelligence, with a pitch transmission terminal and token cost simulator.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "keywords": [
+    "homescreen",
+    "ai",
+    "consumer",
+    "token-deflation",
+    "brutalist",
+    "terminal"
+  ],
+  "author": "Antigravity",
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

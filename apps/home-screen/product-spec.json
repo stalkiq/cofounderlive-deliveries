@@ -1,0 +1,227 @@
+{
+  "missionId": "ep_mtep26l7",
+  "idea": "Every platform shift mints consumer giants. The web gave us Google + Airbnb. Mobile gave us Instagram + DoorDash. AI is the biggest shift YET. But three years in, the only new icon on your home screen is ChatGPT.\n\nSo why do we think NOW is a great time to build AI-powered consumer products? Intelligence just got good enough: you can treat an agent like a person. And it's about to get cheap enough, too: today, the magic can run $1,000 a month in tokens for each user, but that is falling 10x a year. Follow the curve, and you can predict the consumer moment: it lands very soon. Whoever builds now, owns it.\n\nWhat do you build? How we get things done, get around, learn, stay healthy, manage our money, play, connect with friends. It all opens up again.\n\nCONSUMER is going to be so back. If you're building for a billion people, we'd love to hear from you.",
+  "brand": {
+    "name": "Home Screen",
+    "tagline": "The race for the next billion-user icon.",
+    "audience": "Maverick consumer founders building the next generation of AI-native giants.",
+    "tone": [
+      "High-conviction",
+      "Tactile",
+      "Rebellious"
+    ],
+    "visualConcept": "A physical-feeling, dark-mode grid resembling an empty mobile home screen, where blank icon slots slowly illuminate with vibrant, generative neon-coral silhouettes as the user scrolls down the cost-curve.",
+    "layout": "A high-impact, single-column editorial scroll featuring massive, brutalist typography, an interactive 'cost-per-token' slider, and a hyper-minimalist pitch submission portal.",
+    "palette": {
+      "background": "#0A0A0A",
+      "surface": "#161616",
+      "primary": "#FFFFFF",
+      "accent": "#FF5A09",
+      "text": "#E0E0E0"
+    },
+    "creativeNotes": [
+      "Build an interactive SVG cost-curve graph that dynamically scales down 10x as the user scrolls, triggering a visual 'unlock' animation when it hits the current year.",
+      "Use a CSS grid with 'perspective' and 'rotateX' to create a 3D-tilted home screen mockup that straightens out and becomes interactive on scroll.",
+      "Optimize performance by using system font stacks styled with ultra-black weights (e.g., Impact or Arial Black) to avoid the loading lag of heavy custom web fonts."
+    ]
+  },
+  "mvp": {
+    "name": "Home Screen",
+    "workspaceLabel": "Hacker Portal v1.0.4",
+    "experience": {
+      "archetype": "terminal",
+      "device": "desktop",
+      "navigationStyle": "sidebar",
+      "density": "compact",
+      "typeStyle": "mono",
+      "radius": "sharp",
+      "motif": "A brutalist, neon-coral terminal grid integrated with a 3D-tilted home screen mockup tracking the deflationary cost curve of consumer intelligence."
+    },
+    "eyebrow": "THE HOME SCREEN IS EMPTY",
+    "headline": "The race for the next billion-user icon.",
+    "subheadline": "Every major platform shift mints consumer giants. We back the maverick founders building highly tactile, agentic consumer products at the exact intersection of falling token costs and human-grade reasoning.",
+    "palette": {
+      "background": "#0A0A0A",
+      "surface": "#161616",
+      "primary": "#FFFFFF",
+      "accent": "#FF5A09",
+      "text": "#E0E0E0"
+    },
+    "googleCapabilities": [
+      {
+        "service": "gemini",
+        "label": "Token-Deflation Arbitrage Simulator",
+        "rationale": "Evaluates the founder's consumer AI concept and calculates its exact cost-deflation trajectory to determine when it hits the mass-market consumer threshold.",
+        "primaryScreen": 0,
+        "config": {
+          "assistantRole": "You are the Home Screen Venture Partner. You analyze consumer AI pitches, calculate their token-deflation timeline (assuming a 10x cost reduction year-over-year), and determine if they can capture the next billion-user icon slot.",
+          "mapQuery": "",
+          "locationQuery": "",
+          "origin": "",
+          "destination": "",
+          "calendarTitle": "",
+          "analyticsLabel": "Token Deflation Index",
+          "targetLanguage": "en",
+          "analysisMode": "both",
+          "speechPrompt": "Read this result aloud"
+        }
+      }
+    ],
+    "screens": [
+      {
+        "label": "Cost Simulator",
+        "type": "assistant",
+        "title": "Agent Cost-Curve Simulator",
+        "description": "Describe your agentic workflow (e.g., 'A proactive agent that manages personal wealth by scanning transactions and auto-negotiating bills'). We will calculate your path to a $1/month per user cost structure.",
+        "metrics": [
+          {
+            "label": "Current Cost/User/Mo",
+            "value": "$1,200.00"
+          },
+          {
+            "label": "Projected Cost (2026)",
+            "value": "$12.00"
+          },
+          {
+            "label": "Mass Market Feasibility",
+            "value": "98.4%"
+          }
+        ],
+        "items": [
+          {
+            "title": "Agentic Wealth Manager",
+            "detail": "Requires 1.2M tokens/day per user for continuous background reasoning and transactional analysis.",
+            "status": "Simulated",
+            "meta": "Feasible in 24 months",
+            "value": "10x Deflation Path"
+          }
+        ]
+      },
+      {
+        "label": "Deflation Index",
+        "type": "table",
+        "title": "Token Deflation Ledger",
+        "description": "Historical and projected cost per million tokens across major model classes, tracking the inevitable march toward free intelligence.",
+        "metrics": [
+          {
+            "label": "Avg. YoY Deflation",
+            "value": "-90.2%"
+          },
+          {
+            "label": "Current Cost/1M Tokens",
+            "value": "$2.50"
+          }
+        ],
+        "items": [
+          {
+            "title": "GPT-3 Era (2020)",
+            "detail": "High-latency, raw completion models.",
+            "status": "Historical",
+            "meta": "100%",
+            "value": "$20.00 / 1M tokens"
+          },
+          {
+            "title": "GPT-4 Era (2023)",
+            "detail": "Early reasoning, high cost ceiling.",
+            "status": "Historical",
+            "meta": "10%",
+            "value": "$10.00 / 1M tokens"
+          },
+          {
+            "title": "Agentic Era (2024)",
+            "detail": "Sub-dollar reasoning models, high context.",
+            "status": "Active",
+            "meta": "1%",
+            "value": "$1.00 / 1M tokens"
+          },
+          {
+            "title": "Ubiquitous Era (2026)",
+            "detail": "Edge-deployed, near-zero marginal cost.",
+            "status": "Projected",
+            "meta": "0.01%",
+            "value": "$0.01 / 1M tokens"
+          }
+        ]
+      },
+      {
+        "label": "Submit Pitch",
+        "type": "workflow",
+        "title": "Claim Your Icon Slot",
+        "description": "We are pre-launch and actively deploying capital. Submit your raw terminal output, prototype, or pitch to secure your place on the home screen.",
+        "metrics": [
+          {
+            "label": "Active Investments",
+            "value": "14"
+          },
+          {
+            "label": "Average Ticket",
+            "value": "$1.5M"
+          }
+        ],
+        "items": [
+          {
+            "title": "Project 'Aura' (Anonymized)",
+            "detail": "Proactive health agent using continuous voice context.",
+            "status": "Simulated",
+            "meta": "Feasible Q3 2025",
+            "value": "$0.85/mo target"
+          },
+          {
+            "title": "Project 'Blink' (Anonymized)",
+            "detail": "Micro-transaction negotiator running on local edge models.",
+            "status": "Simulated",
+            "meta": "Feasible Q1 2026",
+            "value": "$0.12/mo target"
+          }
+        ]
+      }
+    ],
+    "workflow": {
+      "title": "Submit Raw Terminal Output or Pitch",
+      "description": "No polished decks required. Show us the code, the terminal output, or the raw agentic loop you've built.",
+      "fields": [
+        {
+          "label": "Project Name",
+          "type": "text",
+          "placeholder": "e.g., Neon Health Agent"
+        },
+        {
+          "label": "Target Consumer Category",
+          "type": "select",
+          "options": [
+            "Agentic Utility (Logistics, Money, Health)",
+            "Social & Play (New Networks, Gaming)",
+            "Proactive Learning & Context"
+          ]
+        },
+        {
+          "label": "Raw Terminal Output or Code Snippet",
+          "type": "text",
+          "placeholder": "Paste your agent's execution logs or core loop here..."
+        }
+      ],
+      "buttonLabel": "Transmit to Home Screen",
+      "successTitle": "Transmission Received",
+      "successMessage": "Your terminal output has been routed to our investment team. We will run it through our cost-curve simulator and reach out within 48 hours."
+    },
+    "googleCapability": {
+      "service": "gemini",
+      "label": "Token-Deflation Arbitrage Simulator",
+      "rationale": "Evaluates the founder's consumer AI concept and calculates its exact cost-deflation trajectory to determine when it hits the mass-market consumer threshold.",
+      "primaryScreen": 0,
+      "config": {
+        "assistantRole": "You are the Home Screen Venture Partner. You analyze consumer AI pitches, calculate their token-deflation timeline (assuming a 10x cost reduction year-over-year), and determine if they can capture the next billion-user icon slot.",
+        "mapQuery": "",
+        "locationQuery": "",
+        "origin": "",
+        "destination": "",
+        "calendarTitle": "",
+        "analyticsLabel": "Token Deflation Index",
+        "targetLanguage": "en",
+        "analysisMode": "both",
+        "speechPrompt": "Read this result aloud"
+      }
+    }
+  },
+  "revision": 2
+}
