@@ -1,0 +1,24 @@
+{
+  "name": "phalanx-secure-runtime",
+  "version": "1.0.0",
+  "description": "Zero-trust execution layer for autonomous enterprise fleets",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "smoke-test": "node scripts/smoke-test.mjs",
+    "smoke": "node scripts/smoke-test.mjs",
+    "test": "npm run smoke"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "cors": "^2.8.5"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.4"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "private": true
+}

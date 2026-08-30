@@ -1,0 +1,258 @@
+{
+  "missionId": "ep_mtfudv75",
+  "idea": "Fortified Enterprise Fleet: Build a scalable network of institutional agents that hook into official enterprise infrastructure. Teams must demonstrate how agents are cataloged for cross-department use, how they safely maintain context across weeks of asynchronous operations, and how they interact with production data without violating enterprise compliance, data sovereignty, or security policies.\n\nDiscovery & Lifecycle: Agent Registry (the central repository for publishing, versioning, and discovering enterprise-approved agents).\n\nCore Execution & State: Agent Runtime (for long-running, asynchronous background execution) and Memory Bank (for persistent, secure cross-session context over extended timelines).\n\nSecurity & Governance: Agent Identity (For zero-trust access control), Agent Gateway (for unified routing and policy enforcement), and Model Armor (inline guardrails to block prompt injection, tool poisoning, and PII leaks).\n\nTelemetry: Agent Observability (OpenTelemetry-compliant audit logs and end-to-end reasoning chain traces).",
+  "brand": {
+    "name": "Phalanx",
+    "tagline": "The zero-trust execution layer for autonomous enterprise fleets.",
+    "audience": "CISOs and VPs of Infrastructure at Fortune 500 Financial Institutions",
+    "tone": [
+      "Sovereign",
+      "Indestructible",
+      "Monolithic"
+    ],
+    "visualConcept": "A brutalist command center aesthetic featuring heavy dark-mode interfaces, structured tactical grids, and real-time terminal-style agent execution traces.",
+    "layout": "A high-density, single-column dashboard layout starting with a live-rendered 'Agent Registry Grid' in the hero, followed by a split-screen detailing the 'Model Armor' gateway and 'Memory Bank' state timelines.",
+    "palette": {
+      "background": "#0D0E11",
+      "surface": "#1A1C23",
+      "primary": "#FFB800",
+      "accent": "#00FF66",
+      "text": "#F3F4F6"
+    },
+    "creativeNotes": [
+      "Implement a live-updating 'Reasoning Chain' terminal component in the hero that streams mock agent execution logs with zero-trust verification badges.",
+      "Use a strict, monospace-heavy typography hierarchy for all data labels and status indicators to reinforce the security-first engineering aesthetic.",
+      "Design the 'Model Armor' section as an interactive visual gateway where users can toggle simulated prompt injections and watch the system instantly quarantine the agent thread."
+    ]
+  },
+  "mvp": {
+    "name": "Phalanx",
+    "workspaceLabel": "PHALANX // SECURE RUNTIME",
+    "experience": {
+      "archetype": "terminal",
+      "device": "desktop",
+      "navigationStyle": "sidebar",
+      "density": "compact",
+      "typeStyle": "mono",
+      "radius": "sharp",
+      "motif": "brutalist tactical grid with cryptographic status badges"
+    },
+    "eyebrow": "PHALANX // ZERO-TRUST RUNTIME & AGENT REGISTRY GRID",
+    "headline": "The zero-trust execution layer for autonomous enterprise fleets.",
+    "subheadline": "Secure, audit, and orchestrate long-running AI agents within Fortune 500 financial infrastructure. Track live execution traces verified by cryptographic status badges.",
+    "palette": {
+      "background": "#0D0E11",
+      "surface": "#1A1C23",
+      "primary": "#FFB800",
+      "accent": "#00FF66",
+      "text": "#F3F4F6"
+    },
+    "googleCapabilities": [
+      {
+        "service": "gemini",
+        "label": "Model Armor AI Guardrail Analyzer",
+        "rationale": "Uses Gemini to instantly analyze agent reasoning chains, identify potential prompt injections or tool poisoning attempts, and generate real-time quarantine recommendations.",
+        "primaryScreen": 1,
+        "config": {
+          "assistantRole": "Zero-Trust Security Officer & LLM Guardrail Analyzer",
+          "mapQuery": "",
+          "locationQuery": "",
+          "origin": "",
+          "destination": "",
+          "calendarTitle": "",
+          "analyticsLabel": "Live sample operations data",
+          "targetLanguage": "",
+          "analysisMode": "both",
+          "speechPrompt": "Read this result aloud"
+        }
+      }
+    ],
+    "screens": [
+      {
+        "label": "Agent Registry",
+        "type": "catalog",
+        "title": "Approved Enterprise Fleet",
+        "description": "Central repository of cryptographically verified, version-controlled autonomous agents cleared for production financial infrastructure.",
+        "metrics": [
+          {
+            "label": "ACTIVE FLEET",
+            "value": "142 Agents"
+          },
+          {
+            "label": "VERIFIED COMPLIANT",
+            "value": "100%"
+          },
+          {
+            "label": "BLOCKED INJECTIONS",
+            "value": "1,402"
+          }
+        ],
+        "items": [
+          {
+            "title": "TreasuryReconciler-v4.2",
+            "detail": "Automated multi-week ledger reconciliation and anomaly detection.",
+            "status": "VERIFIED",
+            "meta": "SHA-256: 8f9a2c",
+            "value": "Dept: Treasury"
+          },
+          {
+            "title": "RiskAssessor-v2.1",
+            "detail": "Asynchronous credit risk evaluation using real-time market feeds.",
+            "status": "VERIFIED",
+            "meta": "SHA-256: 4d1e9b",
+            "value": "Dept: Risk"
+          },
+          {
+            "title": "SovereignAuditor-v1.0",
+            "detail": "Cross-border transaction auditing with strict data residency enforcement.",
+            "status": "VERIFIED",
+            "meta": "SHA-256: a7c3f1",
+            "value": "Dept: Compliance"
+          },
+          {
+            "title": "LiquidityOptimizer-v3.0",
+            "detail": "Intraday liquidity forecasting and automated capital positioning.",
+            "status": "QUARANTINED",
+            "meta": "SHA-256: e2b8c4",
+            "value": "Dept: Treasury"
+          }
+        ]
+      },
+      {
+        "label": "Model Armor",
+        "type": "assistant",
+        "title": "Real-Time Guardrail & Reasoning Trace Analyzer",
+        "description": "Interact with the Model Armor security engine to audit active agent reasoning chains, simulate prompt injections, and generate cryptographic quarantine policies.",
+        "metrics": [
+          {
+            "label": "SCAN LATENCY",
+            "value": "0.84ms"
+          },
+          {
+            "label": "THREAT LEVEL",
+            "value": "ELEVATED"
+          }
+        ],
+        "items": [
+          {
+            "title": "Simulated Prompt Injection Detected",
+            "detail": "Agent 'TreasuryReconciler' received payload attempting to bypass ledger limits.",
+            "status": "BLOCKED",
+            "meta": "Source: External API",
+            "value": "Severity: Critical"
+          },
+          {
+            "title": "Tool Poisoning Attempt Blocked",
+            "detail": "Malicious database schema modification intercepted during execution.",
+            "status": "BLOCKED",
+            "meta": "Source: SQL Hook",
+            "value": "Severity: High"
+          }
+        ]
+      },
+      {
+        "label": "Deploy Agent",
+        "type": "workflow",
+        "title": "Register Fortified Agent",
+        "description": "Provision a new autonomous agent with a zero-trust cryptographic identity, state-locked memory bank, and custom Model Armor guardrails.",
+        "metrics": [
+          {
+            "label": "PENDING SIGNATURES",
+            "value": "3"
+          },
+          {
+            "label": "HSM SLOTS AVAILABLE",
+            "value": "12"
+          }
+        ],
+        "items": [
+          {
+            "title": "Baseline Financial Profile",
+            "detail": "Pre-configured with strict ledger-writing guardrails and 30-day state retention.",
+            "status": "TEMPLATE",
+            "meta": "ID: profile-fin-strict",
+            "value": "Security: High"
+          },
+          {
+            "title": "Read-Only Auditor Profile",
+            "detail": "Zero write permissions, optimized for cross-border compliance checks.",
+            "status": "TEMPLATE",
+            "meta": "ID: profile-audit-ro",
+            "value": "Security: Medium"
+          }
+        ]
+      }
+    ],
+    "workflow": {
+      "title": "Provision Zero-Trust Agent",
+      "description": "Define the agent's operational boundaries, assign its IAM role, and configure its memory retention policy.",
+      "fields": [
+        {
+          "label": "Agent Name",
+          "type": "text",
+          "placeholder": "e.g., PortfolioRebalancer-v1"
+        },
+        {
+          "label": "Target Infrastructure Department",
+          "type": "select",
+          "options": [
+            "Treasury",
+            "Risk Management",
+            "Compliance",
+            "Global Operations"
+          ]
+        },
+        {
+          "label": "Memory Bank Retention Policy",
+          "type": "select",
+          "options": [
+            "7 Days (Ephemeral)",
+            "30 Days (Standard)",
+            "Indefinite (State-Locked)"
+          ]
+        },
+        {
+          "label": "Model Armor Guardrail Level",
+          "type": "select",
+          "options": [
+            "Strict (Financial Compliance)",
+            "Standard (Enterprise)",
+            "Custom (Developer Sandbox)"
+          ]
+        },
+        {
+          "label": "HSM Key Slot / Hardware Security Module Integration",
+          "type": "select",
+          "options": [
+            "Slot 01 (Primary Treasury Key)",
+            "Slot 02 (Risk Audit Signer)",
+            "Slot 03 (Compliance Ledger Signer)",
+            "Local Ephemeral Key"
+          ]
+        }
+      ],
+      "buttonLabel": "Initialize & Cryptographically Sign Agent",
+      "successTitle": "Agent Provisioned & Verified",
+      "successMessage": "Agent identity has been registered in the Phalanx Registry. Cryptographic handshakes have been established with enterprise IAM."
+    },
+    "googleCapability": {
+      "service": "gemini",
+      "label": "Model Armor AI Guardrail Analyzer",
+      "rationale": "Uses Gemini to instantly analyze agent reasoning chains, identify potential prompt injections or tool poisoning attempts, and generate real-time quarantine recommendations.",
+      "primaryScreen": 1,
+      "config": {
+        "assistantRole": "Zero-Trust Security Officer & LLM Guardrail Analyzer",
+        "mapQuery": "",
+        "locationQuery": "",
+        "origin": "",
+        "destination": "",
+        "calendarTitle": "",
+        "analyticsLabel": "Live sample operations data",
+        "targetLanguage": "",
+        "analysisMode": "both",
+        "speechPrompt": "Read this result aloud"
+      }
+    }
+  },
+  "revision": 2
+}
