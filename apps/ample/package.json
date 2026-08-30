@@ -1,0 +1,20 @@
+{
+  "name": "ample-plate-builder",
+  "version": "1.0.0",
+  "description": "Ample - Satiety-First Plate Generator with Google Sign-in Mock and Dark Blue visual motif.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "smoke/test": "node scripts/smoke-test.mjs",
+    "smoke": "node scripts/smoke-test.mjs",
+    "test": "npm run smoke"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  },
+  "type": "module",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "private": true
+}

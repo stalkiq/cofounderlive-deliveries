@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ample — The Anti-Diet Plate Builder</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts for Editorial Serif and Clean Sans Header -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            serif: ['"Playfair Display"', 'Georgia', 'serif'],
+            sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              background: '#0B111E', // Very rich dark blue hearth space
+              surface: '#151D2A',    // Matching lighter surface slate
+              card: '#1F2A3C',       // Warm cozy dark blue secondary surface
+              primary: '#A63A2B',    // Red clay hearth ember
+              accent: '#E07A5F',     // Warm orange ember highlight
+              border: '#2C3E55',     // Soft slate-blue rim
+              textLight: '#F3F4F6',  // Pure light cream/white text
+              textMuted: '#94A3B8',  // Soft slate gray
+              gBlue: '#4285F4',      // Google primary branding
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    /* Styling scrollbars beautifully */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #0B111E;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #1F2A3C;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #E07A5F;
+    }
+    .serif-title {
+      font-family: 'Playfair Display', Georgia, serif;
+    }
+    .soft-shadow {
+      box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.7);
+    }
+    /* Glow animations matching hearth concept */
+    .glow-orange {
+      box-shadow: 0 0 25px -5px rgba(224, 122, 95, 0.3);
+    }
+    .glow-nav {
+      box-shadow: 0 -4px 20px rgba(11, 17, 30, 0.9);
+    }
+  </style>
+</head>
+<body class="bg-brand-background text-brand-textLight font-sans min-h-screen flex flex-col items-center justify-start overflow-x-hidden selection:bg-brand-accent selection:text-white">
+
+  <!-- Mobile phone wrapper container to respect comfortable density and mobile bottom nav -->
+  <div class="w-full max-w-md min-h-screen bg-brand-background border-x border-brand-border flex flex-col relative soft-shadow mb-0">
+    
+    <!-- Top Bar Brand Header -->
+    <header class="bg-brand-surface px-6 py-4 border-b border-brand-border flex items-center justify-between sticky top-0 z-40">
+      <div class="flex items-center gap-2.5">
+        <div class="w-8 h-8 rounded-full bg-brand-primary flex items-center justify-center font-serif text-white font-bold text-lg glow-orange">A</div>
+        <div>
+          <span class="text-xl font-bold tracking-tight text-white serif-title">Ample</span>
+          <span class="text-[10px] uppercase font-bold text-brand-accent tracking-widest block -mt-1 font-sans">The Anti-Diet</span>
+        </div>
+      </div>
+      
+      <!-- User Profile state bubble -->
+      <div id="header-profile" class="flex items-center gap-2 bg-brand-background rounded-full pl-2 pr-3 py-1 border border-brand-border transition-all duration-300">
+        <span class="w-2.5 h-2.5 rounded-full bg-red-500 animate-pulse" id="auth-indicator"></span>
+        <span class="text-xs text-brand-textMuted font-medium font-sans" id="header-user-name">Guest Room</span>
+      </div>
+    </header>
+
+    <!-- Main Content Area with Bottom Padding for Bottom Nav Bar -->
+    <main class="flex-1 p-6 pb-28 min-h-[calc(100vh-140px)] flex flex-col">
+
+      <!-- ================= SCREEN 1: WELCOME (DASHBOARD) ================= -->
+      <section id="screen-welcome" class="screen-view flex flex-col flex-1 justify-between gap-6">
+        
+        <!-- Hero Section -->
+        <div class="space-y-4 text-center mt-4">
+          <div class="inline-block px-3 py-1 bg-brand-surface border border-brand-accent rounded-full text-brand-accent text-xs font-semibold tracking-wide font-sans mb-1">
+            ✨ The Anti-Diet Plate Builder
+          </div>
+          <h1 class="text-3xl font-serif font-extrabold text-white leading-tight px-1 text-left">
+            No shame.<br>No counting.<br>Just better plates.
+          </h1>
+          <p class="text-brand-textMuted text-sm leading-relaxed text-left font-sans">
+            Skip the stressful counting apps. Step into a warmer, calmer way to support weight-health. Build satisfying plates instantly with a nourishing, calorie-free meal planner designed for comforting volume.
+          </p>
+        </div>
+
+        <!-- Metrics cards (spec requirements) -->
+        <div class="grid grid-cols-2 gap-4 my-2">
+          <div class="bg-brand-surface p-4 rounded-2xl border border-brand-border flex flex-col justify-center">
+            <span class="text-xs text-brand-textMuted font-medium font-sans block">Onboarding Time</span>
+            <span class="text-2xl font-bold text-brand-accent serif-title mt-0.5">3 Seconds</span>
+          </div>
+          <div class="bg-brand-surface p-4 rounded-2xl border border-brand-border flex flex-col justify-center">
+            <span class="text-xs text-brand-textMuted font-medium font-sans block">Privacy Focus</span>
+            <span class="text-md font-bold text-white serif-title mt-2 leading-tight">No Calories Allowed</span>
+          </div>
+        </div>
+
+        <!-- Call to Action / Custom Google Authorization Simulation -->
+        <div class="bg-brand-surface p-6 rounded-3xl border border-brand-border space-y-4 glow-orange relative overflow-hidden">
+          <div class="absolute -top-12 -right-12 w-24 h-24 bg-brand-accent opacity-10 rounded-full blur-2xl"></div>
+          
+          <div class="space-y-1.5 relative">
+            <h3 class="text-md font-bold text-white font-sans flex items-center gap-1.5">
+              <svg class="w-4 h-4 text-brand-accent" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a8 8 0 100 16 8 8 0 000-16zm0 14a6 6 0 110-12 6 6 0 010 12z"/></svg>
+              Step into Ample's Hearth
+            </h3>
+            <p class="text-xs text-brand-textMuted leading-relaxed">
+              One-click secure simulation to instantly sync your personalized satiety boundaries and save dishes to memory.
+            </p>
+          </div>
+
+          <!-- Simulated Google One-Tap Sign In Button -->
+          <button id="google-login-btn" class="w-full bg-white text-gray-900 border border-gray-200 py-3.5 px-4 rounded-xl font-semibold text-sm flex items-center justify-center gap-3 hover:bg-slate-50 transition active:scale-[0.98] cursor-pointer">
+            <!-- SVG Google Icon -->
+            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none">
+              <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+              <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+              <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l3.66-2.85z" fill="#FBBC05"/>
+              <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.85c.87-2.6 3.3-4.53 12-4.53z" fill="#EA4335"/>
+            </svg>
+            Continue with Google
+          </button>
+
+          <!-- Status badge of googlecapability -->
+          <div class="flex items-center justify-between text-[11px] pt-1 border-t border-brand-border text-brand-textMuted font-sans">
+            <span>Status: <strong class="text-brand-accent">Recommended</strong></span>
+            <span>Security: SHA-256 Mocked</span>
+          </div>
+        </div>
+
+        <!-- The Hearth Philosophy comparison block -->
+        <div class="bg-brand-surface/40 p-5 rounded-2xl border border-brand-border/60 space-y-3 font-sans">
+          <h4 class="text-xs font-extrabold uppercase text-brand-accent tracking-widest">The Hearth Philosophy</h4>
+          <div class="grid grid-cols-2 gap-3 text-xs leading-relaxed">
+            <div class="space-y-1 bg-red-950/20 p-2.5 rounded-lg border border-red-900/20">
+              <span class="font-bold text-red-400">Diet Culture ⚠️</span>
+              <p class="text-brand-textMuted">Obsessive digital weighing, micro macros, shame & late night hunger spikes.</p>
+            </div>
+            <div class="space-y-1 bg-emerald-950/20 p-2.5 rounded-lg border border-emerald-900/20">
+              <span class="font-bold text-emerald-400">Ample Way 🍽️</span>
+              <p class="text-brand-textMuted">High-volume nourishing plates, rich fiber + protein, pure deep satiety.</p>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ================= SCREEN 2: MAIN WORKFLOW (ONE-CLICK PLAN) ================= -->
+      <section id="screen-workflow" class="screen-view flex flex-col gap-5 hidden">
+        
+        <!-- Header overview -->
+        <div>
+          <span class="text-xs font-bold text-brand-accent uppercase tracking-widest font-sans">Step 1 — Rate Your Hunger</span>
+          <h2 class="text-2xl font-serif font-bold text-white mt-0.5">Hearthside Plate Planner</h2>
+          <p class="text-xs text-brand-textMuted mt-1">
+            No math, no counts. Select how much energy your body is calling for right now, and let's scale a satisfying meal.
+          </p>
+        </div>
+
+        <!-- Satiety Option Quick Buttons (One click scaling instant metrics) -->
+        <div class="grid grid-cols-3 gap-2">
+          <!-- Peckish -->
+          <button type="button" class="satiety-preset-btn p-3 bg-brand-surface rounded-xl border border-brand-border text-left hover:border-brand-accent/50 focus:outline-none transition group click-active cursor-pointer" data-val="Peckish" data-hunger="Lightly peckish">
+            <span class="text-[10px] uppercase font-bold text-amber-500 tracking-wide font-sans">Satiety 6/10</span>
+            <span class="font-serif font-bold text-sm block text-white mt-1">Peckish</span>
+            <span class="text-[10px] text-brand-textMuted leading-tight block mt-1 font-sans">Light Volume</span>
+          </button>
+          
+          <!-- Ready to Eat -->
+          <button type="button" class="satiety-preset-btn p-3 bg-brand-surface rounded-xl border border-brand-border text-left hover:border-brand-accent/50 focus:outline-none transition group click-active cursor-pointer" data-val="Ready" data-hunger="Ready for a full meal">
+            <span class="text-[10px] uppercase font-bold text-brand-accent tracking-wide font-sans">Satiety 8/10</span>
+            <span class="font-serif font-bold text-sm block text-white mt-1">Ready</span>
+            <span class="text-[10px] text-brand-textMuted leading-tight block mt-1 font-sans">Standard Plate</span>
+          </button>
+
+          <!-- Starving -->
+          <button type="button" class="satiety-preset-btn p-3 bg-brand-surface rounded-xl border border-brand-border text-left hover:border-brand-accent/50 focus:outline-none transition group click-active cursor-pointer" data-val="Starving" data-hunger="Extremely hungry (need high volume)">
+            <span class="text-[10px] uppercase font-bold text-emerald-400 tracking-wide font-sans">Satiety 10/10</span>
+            <span class="font-serif font-bold text-sm block text-white mt-1">Starving</span>
+            <span class="text-[10px] text-brand-textMuted leading-tight block mt-1 font-sans">Max Volume</span>
+          </button>
+        </div>
+
+        <!-- Detailed Generator Request Form -->
+        <form id="plate-generator-form" class="bg-brand-surface p-5 rounded-3xl border border-brand-border space-y-4 glow-orange">
+          <div class="border-b border-brand-border pb-3">
+            <h3 class="text-sm font-bold uppercase text-brand-accent tracking-widest">Generate Your Next Plate</h3>
+            <p class="text-[11px] text-brand-textMuted">Adjust options below to summon custom recipes from the Hearth AI capability.</p>
+          </div>
+
+          <!-- Craving Field -->
+          <div class="space-y-1.5">
+            <label class="text-xs font-bold text-white block">What are you craving?</label>
+            <input type="text" id="form-craving" class="w-full bg-brand-background border border-brand-border text-stone-100 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-brand-accent transition" placeholder="e.g., warm pasta, fresh crunchy salad, creamy chicken stew">
+          </div>
+
+          <!-- Hunger Level Select -->
+          <div class="space-y-1.5">
+            <label class="text-xs font-bold text-white block">Current Hunger Level</label>
+            <select id="form-hunger" class="w-full bg-brand-background border border-brand-border text-stone-100 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-brand-accent transition">
+              <option value="Ready for a full meal">Ready for a full meal (Standard volume, high protein)</option>
+              <option value="Extremely hungry (need high volume)">Extremely hungry (Massive volume, extra fiber & protein)</option>
+              <option value="Lightly peckish">Lightly peckish (Satiety top-up, quick bite)</option>
+            </select>
+          </div>
+
+          <!-- Primary Goal Select -->
+          <div class="space-y-1.5">
+            <label class="text-xs font-bold text-white block">Primary Meal Goal</label>
+            <select id="form-goal" class="w-full bg-brand-background border border-brand-border text-stone-100 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-brand-accent transition">
+              <option value="Warm & comforting">Warm & comforting (Warm oven bakes, stovetop stews)</option>
+              <option value="Fresh & energizing">Fresh & energizing (Enormous bowls, crisp garden raw bases)</option>
+              <option value="Quick & minimal prep">Quick & minimal prep (Under 10-minutes assembly)</option>
+            </select>
+          </div>
+
+          <!-- Submit Button -->
+          <button type="submit" id="form-submit-btn" class="w-full bg-brand-primary text-white py-3 px-4 rounded-xl font-bold text-sm tracking-wide hover:bg-red-700 transition active:scale-[0.98] cursor-pointer flex items-center justify-center gap-2">
+            <!-- Loading circle spinner hidden initially -->
+            <svg id="submit-spinner" class="animate-spin -ml-1 mr-2 h-4 w-4 text-white hidden" fill="none" viewBox="0 0 24 24">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+            Build My Plate
+          </button>
+        </form>
+
+        <!-- Informational banner -->
+        <div class="bg-brand-surface/40 p-4 rounded-xl border border-brand-border flex items-center gap-3">
+          <span class="text-xl">💡</span>
+          <p class="text-[11px] text-brand-textMuted leading-normal">
+            <strong>Satiety-First logic:</strong> Fibrous greens and roots fill stomach space safely. Complex brown proteins and essential fats trigger brain satisfaction peptides. Everything is designed without points or tracking.
+          </p>
+        </div>
+
+      </section>
+
+      <!-- ================= SCREEN 3: BUILD PLATE (ASSISTANT & DISH DETAILS) ================= -->
+      <section id="screen-assistant" class="screen-view flex flex-col gap-5 hidden">
+        
+        <!-- Screen Header -->
+        <div class="flex items-center justify-between">
+          <div>
+            <span class="text-xs font-bold text-brand-accent uppercase tracking-widest font-sans">Active Satiety Guide</span>
+            <h2 class="text-2xl font-serif font-bold text-white mt-0.5">The Hearth Assistant</h2>
+            <p class="text-xs text-brand-textMuted mt-1">
+              Your customized nourishing arrangement is shown below. Zero tracking required.
+            </p>
+          </div>
+          <div class="px-3 py-1 bg-brand-surface border border-brand-accent rounded-full text-brand-accent text-xs font-semibold font-sans">
+            AI Guide
+          </div>
+        </div>
+
+        <!-- Success Toast Notification (will fade out) -->
+        <div id="success-toast" class="bg-emerald-900/30 border border-emerald-500/50 p-4 rounded-2xl hidden">
+          <span class="text-emerald-400 font-bold text-sm block">✓ Plate Built!</span>
+          <span class="text-[11px] text-brand-textMuted mt-0.5 block">Your custom plate template was automatically calculated and loaded. This dish was written to your persistent cloud diary.</span>
+        </div>
+
+        <!-- Core Display Plate Container -->
+        <div id="assistant-plate-card" class="bg-brand-surface rounded-3xl border border-brand-border p-5 space-y-5 glow-orange relative overflow-hidden">
+          
+          <!-- Dish Title -->
+          <div class="border-b border-brand-border pb-4">
+            <div class="flex items-center justify-between gap-2">
+              <h3 id="plate-title" class="text-xl font-bold font-serif text-white hover:text-brand-accent transition">Slow-Simmered Tomato Stew</h3>
+              <div class="px-2 py-0.5 bg-brand-primary text-white font-bold text-[10px] rounded tracking-wide shrink-0" id="plate-score-badge">
+                Satiety: 9.5
+              </div>
+            </div>
+            <div class="flex flex-wrap items-center gap-2 mt-1.5 text-[10px] text-brand-textMuted">
+              <span class="bg-brand-background px-2 py-0.5 rounded border border-brand-border" id="plate-meta-hunger">Satiety 8/10</span>
+              <span class="bg-brand-background px-2 py-0.5 rounded border border-brand-border" id="plate-meta-goal">Warm & Comforting</span>
+            </div>
+          </div>
+
+          <!-- Interactive Plate Visualizer Widget -->
+          <div class="py-2 flex flex-col items-center justify-center">
+            <span class="text-xs font-semibold text-brand-textMuted mb-3 text-center uppercase tracking-wider block">Visual Portion Guidance</span>
+            
+            <div class="w-56 h-56 rounded-full border-4 border-brand-border relative bg-brand-background shadow-inner flex items-center justify-center overflow-hidden transition-all duration-500 hover:scale-[1.02]">
+              <!-- Visual divisions using CSS Grid/Paths -->
+              <!-- Half of the plate: Vegetables -->
+              <div class="absolute left-0 top-0 w-28 h-56 bg-[#1A311F]/60 border-r-2 border-brand-border flex items-center justify-center p-3 text-center transition group-hover:bg-[#1A311F]">
+                <div class="z-10">
+                  <span class="text-[10px] font-bold text-emerald-400 block uppercase tracking-wide">50% VOLUME</span>
+                  <span class="text-[9px] text-brand-textLight font-medium block leading-tight mt-0.5" id="visual-veggie-txt">Fibers & Greens</span>
+                </div>
+              </div>
+
+              <!-- Top-right quadrant: Protein -->
+              <div class="absolute right-0 top-0 w-28 h-28 bg-[#3c1d1a]/60 border-b-2 border-brand-border flex items-center justify-center p-3 text-center">
+                <div>
+                  <span class="text-[10px] font-bold text-red-400 block uppercase tracking-wide">25% PROTEIN</span>
+                  <span class="text-[9px] text-brand-textLight font-medium block leading-tight mt-0.5" id="visual-protein-txt">White Beans</span>
+                </div>
+              </div>
+
+              <!-- Bottom-right quadrant: Complex Grains / Fats -->
+              <div class="absolute right-0 bottom-0 w-28 h-28 bg-[#372A1C]/60 flex items-center justify-center p-3 text-center">
+                <div>
+                  <span class="text-[10px] font-bold text-amber-500 block uppercase tracking-wide">25% ENERGY</span>
+                  <span class="text-[9px] text-brand-textLight font-medium block leading-tight mt-0.5" id="visual-grain-txt">Sourdough</span>
+                </div>
+              </div>
+
+              <!-- Beautiful centerpiece circle button -->
+              <div class="absolute w-12 h-12 rounded-full bg-brand-surface border-2 border-brand-border flex items-center justify-center shadow-lg font-serif italic text-xs text-brand-accent font-bold">
+                Ample
+              </div>
+            </div>
+            
+            <p class="text-[10px] text-brand-textMuted text-center mt-3 leading-relaxed px-4">
+              *Adjust food quantities based on your own internal satiety cues, not counting algorithms.
+            </p>
+          </div>
+
+          <!-- Structured Dish Description Paragraph (Gemini Emulator generated) -->
+          <div class="bg-brand-background/60 p-4 rounded-2xl border border-brand-border/60 text-xs leading-relaxed font-sans">
+            <span class="font-bold text-white block mb-1">Serving Arrangement:</span>
+            <p id="plate-description" class="text-brand-textMuted text-justify">
+              1/2 plate of warm stew filled with rich tomato-herb broth, soft wilted kale, and roasted garlic. 1/4 plate of creamy white cannellini beans for rich fiber and plant protein. 1/4 plate of grilled, thick-sliced sourdough bread brushed with extra virgin olive oil to absorb the luxurious broth.
+            </p>
+          </div>
+
+          <!-- Empty state selector if history becomes dry -->
+          <button id="nav-to-planner-btn" class="w-full bg-brand-surface hover:bg-brand-background border-dashed border-2 border-brand-border hover:border-brand-accent py-3 px-4 rounded-xl text-xs font-semibold text-brand-textMuted transition flex items-center justify-center gap-2">
+            🍳 Scale Another Healthy Meal Solution
+          </button>
+        </div>
+
+      </section>
+
+      <!-- ================= SCREEN 4: PLATTERS HISTORY & PROFILE SETTINGS ================= -->
+      <section id="screen-history" class="screen-view flex flex-col gap-5 hidden">
+        
+        <!-- Header -->
+        <div>
+          <span class="text-xs font-bold text-brand-accent uppercase tracking-widest font-sans">Accountability without Shame</span>
+          <h2 class="text-2xl font-serif font-bold text-white mt-0.5">Settings & Diary</h2>
+          <p class="text-xs text-brand-textMuted mt-1">
+            Browse through your recent satiety plate formulations written automatically to persistent, secure memory.
+          </p>
+        </div>
+
+        <!-- Memory Plates List (dynamic) -->
+        <h3 class="text-xs font-bold uppercase text-brand-accent tracking-widest border-b border-brand-border pb-1 font-sans">Durable Meal History</h3>
+        
+        <div id="memory-list-container" class="space-y-3 min-h-[140px] flex flex-col justify-start">
+          <!-- Will be filled dynamically. Loading state. -->
+          <div class="text-center py-6 text-brand-textMuted text-xs">
+            <svg class="animate-spin h-5 w-5 mx-auto text-brand-accent mb-2" fill="none" viewBox="0 0 24 24">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+            Polling secure database memory...
+          </div>
+        </div>
+
+        <!-- Profile configuration Fields (updates settings API) -->
+        <div class="bg-brand-surface p-5 rounded-3xl border border-brand-border space-y-4 glow-orange">
+          <div class="border-b border-brand-border pb-3">
+            <h3 class="text-sm font-bold uppercase text-brand-accent tracking-widest">Hearthside Preferences</h3>
+            <p class="text-[11px] text-brand-textMuted">Tweak the general guide profile defaults below.</p>
+          </div>
+
+          <!-- Settings Save Form -->
+          <form id="settings-profile-form" class="space-y-3">
+            <div class="space-y-1">
+              <label class="text-[11px] font-bold text-white block">DisplayName / Kitchen Nickname</label>
+              <input type="text" id="settings-name" class="w-full bg-brand-background border border-brand-border text-stone-100 rounded-lg px-3 py-1.5 text-xs focus:outline-none focus:border-brand-accent transition">
+            </div>
+
+            <div class="space-y-1">
+              <label class="text-[11px] font-bold text-white block">Common Food Evocation / Style</label>
+              <select id="settings-theme" class="w-full bg-brand-background border border-brand-border text-stone-100 rounded-lg px-3 py-1.5 text-xs focus:outline-none focus:border-brand-accent transition">
+                <option value="Warm Hearth Cookery">Warm Hearth Cookery (Cozy, heavy roasts)</option>
+                <option value="Fresh Earth Salads">Fresh Earth Salads (Crisp, light garden oils)</option>
+                <option value="Minimal Prep Comfort">Minimal Prep Comfort (Stovetop fast meals)</option>
+              </select>
+            </div>
+
+            <div class="space-y-1">
+              <label class="text-[11px] font-bold text-white block">Gluten & Diary Preferences</label>
+              <select id="settings-excludes" class="w-full bg-brand-background border border-brand-border text-stone-100 rounded-lg px-3 py-1.5 text-xs focus:outline-none">
+                <option value="None (All Foods Welcome)">None (All Foods Welcome)</option>
+                <option value="Prefer gluten-free fiber alternatives">Prefer gluten-free fiber alternatives</option>
+                <option value="Plant-based vegan ratios">Plant-based vegan ratios</option>
+              </select>
+            </div>
+
+            <button type="submit" id="settings-save-btn" class="w-full bg-brand-background border border-brand-border text-brand-accent hover:bg-brand-accent hover:text-white py-2 px-3 rounded-lg font-bold text-xs transition cursor-pointer">
+              Save Kitchen Preferences
+            </button>
+          </form>
+
+          <!-- Status checkboxes -->
+          <div class="grid grid-cols-2 pt-2 border-t border-brand-border text-[10px] text-brand-textMuted">
+            <label class="flex items-center gap-1.5">
+              <input type="checkbox" id="settings-glink" checked class="accent-brand-accent"> Google Connected
+            </label>
+            <label class="flex items-center gap-1.5">
+              <input type="checkbox" id="settings-haptic" checked class="accent-brand-accent"> Satiety Haptics
+            </label>
+          </div>
+        </div>
+
+      </section>
+
+    </main>
+
+    <!-- ================= HIGH FIDELITY BOTTOM NAV BAR ================= -->
+    <nav class="absolute bottom-0 inset-x-0 bg-brand-surface border-t border-brand-border px-4 py-3 flex items-center justify-around text-center z-40 glow-nav">
+      
+      <!-- Nav welcome/dashboard -->
+      <button id="nav-btn-welcome" class="nav-target-btn flex-1 flex flex-col items-center justify-center text-brand-accent" data-target="screen-welcome">
+        <!-- SVG Home -->
+        <svg class="w-5.5 h-5.5 mb-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+        </svg>
+        <span class="text-[9px] font-bold uppercase tracking-wider block">Welcome</span>
+      </button>
+
+      <!-- Nav workflow -->
+      <button id="nav-btn-workflow" class="nav-target-btn flex-1 flex flex-col items-center justify-center text-brand-textMuted hover:text-brand-accent transition" data-target="screen-workflow">
+        <!-- SVG Plate/Fork -->
+        <svg class="w-5.5 h-5.5 mb-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"/>
+        </svg>
+        <span class="text-[9px] font-bold uppercase tracking-wider block">Plate Planner</span>
+      </button>
+
+      <!-- Nav assistant -->
+      <button id="nav-btn-assistant" class="nav-target-btn flex-1 flex flex-col items-center justify-center text-brand-textMuted hover:text-brand-accent transition" data-target="screen-assistant">
+        <!-- SVG Sparkles/Assistant -->
+        <svg class="w-5.5 h-5.5 mb-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 21l-.813-5.096L3 15l5.096-.813L9 9l.813 5.096L15 15l-5.187.904zM18 10.5l-.375 2.625L15 13.5l2.625.375.375 2.625.375-2.625L21 13.5l-2.625-.375L18 10.5z"/>
+        </svg>
+        <span class="text-[9px] font-bold uppercase tracking-wider block">Assistant</span>
+      </button>
+
+      <!-- Nav history -->
+      <button id="nav-btn-history" class="nav-target-btn flex-1 flex flex-col items-center justify-center text-brand-textMuted hover:text-brand-accent transition" data-target="screen-history">
+        <!-- SVG Book/History -->
+        <svg class="w-5.5 h-5.5 mb-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+        </svg>
+        <span class="text-[9px] font-bold uppercase tracking-wider block">Diary</span>
+      </button>
+
+    </nav>
+  </div>
+
+  <!-- Client Application Engine JS -->
+  <script>
+    // Global State management
+    let state = {
+      isFirstRun: true,
+      userSignedIn: false,
+      userProfile: {
+        displayName: "Guest Room",
+        favoriteFlavors: [],
+        appTheme: "Dark Blue Hearth",
+        dietaryExclude: "None",
+        glink: false
+      },
+      currentPlate: null,
+      plateHistory: []
+    };
+
+    // DOM Elements
+    const views = document.querySelectorAll('.screen-view');
+    const navButtons = document.querySelectorAll('.nav-target-btn');
+    const googleLoginBtn = document.getElementById('google-login-btn');
+    const authIndicator = document.getElementById('auth-indicator');
+    const headerUserName = document.getElementById('header-user-name');
+    const headerProfileBox = document.getElementById('header-profile');
+    
+    // Form and input elements
+    const plateForm = document.getElementById('plate-generator-form');
+    const inputCraving = document.getElementById('form-craving');
+    const inputHunger = document.getElementById('form-hunger');
+    const inputGoal = document.getElementById('form-goal');
+    const submitBtn = document.getElementById('form-submit-btn');
+    const submitSpinner = document.getElementById('submit-spinner');
+    
+    // Assistant view details elements
+    const plateTitle = document.getElementById('plate-title');
+    const plateScoreBadge = document.getElementById('plate-score-badge');
+    const plateMetaHunger = document.getElementById('plate-meta-hunger');
+    const plateMetaGoal = document.getElementById('plate-meta-goal');
+    const plateDescription = document.getElementById('plate-description');
+    
+    // Visual indicators
+    const visualVeggieTxt = document.getElementById('visual-veggie-txt');
+    const visualProteinTxt = document.getElementById('visual-protein-txt');
+    const visualGrainTxt = document.getElementById('visual-grain-txt');
+    const successToast = document.getElementById('success-toast');
+    const navToPlannerBtn = document.getElementById('nav-to-planner-btn');
+
+    // History & settings elements
+    const memoryHistoryList = document.getElementById('memory-list-container');
+    const settingsProfileForm = document.getElementById('settings-profile-form');
+    const settingsNameInput = document.getElementById('settings-name');
+    const settingsThemeSelect = document.getElementById('settings-theme');
+    const settingsExcludesSelect = document.getElementById('settings-excludes');
+    const settingsGlinkCheckbox = document.getElementById('settings-glink');
+    const settingsHapticCheckbox = document.getElementById('settings-haptic');
+
+    // 1. Navigation Flow Router
+    function routerTransition(targetScreenId) {
+      // Hide all screen contents
+      views.forEach(view => view.classList.add('hidden'));
+      
+      // Reveal the selected screen
+      const activeScreen = document.getElementById(targetScreenId);
+      if (activeScreen) {
+        activeScreen.classList.remove('hidden');
+      }
+
+      // Update active nav button aesthetics
+      navButtons.forEach(btn => {
+        if (btn.getAttribute('data-target') === targetScreenId) {
+          btn.classList.remove('text-brand-textMuted');
+          btn.classList.add('text-brand-accent');
+        } else {
+          btn.classList.remove('text-brand-accent');
+          btn.classList.add('text-brand-textMuted');
+        }
+      });
+
+      // Special screen triggers
+      if (targetScreenId === 'screen-history') {
+        renderHistoryDiary();
+      }
+    }
+
+    // Attach listeners to bottom navigation
+    navButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const target = btn.getAttribute('data-target');
+        
+        // Block workspace screens if they're not signed in (for authentic onboarding flow)
+        if (!state.userSignedIn && target !== 'screen-welcome') {
+          alert("🚪 Secure Onboarding: Please sign in with Google One-Tap on the Welcome screen first to save customized meals!");
+          routerTransition('screen-welcome');
+          return;
+        }
+        
+        routerTransition(target);
+      });
+    });
+
+    // Onboarding Quick-Sign-In trigger
+    googleLoginBtn.addEventListener('click', () => {
+      simulateGoogleSignIn("Theo Ample", "theo@example.com");
+    });
+
+    function simulateGoogleSignIn(name, email) {
+      state.userSignedIn = true;
+      state.userProfile.displayName = name;
+      state.userProfile.glink = true;
+
+      // Update header visualization
+      authIndicator.classList.remove('bg-red-500');
+      authIndicator.classList.add('bg-emerald-400');
+      headerUserName.textContent = name;
+      headerProfileBox.classList.add('border-brand-accent/40');
+
+      // Sync settings fields
+      settingsNameInput.value = name;
+
+      // Persist signed in status in browser SessionStorage
+      sessionStorage.setItem('ample_signed_in', 'true');
+      sessionStorage.setItem('ample_user_name', name);
+
+      // Play soft transition and bump user straight to Screen 2: Planner (Fast 3-second onboarding focus!)
+      setTimeout(() => {
+        routerTransition('screen-workflow');
+      }, 500);
+    }
+
+    // Restore sign in session if present
+    if (sessionStorage.getItem('ample_signed_in') === 'true') {
+      const storedName = sessionStorage.getItem('ample_user_name') || "Theo Ample";
+      simulateGoogleSignIn(storedName, "theo@example.com");
+    }
+
+    // 2. Preset Hunger Selectors (One-Click instant scaling)
+    document.querySelectorAll('.satiety-preset-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const hungerSelection = btn.getAttribute('data-hunger');
+        // Preset values
+        inputHunger.value = hungerSelection;
+        
+        // Highlight active preset button visually
+        document.querySelectorAll('.satiety-preset-btn').forEach(b => b.classList.remove('border-brand-accent'));
+        btn.classList.add('border-brand-accent');
+
+        // Add soft trigger motion animation
+        btn.classList.add('scale-[0.98]');
+        setTimeout(() => btn.classList.remove('scale-[0.98]'), 150);
+      });
+    });
+
+    // 3. Main Workflow: Submit generator form details -> Save -> Load on screen-assistant
+    plateForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      if (!state.userSignedIn) {
+        alert("🚪 Secure Auth: Please register via Google Sign In before saving recipe compositions.");
+        routerTransition('screen-welcome');
+        return;
+      }
+
+      // Enter active loading feedback
+      submitBtn.setAttribute('disabled', 'true');
+      submitSpinner.classList.remove('hidden');
+
+      const payload = {
+        craving: inputCraving.value,
+        hungerLevel: inputHunger.value,
+        goal: inputGoal.value
+      };
+
+      try {
+        // Durably post plate config to /api/memory
+        const response = await fetch('/api/memory', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(payload)
+        });
+
+        if (!response.ok) {
+          throw new Error("HTTP failure saving recipe details");
+        }
+
+        const calculatedPlate = await response.json();
+        
+        // Update loaded item state
+        state.currentPlate = calculatedPlate;
+
+        // Apply visual updates to screen-assistant details
+        renderActivePlateDetails(calculatedPlate);
+
+        // Flash success toast message
+        successToast.classList.remove('hidden');
+        setTimeout(() => {
+          successToast.classList.add('hidden');
+        }, 6000);
+
+        // Reset text boxes safely
+        inputCraving.value = "";
+
+        // Route instantly to Screen 3: Satiety Assistant screen
+        setTimeout(() => {
+          routerTransition('screen-assistant');
+        }, 700);
+
+      } catch (err) {
+        console.error("Failed to commit recipe details dynamically:", err);
+        alert("Memory state database synchronization issue. Your data was processed offline.");
+      } finally {
+        submitBtn.removeAttribute('disabled');
+        submitSpinner.classList.add('hidden');
+      }
+    });
+
+    // Helper map variables to feed assistant fields
+    function renderActivePlateDetails(plate) {
+      if (!plate) return;
+
+      plateTitle.textContent = plate.title;
+      plateScoreBadge.textContent = "Satiety: " + (plate.satietyScore || "9/10");
+      plateMetaHunger.textContent = plate.hungerLevel;
+      plateMetaGoal.textContent = plate.goal;
+      plateDescription.textContent = plate.description;
+
+      // Update portions widgets nicely
+      visualVeggieTxt.textContent = plate.visualPortions.vegetables || "Fibers & Volume";
+      visualProteinTxt.textContent = plate.visualPortions.protein || "High-Quality Protein";
+      visualGrainTxt.textContent = plate.visualPortions.grains || "Whole energy grains";
+    }
+
+    // Allow user to return to workspace creator
+    navToPlannerBtn.addEventListener('click', () => {
+      routerTransition('screen-workflow');
+    });
+
+    // 4. Settings Profiler Actions
+    settingsProfileForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const updatedSettings = {
+        displayName: settingsNameInput.value,
+        appTheme: settingsThemeSelect.value,
+        dietaryExclude: settingsExcludesSelect.value,
+        googleLinked: settingsGlinkCheckbox.checked,
+        hapticFeedback: settingsHapticCheckbox.checked
+      };
+
+      try {
+        const res = await fetch('/api/settings', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(updatedSettings)
+        });
+
+        if (res.ok) {
+          const ret = await res.json();
+          // Render header changes
+          state.userProfile.displayName = updatedSettings.displayName;
+          headerUserName.textContent = updatedSettings.displayName;
+          sessionStorage.setItem('ample_user_name', updatedSettings.displayName);
+          alert("✓ Kitchen profile configurations adjusted successfully!");
+        }
+      } catch (er) {
+        alert("Profile save issue.");
+      }
+    });
+
+    // 5. Read Memory history diary and display items in Diary dashboard
+    async function renderHistoryDiary() {
+      memoryHistoryList.innerHTML = `
+        <div class="text-center py-6 text-brand-textMuted text-xs">
+          <svg class="animate-spin h-5 w-5 mx-auto text-brand-accent mb-2" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+          </svg>
+          Re-reading durable plate list...
+        </div>
+      `;
+
+      try {
+        const response = await fetch('/api/memory');
+        if (!response.ok) throw new Error("Could not retrieve JSON diary plates database elements");
+
+        const historyItems = await response.json();
+        state.plateHistory = historyItems;
+
+        if (historyItems.length === 0) {
+          memoryHistoryList.innerHTML = `
+            <div class="p-6 bg-brand-surface border border-dashed border-brand-border rounded-2xl text-center text-xs text-brand-textMuted font-sans">
+              No comforting meals recorded in your diary yet. Tap "Plate Planner" below to formulate your first dish template!
+            </div>
+          `;
+          return;
+        }
+
+        memoryHistoryList.innerHTML = "";
+        historyItems.forEach(item => {
+          const dtStr = new Date(item.timestamp).toLocaleDateString([], { month: 'short', day: 'numeric', hour: '2-digit', minute:'2-digit' });
+          const cardHtml = `
+            <div class="p-4 bg-brand-surface rounded-2xl border border-brand-border flex flex-col gap-2 transition hover:border-brand-accent/40 cursor-pointer" onclick="loadPreviousPlateToAssistant('${item.id}')">
+              <div class="flex items-start justify-between gap-1">
+                <div>
+                  <h4 class="font-serif font-bold text-white text-sm hover:text-brand-accent transition inline-block">${item.title}</h4>
+                  <span class="text-[10px] text-brand-textMuted block">Saved: ${dtStr}</span>
+                </div>
+                <div class="px-2 py-0.5 bg-brand-card text-brand-accent font-mono text-[10px] rounded shrink-0 font-bold border border-brand-border">
+                  ${item.satietyScore.split(" ")[0] || "9/10"}
+                </div>
+              </div>
+              <p class="text-[11px] text-brand-textMuted leading-normal line-clamp-2">${item.description}</p>
+              <div class="flex items-center justify-between text-[9px] text-brand-accent uppercase font-bold tracking-wider pt-1 border-t border-brand-border/40">
+                <span>Craving: ${item.craving}</span>
+                <span class="text-white hover:underline">Inspect Plate &rarr;</span>
+              </div>
+            </div>
+          `;
+          memoryHistoryList.innerHTML += cardHtml;
+        });
+
+      } catch (err) {
+        console.error("Diary list fetch error: ", err);
+        memoryHistoryList.innerHTML = `
+          <div class="p-4 text-center text-xs text-red-400 font-sans border border-rose-900 border-dashed rounded-xl">
+            Could not fetch persistent diary history values. File operations are resolving or database is syncing.
+          </div>
+        `;
+      }
+    }
+
+    // Allow user to click any item from history to load back into Assistant view
+    window.loadPreviousPlateToAssistant = function(plateId) {
+      const match = state.plateHistory.find(p => p.id === plateId);
+      if (match) {
+        renderActivePlateDetails(match);
+        routerTransition('screen-assistant');
+      }
+    };
+
+    // Initialize kitchen defaults on startup
+    async function loadSettingsOnBoot() {
+      try {
+        const response = await fetch('/api/settings');
+        if (response.ok) {
+          const settings = await response.json();
+          state.userProfile.displayName = settings.displayName;
+          settingsNameInput.value = settings.displayName;
+          settingsThemeSelect.value = settings.appTheme;
+          settingsExcludesSelect.value = settings.dietaryExclude;
+          settingsGlinkCheckbox.checked = settings.googleLinked;
+          settingsHapticCheckbox.checked = settings.hapticFeedback;
+          
+          if (state.userSignedIn) {
+            headerUserName.textContent = settings.displayName;
+          }
+        }
+      } catch (e) {
+        // quiet fail
+      }
+    }
+
+    // Trigger basic boot variables
+    loadSettingsOnBoot();
+
+    // Default seed render for active assistant display until custom generation occurs
+    const initialSeedPlate = {
+      title: "Slow-Simmered Tomato & White Bean Stew",
+      hungerLevel: "Ready for a full meal",
+      goal: "Warm & comforting",
+      description: "1/2 plate of warm stew filled with rich tomato-herb broth, soft wilted kale, and roasted garlic. 1/4 plate of creamy white cannellini beans for rich fiber and plant protein. 1/4 plate of grilled, thick-sliced sourdough bread brushed with extra virgin olive oil to absorb the luxurious broth.",
+      visualPortions: {
+        vegetables: "50% Greens & Savory Tomato Broth Base",
+        protein: "25% Simmered Cannellini Kidney Beans",
+        grains: "25% Charcoal-Grilled Sourdough toast Slice"
+      },
+      satietyScore: "9.5/10",
+      craving: "warm hearty stew"
+    };
+    renderActivePlateDetails(initialSeedPlate);
+  </script>
+</body>
+</html>
