@@ -1,0 +1,218 @@
+{
+  "missionId": "ep_mtfuv40x",
+  "idea": "food app for overweight people with a google sign in",
+  "brand": {
+    "name": "Ample",
+    "tagline": "No shame. No counting. Just better plates in one click.",
+    "audience": "Busy adults tired of guilt-tripping diet apps who want a friction-free way to plan satisfying, weight-conscious meals.",
+    "tone": [
+      "Empathetic",
+      "Nourishing",
+      "Uncomplicated"
+    ],
+    "visualConcept": "Warm Hearth: Soft, organic clay and oatmeal tones paired with rich olive green, featuring oversized, friendly typography and zero-friction Google-only entry portals.",
+    "layout": "A single-scroll landing page starting with a massive, warm hero section featuring a prominent 'Sign in with Google' button, followed by a side-by-side comparison of 'The Guilt Cycle' vs 'The Ample Way', ending with a clean, interactive meal-builder preview.",
+    "palette": {
+      "background": "#FAF6F0",
+      "surface": "#F0E6D8",
+      "primary": "#2A4B3C",
+      "accent": "#D35400",
+      "text": "#1E1B18"
+    },
+    "creativeNotes": [
+      "Implement a seamless, single-tap Google Sign-In button that immediately transitions the hero section into a personalized dashboard mockup without page reload.",
+      "Use fluid, organic SVG shapes and micro-interactions on food cards to make selection feel tactile and satisfying rather than clinical.",
+      "Ensure AAA accessibility contrast ratios on all text elements, prioritizing large, highly-readable serif headings for a premium, editorial feel."
+    ]
+  },
+  "mvp": {
+    "name": "Ample",
+    "workspaceLabel": "Ample Plate Builder",
+    "experience": {
+      "archetype": "mobile",
+      "device": "mobile",
+      "navigationStyle": "bottom",
+      "density": "comfortable",
+      "typeStyle": "serif",
+      "radius": "soft",
+      "motif": "Warm Hearth"
+    },
+    "eyebrow": "The Anti-Diet Plate Builder",
+    "headline": "No shame. No counting. Just better plates in one click.",
+    "subheadline": "Skip the tracking. Gather around a warmer way to eat. Build your perfect plate in one click with a nourishing, stress-free meal planner designed for satisfying, hearth-cooked volume without the psychological toll of calorie tracking.",
+    "palette": {
+      "background": "#FAF6F4",
+      "surface": "#F3EAE3",
+      "primary": "#A63A2B",
+      "accent": "#E07A5F",
+      "text": "#261C19"
+    },
+    "googleCapabilities": [
+      {
+        "service": "gemini",
+        "label": "Satiety-First Plate Generator",
+        "rationale": "Generates personalized, shame-free plate compositions and visual portion guides based on current hunger levels and cravings, eliminating calorie counting.",
+        "primaryScreen": 2,
+        "config": {
+          "assistantRole": "An empathetic, nourishing culinary guide that builds satisfying, balanced plates focusing on volume, protein, and fiber, evoking the warmth and comfort of a home-cooked, nourishing red-hearth kitchen without mentioning calories or macros.",
+          "mapQuery": "",
+          "locationQuery": "",
+          "origin": "",
+          "destination": "",
+          "calendarTitle": "",
+          "analyticsLabel": "",
+          "targetLanguage": "",
+          "analysisMode": "both",
+          "speechPrompt": ""
+        }
+      }
+    ],
+    "screens": [
+      {
+        "label": "Welcome",
+        "type": "dashboard",
+        "title": "Welcome to Ample's Hearth",
+        "description": "Skip the tracking. Sign in securely with Google One-Tap to step into a warm, shame-free kitchen where satisfying plates are built in seconds.",
+        "metrics": [
+          {
+            "label": "Onboarding Time",
+            "value": "3 Seconds"
+          },
+          {
+            "label": "Privacy Focus",
+            "value": "No Calorie Counting"
+          }
+        ],
+        "items": [
+          {
+            "title": "Continue with Google",
+            "detail": "One-click secure sign-in to instantly bypass onboarding and sync your personalized plate preferences.",
+            "status": "Recommended",
+            "meta": "Google Secure Auth",
+            "value": "Sign In"
+          }
+        ]
+      },
+      {
+        "label": "One-Click Plan",
+        "type": "workflow",
+        "title": "Hearthside Plate Planner",
+        "description": "No calculations, just comfort. Tap your current hunger level to scale your perfect plate instantly with the warmth of a home-cooked meal.",
+        "metrics": [
+          {
+            "label": "Scaling Speed",
+            "value": "Instant"
+          }
+        ],
+        "items": [
+          {
+            "title": "Peckish",
+            "detail": "Light, satisfying bite to tide you over.",
+            "status": "Light Volume",
+            "meta": "Satiety 6/10",
+            "value": "Select Peckish"
+          },
+          {
+            "title": "Ready to Eat",
+            "detail": "Standard balanced plate focusing on volume and protein.",
+            "status": "Balanced Volume",
+            "meta": "Satiety 8/10",
+            "value": "Select Balanced"
+          },
+          {
+            "title": "Starving",
+            "detail": "High-volume, fiber-rich plate to satisfy deep hunger safely.",
+            "status": "Max Volume",
+            "meta": "Satiety 10/10",
+            "value": "Select Starving"
+          }
+        ]
+      },
+      {
+        "label": "Build Plate",
+        "type": "assistant",
+        "title": "The Hearth Assistant",
+        "description": "Tell us what you're craving or what's in your pantry. We'll design a satisfying, balanced plate with the comforting warmth of a red-hearth kitchen.",
+        "metrics": [
+          {
+            "label": "Satiety Focus",
+            "value": "High Volume"
+          },
+          {
+            "label": "Mindset",
+            "value": "No Counting"
+          }
+        ],
+        "items": [
+          {
+            "title": "Slow-Simmered Tomato & White Bean Stew",
+            "detail": "1/2 plate rich tomato-herb broth & wilted greens, 1/4 plate creamy white beans, 1/4 plate crusty sourdough with a drizzle of olive oil.",
+            "status": "Balanced",
+            "meta": "Satiety Score: 9.5/10",
+            "value": ""
+          },
+          {
+            "title": "Roasted Red Pepper & Lentil Bowl",
+            "detail": "Generous bed of roasted peppers, zucchini, and spinach, topped with warm spiced lentils and a dollop of creamy garlic tahini.",
+            "status": "Comforting",
+            "meta": "Satiety Score: 9/10",
+            "value": ""
+          }
+        ]
+      }
+    ],
+    "workflow": {
+      "title": "Generate Your Next Plate",
+      "description": "Select your current state. We'll handle the portion scaling instantly.",
+      "fields": [
+        {
+          "label": "What are you craving?",
+          "type": "text",
+          "placeholder": "e.g., warm pasta, fresh crunchy salad, savory chicken"
+        },
+        {
+          "label": "Current Hunger Level",
+          "type": "select",
+          "placeholder": "",
+          "options": [
+            "Lightly peckish",
+            "Ready for a full meal",
+            "Extremely hungry (need high volume)"
+          ]
+        },
+        {
+          "label": "Primary Goal",
+          "type": "select",
+          "placeholder": "",
+          "options": [
+            "Warm & comforting",
+            "Fresh & energizing",
+            "Quick & minimal prep"
+          ]
+        }
+      ],
+      "buttonLabel": "Build My Plate",
+      "successTitle": "Plate Built!",
+      "successMessage": "Your balanced plate has been scaled for optimal satiety. Automatically transitioning to your Assistant screen with your new plate loaded!"
+    },
+    "googleCapability": {
+      "service": "gemini",
+      "label": "Satiety-First Plate Generator",
+      "rationale": "Generates personalized, shame-free plate compositions and visual portion guides based on current hunger levels and cravings, eliminating calorie counting.",
+      "primaryScreen": 2,
+      "config": {
+        "assistantRole": "An empathetic, nourishing culinary guide that builds satisfying, balanced plates focusing on volume, protein, and fiber, evoking the warmth and comfort of a home-cooked, nourishing red-hearth kitchen without mentioning calories or macros.",
+        "mapQuery": "",
+        "locationQuery": "",
+        "origin": "",
+        "destination": "",
+        "calendarTitle": "",
+        "analyticsLabel": "",
+        "targetLanguage": "",
+        "analysisMode": "both",
+        "speechPrompt": ""
+      }
+    }
+  },
+  "revision": 3
+}
