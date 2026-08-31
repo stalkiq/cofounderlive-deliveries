@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rind — Metabolic Satiety Engine</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts for High-End Serif Typographies -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            rindBg: '#F9F6F0',
+            rindSurface: '#E6DCD3',
+            rindPrimary: '#2C3E2B',
+            rindAccent: '#D95032',
+            rindText: '#1C1C1C',
+          },
+          fontFamily: {
+            serif: ['"Playfair Display"', 'Georgia', 'serif'],
+            sans: ['"Plus Jakarta Sans"', 'system-ui', '-apple-system', 'sans-serif'],
+          },
+        }
+      }
+    }
+  </script>
+  
+  <style>
+    /* Editorial Layout Styling */
+    body {
+      background-color: #F9F6F0;
+      color: #1C1C1C;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    
+    .serif-text {
+      font-family: 'Playfair Display', Georgia, serif;
+    }
+    
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 4px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #F9F6F0;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #2C3E2B;
+    }
+
+    /* Animation effects */
+    .fade-in {
+      animation: fadeIn 0.4s ease-out forwards;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10s); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body class="h-full bg-rindBg flex flex-col justify-between items-center overflow-x-hidden">
+
+  <!-- Mobile Outer Frame Wrapper -->
+  <div class="w-full max-w-md h-full min-h-screen bg-rindBg flex flex-col relative text-rindText shadow-2xl border-x border-rindSurface/40">
+    
+    <!-- Editorial Journal Header -->
+    <header class="p-6 border-b border-rindSurface bg-rindBg sticky top-0 z-40 flex items-center justify-between">
+      <div>
+        <span class="text-[9px] tracking-[0.3em] uppercase font-bold text-rindAccent block">Metabolic Satiety Engine</span>
+        <h1 class="serif-text text-3xl font-bold tracking-tight text-rindPrimary">Rind</h1>
+      </div>
+      <div id="api-status-badge" class="flex items-center gap-1.5 px-2 py-0.5 border border-rindPrimary/20 text-[10px] tracking-wide uppercase font-semibold">
+        <span class="inline-block w-1.5 h-1.5 bg-rindAccent"></span>
+        <span id="api-status-text">Engine Local</span>
+      </div>
+    </header>
+
+    <!-- Main Dynamic Screen Content Scroll Container -->
+    <main class="flex-1 overflow-y-auto pb-24 px-5 pt-4">
+
+      <!-- ONBOARDING / ASSESSMENT SCREEN -->
+      <section id="screen-assessment" class="screen-view fade-in">
+        <div class="mb-4">
+          <span class="text-[10px] uppercase tracking-widest font-semibold text-rindAccent">Screen I / Baseline</span>
+          <h2 class="serif-text text-3xl font-bold text-rindPrimary mt-1">The Abundance Assessment</h2>
+          <p class="text-sm text-rindText/80 mt-1 lines-relaxed">
+            Calculate your baseline metabolic satiety index to discover how much more you should be eating to stabilize hunger hormones.
+          </p>
+        </div>
+
+        <!-- Metrics bar -->
+        <div class="grid grid-cols-2 gap-3 mb-6 bg-rindSurface p-4 border border-rindPrimary/20">
+          <div>
+            <span class="text-[9px] uppercase tracking-wider text-rindPrimary/70 block">Current Satiety Baseline</span>
+            <span id="current-satiety-val" class="serif-text text-2xl font-bold text-rindPrimary">42%</span>
+          </div>
+          <div>
+            <span class="text-[9px] uppercase tracking-wider text-rindPrimary/70 block">Target Abundance Index</span>
+            <span class="serif-text text-2xl font-bold text-rindAccent">85%</span>
+          </div>
+        </div>
+
+        <!-- Canvas morphing shape representing stomach physical / metabolic satiety status -->
+        <div class="mb-6 p-4 border border-rindSurface bg-rindBg flex flex-col items-center">
+          <span class="text-[10px] uppercase font-bold tracking-widest text-rindPrimary">Metabolic Hunger Geometry</span>
+          <p class="text-[11px] text-center text-rindText/60 mb-2">Adjusted dynamically based on your satiety and meal choices</p>
+          <canvas id="satiety-canvas" width="220" height="110" class="border-b border-rindSurface/60 bg-rindBg"></canvas>
+          <div class="flex justify-between w-full mt-1.5 px-3">
+            <span class="text-[10px] italic text-rindAccent">Jagged (Restriction Starvation)</span>
+            <span class="text-[10px] italic text-rindPrimary">Perfect Circle (Optimal Abundance)</span>
+          </div>
+        </div>
+
+        <!-- Form for the Assessment -->
+        <form id="assessment-form" class="space-y-4">
+          <div>
+            <label class="text-xs uppercase font-bold tracking-wider text-rindPrimary block mb-1">
+              Satiety Slider (Current Fullness Rating)
+            </label>
+            <select id="assess-satiety-slider" class="w-full bg-rindBg border border-rindPrimary p-3 text-sm focus:outline-none focus:border-rindAccent rounded-none">
+              <option value="Level 1-3: Chronic Starvation State">Level 1-3: Chronic Starvation State</option>
+              <option value="Level 4-6: Moderate Insulin Fluctuations">Level 4-6: Moderate Insulin Fluctuations</option>
+              <option value="Level 7-8: Solid Baseline Satiety">Level 7-8: Solid Baseline Satiety</option>
+              <option value="Level 9-10: Peak Metabolic Abundance">Level 9-10: Peak Metabolic Abundance</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="text-xs uppercase font-bold tracking-wider text-rindPrimary block mb-1">
+              Primary Dietary Pattern
+            </label>
+            <select id="assess-dietary-pattern" class="w-full bg-rindBg border border-rindPrimary p-3 text-sm focus:outline-none focus:border-rindAccent rounded-none">
+              <option value="Chronic Caloric Restriction (Low Calorie)">Chronic Caloric Restriction (Low Calorie)</option>
+              <option value="Low Carb / Ketogenic">Low Carb / Ketogenic</option>
+              <option value="Standard Modern Diet (Processed-Heavy)">Standard Modern Diet (Processed-Heavy)</option>
+              <option value="Whole Food Plant-Based">Whole Food Plant-Based</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="text-xs uppercase font-bold tracking-wider text-rindPrimary block mb-1">
+              Your Greatest Daily Struggle
+            </label>
+            <select id="assess-struggle" class="w-full bg-rindBg border border-rindPrimary p-3 text-sm focus:outline-none focus:border-rindAccent rounded-none">
+              <option value="Late-night cravings & snacking">Late-night cravings & snacking</option>
+              <option value="Energy crashes 2 hours after eating">Energy crashes 2 hours after eating</option>
+              <option value="Constant thoughts of food / food noise">Constant thoughts of food / food noise</option>
+              <option value="Inability to feel truly full">Inability to feel truly full</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="text-xs uppercase font-bold tracking-wider text-rindPrimary block mb-1">
+              Daily Fiber Target
+            </label>
+            <select id="assess-fiber" class="w-full bg-rindBg border border-rindPrimary p-3 text-sm focus:outline-none focus:border-rindAccent rounded-none">
+              <option value="Under 15g (Typical)">Under 15g (Typical)</option>
+              <option value="15g to 25g (Moderate)">15g to 25g (Moderate)</option>
+              <option value="25g to 40g (Optimal Abundance)">25g to 40g (Optimal Abundance)</option>
+              <option value="Unsure / Do not track">Unsure / Do not track</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="text-xs uppercase font-bold tracking-wider text-rindPrimary block mb-1">
+              Focus Whole Food Group
+            </label>
+            <select id="assess-focus" class="w-full bg-rindBg border border-rindPrimary p-3 text-sm focus:outline-none focus:border-rindAccent rounded-none">
+              <option value="Cruciferous Vegetables & Greens">Cruciferous Vegetables & Greens</option>
+              <option value="Clean Lean Proteins">Clean Lean Proteins</option>
+              <option value="Legumes & Resistant Starches">Legumes & Resistant Starches</option>
+              <option value="Healthy Fats & Seeds">Healthy Fats & Seeds</option>
+            </select>
+          </div>
+
+          <button id="btn-submit-assessment" type="submit" class="w-full bg-rindPrimary text-white py-3.5 mt-2 uppercase font-bold text-xs tracking-widest hover:bg-rindAccent transition-all rounded-none block">
+            Generate Satiety Profile
+          </button>
+        </form>
+
+        <!-- Success modal / detail section following submission -->
+        <div id="assessment-response" class="hidden mt-6 p-5 border-2 border-rindAccent bg-rindSurface/30 fade-in">
+          <span class="text-[10px] tracking-widest font-extrabold text-rindAccent block uppercase mb-1">Assessment Complete</span>
+          <h3 id="assess-success-title" class="serif-text text-xl font-bold text-rindPrimary">Success! Your Abundance Profile is Ready.</h3>
+          <p id="assess-success-message" class="text-sm mt-2 text-rindText/90 leading-relaxed">
+            Your Abundance Index is calculated at 42%. Your metabolic baseline indicates severe caloric restriction fatigue.
+          </p>
+          <div class="mt-4 border-t border-rindPrimary/20 pt-3 text-xs flex justify-between tracking-wide">
+            <strong>Recorded on server</strong>
+            <span id="assess-saved-time" class="text-rindAccent font-bold">Just Now</span>
+          </div>
+          <button id="btn-assess-to-planner" class="w-full border border-rindPrimary hover:bg-rindPrimary hover:text-white py-2.5 mt-4 uppercase font-bold text-[10px] tracking-widest transition-all rounded-none">
+            Head to Satiety Engine Plan →
+          </button>
+        </div>
+      </section>
+
+
+      <!-- MAIN WORKFLOW: CULINARY SATIETY PLANNER -->
+      <section id="screen-engine" class="screen-view hidden fade-in">
+        <div class="mb-4">
+          <span class="text-[10px] uppercase tracking-widest font-semibold text-rindAccent">Screen II / Engine</span>
+          <h2 class="serif-text text-3xl font-bold text-rindPrimary mt-1">Culinary Satiety Planner</h2>
+          <p class="text-sm text-rindText/80 mt-1">
+            Ask our culinary engine to transform your ingredients into high-volume, metabolically dense meals that optimize satiety.
+          </p>
+        </div>
+
+        <!-- Metrics indicators -->
+        <div class="grid grid-cols-2 gap-3 mb-6 bg-rindSurface p-4 border border-rindPrimary/20">
+          <div>
+            <span class="text-[9px] uppercase tracking-wider text-rindPrimary/70 block">Satiety Target State</span>
+            <span class="serif-text text-lg font-bold text-rindPrimary block">Optimal Volumetrics</span>
+          </div>
+          <div>
+            <span class="text-[9px] uppercase tracking-wider text-rindPrimary/70 block">Active Formula</span>
+            <span class="serif-text text-lg font-bold text-rindAccent block">GLP1-Activation</span>
+          </div>
+        </div>
+
+        <!-- Satiety Mapping Status Banner -->
+        <div class="p-3 bg-rindAccent/10 border border-rindAccent/30 mb-5 flex items-center justify-between text-xs">
+          <div>
+            <strong class="text-rindAccent block font-bold uppercase tracking-wider text-[10px]">Satiety Mapping Active</strong>
+            <span class="text-rindText/80">Input ingredients or cravings below.</span>
+          </div>
+          <span class="px-2 py-0.5 bg-rindAccent text-white font-semibold text-[9px] uppercase tracking-widest">Active</span>
+        </div>
+
+        <!-- Form and Ingredients Text input -->
+        <div class="border border-rindPrimary p-4 mb-6 bg-rindBg">
+          <span class="text-[10px] uppercase font-bold tracking-widest block mb-1 text-rindPrimary">Formulate Custom Menu</span>
+          
+          <div class="space-y-3 mt-2">
+            <div>
+              <label class="text-[11px] font-bold text-rindPrimary/80 uppercase block mb-0.5">Ingredients / Current Cravings</label>
+              <input id="engine-input-ingredients" type="text" placeholder="e.g. salmon, tenderstem broccoli, lemon, watercress" 
+                     class="w-full bg-rindBg border border-rindPrimary/50 p-2.5 text-sm focus:outline-none focus:border-rindAccent rounded-none">
+            </div>
+
+            <div>
+              <label class="text-[11px] font-bold text-rindPrimary/80 uppercase block mb-0.5">Focus Macro-Food Group</label>
+              <select id="engine-select-focus" class="w-full bg-rindBg border border-rindPrimary/50 p-2 text-sm rounded-none focus:outline-none">
+                <option value="Cruciferous Vegetables & Greens">Cruciferous Vegetables & Greens</option>
+                <option value="Clean Lean Proteins">Clean Lean Proteins</option>
+                <option value="Legumes & Resistant Starches">Legumes & Resistant Starches</option>
+                <option value="Healthy Fats & Seeds">Healthy Fats & Seeds</option>
+              </select>
+            </div>
+
+            <div class="grid grid-cols-2 gap-2">
+              <div>
+                <label class="text-[10px] font-bold text-rindPrimary/80 uppercase block mb-0.5">Dietary Rule</label>
+                <select id="engine-select-diet" class="w-full bg-rindBg border-rindPrimary/50 p-1.5 text-xs rounded-none focus:outline-none">
+                  <option value="Whole Food Plant-Based">Plant-Based</option>
+                  <option value="Chronic Caloric Restriction (Low Calorie)">Balanced Volume</option>
+                  <option value="Low Carb / Ketogenic">Low Carb Keto</option>
+                  <option value="Standard Modern Diet (Processed-Heavy)">Standard Modern</option>
+                </select>
+              </div>
+              <div>
+                <label class="text-[10px] font-bold text-rindPrimary/80 uppercase block mb-0.5">Target Deficit Fatigue</label>
+                <select id="engine-select-struggle" class="w-full bg-rindBg border border-rindPrimary/50 p-1.5 text-xs rounded-none focus:outline-none">
+                  <option value="Late-night cravings & snacking">Late-night snack</option>
+                  <option value="Energy crashes 2 hours after eating">Energy Crash</option>
+                  <option value="Constant thoughts of food / food noise">Food Noise</option>
+                  <option value="Inability to feel truly full">Cannot Feel Full</option>
+                </select>
+              </div>
+            </div>
+
+            <button id="btn-generate-recipe" class="w-full bg-rindAccent text-white py-3 uppercase font-bold text-xs tracking-widest hover:bg-rindPrimary transition-all rounded-none flex items-center justify-center gap-2">
+              <span id="spinner-loader" class="hidden inline-block w-4 h-4 border-2 border-white border-t-transparent animate-spin"></span>
+              Construct Satiety Plate
+            </button>
+          </div>
+        </div>
+
+        <!-- Recipe display structure - High-End Editorial Style -->
+        <div id="generated-recipe-wrapper" class="hidden border border-rindPrimary/30 bg-rindBg overflow-hidden fade-in">
+          <!-- Recipe Header banner -->
+          <div class="bg-rindPrimary text-white p-5">
+            <div class="flex justify-between items-start">
+              <span class="text-[9px] uppercase tracking-widest border border-white/30 px-1.5 py-0.5 font-bold">Rind Magazine Certified</span>
+              <span id="recipe-timestamp" class="text-[9px] opacity-80 uppercase tracking-widest">Just Now</span>
+            </div>
+            <h3 id="recipe-title" class="serif-text text-2xl font-bold mt-2 leading-tight">Charred Romanesco Crown & Basil Pistachio Gremo</h3>
+            <div class="flex items-center gap-4 mt-3 pt-3 border-t border-white/20 text-xs">
+              <div>
+                <span class="opacity-70 text-[9px] uppercase block">Satiety Quotient</span>
+                <strong id="recipe-score" class="text-sm">9.5/10</strong>
+              </div>
+              <div>
+                <span class="opacity-70 text-[9px] uppercase block">Prep Chronology</span>
+                <strong id="recipe-prep" class="text-sm">15 Mins Prep</strong>
+              </div>
+              <div>
+                <span class="opacity-70 text-[9px] uppercase block">Hydration Volume</span>
+                <strong id="recipe-volume" class="text-sm">Extremely High</strong>
+              </div>
+            </div>
+          </div>
+
+          <!-- Recipe Body -->
+          <div class="p-5 space-y-4">
+            <p id="recipe-description" class="serif-text italic text-sm text-rindText/90 leading-relaxed border-b border-rindSurface pb-3">
+              A towering fresh pinnacle of romanesco crowns a velvet lake of raw garlic gremolata. High volume cellular moisture works automatically to expand stretch receptors of your primary vagus nerve...
+            </p>
+
+            <!-- Bio-metrics -->
+            <div class="p-3 bg-rindSurface/50 text-[11px] space-y-1.5 border border-rindSurface">
+              <strong class="text-[10px] uppercase text-rindAccent block tracking-wider font-extrabold">Physiological Mechanism</strong>
+              <div class="grid grid-cols-2 gap-2">
+                <div><span class="opacity-70">Fiber:</span> <strong id="macro-fiber">14g Prebiotic</strong></div>
+                <div><span class="opacity-70">Protein:</span> <strong id="macro-protein">12g Organic</strong></div>
+              </div>
+              <div><span class="opacity-70">Gut Signal Trigger:</span> <span id="macro-signal" class="font-semibold text-rindPrimary">GLP-1 release from fermented short-chain fatty acids</span></div>
+            </div>
+
+            <!-- Ingredients -->
+            <div>
+              <h4 class="text-xs uppercase font-extrabold text-rindPrimary tracking-widest mb-1.5">Whole Ingredients Needed</h4>
+              <ul id="recipe-ingredients-list" class="list-disc list-inside text-xs space-y-1 text-rindText/90 pl-1">
+                <li>1 crown fresh romanesco broccoli</li>
+                <li>30g healthy green pistachios</li>
+                <li>Handful garden mint and fresh lemon squeeze</li>
+              </ul>
+            </div>
+
+            <!-- Masterclass Directions -->
+            <div>
+              <h4 class="text-xs uppercase font-extrabold text-rindPrimary tracking-widest mb-1.5">Preparation Masterclass</h4>
+              <ol id="recipe-instructions-list" class="list-decimal list-inside text-xs space-y-1.5 text-rindText/90 pl-1">
+                <li>Heat heavy cast iron until glowing...</li>
+                <li>Steam whole romanesco wedges with 1 drip of clean water...</li>
+                <li>Mound into wide organic bowls and decorate...</li>
+              </ol>
+            </div>
+
+            <!-- Architectural Rationale -->
+            <div class="p-4 border-l-2 border-rindAccent bg-rindSurface/20 text-xs italic">
+              <strong class="block uppercase font-bold text-rindPrimary tracking-wide not-italic mb-1 text-[10px]">Why This Crowds Out Industrial Urges</strong>
+              <span id="recipe-rationale">By elevating volume and crunch, you reset the stomach baseline volume without hunger anxiety.</span>
+            </div>
+
+            <div class="text-[10px] opacity-60 text-right mt-2 text-rindPrimary" id="recipe-source-badge">
+              Generation: Rule-based Offline Fallback Mode
+            </div>
+          </div>
+        </div>
+
+        <!-- History of Generated Recipes -->
+        <div class="mt-8 border-t border-rindSurface pt-5">
+          <h3 class="serif-text text-xl font-bold text-rindPrimary mb-3">Saved Satiety History</h3>
+          <div id="recipe-history-log" class="space-y-3">
+            <p class="text-xs italic text-rindText/60">No custom formulas created on server yet. Take control above.</p>
+          </div>
+        </div>
+      </section>
+
+
+      <!-- CURATED CATALOG / EDITORIAL LIBRARY, PLUS SETTINGS/HISTORY -->
+      <section id="screen-library" class="screen-view hidden fade-in">
+        <div class="mb-4">
+          <span class="text-[10px] uppercase tracking-widest font-semibold text-rindAccent">Screen III / Library</span>
+          <h2 class="serif-text text-3xl font-bold text-rindPrimary mt-1">The Abundant Table</h2>
+          <p class="text-sm text-rindText/80 mt-1 pb-1">
+            Premium, magazine-grade culinary inspiration featuring high-volume, structural whole foods.
+          </p>
+        </div>
+
+        <!-- Metrics block -->
+        <div class="grid grid-cols-2 gap-3 mb-6 bg-rindSurface p-4 border border-rindPrimary/20">
+          <div>
+            <span class="text-[9px] uppercase tracking-wider text-rindPrimary/70 block">Curated Food Guides</span>
+            <span class="serif-text text-2xl font-bold text-rindPrimary">48 Chapters</span>
+          </div>
+          <div>
+            <span class="text-[9px] uppercase tracking-wider text-rindPrimary/70 block">Avg Satiety Rating</span>
+            <span class="serif-text text-2xl font-bold text-rindAccent">9.2 / 10</span>
+          </div>
+        </div>
+
+        <!-- Curated Catalog Cards -->
+        <div class="space-y-4 mb-6">
+          
+          <!-- Guide Entry 1 -->
+          <div class="border border-rindPrimary/10 bg-rindBg p-4 hover:border-rindAccent transition-all cursor-pointer block" onclick="openEditorialDetail('romanesco')">
+            <div class="flex justify-between items-start">
+              <span class="font-bold text-[10px] text-rindAccent uppercase tracking-widest bg-rindAccent/10 px-1 py-0.5">Recipe Entry</span>
+              <span class="text-xs text-rindText/60 italic font-semibold">9.4 Satiety</span>
+            </div>
+            <h3 class="serif-text text-lg font-bold text-rindPrimary mt-1.5">Charred Romanesco & Pistachio Gremolata</h3>
+            <p class="text-xs text-rindText/80 line-clamp-2 mt-1">
+              A towering, deeply charred romanesco crown drizzled with a sharp, vibrant pistachio and wild mint gremolata.
+            </p>
+            <div class="flex justify-between items-center text-[10px] text-rindPrimary uppercase font-bold mt-3 pt-3 border-t border-rindSurface/50">
+              <span>Click to view recipe guide</span>
+              <span>15 mins prep</span>
+            </div>
+          </div>
+
+          <!-- Guide Entry 2 -->
+          <div class="border border-rindPrimary/10 bg-rindBg p-4 hover:border-rindAccent transition-all cursor-pointer block" onclick="openEditorialDetail('salmon')">
+            <div class="flex justify-between items-start">
+              <span class="font-bold text-[10px] text-rindAccent uppercase tracking-widest bg-rindAccent/10 px-1 py-0.5">Recipe Entry</span>
+              <span class="text-xs text-rindText/60 italic font-semibold">8.9 Satiety</span>
+            </div>
+            <h3 class="serif-text text-lg font-bold text-rindPrimary mt-1.5">Slow-Roasted Salmon in Wild Sorrel Broth</h3>
+            <p class="text-xs text-rindText/80 line-clamp-2 mt-1">
+              Slow-roasted, fat-rich king salmon collar submerged in a tart, mineral-dense wild sorrel and bone broth.
+            </p>
+            <div class="flex justify-between items-center text-[10px] text-rindPrimary uppercase font-bold mt-3 pt-3 border-t border-rindSurface/50">
+              <span>Click to view recipe guide</span>
+              <span>30 mins prep</span>
+            </div>
+          </div>
+
+          <!-- Guide Entry 3 -->
+          <div class="border border-rindPrimary/10 bg-rindBg p-4 hover:border-rindAccent transition-all cursor-pointer block" onclick="openEditorialDetail('science')">
+            <div class="flex justify-between items-start">
+              <span class="font-bold text-[10px] text-rindPrimary uppercase tracking-widest bg-rindSurface px-1 py-0.5">Science Dossier</span>
+              <span class="text-xs text-rindAccent italic font-semibold">Featured Guide</span>
+            </div>
+            <h3 class="serif-text text-lg font-bold text-rindPrimary mt-1.5">The Science of Volumetrics</h3>
+            <p class="text-xs text-rindText/80 line-clamp-2 mt-1">
+              The Uncompromising Truth: How crowding out industrial food resets your biological set point without starvation.
+            </p>
+            <div class="flex justify-between items-center text-[10px] text-rindPrimary uppercase font-bold mt-3 pt-3 border-t border-rindSurface/50">
+              <span>Click to read essay</span>
+              <span>5 min read</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pop up detail drawer inside/overlapping for editorial details -->
+        <div id="editorial-popup-drawer" class="hidden border-2 border-rindPrimary bg-rindBg p-5 mb-6 fade-in">
+          <div class="flex justify-between items-center border-b border-rindPrimary/20 pb-2">
+            <span id="popup-eyebrow" class="text-[9px] uppercase tracking-widest text-rindAccent font-bold">Rind Magazine Feature</span>
+            <button onclick="closeEditorialDrawer()" class="text-xs font-bold text-rindAccent uppercase tracking-wide">Close [X]</button>
+          </div>
+          <h3 id="popup-title" class="serif-text text-2xl font-bold mt-2 text-rindPrimary">Default Title</h3>
+          <p id="popup-body" class="text-xs text-rindText/90 leading-relaxed mt-2.5">
+            Default description text.
+          </p>
+          <div id="popup-content-block" class="mt-4 p-3 bg-rindSurface text-xs">
+            Secondary properties
+          </div>
+        </div>
+
+        <!-- History database tracker & system settings -->
+        <div class="border-t border-rindSurface pt-6 mt-8 space-y-6">
+          <div>
+            <h3 class="serif-text text-xl font-bold text-rindPrimary mb-2">The Durable Memory Ledger</h3>
+            <p class="text-xs text-rindText/70 leading-relaxed">
+              These records reside directly in a local JSON storage file on your backend. Perfect persistence.
+            </p>
+          </div>
+
+          <!-- History tab accordion for saved structures -->
+          <div class="space-y-4">
+            <div>
+              <button onclick="toggleAccordion('history-assessments')" class="w-full flex justify-between items-center p-3 border border-rindPrimary text-xs uppercase font-extrabold tracking-widest text-rindPrimary hover:bg-rindSurface">
+                <span>Completed Assessments (<span id="count-assessments">0</span>)</span>
+                <span>[Toggle]</span>
+              </button>
+              <div id="history-assessments" class="hidden border-x border-b border-rindPrimary p-3 space-y-2 bg-rindBg max-h-48 overflow-y-auto">
+                <p class="text-xs italic">No assessments submitted yet.</p>
+              </div>
+            </div>
+
+            <div>
+              <button onclick="toggleAccordion('history-plans')" class="w-full flex justify-between items-center p-3 border border-rindPrimary text-xs uppercase font-extrabold tracking-widest text-rindPrimary hover:bg-rindSurface">
+                <span>Saved Meal Recipes (<span id="count-plans">0</span>)</span>
+                <span>[Toggle]</span>
+              </button>
+              <div id="history-plans" class="hidden border-x border-b border-rindPrimary p-3 space-y-2 bg-rindBg max-h-48 overflow-y-auto">
+                <p class="text-xs italic">No culinary plans generated yet.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Configuration Settings Dashboard -->
+          <div class="bg-rindSurface p-4 border border-rindPrimary/20">
+            <span class="text-[10px] uppercase tracking-widest font-bold text-rindPrimary block mb-2">Engine Controls</span>
+            
+            <div class="space-y-3">
+              <div>
+                <label class="text-[10px] uppercase font-semibold text-rindText/80 block">Configure Daily Fiber Goal (g)</label>
+                <input id="settings-fiber-goal" type="number" value="30" class="w-full bg-rindBg p-2 border border-rindPrimary/30 text-xs focus:outline-none rounded-none mt-1">
+              </div>
+
+              <div>
+                <label class="text-[10px] uppercase font-semibold text-rindText/80 block">Gemini API Key Connection</label>
+                <div class="flex gap-2 mt-1">
+                  <input id="settings-api-key" type="password" value="MOCK_API_KEY_LOADED" disabled class="flex-1 bg-rindBg p-2 border border-rindPrimary/30 text-xs opacity-70 rounded-none">
+                  <button class="bg-rindPrimary text-white text-[9px] uppercase px-3 hover:bg-rindAccent rounded-none font-semibold cursor-not-allowed">Saved</button>
+                </div>
+                <small class="text-[9px] text-rindText/60 block mt-1">To change key, supply env var `GEMINI_API_KEY` on your backend host environment.</small>
+              </div>
+
+              <div class="flex gap-2 pt-2">
+                <button onclick="saveConfigSettings()" class="flex-1 bg-rindPrimary text-white text-[10px] uppercase font-bold py-2 hover:bg-rindAccent transition-all rounded-none">
+                  Commit Memory Update
+                </button>
+                <button onclick="resetDataStore()" class="bg-rindAccent/15 border border-rindAccent text-rindAccent text-[10px] uppercase font-bold px-3 py-2 hover:bg-rindAccent hover:text-white transition-all rounded-none">
+                  Reset DB
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Developer sandbox / metadata indicators -->
+          <div class="pt-2 text-center">
+            <span class="text-[9px] uppercase tracking-widest font-bold text-rindAccent block mb-1">DURABLE PATH</span>
+            <code class="text-[9px] bg-rindSurface px-1.5 py-0.5 block break-all font-mono">/data/memory.json</code>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Bottom Navigation Bar - Mobile Archetype Styled -->
+    <nav class="absolute bottom-0 inset-x-0 bg-rindPrimary text-white flex justify-around items-center border-t border-rindPrimary pt-1.5 pb-5 z-40">
+      
+      <!-- Tab 1: Assessment -->
+      <button onclick="switchTab('assessment')" id="nav-btn-assessment" class="flex flex-col items-center gap-1 opacity-100 py-1 transition-all text-rindAccent">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor" class="w-5.5 h-5.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6a7.5 7.5 0 1 0 7.5 7.5h-7.5V6Z" />
+          <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 10.5H21A7.5 7.5 0 0 0 13.5 3v7.5Z" />
+        </svg>
+        <span class="text-[10px] tracking-widest uppercase font-bold">Assessment</span>
+      </button>
+
+      <!-- Tab 2: Satiety Planner (Engine) -->
+      <button onclick="switchTab('engine')" id="nav-btn-engine" class="flex flex-col items-center gap-1 opacity-60 py-1 transition-all">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor" class="w-5.5 h-5.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 3.104v13.01c0 .614-.798.883-1.166.393l-4.003-5.335a.75.75 0 0 0-1.166-.01l-1.42 1.894a.75.75 0 0 0 .14 1.025l8.172 6.13a1.5 1.5 0 0 0 1.8 0l8.172-6.13a.75.75 0 0 0 .143-1.025l-1.42-1.894a.75.75 0 0 0-1.166.01l-4.003 5.336c-.368.49-1.166.22-1.166-.394V3.103a.75.75 0 0 0-1.5 0Z" />
+        </svg>
+        <span class="text-[10px] tracking-widest uppercase font-bold">Satiety Engine</span>
+      </button>
+
+      <!-- Tab 3: Curated Catalog (Library) -->
+      <button onclick="switchTab('library')" id="nav-btn-library" class="flex flex-col items-center gap-1 opacity-60 py-1 transition-all">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor" class="w-5.5 h-5.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 0 0 8.716-6.747M12 21a9.004 9.004 0 0 1-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 0 1 7.843 4.582M12 3a8.997 8.997 0 0 0-7.843 4.582m15.686 0A11.953 11.953 0 0 1 12 10.5c-2.998 0-5.74-.11-8.157-.318z" />
+        </svg>
+        <span class="text-[10px] tracking-widest uppercase font-bold">Abundant Table</span>
+      </button>
+
+    </nav>
+
+  </div>
+
+  <script src="/app.js"></script>
+</body>
+</html>
