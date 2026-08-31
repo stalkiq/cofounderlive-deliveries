@@ -1,0 +1,778 @@
+/* ==========================================================================
+   KOLEKTIF - TAP-TAP INSPIRED 2G STYLESHEET
+   ========================================================================== */
+
+:root {
+  --background: #F4EFEA;
+  --surface: #FFFFFF;
+  --primary: #1B365D;
+  --accent: #E0533C;
+  --text: #121212;
+  --border-thick: 3px;
+  --border-thin: 1.5px;
+  --shadow-color: rgba(18, 18, 18, 0.15);
+  --success-color: #2D6A4F;
+  --font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --transition-speed: 0.2s;
+}
+
+/* ==========================================================================
+   LOW-BANDWIDTH MODE STATE (Enforced with .low-bandwidth body class)
+   ========================================================================== */
+body.low-bandwidth-active {
+  --background: #FFFFFF;
+  --surface: #FFFFFF;
+  --primary: #000000;
+  --accent: #000000;
+  --text: #000000;
+  --shadow-color: transparent;
+  --success-color: #000000;
+  font-size: 0.95rem; /* Compact density */
+}
+
+/* Strip complex elements and transitions in low bandwidth mode */
+body.low-bandwidth-active * {
+  transition: none !important;
+  animation: none !important;
+  box-shadow: none !important;
+}
+
+body.low-bandwidth-active .metrics-grid,
+body.low-bandwidth-active .led-indicator,
+body.low-bandwidth-active .brand-banner {
+  display: none !important;
+}
+
+body.low-bandwidth-active .onboarding-screen .instruction-box {
+  background: #FFF !important;
+  border: var(--border-thin) solid #000 !important;
+}
+
+body.low-bandwidth-active .tap-tap-border-card {
+  border-width: var(--border-thick) !important;
+  background-color: #FFF !important;
+  border-color: #000 !important;
+}
+
+body.low-bandwidth-active .btn {
+  background-color: #000 !important;
+  color: #FFF !important;
+  border: var(--border-thick) solid #000 !important;
+  text-transform: uppercase;
+  font-weight: 900;
+}
+
+body.low-bandwidth-active .btn.outline {
+  background-color: #FFF !important;
+  color: #000 !important;
+}
+
+/* ==========================================================================
+   BASE & RESET STYLES
+   ========================================================================== */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-family);
+  background-color: #E8E2D9;
+  color: var(--text);
+  line-height: 1.4;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 10px;
+}
+
+/* Mobile Simulation Container */
+.mobile-frame {
+  width: 100%;
+  max-width: 480px;
+  background-color: var(--background);
+  border: var(--border-thick) solid #121212;
+  box-shadow: 6px 6px 0px #121212;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  min-height: 800px;
+  overflow-x: hidden;
+}
+
+/* ==========================================================================
+   GLOBAL HEADER (Inspired by traditional Haitian sign painting art)
+   ========================================================================== */
+.global-header {
+  background-color: var(--surface);
+  border-bottom: var(--border-thick) solid #121212;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.brand-zone {
+  position: relative;
+}
+
+.brand-banner {
+  background-color: var(--accent);
+  color: #FFFFFF;
+  font-size: 0.65rem;
+  font-weight: bold;
+  padding: 2px 6px;
+  border: var(--border-thin) solid #121212;
+  letter-spacing: 1px;
+  position: absolute;
+  top: -8px;
+  right: 0;
+  transform: rotate(2deg);
+}
+
+.logo {
+  font-size: 2rem;
+  font-weight: 900;
+  color: var(--primary);
+  letter-spacing: -1px;
+  line-height: 1;
+  text-transform: uppercase;
+  text-shadow: 1px 1px 0px var(--accent);
+}
+
+.tagline {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: rgb(80, 80, 80);
+}
+
+/* Bandwidth Switch */
+.bandwidth-control-wrapper {
+  background-color: var(--background);
+  border: var(--border-thin) solid #121212;
+  padding: 6px 10px;
+}
+
+.bandwidth-switch-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+}
+
+.bandwidth-switch-label .mode-text {
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 38px;
+  height: 20px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #CCC;
+  border: var(--border-thin) solid #121212;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 12px;
+  width: 12px;
+  left: 3px;
+  bottom: 2px;
+  background-color: #121212;
+}
+
+input:checked + .slider {
+  background-color: var(--accent);
+}
+
+input:checked + .slider:before {
+  transform: translateX(18px);
+  background-color: #FFFFFF;
+}
+
+/* Low-Bandwidth Alert Banner */
+.lb-banner {
+  background-color: #FFFF00;
+  color: #000;
+  font-size: 0.7rem;
+  font-weight: 800;
+  text-align: center;
+  padding: 6px;
+  border-bottom: var(--border-thin) solid #121212;
+}
+
+/* ==========================================================================
+   CARDS & SECTIONS
+   ========================================================================== */
+.app-body {
+  flex-grow: 1;
+  padding: 15px;
+  overflow-y: auto;
+  max-height: 580px;
+}
+
+/* Tap-Tap High Contrast Card with Bold Borders & Sharp Corners */
+.tap-tap-border-card {
+  background: var(--surface);
+  border: var(--border-thick) solid #121212;
+  padding: 15px;
+  margin-bottom: 15px;
+  position: relative;
+}
+
+.tap-tap-border-card.accent-border {
+  border-color: var(--accent);
+}
+
+.card-eyebrow {
+  font-size: 0.65rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 4px;
+  letter-spacing: 0.5px;
+}
+
+.hero-headline {
+  font-size: 1.35rem;
+  font-weight: 900;
+  line-height: 1.15;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+}
+
+.hero-subheadline {
+  font-size: 0.85rem;
+  color: rgb(50, 50, 50);
+}
+
+/* Metric Stats Blocks */
+.metrics-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.metric-card {
+  background-color: var(--surface);
+  border: var(--border-thin) solid #121212;
+  padding: 8px 12px;
+  display: flex;
+  flex-direction: column;
+}
+
+.metric-value {
+  font-size: 1.3rem;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.metric-label {
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #666;
+  margin-top: 4px;
+}
+
+.text-accent {
+  color: var(--accent);
+}
+
+/* Status Banners */
+.status-card {
+  background-color: var(--surface);
+  border: var(--border-thin) solid #121212;
+  padding: 10px;
+  margin-bottom: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+
+.sync-banner {
+  font-size: 0.75rem;
+}
+
+.sync-banner-content {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+}
+
+.led-indicator {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 1px solid #121212;
+  flex-shrink: 0;
+}
+
+.pulse-green {
+  background-color: #00FF00;
+}
+
+.pulse-yellow {
+  background-color: #FFA500;
+}
+
+/* Instruction Block */
+.instruction-box {
+  background-color: #FFFCEC;
+  border: var(--border-thin) dashed #121212;
+  padding: 12px;
+  margin-bottom: 15px;
+  font-size: 0.8rem;
+}
+
+.instruction-box h3 {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+  font-weight: 800;
+}
+
+.instruction-box ul {
+  padding-left: 15px;
+}
+
+.instruction-box li {
+  margin-bottom: 4px;
+}
+
+/* ==========================================================================
+   TIMELINE FEED ITEMS
+   ========================================================================== */
+.section-title {
+  font-size: 1rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  border-bottom: 2px solid #121212;
+  padding-bottom: 2px;
+  letter-spacing: 0.3px;
+}
+
+.alerts-list-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.feed-item {
+  background-color: var(--surface);
+  border: var(--border-thin) solid #121212;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  position: relative;
+}
+
+.feed-item.urgent-item {
+  border-left: 6px solid var(--accent);
+}
+
+.feed-item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.feed-title {
+  font-size: 0.9rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: var(--primary);
+  line-height: 1.15;
+}
+
+.feed-badge {
+  font-size: 0.6rem;
+  font-weight: 900;
+  background-color: #121212;
+  color: #FFF;
+  padding: 1px 5px;
+  text-transform: uppercase;
+}
+
+.feed-badge.urgent-badge {
+  background-color: var(--accent);
+}
+
+.feed-detail {
+  font-size: 0.8rem;
+  color: #333;
+}
+
+.feed-item-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #555;
+  border-top: 1px dashed rgb(200, 200, 200);
+  padding-top: 4px;
+  margin-top: 2px;
+}
+
+.meta-zone {
+  color: var(--accent);
+}
+
+/* ==========================================================================
+   FORMS, BUTTONS & SELECTS
+   ========================================================================== */
+.form-group {
+  margin-bottom: 12px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  font-family: var(--font-family);
+  font-size: 0.85rem;
+  padding: 8px;
+  background-color: var(--surface);
+  border: var(--border-thin) solid #121212;
+  border-radius: 0;
+  outline: none;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  border-color: var(--accent);
+  background-color: #FFF;
+}
+
+/* Template Suggestions Tags */
+.template-selector {
+  margin-bottom: 12px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+}
+
+.selector-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+}
+
+.tag-selector {
+  background-color: #E2DCD5;
+  border: 1px solid #121212;
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 2px 6px;
+  cursor: pointer;
+}
+
+.tag-selector:hover {
+  background-color: #121212;
+  color: #FFF;
+}
+
+/* BUTTONS */
+.btn {
+  font-family: var(--font-family);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 15px;
+  font-size: 0.8rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  border: var(--border-thin) solid #121212;
+  border-radius: 0;
+  text-align: center;
+  transition: background-color var(--transition-speed), color var(--transition-speed);
+}
+
+.btn-primary {
+  background-color: var(--primary);
+  color: #FFFFFF;
+}
+
+.btn-primary:active {
+  background-color: #121212;
+}
+
+.btn-block {
+  display: flex;
+  width: 100%;
+}
+
+.btn-compact {
+  padding: 6px 10px;
+  font-size: 0.7rem;
+}
+
+.accent-bg {
+  background-color: var(--accent) !important;
+}
+
+.outline {
+  background-color: transparent;
+  color: #121212;
+}
+
+.outline:hover {
+  background-color: #121212;
+  color: #FFF;
+}
+
+/* ==========================================================================
+   COMPRESSOR RESULT WORKSPACE
+   ========================================================================== */
+.compression-result-box {
+  background-color: #FFFCEC;
+  border-color: var(--success-color);
+  margin-top: 15px;
+}
+
+.result-box-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.result-badge-logo {
+  font-size: 0.65rem;
+  font-weight: 900;
+  background-color: var(--success-color);
+  color: white;
+  padding: 2px 6px;
+  text-transform: uppercase;
+}
+
+.saving-green {
+  color: var(--success-color);
+  font-size: 0.75rem;
+  font-weight: 900;
+}
+
+.compiled-message-box {
+  background: white;
+  border: var(--border-thin) solid #121212;
+  padding: 10px;
+  margin-bottom: 8px;
+}
+
+.compressed-text-view {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text);
+  word-wrap: break-word;
+}
+
+.character-counter-zone {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.7rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.safe-status {
+  color: var(--success-color);
+}
+
+.compress-actions-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+/* ==========================================================================
+   SUCCESS OVERLAY/PANE
+   ========================================================================== */
+.success-screen-box {
+  background-color: #EDF7ED;
+  border-color: var(--success-color);
+  padding: 20px;
+  text-align: center;
+}
+
+.success-icon-banner {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+}
+
+.success-screen-box h3 {
+  font-size: 1.1rem;
+  margin-bottom: 8px;
+  font-weight: 900;
+  text-transform: uppercase;
+  color: var(--success-color);
+}
+
+.success-screen-box p {
+  font-size: 0.8rem;
+  color: #333;
+  margin-bottom: 15px;
+}
+
+.success-action-center {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* ==========================================================================
+   DEBUG MEMORY PANEL
+   ========================================================================== */
+.settings-profile-info {
+  font-size: 0.8rem;
+  margin-bottom: 10px;
+}
+
+.settings-profile-info p {
+  margin-bottom: 4px;
+}
+
+.system-debug-logs {
+  background-color: #F8F9FA;
+  margin-top: 15px;
+}
+
+.log-intro {
+  font-size: 0.75rem;
+  color: #666;
+  margin-bottom: 10px;
+}
+
+.refresh-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.json-code-box {
+  background-color: #121212;
+  color: #00FF00;
+  font-family: monospace;
+  font-size: 0.65rem;
+  padding: 10px;
+  overflow-x: auto;
+  max-height: 180px;
+  border: var(--border-thin) solid #121212;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+/* ==========================================================================
+   BOTTOM APP CO NAVIGATION TABS
+   ========================================================================== */
+.bottom-nav {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  background-color: var(--surface);
+  border-top: var(--border-thick) solid #121212;
+  margin-top: auto;
+}
+
+.nav-tab {
+  background: transparent;
+  border: none;
+  border-right: var(--border-thin) solid #121212;
+  padding: 10px 4px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  cursor: pointer;
+  color: #555;
+}
+
+.nav-tab:last-child {
+  border-right: none;
+}
+
+.nav-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+}
+
+.svg-inline {
+  width: 100%;
+  height: 100%;
+}
+
+.nav-label {
+  font-size: 0.6rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+/* Active tab highlights */
+.nav-tab.active-tab {
+  background-color: var(--background);
+  color: var(--primary);
+}
+
+.nav-tab.active-tab .nav-icon {
+  color: var(--accent);
+}
+
+/* Utilities */
+.hidden {
+  display: none !important;
+}
+
+.badge {
+  font-size: 0.6rem;
+  font-weight: 900;
+  background-color: var(--accent);
+  color: white;
+  padding: 2px 6px;
+  text-transform: uppercase;
+}
