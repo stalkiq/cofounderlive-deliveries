@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="ht">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kolektif MVP — Port-au-Prince Coordination</title>
+  <link rel="stylesheet" href="app.css">
+</head>
+<body>
+
+  <!-- MOBILE CONTAINER TO SIMULATE DEVICE WITH BOTTOM NAVIGATION -->
+  <div class="mobile-frame">
+
+    <!-- GLOBAL HEADER (Tap-Tap Inspired Style) -->
+    <header class="global-header">
+      <div class="brand-zone">
+        <span class="brand-banner">TAP-TAP READY</span>
+        <h1 class="logo">KOLEKTIF</h1>
+        <p class="tagline">Pòtoprens • 2G Kominikasyon</p>
+      </div>
+
+      <!-- Prominent CSS-only styled Toggle Switch for Low-Bandwidth Mode -->
+      <div class="bandwidth-control-wrapper">
+        <label class="bandwidth-switch-label" for="bandwidth-toggle">
+          <span class="mode-text">2G SEVÈ (Low-Bandwidth)</span>
+          <div class="switch">
+            <input type="checkbox" id="bandwidth-toggle">
+            <span class="slider"></span>
+          </div>
+        </label>
+      </div>
+    </header>
+
+    <!-- LOW-BANDWIDTH ACTIVE BANNER -->
+    <div id="low-bandwidth-banner" class="lb-banner hidden">
+      ⚠️ LOW-BANDWIDTH MODE ACTIF — Se sèlman tèks ak fòmilè k'ap chaje pou minimize done.
+    </div>
+
+    <!-- MAIN INTERACTIVE APP CONTAINER -->
+    <main class="app-body">
+
+      <!-- ============================================== -->
+      <!-- SCREEN 0: ONBOARDING (Durable Setup Flow) -->
+      <!-- ============================================== -->
+      <section id="screen-onboarding" class="screen onboarding-screen">
+        <div class="tap-tap-border-card accent-border">
+          <div class="card-eyebrow">KOLEKTIF MVP</div>
+          <h2 class="hero-headline">Byenveni nan Kolektif 🇭🇹</h2>
+          <p class="hero-subheadline">Koneksyon dirèk ak rapid pou kominote Pòtoprens la. Sove lavi lakay nou nan moman ijans.</p>
+        </div>
+
+        <div class="instruction-box">
+          <h3>Poukisa Kolektif spesyal?</h3>
+          <ul>
+            <li>⚡ <strong>Ekonomize Done:</strong> Fè pou kadav rezo 2G. Chaje vit nan tout sikonstans.</li>
+            <li>📥 <strong>Kach lokal:</strong> Sove rapò ou sou telefòn lan menm lè rezo tonbe, l'ap senkronize lè gen siyal.</li>
+            <li>📻 <strong>Konpresyon SMS:</strong> Gemini ka ede'w pi byen rasanble enfòmasyon yo an fòma kout pou radyo oubyen SMS.</li>
+          </ul>
+        </div>
+
+        <div class="onboarding-form tap-tap-border-card">
+          <h3>Kreye Pwofil ou kòm Lidè Lokal</h3>
+          <div class="form-group">
+            <label for="onboard-name">Non konplè / Kontak prensipal</label>
+            <input type="text" id="onboard-name" placeholder="E.g., Jean-Pierre Laguerre" required value="Jean-Pierre Laguerre">
+          </div>
+          <div class="form-group">
+            <label for="onboard-role">Wòl Kominotè</label>
+            <select id="onboard-role">
+              <option value="Animatè Kominotè">Animatè Kominotè (Community Coordinator)</option>
+              <option value="Lidè Relijye / Legliz">Lidè Relijye / Legliz (Church/Religious Leader)</option>
+              <option value="Repòtè Radyo">Repòtè Radyo (Community Radio Broadcaster)</option>
+              <option value="Sitwayen Angaje">Sitwayen Angaje (Active Neighborhood Resident)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="onboard-zone">Zòn kote w'ap travay</label>
+            <select id="onboard-zone">
+              <option value="Delmas">Delmas (Delmas)</option>
+              <option value="Pétion-Ville">Pétion-Ville (Pétion-Ville)</option>
+              <option value="Champ de Mars">Champ de Mars (Champ de Mars)</option>
+              <option value="Carrefour">Carrefour (Carrefour)</option>
+              <option value="Cité Soleil">Cité Soleil (Cité Soleil)</option>
+            </select>
+          </div>
+
+          <button id="btn-complete-onboarding" class="btn btn-primary accent-bg btn-block">
+            KÒMANSE ITILIZE KOLEKTIF &rarr;
+          </button>
+        </div>
+      </section>
+
+      <!-- ============================================== -->
+      <!-- SCREEN 1: FIL ALÈT (FEED & TIMELINE LISTING) -->
+      <!-- ============================================== -->
+      <section id="screen-feed" class="screen hidden">
+        <div class="screen-header">
+          <h2>Kolektif Live Alerts</h2>
+          <p class="screen-description">Alèt ak resous moun rapòte dirèkteman nan zòn yo. Anrejistre de fason offline pou aksè prese.</p>
+        </div>
+
+        <!-- Metric badges -->
+        <div class="metrics-grid">
+          <div class="metric-card">
+            <span class="metric-value" id="val-active-alerts">14</span>
+            <span class="metric-label">Alèt Aktif</span>
+          </div>
+          <div class="metric-card">
+            <span class="metric-value text-accent" id="val-water-points">8 Aktif</span>
+            <span class="metric-label">Pwen Aksè Dlo</span>
+          </div>
+        </div>
+
+        <!-- Sync Controls and Offline Status -->
+        <div class="sync-banner status-card">
+          <div class="sync-banner-content">
+            <div class="led-indicator pulse-green" id="network-led"></div>
+            <span id="sync-status">Siyal rezo OK. Tout done senkronize ak kat jeyografik lòt moun.</span>
+          </div>
+          <button id="btn-manual-sync" class="btn btn-compact outline">Fòse Senk </button>
+        </div>
+
+        <!-- Time-line Feed Container -->
+        <div class="feed-timeline">
+          <h3 class="section-title">Fil Alèt Kominote</h3>
+          <div id="alerts-list-container" class="alerts-list-container">
+            <!-- Dynamic and Hardcoded alerts from product spec render here -->
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================== -->
+      <!-- SCREEN 2: KONPRESÈ (SMS DRAFT ASSISTANT - GEMINI CAPABILITY) -->
+      <!-- ============================================== -->
+      <section id="screen-compressor" class="screen hidden">
+        <div class="screen-header">
+          <h2>SMS &amp; Radio Draft Compressor</h2>
+          <p class="screen-description">Rada kominote te konn pèdi done nan mesaj byen long. Gemini ap tradui ak komprese rapò ki konplike yo an fòma kout &lt; 140 karaktè.</p>
+        </div>
+
+        <div class="metrics-grid">
+          <div class="metric-card">
+            <span class="metric-value">140 Chars</span>
+            <span class="metric-label">Limit maksimòm</span>
+          </div>
+          <div class="metric-card">
+            <span class="metric-value text-accent">98% done</span>
+            <span class="metric-label">Ekonomi bande</span>
+          </div>
+        </div>
+
+        <div class="guidelines-card tap-tap-border-card">
+          <div class="guidelines-header">
+            <strong>Kijan pou w' sèvi avèl:</strong>
+            <span class="badge">V1.0</span>
+          </div>
+          <p class="guidelines-detail">Ekri enfòmasyon ijans ou jwenn yo an Angle, Fransè oswa Kreyòl. Modèl entèlijans Kolektif la pral retire bri pou fè l' kout pou difizyon radyo oswa SMS dirèk.</p>
+        </div>
+
+        <div class="compressor-form">
+          <div class="form-group">
+            <label for="raw-report-input"><strong>1. Antre Rapò Ijans ki Long lan</strong></label>
+            <textarea id="raw-report-input" rows="5" placeholder="E.g., Gen yon gwo blokaj wout bò zòn Delmas 31 akòz anpil kras ak fatra ki soti nan lapli yè a. Blokaj sa anpeche otomobil yo pase nèt epi li poze danje sekirite. Pa pase bò la, chwazi lòt wout dekouvè..."></textarea>
+          </div>
+
+          <!-- Helper Template suggestions for speedy mock-up flow testing -->
+          <div class="template-selector">
+            <span class="selector-label">Egzanp rapid:</span>
+            <button class="tag-selector" data-text="Safe drinking water is available at Place Saint-Pierre. It is free code 22. Organized by youth and local volunteers. Water point open until 6:00 PM.">🚰 Dlo Saint-Pierre</button>
+            <button class="tag-selector" data-text="First aid items and general medical consultation triage available at Rue Capois health center. Operating with very restricted staff for emergencies. Contact cell +509-3224-9988.">🏥 Sante Rue Capois</button>
+          </div>
+
+          <div class="form-actions">
+            <button id="btn-compress-draft" class="btn btn-primary accent-bg btn-block">
+              ⚡ COMPRESE RAPÒ (Simile Gemini)
+            </button>
+          </div>
+
+          <!-- RESULT BLOCK -->
+          <div id="compression-result-card" class="compression-result-box tap-tap-border-card hidden">
+            <div class="result-box-header">
+              <span class="result-badge-logo">SMS Gemini Result</span>
+              <span id="result-saving-pct" class="saving-green">-90% characters</span>
+            </div>
+            
+            <div class="compiled-message-box">
+              <p id="compressed-text" class="compressed-text-view">ALÈT: Distribisyon dlo bò Plas Saint-Pierre louvri gratis jodi a. Pote bokit. Pou info rele +50934114422.</p>
+            </div>
+
+            <div class="character-counter-zone">
+              <span>Sif karaktè: <strong id="result-char-count">115</strong> / 140 Limit</span>
+              <span class="safe-status" id="counter-status">✅ Sifas SMS San Safe</span>
+            </div>
+
+            <div class="compress-actions-grid">
+              <button id="btn-copy-sms" class="btn btn-compact">Kopye Tèks</button>
+              <button id="btn-queue-from-compressor" class="btn btn-compact accent-bg">Voye nan fòm rapò</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================== -->
+      <!-- SCREEN 3: RAPÒTE (WORKFLOW FORM CREATION) -->
+      <!-- ============================================== -->
+      <section id="screen-report" class="screen hidden">
+        <div class="screen-header">
+          <h2>Voye Alèt Nèf (Submit Report Now)</h2>
+          <p class="screen-description">Ede rezo a rete fre. Antre enfòmasyon pi ba a, sistèm nan otomatikman kach li pou voye li byen fasil rapid lè siyal la retounen.</p>
+        </div>
+
+        <!-- Offline Auto-sync state notification box -->
+        <div class="storage-queue-status">
+          <strong>Kach Lokal Kolektif:</strong>
+          <span id="queue-pending-count" class="badge">0 Mwayen Anrejistre (Offline Queue)</span>
+        </div>
+
+        <form id="form-new-report" class="tap-tap-border-card main-workflow-card">
+          <div class="form-group">
+            <label for="report-category">Kategori (Category) *</label>
+            <select id="report-category" required>
+              <option value="" disabled selected>-- Chwazi Kategori --</option>
+              <option value="Dlo / Manje (Water / Food)">Dlo / Manje (Water / Food)</option>
+              <option value="Sante / Medikal (Health / Medical)">Sante / Medikal (Health / Medical)</option>
+              <option value="Sekirite / Wout (Security / Road Block)">Sekirite / Wout (Security / Road Block)</option>
+              <option value="Lòt (Other)">Lòt (Other)</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="report-location">Zòn / Katye (Neighborhood / Location) *</label>
+            <input type="text" id="report-location" placeholder="E.g., Delmas 33, Pòtoprens" required>
+          </div>
+
+          <div class="form-group">
+            <label for="report-description">Deskripsyon Kout (Short Description) *</label>
+            <textarea id="report-description" rows="3" placeholder="Antre enfòmasyon dezas oubyen èd la..." required></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="report-contact">Nimewo Kontak (Contact Number)</label>
+            <input type="text" id="report-contact" placeholder="E.g., +509 3444-5566">
+          </div>
+
+          <button type="submit" id="btn-submit-report" class="btn btn-primary btn-block">
+             Voye Alèt (Queue Alert)
+          </button>
+        </form>
+
+        <!-- Dynamic inline success response pane -->
+        <div id="report-success-pane" class="success-screen-box tap-tap-border-card hidden">
+          <div class="success-icon-banner">✅</div>
+          <h3 id="success-title">Alèt Anrejistre! (Alert Cached!)</h3>
+          <p id="success-message">Done sa yo sove dirèkteman sou telefòn ou. Kolektif ap pouse alèt la sou kat la osito telefòn lan detekte kèlkeswa ti rezo done.</p>
+          <div class="success-action-center">
+            <button id="btn-back-to-feed" class="btn btn-compact">Retounen nan Fil Alèt</button>
+            <button id="btn-another-report" class="btn btn-compact outline">Kreye Yon Lòt Rapò</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================== -->
+      <!-- SCREEN 4: HISTORY, LOCAL REGISTRY & MEMORY DEBUG -->
+      <!-- ============================================== -->
+      <section id="screen-settings" class="screen hidden">
+        <div class="screen-header">
+          <h2>Durable Memory &amp; System Settings</h2>
+          <p class="screen-description">Chèche kontwole jan Done yo mache anba-kapo a. Men vizibilite total sou depo lokal la ak sèvè-a.</p>
+        </div>
+
+        <div class="tap-tap-border-card">
+          <h3>Sistèm Done Kominikasyon</h3>
+          <div class="settings-profile-info">
+            <p><strong>Lidè Kominotè:</strong> <span id="settings-user-name">Jean-Pierre Laguerre</span></p>
+            <p><strong>Wòl Jeneral:</strong> <span id="settings-user-role">Animatè Kominotè</span></p>
+            <p><strong>Remak:</strong> Done pwofil sa kach sou navigatè w pou chak fwa ou voye nouvo alèt.</p>
+          </div>
+          <button id="btn-reset-onboarding" class="btn btn-compact outline text-accent">Debloque Onboarding / Efase Profil</button>
+        </div>
+
+        <div class="system-debug-logs tap-tap-border-card">
+          <h3>GET / POST API Memwa (Durable Engine Monitor)</h3>
+          <p class="log-intro">Tcheke an tan reyèl ki done JSON ki anrejistre andedan sèvè-a `/api/memory` pou Kolektif Command:</p>
+          
+          <div class="refresh-controls">
+            <span>Durable Memory Records Count: <strong id="debug-record-count">0</strong></span>
+            <button id="btn-refresh-memory-debug" class="btn btn-compact">Konfime ak Refresh</button>
+          </div>
+
+          <pre id="json-memory-viewer" class="json-code-box">{ "loading": "ap tann konfime..." }</pre>
+        </div>
+      </main>
+
+    <!-- BOTTOM GLOBAL NAVIGATION TABS BAR -->
+    <nav class="bottom-nav">
+      <button class="nav-tab active-tab" data-target="screen-feed">
+        <span class="nav-icon">
+          <!-- Bell inline SVG -->
+          <svg class="svg-inline" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+            <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+          </svg>
+        </span>
+        <span class="nav-label">Fil Alèt</span>
+      </button>
+
+      <button class="nav-tab" id="nav-tab-compressor" data-target="screen-compressor">
+        <span class="nav-icon">
+          <!-- Wand inline SVG -->
+          <svg class="svg-inline" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+          </svg>
+        </span>
+        <span class="nav-label">Konpresè</span>
+      </button>
+
+      <button class="nav-tab" data-target="screen-report">
+        <span class="nav-icon">
+          <!-- Plus Circular inline SVG -->
+          <svg class="svg-inline" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="8" x2="12" y2="16"></line>
+            <line x1="8" y1="12" x2="16" y2="12"></line>
+          </svg>
+        </span>
+        <span class="nav-label">Rapòte</span>
+      </button>
+
+      <button class="nav-tab" data-target="screen-settings">
+        <span class="nav-icon">
+          <!-- Settings inline SVG -->
+          <svg class="svg-inline" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="3"></circle>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+          </svg>
+        </span>
+        <span class="nav-label">Debug / Lis</span>
+      </button>
+    </nav>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
