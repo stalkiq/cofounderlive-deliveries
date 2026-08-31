@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pace — Calendar-Calibrated Weight Loss for Remote Professionals</title>
+  <!-- Google Fonts: Playfair Display (Serif) & Inter (Sans) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            paceBg: '#FDFBF7',
+            paceSurface: '#F5EFEB',
+            pacePrimary: '#1C1E1F',
+            paceAccent: '#E05A47',
+            paceText: '#2B2523',
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            serif: ['Playfair Display', 'serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background-color: #FDFBF7;
+      color: #2B2523;
+      font-family: 'Inter', sans-serif;
+    }
+    .serif-heavy {
+      font-family: 'Playfair Display', serif;
+    }
+    .nudge-card {
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .nudge-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 24px -10px rgba(224, 90, 71, 0.15);
+    }
+    /* Scrollbar Styling */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #F5EFEB;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #E05A47;
+      border-radius: 3px;
+    }
+  </style>
+</head>
+<body class="min-h-screen text-paceText antialiased flex flex-col md:flex-row">
+
+  <!-- ================= SIDEBAR NAVIGATION ================= -->
+  <aside id="sidebar-nav" class="hidden md:flex flex-col w-72 bg-paceSurface border-r border-[#E6DCD5] min-h-screen p-6 justify-between flex-shrink-0">
+    <div class="space-y-8">
+      <!-- App Brand Title -->
+      <div class="flex items-center space-x-3">
+        <div class="w-10 h-10 rounded-full bg-paceAccent flex items-center justify-center text-white font-serif text-xl font-bold italic shadow-md">P</div>
+        <div>
+          <h1 class="serif-heavy text-2xl font-bold tracking-tight text-pacePrimary">Pace</h1>
+          <p class="text-xs uppercase tracking-wider text-[#A49487] font-semibold">Calendar-Calibrated</p>
+        </div>
+      </div>
+
+      <!-- Main Navigation Menu -->
+      <nav class="space-y-2">
+        <p class="text-xs font-bold uppercase tracking-widest text-[#9C8F84] mb-3 px-3">Engine Screens</p>
+        
+        <button onclick="switchScreen('onboarding')" class="nav-btn flex items-center space-x-3 w-full px-4 py-3 rounded-lg text-left text-sm font-medium transition duration-200 hover:bg-[#EBE2DA]" data-screen="onboarding">
+          <svg class="w-5 h-5 text-paceAccent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-2-2m0 0l2-2m-2 2h8m-9 4h10a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+          <span>1. Onboarding Mock</span>
+        </button>
+
+        <button onclick="switchScreen('myday')" class="nav-btn flex items-center space-x-3 w-full px-4 py-3 rounded-lg text-left text-sm font-medium transition duration-200 hover:bg-[#EBE2DA]" data-screen="myday">
+          <svg class="w-5 h-5 text-paceAccent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 3V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+          <span>2. My Day (Calendar)</span>
+        </button>
+
+        <button onclick="switchScreen('ai')" class="nav-btn flex items-center space-x-3 w-full px-4 py-3 rounded-lg text-left text-sm font-medium transition duration-200 hover:bg-[#EBE2DA]" data-screen="ai">
+          <svg class="w-5 h-5 text-paceAccent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>
+          <span>3. Pace AI Copilot</span>
+        </button>
+
+        <button onclick="switchScreen('calibrate')" class="nav-btn flex items-center space-x-3 w-full px-4 py-3 rounded-lg text-left text-sm font-medium transition duration-200 hover:bg-[#EBE2DA]" data-screen="calibrate">
+          <svg class="w-5 h-5 text-paceAccent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path></svg>
+          <span>4. Calibrate Settings</span>
+        </button>
+
+        <button onclick="switchScreen('history')" class="nav-btn flex items-center space-x-3 w-full px-4 py-3 rounded-lg text-left text-sm font-medium transition duration-200 hover:bg-[#EBE2DA]" data-screen="history">
+          <svg class="w-5 h-5 text-paceAccent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+          <span>5. Durable History Logs</span>
+        </button>
+      </nav>
+    </div>
+
+    <!-- Saved Profile Card Overview in Sidebar -->
+    <div class="bg-paceBg p-4 rounded-xl border border-[#E6DCD5] space-y-2">
+      <p class="text-xs font-bold uppercase tracking-wider text-[#A49487]">Current Calibration</p>
+      <div class="space-y-1">
+        <div class="text-xs font-bold text-pacePrimary text-ellipsis overflow-hidden" id="sb-account">No Google Sync Yet</div>
+        <div class="text-xs text-[#E05A47]" id="sb-goal">Select Goal</div>
+        <div class="text-xs text-slate-500 italic" id="sb-freq">Frequency</div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Mobile Floating Header Navigation -->
+  <header class="md:hidden w-full bg-paceSurface p-4 border-b border-[#E6DCD5] flex justify-between items-center sticky top-0 z-50">
+    <div class="flex items-center space-x-2">
+      <div class="w-8 h-8 rounded-full bg-paceAccent flex items-center justify-center text-white font-serif font-bold italic">P</div>
+      <span class="font-serif text-xl font-bold text-pacePrimary">Pace</span>
+    </div>
+    <div class="flex space-x-1">
+      <button onclick="switchScreen('onboarding')" class="p-2 text-xs font-semibold bg-[#EBE2DA] rounded" title="Onboarding">Onboarding</button>
+      <button onclick="switchScreen('myday')" class="p-2 text-xs font-semibold bg-[#EBE2DA] rounded" title="My Day">MyDay</button>
+      <button onclick="switchScreen('ai')" class="p-2 text-xs font-semibold bg-[#EBE2DA] rounded" title="AI">AI</button>
+      <button onclick="switchScreen('calibrate')" class="p-2 text-xs font-semibold bg-[#EBE2DA] rounded" title="Calibrate">Calibrate</button>
+      <button onclick="switchScreen('history')" class="p-2 text-xs font-semibold bg-[#EBE2DA] rounded" title="History">Logs</button>
+    </div>
+  </header>
+
+
+  <!-- ================= MAIN CONTENT container ================= -->
+  <main class="flex-grow p-4 md:p-8 max-w-6xl mx-auto w-full space-y-8 flex flex-col justify-start">
+    
+    <!-- Top Notification Banner -->
+    <div id="toast-banner" class="hidden bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-xl p-4 flex items-center justify-between shadow-sm animate-fade-in-down">
+      <div class="flex items-center space-x-3">
+        <svg class="w-5 h-5 text-emerald-600" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+        <span class="text-sm font-medium" id="toast-message">Database synchronized successfully!</span>
+      </div>
+      <button onclick="toggleToast('', false)" class="text-emerald-500 hover:text-emerald-800 text-xs font-bold font-mono">✕</button>
+    </div>
+
+    <!-- ================= SCREEN 1: ONBOARDING ================= -->
+    <section id="screen-onboarding" class="screen-panel opacity-0 translate-y-4 transition duration-300 pointer-events-none absolute hidden">
+      <div class="max-w-2xl mx-auto space-y-8 py-4">
+        <div class="space-y-4 text-center md:text-left">
+          <span class="text-xs uppercase tracking-widest text-[#E05A47] font-bold">The Zero-Friction Weight Loss Engine</span>
+          <h2 class="serif-heavy text-4xl md:text-5xl font-bold text-pacePrimary leading-tight">Sustainable weight loss, calibrated to your calendar.</h2>
+          <p class="text-lg text-[#5F5146] font-light leading-relaxed">
+            We integrate directly with Google Workspace to deliver automated, context-aware habit nudges that fit between your meetings. No complex food logging. No extra cognitive load.
+          </p>
+        </div>
+
+        <!-- Google Onboarding Simulator Card -->
+        <div class="bg-paceSurface border border-[#E6DCD5] rounded-2xl p-6 md:p-8 shadow-sm space-y-6">
+          <div class="flex items-center justify-between border-b border-[#E6DCD5] pb-4">
+            <span class="text-xs font-bold uppercase tracking-wider text-[#9C8F84]">Onboarding Phase 1</span>
+            <div class="flex space-x-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-paceAccent"></span>
+              <span class="w-2.5 h-2.5 rounded-full bg-[#E6DCD5]"></span>
+              <span class="w-2.5 h-2.5 rounded-full bg-[#E6DCD5]"></span>
+            </div>
+          </div>
+
+          <div class="space-y-4">
+            <h3 class="serif-heavy text-xl font-bold">Connect your Google Workspace</h3>
+            <p class="text-sm text-[#78695C]">
+              Pace scans your upcoming meetings to identify natural transition blocks, allowing us to safely schedule 10-minute movement breaks or meal transitions. Your data stays private.
+            </p>
+          </div>
+
+          <!-- Interactive Google Identity Sign In Mock -->
+          <div class="space-y-4">
+            <button id="google-login-btn" onclick="triggerGoogleLoginSimulation()" class="w-full flex items-center justify-center space-x-3 bg-white border border-[#DDD0C6] hover:border-[#C4B2A5] text-pacePrimary font-medium py-3 px-4 rounded-xl transition duration-150 relative overflow-hidden group shadow-sm">
+              <svg class="w-5 h-5 flex-shrink-0" viewBox="0 0 24 24">
+                <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22c-.65-.6-1.12-1.39-1.35-2.22v.46z"/>
+                <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+              </svg>
+              <span id="google-btn-text">Sign in with Google</span>
+              
+              <!-- 2-Second Simulated Spinner Overlay -->
+              <div id="google-spinner" class="absolute inset-0 bg-white/95 flex items-center justify-center space-x-2 opacity-0 pointer-events-none transition duration-200">
+                <div class="w-5 h-5 border-2 border-paceAccent border-t-transparent rounded-full animate-spin"></div>
+                <span class="text-xs font-semibold tracking-wide text-paceAccent">Connecting your Google Calendar...</span>
+              </div>
+            </button>
+            <p class="text-center text-xs text-slate-500 italic">No actual password or Google credentials required for this sandbox app. Simple simulation!</p>
+          </div>
+
+          <!-- Quick Config options inside is connected -->
+          <div id="onboarding-setup-form" class="hidden pt-4 border-t border-[#E6DCD5] space-y-4 animate-fade-in-up">
+            <h4 class="text-xs font-bold uppercase tracking-wider text-[#A49487]">Connected Account: <span id="onboarding-email" class="text-emerald-700">user@workspace.com</span></h4>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-xs font-bold uppercase mb-1">Primary Goal Target</label>
+                <select id="onboard-goal" class="w-full bg-white border border-[#E6DCD5] p-2 rounded-lg text-sm">
+                  <option value="Sustainable Weight Loss" selected>Sustainable Weight Loss (Calorie Deficit focus)</option>
+                  <option value="Maintain Energy & Focus">Maintain Energy & Focus (Blood Sugar focus)</option>
+                  <option value="Build Lean Muscle">Build Lean Muscle (Anabolic state focus)</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-xs font-bold uppercase mb-1">Nudge Cadence</label>
+                <select id="onboard-freq" class="w-full bg-white border border-[#E6DCD5] p-2 rounded-lg text-sm">
+                  <option value="Gentle (Only during 30m+ gaps)">Gentle (Only long gap reminders)</option>
+                  <option value="Balanced (Between major meetings)" selected>Balanced (Standard transitions)</option>
+                  <option value="Active (Every transition period)">Active (Micro-breaks & stretch triggers)</option>
+                </select>
+              </div>
+            </div>
+            <button onclick="saveOnboardingAndProceed()" class="w-full bg-paceAccent hover:bg-[#C94D3B] text-white font-semibold py-3 px-4 rounded-xl transition duration-150">
+              Submit & Calibrate My Schedule
+            </button>
+          </div>
+        </div>
+
+        <!-- Dynamic Investor Sandbox Preview Banner -->
+        <div class="p-6 bg-[#FAF3EE] border border-[#ECD9CE] rounded-xl flex items-start space-x-4">
+          <div class="text-paceAccent text-2xl font-serif">“</div>
+          <div class="space-y-1">
+            <p class="text-xs font-bold uppercase tracking-wider text-[#C45E4D]">Live Interactive Sandbox Notice</p>
+            <p class="text-sm text-[#70554A]">
+              We have pre-configured three primary screens syncing with local durable memory storage (located at <code>data/memory.json</code>). When you select setting preferences or tick off completed habits, changes instantly save and persist across server reboots.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= SCREEN 2: MY DAY (CALENDAR VIEW) ================= -->
+    <section id="screen-myday" class="screen-panel opacity-0 translate-y-4 transition duration-300 pointer-events-none absolute hidden">
+      <div class="space-y-8">
+        
+        <!-- Screen Header -->
+        <div class="border-b border-[#E6DCD5] pb-4 flex flex-col md:flex-row md:items-end justify-between gap-4">
+          <div>
+            <span class="text-xs uppercase tracking-widest text-paceAccent font-bold">Your Google Meet Sync</span>
+            <h2 class="serif-heavy text-3xl font-bold text-pacePrimary">Calendar-Calibrated Routine</h2>
+            <p class="text-sm text-[#78695C]">Your Google Calendar meetings synchronized with automated, low-friction habit windows.</p>
+          </div>
+          <!-- Metrics -->
+          <div class="flex items-center space-x-4">
+            <div class="bg-paceSurface text-center px-4 py-2 rounded-xl border border-[#E6DCD5]">
+              <div class="text-xs text-slate-500 uppercase tracking-widest">Meeting Free Time</div>
+              <div class="text-xl font-bold text-pacePrimary" id="metric-free">4.5 hrs</div>
+            </div>
+            <div class="bg-paceSurface text-center px-4 py-2 rounded-xl border border-[#E6DCD5]">
+              <div class="text-xs text-slate-500 uppercase tracking-widest">Hydration Target</div>
+              <div class="text-xl font-bold text-paceAccent" id="metric-hydrate">3/4 Liters</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          
+          <!-- Calendar Timeline (2/3 width) -->
+          <div class="lg:col-span-2 space-y-4">
+            <div class="flex justify-between items-center mb-2">
+              <span class="text-xs font-bold uppercase tracking-widest text-[#9C8F84]">Chronological Timeline (Today)</span>
+              <!-- Toggle to show custom generated nudges -->
+              <span class="text-xs text-emerald-700 bg-emerald-50 px-2 py-1 rounded font-semibold flex items-center">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-1.5 animate-pulse"></span>
+                Autosynced Live
+              </span>
+            </div>
+
+            <!-- This div is populated dynamically with Meetings & Habit Nudges -->
+            <div id="timeline-list" class="space-y-3">
+              <!-- Dynamic items will load here -->
+            </div>
+
+            <!-- Custom Nudge Addition Tool directly inside My Day flow -->
+            <div class="bg-paceSurface p-4 rounded-xl border border-[#EBE2DA] space-y-3">
+              <h4 class="text-xs font-bold uppercase tracking-wider text-paceAccent">Quick Inject: Custom Calender-Gap Nudge</h4>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-3 pb-2">
+                <input type="text" id="custom-nudge-title" placeholder="e.g., Pace Nudge: High-Protein Greek Yogurt" class="bg-white px-3 py-2 border border-[#DDD0C6] rounded text-xs">
+                <input type="text" id="custom-nudge-time" placeholder="e.g., 11:30 AM - 11:45 AM" class="bg-white px-3 py-2 border border-[#DDD0C6] rounded text-xs">
+              </div>
+              <div class="flex items-center justify-between">
+                <select id="custom-nudge-type" class="bg-white p-1 border border-[#DDD0C6] rounded text-xs">
+                  <option value="Nutrition • Calibrated for Snack">Nutrition (30g Protein Target)</option>
+                  <option value="Movement • Recovery Break">Movement (Post-Meeting Transition)</option>
+                  <option value="Hydration • Recovery Tracker">Hydration Nudge</option>
+                </select>
+                <button onclick="injectCustomNudge()" class="bg-pacePrimary hover:bg-black text-white text-xs font-bold py-2 px-4 rounded transition duration-150">
+                  Inject into Day (Saves to Memory)
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Quick Actions & Daily Coach Card (1/3 width) -->
+          <div class="space-y-6">
+            <!-- Calorie Coach box -->
+            <div class="bg-pacePrimary text-white rounded-2xl p-6 space-y-4 shadow-md">
+              <div class="space-y-1">
+                <span class="text-xs uppercase tracking-wider text-paceAccent font-bold">Goal Strategy Coach</span>
+                <h3 class="serif-heavy text-lg font-bold" id="coach-goal-status">Weight Loss Calibrator</h3>
+              </div>
+              <p class="text-xs text-slate-300 leading-relaxed font-light">
+                Metabolic efficiency is controlled by insulin transitions. By scheduling high-protein windows directly into client-call-free blocks, we prevent cognitive sugar crashes.
+              </p>
+              
+              <div class="border-t border-slate-700 pt-4 space-y-2">
+                <div class="flex justify-between items-center text-xs">
+                  <span class="text-slate-400">Pushed Habit Completion</span>
+                  <span class="font-bold text-paceAccent" id="habit-progress-pct">0% (0/0)</span>
+                </div>
+                <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
+                  <div class="bg-paceAccent h-full transition-all duration-300" id="habit-progress-bar" style="width: 0%"></div>
+                </div>
+              </div>
+
+              <!-- Clickable Action -->
+              <button onclick="switchScreen('ai')" class="w-full bg-white text-pacePrimary hover:bg-slate-100 py-2.5 rounded-lg text-xs font-bold text-center transition">
+                Ask Pace AI to Readjust Today
+              </button>
+            </div>
+
+            <!-- Habit Tracker Checklist Panel (Persistence Proof) -->
+            <div class="bg-[#FBFDFB] border border-emerald-200 rounded-xl p-5 space-y-3">
+              <div class="flex items-center space-x-2">
+                <div class="w-2.5 h-2.5 bg-emerald-500 rounded-full"></div>
+                <h4 class="text-xs font-bold uppercase tracking-wider text-emerald-800">Completed Habits (Stored in Memory)</h4>
+              </div>
+              <p class="text-xs text-slate-500 leading-relaxed">
+                Ticking off these items saves log entries into <code>POST /api/memory</code> database state. They will persist upon page refreshes!
+              </p>
+              <div class="space-y-2 pt-2" id="habit-log-checklist">
+                <!-- Checked-off habits read from GET /api/memory -->
+                <div class="text-xs text-slate-400 italic">No habits logged yet today. Complete recommendations on the left!</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= SCREEN 3: PACE AI (CONTEXT RECOMMENDATIONS) ================= -->
+    <section id="screen-ai" class="screen-panel opacity-0 translate-y-4 transition duration-300 pointer-events-none absolute hidden">
+      <div class="space-y-8">
+        
+        <!-- Screen Header -->
+        <div class="border-b border-[#E6DCD5] pb-4 flex flex-col md:flex-row md:items-end justify-between gap-4">
+          <div>
+            <span class="text-xs uppercase tracking-widest text-paceAccent font-bold">Pace Copilot Interface</span>
+            <h2 class="serif-heavy text-3xl font-bold text-pacePrimary">Context-Aware Recommendations</h2>
+            <p class="text-sm text-[#78695C]">Ask Pace to adjust your nutrition or movement plan based on meeting changes.</p>
+          </div>
+          <!-- Metrics -->
+          <div class="flex items-center space-x-4">
+            <div class="bg-paceSurface text-center px-4 py-2 rounded-xl border border-[#E6DCD5]">
+              <div class="text-xs text-slate-500 uppercase tracking-widest">Daily Calorie Target</div>
+              <div class="text-lg font-bold text-pacePrimary">1,850 kcal</div>
+            </div>
+            <div class="bg-paceSurface text-center px-4 py-2 rounded-xl border border-[#E6DCD5]">
+              <div class="text-xs text-slate-500 uppercase tracking-widest">Active Minutes Goal</div>
+              <div class="text-lg font-bold text-paceAccent">30 mins</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Chat + Active recommendations side by side -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          
+          <!-- Recommendations Cards list -->
+          <div class="space-y-4">
+            <h3 class="text-xs font-bold uppercase tracking-widest text-[#9C8F84]">Active Calendared Insights</h3>
+            
+            <div class="bg-[#FCFAF8] p-5 rounded-2xl border border-paceAccent/20 hover:border-paceAccent transition duration-150 space-y-2">
+              <div class="flex justify-between items-center">
+                <span class="text-xs font-bold uppercase tracking-widest text-[#A89482]">Nutrition • Calibrated for AM Focus</span>
+                <span class="text-xs font-bold text-paceAccent bg-paceAccent/10 px-2 py-0.5 rounded-full">Active Mode</span>
+              </div>
+              <h4 class="serif-heavy text-lg font-bold text-pacePrimary">Morning Protein Nudge</h4>
+              <p class="text-xs text-[#5C4F44] leading-relaxed">
+                Eat 30g protein before your 10:00 AM standup to sustain focus and prevent mid-morning stress-induced cortisol dips from causing snack cravings.
+              </p>
+              <div class="text-xs font-bold text-slate-500 flex justify-between items-center pt-2">
+                <span>Suggested: 9:00 AM</span>
+                <span class="italic text-slate-400">Calibrated to 9 AM blank slot</span>
+              </div>
+            </div>
+
+            <div class="bg-[#FCFAF8] p-5 rounded-2xl border border-dashed border-[#DFD4CC] transition duration-150 space-y-2">
+              <div class="flex justify-between items-center">
+                <span class="text-xs font-bold uppercase tracking-widest text-[#A89482]">Movement • Calibrated for PM Slump</span>
+                <span class="text-xs font-bold text-slate-500 bg-slate-100 px-2 py-0.5 rounded-full">Upcoming</span>
+              </div>
+              <h4 class="serif-heavy text-lg font-bold text-pacePrimary">Afternoon Walk Nudge</h4>
+              <p class="text-xs text-[#5C4F44] leading-relaxed">
+                A 15-minute brisk walk is scheduled during your 3:00 PM calendar gap. Posture adjustment triggers neural alertness while lowering glycemic storage load.
+              </p>
+              <div class="text-xs font-bold text-slate-500 flex justify-between items-center pt-2">
+                <span>Suggested: 3:00 PM (15m duration)</span>
+                <span class="italic text-[#E05A47]">Post planning sync</span>
+              </div>
+            </div>
+
+            <!-- Extra Dynamic Recommendations based on context database -->
+            <div class="p-6 bg-[#FAF3EE] border border-[#ECD9CE] rounded-xl text-xs space-y-2">
+              <h5 class="font-bold text-[#E05A47] uppercase leading-relaxed text-xs">Pace Calendar Copilot System Role Context:</h5>
+              <p class="italic text-slate-500 leading-relaxed font-serif">
+                "You are Pace, a warm, scientific, and deliberate health coach for busy remote professionals. You analyze Google Calendar schedules and provide highly actionable, low-friction nutrition and movement recommendations (nudges) that fit perfectly into meeting gaps."
+              </p>
+            </div>
+          </div>
+
+          <!-- Live Copilot Chat Sandbox -->
+          <div class="bg-paceSurface border border-[#E6DCD5] rounded-2xl p-6 flex flex-col space-y-4 h-[500px]">
+            <div class="border-b border-[#EBE2DA] pb-3 flex justify-between items-center">
+              <div>
+                <h3 class="serif-heavy text-md font-bold">Ask Pace Calendar Copilot</h3>
+                <p class="text-[10px] text-slate-500">Query modifications or ask questions directly related to today's schedule</p>
+              </div>
+              <button onclick="clearChatMemory()" class="text-xs text-rose-600 hover:underline">Clear Chat History</button>
+            </div>
+
+            <!-- Messages Window -->
+            <div id="chat-messages-container" class="flex-grow overflow-y-auto space-y-4 pr-1 text-xs">
+              <!-- Initial Welcome message -->
+              <div class="bg-white p-3 rounded-xl border border-[#E6DCD5] space-y-1">
+                <p class="font-bold text-paceAccent">Pace Calendar Copilot</p>
+                <p class="text-[#55493E]">
+                  Hello! I am Pace, your deliberate and warm health coach. I see your meetings are dense today. Try asking me "What should I eat before my sprint planning?" or water reminders, or how to handle gaps!
+                </p>
+              </div>
+            </div>
+
+            <!-- Message input form -->
+            <div class="flex space-x-2 pt-2 border-t border-[#EBE2DA]">
+              <input type="text" id="chat-user-input" placeholder="Type: 'How should I exercise today?'..." class="flex-grow bg-white border border-[#DDD0C6] p-2.5 rounded-xl text-xs outline-none focus:border-paceAccent transition" onkeydown="if(event.key === 'Enter') sendCopilotChatMessage()">
+              <button onclick="sendCopilotChatMessage()" class="bg-paceAccent hover:bg-[#C94D3B] text-white px-4 rounded-xl text-xs font-bold">
+                Send
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= SCREEN 4: CALIBRATE (WORKFLOW CONFIG) ================= -->
+    <section id="screen-calibrate" class="screen-panel opacity-0 translate-y-4 transition duration-300 pointer-events-none absolute hidden">
+      <div class="max-w-2xl mx-auto space-y-6">
+        
+        <!-- Header -->
+        <div class="border-b border-[#E6DCD5] pb-4">
+          <span class="text-xs uppercase tracking-widest text-[#E05A47] font-bold">Workspace Configuration</span>
+          <h2 class="serif-heavy text-3xl font-bold">Calibrate Your Daily Pace</h2>
+          <p class="text-sm text-[#78695C]">Tell us your primary health goal and how aggressively we should nudge you between meetings.</p>
+        </div>
+
+        <!-- Settings Setup Form -->
+        <div class="bg-paceSurface rounded-2xl border border-[#E6DCD5] p-6 md:p-8 space-y-6">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            
+            <div>
+              <label class="block text-xs font-bold uppercase tracking-wider text-pacePrimary mb-2">Primary Health Goal</label>
+              <select id="config-goal" class="w-full bg-white border border-[#DDD0C6] rounded-xl p-3 text-sm focus:outline-none focus:border-paceAccent transition">
+                <option value="Sustainable Weight Loss" selected>Sustainable Weight Loss</option>
+                <option value="Maintain Energy & Focus">Maintain Energy & Focus</option>
+                <option value="Build Lean Muscle">Build Lean Muscle</option>
+              </select>
+            </div>
+
+            <div>
+              <label class="block text-xs font-bold uppercase tracking-wider text-pacePrimary mb-2">Nudge Frequency</label>
+              <select id="config-freq" class="w-full bg-white border border-[#DDD0C6] rounded-xl p-3 text-sm focus:outline-none focus:border-paceAccent transition">
+                <option value="Gentle (Only during 30m+ gaps)">Gentle (Only during 30m+ gaps)</option>
+                <option value="Balanced (Between major meetings)" selected>Balanced (Between major meetings)</option>
+                <option value="Active (Every transition period)">Active (Every transition period)</option>
+              </select>
+            </div>
+
+            <div class="md:col-span-2">
+              <label class="block text-xs font-bold uppercase tracking-wider text-pacePrimary mb-2">Google Account Connection</label>
+              <div class="flex space-x-2">
+                <input type="text" id="config-email" placeholder="Sign in with Google" value="alex-professional@workspace-sync.com" class="flex-grow bg-white border border-[#DDD0C6] rounded-xl p-3 text-sm focus:outline-none focus:border-paceAccent transition font-mono">
+                <button onclick="triggerCalendarSyncAlert()" class="bg-pacePrimary hover:bg-black text-white text-xs font-bold px-4 rounded-xl transition">
+                  Verify Sync
+                </button>
+              </div>
+              <p class="text-[10px] text-slate-500 italic mt-1.5">Connected using OAuth Sandbox simulated authorization token.</p>
+            </div>
+
+          </div>
+
+          <button onclick="saveCalibrationForm()" class="w-full bg-[#E05A47] hover:bg-[#C94D3B] text-white font-bold py-3.5 px-4 rounded-xl shadow-md transition duration-150">
+            Sync & Calibrate
+          </button>
+        </div>
+
+        <!-- Success Block (Reveals upon calibration submit) -->
+        <div id="calibration-success-card" class="hidden bg-emerald-50 border border-emerald-200 p-6 rounded-2xl space-y-3 animate-fade-in-up">
+          <div class="flex items-center space-x-3 text-emerald-800">
+            <svg class="w-7 h-7 text-emerald-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            <h3 class="serif-heavy text-xl font-bold">Calendar Calibrated!</h3>
+          </div>
+          <p class="text-xs text-emerald-700 leading-relaxed pl-10">
+            Pace has successfully synced with your Google Calendar. We've mapped your meeting gaps and generated your first set of context-aware habit nudges. Check out the updated list on <strong>My Day (Calendar)</strong>.
+          </p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ================= SCREEN 5: HISTORICAL DATA & STORAGE AUDIT ================= -->
+    <section id="screen-history" class="screen-panel opacity-0 translate-y-4 transition duration-300 pointer-events-none absolute hidden">
+      <div class="space-y-8">
+        
+        <!-- Header -->
+        <div class="border-b border-[#E6DCD5] pb-4 flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
+          <div>
+            <span class="text-xs uppercase tracking-widest text-[#E05A47] font-bold">Auditing Durable memory</span>
+            <h2 class="serif-heavy text-3xl font-bold">Pace History & Database State</h2>
+            <p class="text-sm text-[#78695C]">Audit JSON memories stored inside persistent <code>POST/GET /api/memory</code> endpoint records.</p>
+          </div>
+          <button onclick="resetWholeDatabase()" class="bg-rose-50 hover:bg-rose-100 border border-rose-200 text-rose-700 px-3 py-1.5 rounded-lg text-xs font-bold transition">
+            Reset DB to Clean Slate
+          </button>
+        </div>
+
+        <!-- Weight Logger Tool (Durable Log proof) -->
+        <div class="bg-paceSurface border border-[#E6DCD5] rounded-xl p-5 space-y-4">
+          <div class="flex justify-between items-center">
+            <h3 class="serif-heavy text-lg font-bold">Durable Weight Trend Logger</h3>
+            <span class="text-xs font-mono uppercase bg-slate-200 px-2.5 py-0.5 rounded text-slate-700">Type: weightLog</span>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div>
+              <label class="block text-xs font-bold uppercase mb-1">Date Logged</label>
+              <input type="date" id="log-weight-date" class="w-full bg-white border border-[#DDD0C6] p-2 rounded text-xs" value="2026-08-31">
+            </div>
+            <div>
+              <label class="block text-xs font-bold uppercase mb-1">Weight Value (lbs)</label>
+              <input type="number" id="log-weight-val" value="196.2" step="0.1" class="w-full bg-white border border-[#DDD0C6] p-2 rounded text-xs">
+            </div>
+            <div class="flex items-end">
+              <button onclick="submitWeightLog()" class="w-full bg-paceAccent hover:bg-[#C94D3B] text-white text-xs font-bold p-2.5 rounded transition">
+                Save Weight Record to DB
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- History Content Display -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          
+          <!-- SQLite/JSON Live records list -->
+          <div class="space-y-4">
+            <h3 class="text-xs font-bold uppercase tracking-widest text-pacePrimary">Live Memory Logs (Fetched from API)</h3>
+            
+            <div class="bg-white border border-[#E6DCD5] rounded-xl divide-y divide-[#EBE2DA] max-h-[400px] overflow-y-auto" id="history-logs-feed">
+              <!-- Dynamically populated from memory.json -->
+              <p class="p-4 text-xs italic text-slate-400">Loading durable db files...</p>
+            </div>
+          </div>
+
+          <!-- Raw Memory JSON Inspection Panel (Ultimate Proof) -->
+          <div class="space-y-4">
+            <div class="flex justify-between items-center">
+              <h3 class="text-xs font-bold uppercase tracking-widest text-pacePrimary">Durable JSON payload debugger</h3>
+              <span class="text-xs font-semibold text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded">Active File Lock Mode</span>
+            </div>
+            <div class="bg-slate-900 text-slate-300 rounded-xl p-4 font-mono text-[10px] space-y-2 select-all h-[400px] overflow-y-auto">
+              <pre id="raw-json-inspector">Retrieving raw persistence memory...</pre>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Loader Script -->
+  <script src="/app.js"></script>
+</body>
+</html>
