@@ -1,0 +1,21 @@
+{
+  "name": "supercharged-society",
+  "version": "1.0.0",
+  "description": "The high-octane syndicate for elite automotive culture.",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "smoke:test": "node scripts/smoke-test.mjs",
+    "smoke": "node scripts/smoke-test.mjs",
+    "test": "npm run smoke"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  },
+  "devDependencies": {},
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "private": true
+}
