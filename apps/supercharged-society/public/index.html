@@ -1,0 +1,1544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Supercharged Society // Command Center</title>
+  <!-- Google Fonts: Share Tech Mono and Rajdhani -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
+  <!-- Leaflet Map CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+  <!-- FontAwesome for technical/automotive icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <style>
+    /* Styling according to brand definition */
+    :root {
+      --background: #080D0A;
+      --surface: #121A15;
+      --primary: #00FF66;
+      --accent: #00E676;
+      --text: #F5F5F7;
+      --text-muted: #8A9A90;
+      --border: #233428;
+      --carbon-pattern: radial-gradient(circle, #1a251e 10%, transparent 11%), radial-gradient(circle, #1a251e 10%, transparent 11%);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--background);
+      color: var(--text);
+      font-family: 'Share Tech Mono', 'Courier New', monospace;
+      font-size: 14px;
+      line-height: 1.5;
+      overflow-x: hidden;
+      letter-spacing: 0.05em;
+    }
+
+    /* Subtlest scanlines overlay for high-octane technical feel */
+    body::before {
+      content: " ";
+      display: block;
+      position: fixed;
+      top: 0; left: 0; bottom: 0; right: 0;
+      background: linear-gradient(rgba(18, 26, 21, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
+      background-size: 100% 4px, 6px 100%;
+      z-index: 9999;
+      pointer-events: none;
+      opacity: 0.4;
+    }
+
+    /* Layout structure */
+    .app-container {
+      display: flex;
+      min-height: 100vh;
+      width: 100vw;
+    }
+
+    /* Sidebar Navigation panel matching workspace compact template with tactical borders */
+    .sidebar {
+      width: 280px;
+      background-color: var(--surface);
+      border-right: 2px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      flex-shrink: 0;
+      z-index: 100;
+    }
+
+    .brand-section {
+      padding: 24px 16px;
+      border-bottom: 2px solid var(--border);
+    }
+
+    .brand-eyebrow {
+      font-size: 10px;
+      color: var(--primary);
+      text-transform: uppercase;
+      font-weight: bold;
+      letter-spacing: 0.15em;
+      margin-bottom: 6px;
+    }
+
+    .brand-title {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 20px;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--text);
+      letter-spacing: 0.1em;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .brand-title span {
+      color: var(--primary);
+    }
+
+    .nav-list {
+      list-style: none;
+      padding: 16px 8px;
+      flex-grow: 1;
+    }
+
+    .nav-item {
+      margin-bottom: 8px;
+    }
+
+    .nav-link {
+      display: flex;
+      align-items: center;
+      padding: 12px 14px;
+      color: var(--text-muted);
+      text-decoration: none;
+      border: 1px solid transparent;
+      transition: all 0.2s ease;
+      cursor: pointer;
+      text-transform: uppercase;
+    }
+
+    .nav-link:hover {
+      background-color: rgba(0, 255, 102, 0.05);
+      color: var(--primary);
+      border-color: rgba(0, 255, 102, 0.15);
+    }
+
+    .nav-link.active {
+      color: var(--background);
+      background-color: var(--primary);
+      border-color: var(--primary);
+      font-weight: bold;
+    }
+
+    .nav-link i {
+      width: 24px;
+      font-size: 16px;
+    }
+
+    .sync-status-indicator {
+      padding: 16px;
+      border-top: 1px solid var(--border);
+      background-color: rgba(8, 13, 10, 0.5);
+    }
+
+    .status-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 6px;
+      font-size: 11px;
+    }
+
+    .status-lbl {
+      color: var(--text-muted);
+    }
+
+    .status-val {
+      color: var(--primary);
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .status-pulse {
+      width: 8px;
+      height: 8px;
+      background-color: var(--primary);
+      border-radius: 50%;
+      animation: blink 1.2s infinite alternate;
+    }
+
+    /* Main Workspace content viewport */
+    .viewport {
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      overflow-y: auto;
+    }
+
+    header {
+      background-color: var(--surface);
+      padding: 16px 24px;
+      border-bottom: 2px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-shrink: 0;
+    }
+
+    .page-title-spec {
+      font-size: 14px;
+      color: var(--primary);
+      text-transform: uppercase;
+    }
+
+    .time-telemetry {
+      color: var(--text-muted);
+      font-size: 12px;
+    }
+
+    /* View blocks */
+    .view-pane {
+      display: none;
+      padding: 24px;
+      flex-grow: 1;
+    }
+
+    .view-pane.active {
+      display: block;
+    }
+
+    /* Design system container helper styles - Mono/Sharp/Dense */
+    .grid-container {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 20px;
+    }
+
+    .card {
+      background-color: var(--surface);
+      border: 1px solid var(--border);
+      padding: 18px;
+      border-radius: 0; /* Sharp layout */
+      position: relative;
+    }
+
+    .card-title {
+      font-size: 12px;
+      color: var(--primary);
+      text-transform: uppercase;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 8px;
+      margin-bottom: 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      letter-spacing: 0.1em;
+    }
+
+    .card-subtitle {
+      font-size: 16px;
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+
+    /* Metrics Grid dashboard block */
+    .telemetry-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    .metric-widget {
+      background-color: var(--surface);
+      border: 1px solid var(--border);
+      padding: 12px 16px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 75px;
+      position: relative;
+    }
+
+    .metric-widget::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background-color: var(--primary);
+    }
+
+    .metric-lbl {
+      font-size: 10px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+
+    .metric-val {
+      font-size: 20px;
+      font-weight: bold;
+      color: #FFF;
+      align-self: flex-end;
+    }
+
+    /* SVG Tachometer */
+    .tachometer-display {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 15px;
+      background: radial-gradient(circle, #101c13 0%, var(--surface) 75%);
+      position: relative;
+    }
+
+    .tacho-svg {
+      width: 220px;
+      height: 220px;
+    }
+
+    .tacho-dial {
+      fill: none;
+      stroke: var(--border);
+      stroke-width: 6;
+      stroke-linecap: round;
+    }
+
+    .tacho-prog {
+      fill: none;
+      stroke: var(--primary);
+      stroke-width: 10;
+      stroke-dasharray: 440;
+      stroke-dashoffset: 440; /* We change this via JS */
+      transition: stroke-dashoffset 0.1s ease;
+      stroke-linecap: round;
+    }
+
+    .tacho-redline {
+      fill: none;
+      stroke: #FF3535;
+      stroke-width: 10;
+      stroke-dasharray: 440;
+      stroke-dashoffset: 350; /* fixed redline section */
+      opacity: 0.8;
+    }
+
+    .tacho-needle {
+      transform-origin: 110px 110px;
+      transform: rotate(-120deg); /* Range: -120deg to 120deg */
+      transition: transform 0.1s ease;
+      fill: var(--accent);
+    }
+
+    .tacho-text-rpm {
+      font-size: 34px;
+      font-weight: bold;
+      color: #FFFFFF;
+      margin-top: -30px;
+      text-align: center;
+      width: 100%;
+    }
+
+    .tacho-text-lbl {
+      font-size: 11px;
+      color: var(--primary);
+      margin-top: 4px;
+      text-transform: uppercase;
+    }
+
+    /* Onboarding Hero Showcase Style */
+    .onboarding-hero {
+      background: linear-gradient(135deg, var(--surface) 0%, rgba(8, 13, 10, 0.9) 100%);
+      padding: 50px 40px;
+      border: 1px dashed var(--primary);
+      margin-bottom: 24px;
+    }
+
+    .hero-eyebrow {
+      color: var(--primary);
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.3em;
+      margin-bottom: 12px;
+    }
+
+    .hero-headline {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 42px;
+      font-weight: 700;
+      line-height: 1.1;
+      text-transform: uppercase;
+      color: #FFFFFF;
+      margin-bottom: 16px;
+      letter-spacing: 0.05em;
+    }
+
+    .hero-subhead {
+      font-size: 16px;
+      color: var(--text-muted);
+      max-width: 750px;
+      margin-bottom: 30px;
+      line-height: 1.6;
+    }
+
+    /* Core Action Buttons with sharp style and neon hover glow */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background-color: transparent;
+      border: 1px solid var(--primary);
+      color: var(--primary);
+      padding: 12px 24px;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 13px;
+      font-weight: bold;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      gap: 10px;
+    }
+
+    .btn:hover {
+      background-color: var(--primary);
+      color: var(--background);
+      box-shadow: 0 0 15px rgba(0, 255, 102, 0.4);
+    }
+
+    .btn-accent {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .btn-accent:hover {
+      background-color: var(--accent);
+      color: var(--background);
+      box-shadow: 0 0 15px rgba(0, 230, 118, 0.4);
+    }
+
+    /* Lists and Feeds design */
+    .feed-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .feed-item {
+      border-left: 2px solid var(--border);
+      background-color: rgba(18, 26, 21, 0.4);
+      padding: 12px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .feed-item.live-indicator {
+      border-left-color: var(--primary);
+    }
+
+    .feed-body {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .feed-title {
+      font-weight: bold;
+      font-size: 13px;
+      color: #FFF;
+    }
+
+    .feed-desc {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .feed-badges {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 11px;
+    }
+
+    .badge {
+      padding: 3px 8px;
+      font-size: 10px;
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+
+    .badge-primary {
+      background-color: rgba(0, 255, 102, 0.1);
+      color: var(--primary);
+      border: 1px solid var(--primary);
+    }
+
+    .badge-gray {
+      background-color: var(--background);
+      color: var(--text-muted);
+      border: 1px solid var(--border);
+    }
+
+    .badge-alert {
+      background-color: rgba(255, 53, 53, 0.1);
+      color: #FF5353;
+      border: 1px solid #FF5353;
+    }
+
+    /* Map Box and Weather Widget CSS Layout combined */
+    #leaflet-map-element {
+      height: 380px;
+      width: 100%;
+      background-color: #0b0f0c;
+      border: 1px solid var(--border);
+      position: relative;
+      z-index: 1;
+    }
+
+    .weather-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-top: 15px;
+    }
+
+    .weather-item {
+      background-color: rgba(8, 13, 10, 0.6);
+      border: 1px solid var(--border);
+      padding: 10px;
+      text-align: center;
+    }
+
+    .weather-lbl {
+      font-size: 9px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .weather-val {
+      font-size: 14px;
+      font-weight: bold;
+      color: var(--primary);
+    }
+
+    /* Register Vehicle Cryptographic Form styles */
+    .onboard-form {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .form-group label {
+      font-size: 11px;
+      color: var(--primary);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    .form-control {
+      background-color: rgba(8, 13, 10, 0.8);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 10px 14px;
+      font-family: 'Share Tech Mono', monospace;
+      outline: none;
+      font-size: 13px;
+      border-radius: 0;
+      transition: all 0.2s ease;
+    }
+
+    .form-control:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 10px rgba(0, 255, 102, 0.2);
+    }
+
+    /* Success Protocol Block overlay */
+    .success-alert-container {
+      display: none;
+      background-color: var(--surface);
+      border: 2px solid var(--primary);
+      padding: 24px;
+      margin-top: 20px;
+      animation: scan-flicker 0.4s ease;
+    }
+
+    .success-hdr {
+      font-family: 'Rajdhani', sans-serif;
+      font-weight: 700;
+      color: var(--primary);
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .success-msg {
+      color: var(--text);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    /* Table styles for history log */
+    .data-table-wrapper {
+      overflow-x: auto;
+    }
+
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+    }
+
+    .data-table th, .data-table td {
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--border);
+      font-size: 12px;
+    }
+
+    .data-table th {
+      color: var(--primary);
+      text-transform: uppercase;
+      background-color: rgba(18, 26, 21, 0.6);
+    }
+
+    .data-table tbody tr:hover {
+      background-color: rgba(255, 255, 255, 0.02);
+    }
+
+    /* Keyframes */
+    @keyframes blink {
+      0% { opacity: 0.3; }
+      100% { opacity: 1; }
+    }
+
+    @keyframes scan-flicker {
+      0% { opacity: 0; transform: translateY(5px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="app-container">
+    <!-- Left Navigation sidebar matching compact layout specs -->
+    <aside class="sidebar">
+      <div>
+        <div class="brand-section">
+          <div class="brand-eyebrow">SYNDICATE ACCESS v4.2</div>
+          <h1 class="brand-title"><i class="fa-solid fa-gauge-high"></i> APEX // <span>SOCIETY</span></h1>
+        </div>
+        
+        <nav>
+          <ul class="nav-list">
+            <li class="nav-item">
+              <a class="nav-link active" onclick="switchTab('onboarding-view')">
+                <i class="fa-solid fa-fingerprint"></i> Onboarding
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" onclick="switchTab('dashboard-view'); loadRegistryData()">
+                <i class="fa-solid fa-circle-nodes"></i> Digital Garage
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" onclick="switchTab('circuit-view'); updateMapAndWeather()">
+                <i class="fa-solid fa-compass"></i> Circuit Network
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" onclick="switchTab('onboard-workflow')">
+                <i class="fa-solid fa-plus-square"></i> Register Vehicle
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" onclick="switchTab('settings-view'); loadDurableLogs()">
+                <i class="fa-solid fa-database"></i> Registry Log
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+
+      <!-- Sync feedback at sidebar footer -->
+      <div class="sync-status-indicator">
+        <div class="status-row">
+          <span class="status-lbl">OBD-II SYNC STATUS</span>
+          <span class="status-val" id="global-sync-val">ONLINE <div class="status-pulse"></div></span>
+        </div>
+        <div class="status-row">
+          <span class="status-lbl">SECURE NETWORK</span>
+          <span class="status-val" style="color:var(--text); font-size:10px;">AES-GCM // 4096-ECC</span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Workspace right-side screen viewport -->
+    <main class="viewport">
+      <header>
+        <div class="page-title-spec" id="header-label">COFOUNDER // CONTROL PANEL // OVERVIEW</div>
+        <div class="time-telemetry" id="header-telemetry-time">LOADING TELEMETRY TIME...</div>
+      </header>
+
+      <!-- TAB 1: ONBOARDING INTRO SCREEN -->
+      <section id="onboarding-view" class="view-pane active">
+        <div class="onboarding-hero">
+          <div class="hero-eyebrow">PROJECT: SUPERCHARGED SOCIETY // THE HIGH-OCTANE SYNDICATE</div>
+          <h2 class="hero-headline">The high-octane syndicate for elite automotive culture.</h2>
+          <p class="hero-subhead">
+            A private, tech-enabled ecosystem for affluent petrolheads, track-day regulars, and restomod collectors who view mechanical engineering as high art. Secure your spot in the immutable global registry.
+          </p>
+          <div style="display: flex; gap: 15px;">
+            <button class="btn" onclick="switchTab('onboard-workflow')">
+              <i class="fa-solid fa-key"></i> Initialize Handshake Onboarding
+            </button>
+            <button class="btn btn-accent" onclick="switchTab('dashboard-view'); loadRegistryData()">
+              <i class="fa-solid fa-binoculars"></i> Search Garage Registry
+            </button>
+          </div>
+        </div>
+
+        <div class="grid-container">
+          <!-- Animated Tachometer section mimicking tactical acid green instrument clusters -->
+          <div class="card" style="grid-column: span 5; display: flex; flex-direction: column;">
+            <div class="card-title">
+              <span>Instrument Cluster Status</span>
+              <span class="badge badge-primary">Dynamic v4</span>
+            </div>
+            <div class="tachometer-display">
+              <!-- Inline Vector SVG Dial -->
+              <svg class="tacho-svg" viewBox="0 0 220 220">
+                <!-- Background dial track -->
+                <path class="tacho-dial" d="M 40 180 A 80 80 0 1 1 180 180" />
+                <!-- Redline section marker -->
+                <path class="tacho-redline" d="M 40 180 A 80 80 0 1 1 180 180" />
+                <!-- Dial progression -->
+                <path id="tacho-prog-path" class="tacho-prog" d="M 40 180 A 80 80 0 1 1 180 180" />
+                <!-- Tachometer Needle pointer -->
+                <polygon id="tacho-needle-element" class="tacho-needle" points="110,113 107,110 110,25 113,110" />
+                <!-- Inner Hub center caps -->
+                <circle cx="110" cy="110" r="14" fill="#080D0A" stroke="#233428" stroke-width="2" />
+                <circle cx="110" cy="110" r="5" fill="var(--primary)" />
+              </svg>
+              <div class="tacho-text-rpm" id="tacho-rpm-digits">1,240</div>
+              <div class="tacho-text-lbl">ENGINE RPM x1000 // THROTTLE REVS</div>
+            </div>
+            
+            <div style="margin-top: 15px; display:flex; flex-direction:column; gap:8px;">
+              <button class="btn" style="width: 100%; text-transform: uppercase;" onmousedown="startThrottle()" onmouseup="stopThrottle()" onmouseleave="stopThrottle()" ontouchstart="startThrottle()" ontouchend="stopThrottle()">
+                <i class="fa-solid fa-bolt"></i> Press & Hold Throttle Engine Accelerator
+              </button>
+              <p style="font-size: 10px; color: var(--text-muted); text-align: center;">
+                Simulates real-time mechanical CAN bus input directly to the dashboard display panel.
+              </p>
+            </div>
+          </div>
+
+          <!-- Quick access summary cards -->
+          <div class="card" style="grid-column: span 7;">
+            <div class="card-title">
+              <span>Syndicate Rules & Verification Hierarchy</span>
+              <span>EST. 2026</span>
+            </div>
+            <div style="display:flex; flex-direction:column; gap:16px;">
+              <div>
+                <h4 style="color:var(--primary); font-size:13px; margin-bottom: 5px;">I. CRYPTOGRAPHIC PROVENANCE</h4>
+                <p style="color:var(--text-muted); font-size:12px; line-height:1.5;">
+                  Every vehicle registered is tokenized corresponding to its VIN/Chassis credentials. No duplicates allowed in the network pipeline.
+                </p>
+              </div>
+              <div>
+                <h4 style="color:var(--primary); font-size:13px; margin-bottom: 5px;">II. REALTIME OBD-II SYNCHRONIZATION</h4>
+                <p style="color:var(--text-muted); font-size:12px; line-height:1.5;">
+                  Track-day telemetry captures thermal gradients, tire bar pressures, and lap sector deltas directly from approved hardware units.
+                </p>
+              </div>
+              <div>
+                <h4 style="color:var(--primary); font-size:13px; margin-bottom: 5px;">III. EXCLUSIVE CIRCUITS</h4>
+                <p style="color:var(--text-muted); font-size:12px; line-height:1.5;">
+                  Members gain automated transponder scheduling at elite tracks, featuring integrated trackside weather telemetry directly bound to each profile.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 2: DIGITAL GARAGE & COMMAND CENTER (DASHBOARD) -->
+      <section id="dashboard-view" class="view-pane">
+        <!-- Live Telemetry Row metrics matching spec -->
+        <div class="telemetry-row">
+          <div class="metric-widget">
+            <span class="metric-lbl">Tire Pressure (FL/FR)</span>
+            <span class="metric-val" id="metric-tire">31.5 / 32.0 PSI</span>
+          </div>
+          <div class="metric-widget">
+            <span class="metric-lbl">Oil Temp</span>
+            <span class="metric-val" id="metric-oil">224°F</span>
+          </div>
+          <div class="metric-widget">
+            <span class="metric-lbl">Lap Delta</span>
+            <span class="metric-val" id="metric-delta">-0.42s</span>
+          </div>
+          <div class="metric-widget">
+            <span class="metric-lbl">OBD Sync Status</span>
+            <span class="metric-val" id="metric-sync" style="color: var(--primary);">ONLINE</span>
+          </div>
+        </div>
+
+        <div class="grid-container">
+          <!-- Left side: Digital Garage database list -->
+          <div class="card" style="grid-column: span 7;">
+            <div class="card-title">
+              <span>Active Syndicate Vehicle Registry</span>
+              <span id="registry-count-label">Loading ...</span>
+            </div>
+            <div style="display:flex; flex-direction:column; gap:12px;" id="garage-list-inner">
+              <!-- Loaded via dynamic script fetch('/api/memory') -->
+            </div>
+          </div>
+
+          <!-- Right side: Realtime activity grid feed -->
+          <div class="card" style="grid-column: span 5;">
+            <div class="card-title">
+              <span>Syndicate Grids & Upload Activity</span>
+              <span style="color:#00FF66;"><i class="fa-solid fa-tower-broadcast"></i> Live feed</span>
+            </div>
+            <div class="feed-list" id="feed-list-inner">
+              <!-- Static high-octane updates matching spec -->
+              <div class="feed-item live-indicator">
+                <div class="feed-body">
+                  <div class="feed-title">GRID FEED: @GT3_RS_Driver uploaded telemetry</div>
+                  <div class="feed-desc">New personal best at Laguna Seca. Telemetry log shared with the regional grid.</div>
+                  <div class="feed-badges">
+                    <span class="badge badge-primary">Telemetry Verified</span>
+                    <span>2 mins ago</span>
+                  </div>
+                </div>
+              </div>
+              <div class="feed-item">
+                <div class="feed-body">
+                  <div class="feed-title">GRID FEED: @Carbon_King RSVP'd to Private Grid</div>
+                  <div class="feed-desc">Joining upcoming private track day at Willow Springs. OBD calibrations ready.</div>
+                  <div class="feed-badges">
+                    <span class="badge badge-gray">RSVP Grid</span>
+                    <span>1 hour ago</span>
+                  </div>
+                </div>
+              </div>
+              <div class="feed-item">
+                <div class="feed-body">
+                  <div class="feed-title">OBD HANDSHAKE INITIALIZED: @Singer_964</div>
+                  <div class="feed-desc">Hardware handshake sequence complete. Encryption token synchronized.</div>
+                  <div class="feed-badges">
+                    <span class="badge badge-primary">Active</span>
+                    <span>Yesterday</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 3: CIRCUIT NETWORK MAPS + TRACKSIDE WEATHER -->
+      <section id="circuit-view" class="view-pane">
+        <div class="grid-container">
+          <!-- Leaflet Interactive map widget -->
+          <div class="card" style="grid-column: span 8;">
+            <div class="card-title">
+              <span>Syndicate Tactical Circuit Network Map</span>
+              <span style="color:var(--primary);"><i class="fa-solid fa-location-crosshairs"></i> LAGUNA SECA SECTOR</span>
+            </div>
+            <p style="font-size:12px; color:var(--text-muted); margin-bottom: 12px;">
+              Interactive map displaying tracks with verified grid nodes. Select any marked circuit pin below to synchronize the weather telemetry system.
+            </p>
+            
+            <div id="leaflet-map-element"></div>
+            
+            <div style="margin-top:15px; display:flex; gap:10px; flex-wrap:wrap;">
+              <button class="btn btn-accent" onclick="selectCircuitPin(36.5843, -121.84, 'WeatherTech Raceway Laguna Seca', 'Monterey, CA', '84°F', '98.2%', '12/15 Slots')">
+                <i class="fa-solid fa-bullseye"></i> Laguna Seca (Default)
+              </button>
+              <button class="btn" onclick="selectCircuitPin(34.8718, -118.2638, 'Willow Springs International Raceway', 'Rosamond, CA', '99°F', '91.2%', '0 (Fully Booked)')">
+                <i class="fa-solid fa-flag-checkered"></i> Willow Springs Raceway
+              </button>
+              <button class="btn" onclick="selectCircuitPin(33.722, -116.216, 'The Thermal Club Private Circuit', 'Thermal, CA', '104°F', '87.5%', 'Private (Invite Only)')">
+                <i class="fa-solid fa-lock"></i> Thermal Club
+              </button>
+            </div>
+          </div>
+
+          <!-- Trackside weather & Atmos coordinates dashboard widget -->
+          <div class="card" style="grid-column: span 4;">
+            <div class="card-title">
+              <span>Trackside Weather Telemetry</span>
+              <span id="active-circuit-badge" class="badge badge-primary">LAGUNA SECA</span>
+            </div>
+            <div style="display:flex; flex-direction:column; gap:18px;">
+              <div>
+                <span class="status-lbl">ACTIVE CIRCUIT LOCATION</span>
+                <h3 id="weather-circuit-title" style="color:var(--text); font-size:18px; margin-top:4px;">WeatherTech Raceway Laguna Seca</h3>
+                <p id="weather-location-sub" style="font-size:11px; color:var(--text-muted);"><i class="fa-solid fa-map-marker-alt"></i> Monterey, CA</p>
+              </div>
+
+              <!-- Atmospheric metrics widgets -->
+              <div class="weather-grid">
+                <div class="weather-item">
+                  <div class="weather-lbl">Est. Track Temp</div>
+                  <div class="weather-val" id="weather-track-temp">84°F</div>
+                </div>
+                <div class="weather-item">
+                  <div class="weather-lbl">Atm. Air Density</div>
+                  <div class="weather-val" id="weather-density">98.2%</div>
+                </div>
+                <div class="weather-item">
+                  <div class="weather-lbl">Grid status</div>
+                  <div class="weather-val" id="weather-slots" style="font-size:11px;">12/15 Slots</div>
+                </div>
+              </div>
+
+              <div style="border-top:1px dashed var(--border); padding-top:14px;">
+                <p style="font-size:11px; line-height: 1.5; color: var(--text-muted);">
+                  <strong>Rationale:</strong> Atmospheric tracking measures barometric density index, indicating dynamic engine volumetric efficiency margins and tire traction degradation thresholds.
+                </p>
+              </div>
+
+              <!-- Dynamic weather action simulation -->
+              <button class="btn" style="width:100%; border-style:dashed;" onclick="simulateWeatherShift()">
+                <i class="fa-solid fa-cloud-sun"></i> Hot Telemetry Calibration Wave
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 4: REGISTER VEHICLE WORKFLOW -->
+      <section id="onboard-workflow" class="view-pane">
+        <div class="grid-container">
+          <div class="card" style="grid-column: span 7;">
+            <div class="card-title">
+              <span>Register Vehicle & Telemetry Sync Form</span>
+              <span class="badge badge-alert">Secure Tunnel</span>
+            </div>
+            <p style="font-size:12px; color:var(--text-muted); margin-bottom: 20px;">
+              Submit your high-performance vehicle to the Supercharged Society immutable blockchain registry index. Onboard specifications and initiate the secure hardware verification sequence.
+            </p>
+
+            <form class="onboard-form" id="vehicle-onboard-form" onsubmit="submitVehicleRegistry(event)">
+              <!-- Field 1: Name and model -->
+              <div class="form-group">
+                <label for="form-vehicle">Vehicle Make & Model (e.g., Porsche 911 Reimagined by Singer)</label>
+                <input type="text" id="form-vehicle" class="form-control" placeholder="Enter full build details..." required>
+              </div>
+
+              <!-- Field 2: Chassis VIN -->
+              <div class="form-group">
+                <label for="form-vin">Chassis / VIN Number (Carbon-Fiber Registry Tokenization)</label>
+                <input type="text" id="form-vin" class="form-control" placeholder="Enter 17-digit chassis VIN token..." required>
+              </div>
+
+              <!-- Field 3: Use case options dropdown -->
+              <div class="form-group">
+                <label for="form-usecase">Primary Use Case</label>
+                <select id="form-usecase" class="form-control" required style="background-color: #080D0A;">
+                  <option value="" disabled selected>Select vehicle designation...</option>
+                  <option value="Track-Day Regular">Track-Day Regular</option>
+                  <option value="Restomod Collector">Restomod Collector</option>
+                  <option value="Vintage Racing">Vintage Racing</option>
+                  <option value="Daily Driver">Daily Driver</option>
+                </select>
+              </div>
+
+              <!-- Field 4: Telemetry ID -->
+              <div class="form-group">
+                <label for="form-hardware">Telemetry Hardware ID (OBD-II Handshake)</label>
+                <input type="text" id="form-hardware" class="form-control" placeholder="APEX-OBD-XXXXXX" required value="APEX-OBD-">
+              </div>
+
+              <!-- Field 5: Target timestamp -->
+              <div class="form-group">
+                <label for="form-date">Next Scheduled Track Session Date</label>
+                <input type="date" id="form-date" class="form-control" required>
+              </div>
+
+              <div style="margin-top: 10px;">
+                <button type="submit" class="btn btn-accent" style="width: 100%;">
+                  <i class="fa-solid fa-server"></i> Initialize Verification Protocol
+                </button>
+              </div>
+            </form>
+
+            <!-- Onboard submission feedback block directly conforming to requirements -->
+            <div id="success-protocol-alert" class="success-alert-container">
+              <h4 class="success-hdr"><i class="fa-solid fa-circle-check"></i> Verification Protocol Initialized</h4>
+              <p class="success-msg">
+                Your vehicle model <strong id="success-model-txt" style="color:var(--primary);">PORSCHE SINGER</strong> has been successfully queue-assigned under chassis node token <code id="success-vin-txt" style="background:#080d0a; padding: 2px 6px;">N/A</code>. 
+              </p>
+              <div style="margin:12px 0; border: 1px dashed var(--border); padding: 10px; font-size:11px;">
+                Your OBD-II hardware handshake sequence string is marked as <span id="success-hardware-txt" style="font-weight:bold; color:var(--accent);">NA</span>.
+              </div>
+              <p class="success-msg" style="color:var(--text-muted); font-size: 12px;">
+                Your vehicle has been queued for cryptographic verification. Our deep technical team will review the OBD-II hardware handshake payload within the next 24 hours. Check status in the Register Log or Command Center.
+              </p>
+              <div style="margin-top:20px; display:flex; gap:10px;">
+                <button class="btn btn-accent" onclick="switchTab('dashboard-view'); loadRegistryData()">
+                  <i class="fa-solid fa-table-list"></i> Jump to Digital Garage
+                </button>
+                <button class="btn" onclick="resetFormOnly()">
+                  <i class="fa-solid fa-plus"></i> Register Another Build
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="card" style="grid-column: span 5; display:flex; flex-direction:column; justify-content:space-between;">
+            <div>
+              <div class="card-title">
+                <span>Hardware Telemetry Calibration</span>
+                <span style="color:var(--accent);"><i class="fa-solid fa-microchip"></i> APEX-OBD DONGLE</span>
+              </div>
+              <p style="font-size:12px; color:var(--text-muted); line-height:1.6; margin-bottom: 14px;">
+                The <strong>APEX v4 Calibration Transponder</strong> utilizes dedicated hardware triggers to capture CAN bus logs directly from your high-performance ECU unit.
+              </p>
+              <p style="font-size:12px; color:var(--text-muted); line-height:1.6; margin-bottom: 20px;">
+                By onboarding your vehicle, you create a private secure stream node that forwards tire pressures, track timings, and track temperatures directly to our syndicate cloud index.
+              </p>
+            </div>
+            
+            <div style="background-color: rgba(0, 255, 102, 0.02); border: 1px dotted var(--border); padding:16px;">
+              <h5 style="color:var(--primary); margin-bottom: 8px;"><i class="fa-solid fa-lock"></i> AES Encrypted Tunneling</h5>
+              <p style="font-size:11px; color:var(--text-muted); line-height: 1.4;">
+                All vehicle telemetries are secured utilizing high-speed hardware logic boards preventing coordinate leakage outside corresponding track circuits.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 5: HISTORY / SYSTEM CONTROLS -->
+      <section id="settings-view" class="view-pane">
+        <div class="grid-container">
+          <!-- Main Table displaying elements from memory.json fetching GET -->
+          <div class="card" style="grid-column: span 12;">
+            <div class="card-title">
+              <span>Durable Memory Registry Log — DB.JSON System Records</span>
+              <button class="btn" style="padding: 4px 10px; font-size:10px;" onclick="loadDurableLogs()">
+                <i class="fa-solid fa-rotate"></i> Reload Raw DB Status
+              </button>
+            </div>
+            <p style="font-size:12px; color:var(--text-muted); margin-bottom: 15px;">
+              This audit log renders the actual records stored in the Express backend persistent file (<code style="background-color:#080D0A; padding:2px 4px;">data/memory.json</code>).
+            </p>
+
+            <div class="data-table-wrapper">
+              <table class="data-table" id="db-raw-table">
+                <thead>
+                  <tr>
+                    <th>Registry ID</th>
+                    <th>Vehicle Details</th>
+                    <th>VIN Credentials</th>
+                    <th>Use Case</th>
+                    <th>Hardware OBD ID</th>
+                    <th>Next Session</th>
+                    <th>Syndicate Status</th>
+                  </tr>
+                </thead>
+                <tbody id="db-table-rows-inner">
+                  <!-- JS dynamically fills rows -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Sandbox Controller card for the reviewer/founder -->
+          <div class="card" style="grid-column: span 7;">
+            <div class="card-title">
+              <span>Automated Verification Signal Generator (Demo Simulator)</span>
+              <span class="badge badge-primary">Admin Control</span>
+            </div>
+            <p style="font-size:12px; color:var(--text-muted); margin-bottom: 15px;">
+              To simulate the deep technological 24-hour verification queue, trigger the remote sensor signal to instantly verify any registered vehicles:
+            </p>
+
+            <div style="display:flex; flex-direction:column; gap:12px;">
+              <div style="display:flex; justify-content:space-between; align-items:center; background: rgba(8,13,10,0.5); padding:10px; border:1px solid var(--border);">
+                <div>
+                  <span style="font-weight:bold; color:var(--primary);">Approve All Pending handshakes</span>
+                  <p style="font-size:10px; color:var(--text-muted); margin-top:2px;">Updates status from 'Reviewing Handshake' to 'Verified Active'.</p>
+                </div>
+                <button class="btn btn-accent" onclick="simulateAdminApproval()">
+                  <i class="fa-solid fa-circle-check"></i> Trigger Verification
+                </button>
+              </div>
+
+              <div style="display:flex; justify-content:space-between; align-items:center; background: rgba(8,13,10,0.5); padding:10px; border:1px solid var(--border);">
+                <div>
+                  <span style="font-weight:bold; color:#FF5353;">System Registry Reset</span>
+                  <p style="font-size:10px; color:var(--text-muted); margin-top:2px;">Clears custom records and reboots database to defaults.</p>
+                </div>
+                <button class="btn" style="border-color:#FF5353; color:#FF5353;" onclick="triggerDurableReset()">
+                  <i class="fa-solid fa-trash-can"></i> Restore Factory Defaults
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Documentation and system diagnostics -->
+          <div class="card" style="grid-column: span 5;">
+            <div class="card-title">
+              <span>Developer Diagnostics Node</span>
+              <span>v1.0.0-PROD</span>
+            </div>
+            <div style="font-size:12px; display:flex; flex-direction:column; gap:10px; color:var(--text-muted);">
+              <div>
+                <strong>Persisted JSON File:</strong> <br>
+                <code style="display:block; background:#080d0a; padding:6px; font-size:11px; margin-top:4px;">/data/memory.json</code>
+              </div>
+              <div>
+                <strong>Endpoints Verified:</strong> <br>
+                <ul style="list-style-position: inside; margin-top:4px;">
+                  <li><code>GET /api/memory</code></li>
+                  <li><code>POST /api/memory</code></li>
+                  <li><code>POST /api/memory/reset</code></li>
+                </ul>
+              </div>
+              <div style="border-top:1px solid var(--border); padding-top:8px; font-size:11px; color:var(--primary);">
+                <i class="fa-solid fa-code"></i> Built for high-octane engineering with Express.js + pure ESM.
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Leaflet Map JS Package -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  
+  <script>
+    // Tab controller logic
+    function switchTab(viewId) {
+      // Hide all panels
+      const panels = document.querySelectorAll('.view-pane');
+      panels.forEach(p => p.classList.remove('active'));
+      
+      // De-activate all sidebar options
+      const navLinks = document.querySelectorAll('.nav-link');
+      navLinks.forEach(lnk => lnk.classList.remove('active'));
+
+      // Activate active block elements
+      const targetPanel = document.getElementById(viewId);
+      if (targetPanel) {
+        targetPanel.classList.add('active');
+      }
+
+      // Sync header status panel label
+      const headerLabel = document.getElementById('header-label');
+      if (viewId === 'onboarding-view') {
+        const matchingLink = Array.from(navLinks).find(l => l.innerHTML.includes('Onboarding'));
+        if (matchingLink) matchingLink.classList.add('active');
+        headerLabel.innerText = "COFOUNDER // CONTROL PANEL // OVERVIEW";
+      } else if (viewId === 'dashboard-view') {
+        const matchingLink = Array.from(navLinks).find(l => l.innerHTML.includes('Digital Garage'));
+        if (matchingLink) matchingLink.classList.add('active');
+        headerLabel.innerText = "COFOUNDER // CONTROL PANEL // GARAGE COMMAND";
+      } else if (viewId === 'circuit-view') {
+        const matchingLink = Array.from(navLinks).find(l => l.innerHTML.includes('Circuit Network'));
+        if (matchingLink) matchingLink.classList.add('active');
+        headerLabel.innerText = "COFOUNDER // CONTROL PANEL // CIRCUIT INTEL";
+      } else if (viewId === 'onboard-workflow') {
+        const matchingLink = Array.from(navLinks).find(l => l.innerHTML.includes('Register Vehicle'));
+        if (matchingLink) matchingLink.classList.add('active');
+        headerLabel.innerText = "COFOUNDER // CONTROL PANEL // SECURE HANDSHAKE";
+      } else if (viewId === 'settings-view') {
+        const matchingLink = Array.from(navLinks).find(l => l.innerHTML.includes('Registry Log'));
+        if (matchingLink) matchingLink.classList.add('active');
+        headerLabel.innerText = "COFOUNDER // CONTROL PANEL // DURABLE AUDIT";
+      }
+    }
+
+    // Dynamic timestamp updater
+    function updateClock() {
+      const now = new Date();
+      const isoString = now.toISOString().replace('T', ' // ').substring(0, 24);
+      document.getElementById('header-telemetry-time').innerText = "LIVE SYS-TIME: " + isoString + " UTC";
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    // ==========================================
+    // INSTRUMENT CLUSTER TACHOMETER REVVING CONTROLS
+    // ==========================================
+    let throttleInterval = null;
+    let currentRpm = 1240; // baseline idling rpm
+    const targetIdlingRpm = 1240;
+    const maxRpm = 9000;
+
+    function renderTachometer(rpm) {
+      const progPath = document.getElementById('tacho-prog-path');
+      const needle = document.getElementById('tacho-needle-element');
+      const textDigits = document.getElementById('tacho-rpm-digits');
+
+      if (!progPath || !needle || !textDigits) return;
+
+      // Map RPM ratio to path strokedashoffset & needle rotation degree
+      const rpmRatio = Math.min(Math.max((rpm / maxRpm), 0), 1);
+      
+      // Sweep angle ranges roughly around 240 degrees (from -120deg to +120deg)
+      const rotationAngle = -120 + (rpmRatio * 240);
+      needle.style.transform = `rotate(${rotationAngle}deg)`;
+
+      // Update stroke dashoffset (ranges from 440 to 110 approx)
+      const maxOffset = 440;
+      const minOffset = 110;
+      const calculatedOffset = maxOffset - (rpmRatio * (maxOffset - minOffset));
+      progPath.style.strokeDashoffset = calculatedOffset;
+
+      // Sync RPM label numbers nicely
+      textDigits.innerText = Math.round(rpm).toLocaleString();
+      
+      // Dynamic shift lights / warning borders at high rpm redline
+      if (rpm > 7800) {
+        textDigits.style.color = "#FF3535";
+        document.getElementById('global-sync-val').style.color = "#FF3535";
+      } else {
+        textDigits.style.color = "#FFFFFF";
+        document.getElementById('global-sync-val').style.color = "var(--primary)";
+      }
+    }
+
+    function startThrottle() {
+      if (throttleInterval) clearInterval(throttleInterval);
+      throttleInterval = setInterval(() => {
+        // Accelerate with slight volatility noise
+        const roarRate = 450 + (Math.random() * 200);
+        currentRpm = Math.min(currentRpm + roarRate, maxRpm);
+        renderTachometer(currentRpm);
+      }, 40);
+    }
+
+    function stopThrottle() {
+      if (throttleInterval) clearInterval(throttleInterval);
+      throttleInterval = setInterval(() => {
+        // Drop back to smooth idling with standard mechanical friction delta
+        currentRpm = Math.max(currentRpm - 300, targetIdlingRpm);
+        renderTachometer(currentRpm);
+        if (currentRpm <= targetIdlingRpm) {
+          clearInterval(throttleInterval);
+        }
+      }, 40);
+    }
+
+    // Initialize baseline tachometer layout state
+    renderTachometer(currentRpm);
+
+    // ==========================================
+    // MAP & WEATHER MODULE
+    // ==========================================
+    let leafletMap = null;
+    let mapMarker = null;
+
+    function updateMapAndWeather() {
+      // Lazy load map when Circuit view becomes active
+      setTimeout(() => {
+        if (!leafletMap) {
+          // Coordinates at WeatherTech Raceway Laguna Seca Monterey CA
+          leafletMap = L.map('leaflet-map-element', {
+            attributionControl: false,
+            zoomControl: true,
+            scrollWheelZoom: false
+          }).setView([36.5843, -121.84], 13);
+
+          // Use super premium CartoDB dark mode tiles
+          L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+            maxZoom: 19
+          }).addTo(leafletMap);
+
+          // Add elegant custom racing-green circle marker centered on Laguna Seca
+          mapMarker = L.circle([36.5843, -121.84], {
+            color: 'var(--primary)',
+            fillColor: 'rgba(0, 255, 102, 0.4)',
+            fillOpacity: 0.5,
+            radius: 400
+          }).addTo(leafletMap);
+          mapMarker.bindPopup("<b>WeatherTech Raceway Laguna Seca</b><br>Private Syndicate Circuit").openPopup();
+        } else {
+          // Invalidate size to prevent Leaflet render bugs inside hidden tabs
+          leafletMap.invalidateSize();
+        }
+      }, 100);
+    }
+
+    function selectCircuitPin(lat, lng, name, location, temp, density, slots) {
+      if (!leafletMap) return;
+      
+      // Pan map smoothly to coordinates
+      leafletMap.panTo([lat, lng]);
+      
+      // Re-initialize marker at new point
+      if (mapMarker) {
+        leafletMap.removeLayer(mapMarker);
+      }
+      mapMarker = L.circle([lat, lng], {
+        color: 'var(--accent)',
+        fillColor: 'rgba(0, 230, 118, 0.4)',
+        fillOpacity: 0.5,
+        radius: 400
+      }).addTo(leafletMap);
+      mapMarker.bindPopup(`<b>${name}</b><br>${location}`).openPopup();
+
+      // Sync active state indicators and metrics
+      document.getElementById('active-circuit-badge').innerText = name.toUpperCase().includes('LAGUNA') ? 'LAGUNA SECA' : name.toUpperCase().includes('WILLOW') ? 'WILLOW SPRINGS' : 'THERMAL CLUB';
+      document.getElementById('weather-circuit-title').innerText = name;
+      document.getElementById('weather-location-sub').innerHTML = `<i class="fa-solid fa-map-marker-alt"></i> ${location}`;
+      document.getElementById('weather-track-temp').innerText = temp;
+      document.getElementById('weather-density').innerText = density;
+      document.getElementById('weather-slots').innerText = slots;
+    }
+
+    function simulateWeatherShift() {
+      // Simulate real-time thermal drift variations
+      const currentVal = parseFloat(document.getElementById('weather-track-temp').innerText);
+      const direction = Math.random() > 0.5 ? 1 : -1;
+      const change = (Math.random() * 3).toFixed(1);
+      const newVal = (currentVal + direction * change).toFixed(1);
+      
+      document.getElementById('weather-track-temp').innerText = `${newVal}°F`;
+      
+      // Random atmospheric adjustment
+      const currentDensity = parseFloat(document.getElementById('weather-density').innerText);
+      const densityAdj = (currentDensity + (Math.random() > 0.5 ? 0.2 : -0.2)).toFixed(1);
+      document.getElementById('weather-density').innerText = `${densityAdj}%`;
+    }
+
+    // ==========================================
+    // BACKEND PERSISTENT API WORKFLOW REST ENDPOINTS
+    // ==========================================
+    async function loadRegistryData() {
+      const container = document.getElementById('garage-list-inner');
+      if (!container) return;
+
+      container.innerHTML = `<div style="text-align:center; padding: 20px; color: var(--text-muted);"><i class="fa-solid fa-circle-notch fa-spin"></i> Reading secure decentralized garage registry...</div>`;
+
+      try {
+        const response = await fetch('/api/memory');
+        const payload = await response.json();
+
+        if (payload.success && payload.vehicles) {
+          document.getElementById('registry-count-label').innerText = `Count: ${payload.count} Verified Units`;
+          
+          if (payload.vehicles.length === 0) {
+            container.innerHTML = `<div style="text-align:center; padding: 30px; color: var(--text-muted); border: 1px dashed var(--border);">No custom builds onboarded. Access the Register Vehicle panel to begin.</div>`;
+            return;
+          }
+
+          let innerHTML = '';
+          payload.vehicles.forEach(veh => {
+            const isMock = veh.isMock ? 'System baseline' : 'Secure Tokenized';
+            const badgeType = (veh.status === 'Verified' || veh.status === 'Track Ready') ? 'badge-primary' : (veh.status === 'Reviewing Handshake') ? 'badge-alert' : 'badge-gray';
+            
+            innerHTML += `
+              <div class="feed-item" style="border-left-color: ${veh.status === 'Verified' ? 'var(--primary)' : 'var(--accent)'}">
+                <div class="feed-body">
+                  <div class="feed-title">${escapeHtml(veh.vehicle)}</div>
+                  <div class="feed-desc">${escapeHtml(veh.detail || veh.meta)}</div>
+                  <div class="feed-badges" style="margin-top: 5px;">
+                     <span style="font-size:10px; color: var(--text-muted);">VIN: <code style="color:#FFF;">${escapeHtml(veh.vin)}</code></span>
+                     <span style="font-size:10px; color: var(--text-muted); margin-left: 5px;">OBD-ID: <code style="color:#FFF;">${escapeHtml(veh.hardwareId)}</code></span>
+                  </div>
+                </div>
+                <div style="text-align: right; display:flex; flex-direction:column; gap:4px; align-items:flex-end;">
+                  <span class="badge ${badgeType}">${escapeHtml(veh.status)}</span>
+                  <span style="font-size:9px; color: var(--text-muted);">${isMock}</span>
+                </div>
+              </div>
+            `;
+          });
+          container.innerHTML = innerHTML;
+        } else {
+          container.innerHTML = `<div style="text-align:center; padding: 20px; color:red;">Verification sequence pipeline error.</div>`;
+        }
+      } catch (err) {
+        console.error("Dashboard Fetch Error:", err);
+        container.innerHTML = `<div style="text-align:center; padding: 20px; color:red;">Connection timed out reading memory.</div>`;
+      }
+    }
+
+    async function loadDurableLogs() {
+      const listRows = document.getElementById('db-table-rows-inner');
+      if (!listRows) return;
+
+      listRows.innerHTML = `<tr><td colspan="7" style="text-align:center; color: var(--text-muted);"><i class="fa-solid fa-spinner fa-spin"></i> Consulting database...</td></tr>`;
+
+      try {
+        const response = await fetch('/api/memory');
+        const payload = await response.json();
+
+        if (payload.success && payload.vehicles) {
+          if (payload.vehicles.length === 0) {
+            listRows.innerHTML = `<tr><td colspan="7" style="text-align:center; color: var(--text-muted);">Database file is currently empty. Initialize a vehicle record!</td></tr>`;
+            return;
+          }
+
+          let html = '';
+          payload.vehicles.forEach(item => {
+            const statusStyle = item.status === 'Verified' ? 'color: var(--primary); font-weight:bold;' : item.status === 'Reviewing Handshake' ? 'color:#FF5353; font-weight:bold;' : 'color: var(--accent);';
+            html += `
+              <tr>
+                <td><code style="background-color:#080D0A; padding:3px 6px;">${escapeHtml(item.id)}</code></td>
+                <td><strong>${escapeHtml(item.vehicle)}</strong></td>
+                <td><small>${escapeHtml(item.vin)}</small></td>
+                <td><span style="font-size:11px;">${escapeHtml(item.useCase)}</span></td>
+                <td><code>${escapeHtml(item.hardwareId)}</code></td>
+                <td>${escapeHtml(item.nextSession)}</td>
+                <td style="${statusStyle}">${escapeHtml(item.status)}</td>
+              </tr>
+            `;
+          });
+          listRows.innerHTML = html;
+        } else {
+          listRows.innerHTML = `<tr><td colspan="7" style="text-align:center; color:red;">Failed to retrieve records.</td></tr>`;
+        }
+      } catch (err) {
+        console.error("Durable Table Fetch Error:", err);
+        listRows.innerHTML = `<tr><td colspan="7" style="text-align:center; color:red;">Network timeout.</td></tr>`;
+      }
+    }
+
+    async function submitVehicleRegistry(event) {
+      event.preventDefault();
+      
+      const vehicle = document.getElementById('form-vehicle').value;
+      const vin = document.getElementById('form-vin').value;
+      const useCase = document.getElementById('form-usecase').value;
+      const hardwareId = document.getElementById('form-hardware').value;
+      const nextSession = document.getElementById('form-date').value;
+
+      try {
+        const res = await fetch('/api/memory', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ vehicle, vin, useCase, hardwareId, nextSession })
+        });
+
+        const result = await res.json();
+        
+        if (result.success) {
+          // Hide Form and reveal verified response sequence exactly as spec requires
+          document.getElementById('vehicle-onboard-form').style.display = 'none';
+          
+          document.getElementById('success-model-txt').innerText = result.entry.vehicle;
+          document.getElementById('success-vin-txt').innerText = result.entry.vin;
+          document.getElementById('success-hardware-txt').innerText = result.entry.hardwareId;
+          
+          document.getElementById('success-protocol-alert').style.display = 'block';
+        } else {
+          alert(`Handshake error: ${result.error}`);
+        }
+      } catch (err) {
+        console.error("Form Submit Error:", err);
+        alert("Failed to propagate registration telemetry to backend. Ensure Express is running.");
+      }
+    }
+
+    function resetFormOnly() {
+      // Re-enable input state interface
+      document.getElementById('vehicle-onboard-form').reset();
+      document.getElementById('form-hardware').value = "APEX-OBD-";
+      document.getElementById('vehicle-onboard-form').style.display = 'flex';
+      document.getElementById('success-protocol-alert').style.display = 'none';
+    }
+
+    async function simulateAdminApproval() {
+      try {
+        const response = await fetch('/api/memory/approve', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' }
+        });
+        const result = await response.json();
+        
+        if (result.success) {
+          if (result.count > 0) {
+            alert(`Handshake signals processed! Verified and calibrated ${result.count} pending OBD units in db.json.`);
+          } else {
+            alert("No pending vehicle handshake records require verification.");
+          }
+          loadDurableLogs();
+          loadRegistryData();
+        } else {
+          alert(`Verification transmission failed: ${result.message}`);
+        }
+      } catch (err) {
+        console.error("Admin approval error:", err);
+        alert("Verification sequence timed out.");
+      }
+    }
+
+    async function triggerDurableReset() {
+      if(!confirm("Are you certain you want to purge all custom vehicle registrations and restore stock values?")) return;
+      try {
+        const response = await fetch('/api/memory/reset', { method: 'POST' });
+        const data = await response.json();
+        if(data.success) {
+          alert("Purge sequence absolute. Initial baseline loaded.");
+          loadDurableLogs();
+          loadRegistryData();
+        }
+      } catch(err) {
+        console.error(err);
+        alert("Communications glitch in resetting durable records.");
+      }
+    }
+
+    function escapeHtml(text) {
+      if (!text) return '';
+      return String(text)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    // Default dates initializer
+    const tomorrow = new Date(Date.now() + 24 * 3600 * 1000);
+    const dateInput = document.getElementById('form-date');
+    if (dateInput) {
+      dateInput.value = tomorrow.toISOString().split('T')[0];
+    }
+
+    // Window load initializers
+    window.addEventListener('DOMContentLoaded', () => {
+      loadRegistryData();
+      loadDurableLogs();
+    });
+  </script>
+</body>
+</html>
