@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kinward Care Portal</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Background Ambient Pulse Canvas -->
+  <canvas id="ambient-canvas"></canvas>
+
+  <div class="mobile-frame">
+    <!-- Top App Bar -->
+    <header class="app-header">
+      <div class="brand">
+        <span class="logo-dot"></span>
+        <span class="logo-text">KINWARD</span>
+      </div>
+      <div class="badge" id="shield-badge">Shield Active</div>
+    </header>
+
+    <!-- MAIN CONTAINER -->
+    <main class="app-content">
+
+      <!-- SCREEN 1: ONBOARDING -->
+      <section id="screen-onboarding" class="app-screen">
+        <div class="onboarding-hero">
+          <div class="glow-sphere"></div>
+          <p class="eyebrow-accent">PRIVACY-FIRST ELDERCARE</p>
+          <h1 class="hero-title">Dignity for parents.<br>Peace of mind for you.</h1>
+          <p class="hero-subtitle">Transforming existing Ring home cameras into ambient, privacy-respecting activity feeds without invasive surveillance.</p>
+        </div>
+
+        <div class="card onboarding-split">
+          <div class="split-side raw">
+            <span class="label">Invasive Video Raw Feed</span>
+            <div class="mock-feed-raw">
+              <div class="camera-rec"></div>
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#FF5555" stroke-width="1.5">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+              </svg>
+              <div class="feed-overlay-text">Mom's full video exposed continuously.</div>
+            </div>
+          </div>
+          <div class="split-side filter">
+            <span class="label">Kinward Ambient Lens</span>
+            <div class="mock-feed-filtered">
+              <div class="thermal-glow orange"></div>
+              <div class="thermal-glow green"></div>
+              <div class="feed-overlay-text">Abstract pattern only. 100% video-blocked.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Let's Set Up Their Space</h3>
+          <p class="card-desc">Enter details to calibrate the Ambient Pattern Analyzer for safety profiles and reassurance updates.</p>
+          <div class="form-group">
+            <label for="input-caregiver">Your First Name (Caregiver)</label>
+            <input type="text" id="input-caregiver" placeholder="e.g. Sarah" value="Sarah">
+          </div>
+          <div class="form-group">
+            <label for="input-parent">Parent's Name to Monitor</label>
+            <input type="text" id="input-parent" placeholder="e.g. Eleanor (Mom)" value="Eleanor (Mom)">
+          </div>
+          <button id="btn-start-onboarding" class="btn btn-primary">Enter Kinward Portal</button>
+        </div>
+      </section>
+
+
+      <!-- SCREEN 2: MAIN WORKFLOW (CONFIGURE PRIVACY SHIELD) -->
+      <section id="screen-configure" class="app-screen hidden">
+        <div class="screen-title-area">
+          <h2>Link Ring & Set Privacy</h2>
+          <p class="screen-desc">Connect parent's Ring account and configure client-side privacy filters to strip raw video feeds.</p>
+        </div>
+
+        <!-- Metric Block -->
+        <div class="metrics-row">
+          <div class="metric-card">
+            <span class="label">Config Status</span>
+            <span class="value" id="badge-config-status">Setup Required</span>
+          </div>
+          <div class="metric-card">
+            <span class="label">Filters Active</span>
+            <span class="value" style="color: var(--accent);">Strict Shield</span>
+          </div>
+        </div>
+
+        <!-- Interactive Lens Calibration Preview -->
+        <div class="card preview-card">
+          <div class="flex-title">
+            <h3>Active Lens Shield Mock</h3>
+            <span class="shield-label-live" id="active-live-lens">Frosted Glass</span>
+          </div>
+          <div class="mock-interactive-video">
+            <!-- Behind is the simulated movement (silhouettes) -->
+            <div class="camera-feed-moving-subject"></div>
+            <!-- Interactive privacy backdrop filters overlay -->
+            <div class="skinward-lens-overlay lens-glass" id="interactive-lens">
+              <div class="lens-blob color-1"></div>
+              <div class="lens-blob color-2"></div>
+            </div>
+            <div class="status-watermark" id="lens-text-overlay">Frosted Glass Mode active</div>
+          </div>
+          <div class="lens-toggles">
+            <button class="selector-btn active" data-style="glass">Frosted Glass</button>
+            <button class="selector-btn" data-style="heatmap">Ambient Heatmap</button>
+            <button class="selector-btn" data-style="motion">Motion Only</button>
+          </div>
+        </div>
+
+        <!-- Shield settings Form -->
+        <div class="card">
+          <h3 class="form-title-underlined">Shield Configuration Form</h3>
+          
+          <form id="shield-form" onsubmit="return false;">
+            <div class="form-group">
+              <label for="shield-device">Ring Device Name</label>
+              <input type="text" id="shield-device" placeholder="e.g. Mom's Living Room Camera" value="Mom's Kitchen Camera" required>
+            </div>
+
+            <div class="form-group">
+              <label for="shield-filter">Privacy Filter Level</label>
+              <select id="shield-filter">
+                <option value="Frosted Glass (High Privacy - Silhouette Only)" selected>Frosted Glass (High Privacy - Silhouette Only)</option>
+                <option value="Ambient Heatmap (Medium Privacy - Color Blobs Only)">Ambient Heatmap (Medium Privacy - Color Blobs Only)</option>
+                <option value="Motion Only (Maximum Privacy - Text Updates Only)">Motion Only (Maximum Privacy - Text Updates Only)</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="shield-window">Daily Monitoring Window</label>
+              <select id="shield-window">
+                <option value="24 Hours (Continuous)" selected>24 Hours (Continuous)</option>
+                <option value="Daytime Only (7:00 AM - 9:00 PM)">Daytime Only (7:00 AM - 9:00 PM)</option>
+                <option value="Nighttime Only (9:00 PM - 7:00 AM)">Nighttime Only (9:00 PM - 7:00 AM)</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="shield-trigger">Caregiver Notification Trigger</label>
+              <select id="shield-trigger">
+                <option value="Only on unusual deviations from routine" selected>Only on unusual deviations from routine</option>
+                <option value="On every major movement transition">On every major movement transition</option>
+                <option value="Daily digest only">Daily digest only</option>
+              </select>
+            </div>
+
+            <button type="button" id="btn-apply-shield" class="btn btn-primary">Apply Privacy Shield</button>
+          </form>
+        </div>
+
+        <!-- Success Toast Trigger -->
+        <div class="success-banner hidden" id="success-shield-message">
+          <div class="banner-icon">✓</div>
+          <div class="banner-text">
+            <h4 id="success-title">Ring Shield Activated!</h4>
+            <p id="success-body">Your Ring feed is now successfully intercepted and filtered. Raw video will never leave this device, ensuring complete dignity and peace of mind.</p>
+          </div>
+        </div>
+      </section>
+
+
+      <!-- SCREEN 3: ACTIVITY TIMELINE -->
+      <section id="screen-timeline" class="app-screen hidden">
+        <div class="screen-title-area">
+          <h2>Privacy-Filtered Timeline</h2>
+          <p class="screen-desc">Real-time Ring events translated into friendly, natural-language updates. Raw video is completely blocked.</p>
+        </div>
+
+        <!-- Metrics Row -->
+        <div class="metrics-row">
+          <div class="metric-card">
+            <span class="label">Last Activity</span>
+            <span class="value" id="stat-last-activity">12 mins ago</span>
+          </div>
+          <div class="metric-card">
+            <span class="label">Routine Match</span>
+            <span class="value" id="stat-routine-match" style="color: var(--accent);">94% Normal</span>
+          </div>
+        </div>
+
+        <!-- Event Simulator Widgets -->
+        <div class="card sim-card">
+          <h3>Interactive Ring Simulator</h3>
+          <p class="card-desc">Simulate a raw Ring motion state. Watch how Kinward's filter strips the video instantly and pushes a friendly telemetry log.</p>
+          <div class="sim-buttons">
+            <button class="sim-btn" data-sensor="Kitchen Camera" data-event="Kitchen Motion" data-desc="Mom is active preparing some morning tea near the stove." data-status="Reassuring" data-style="Warm Amber">🍵 Sensor: Kitchen</button>
+            <button class="sim-btn" data-sensor="Living Room Camera" data-event="Living Room Motion" data-desc="Soft movement detected near her reading armchair." data-status="Resting" data-style="Soft Green">🛋️ Sensor: Armchair</button>
+            <button class="sim-btn" data-sensor="Front Door Doorbell" data-event="Front Door Doorbell" data-desc="Someone is at the door. Eleanor checked via intercom, no door opened." data-status="Secure" data-style="Frosted Glass">🔔 Sensor: Doorbell</button>
+          </div>
+        </div>
+
+        <!-- Dynamic Timeline List -->
+        <div class="timeline-container" id="timeline-events-list">
+          <!-- Dynamic logs appended here -->
+        </div>
+      </section>
+
+
+      <!-- SCREEN 4: CARE ASSISTANT / GEMINI DEEP ANALYSIS -->
+      <section id="screen-assistant" class="app-screen hidden">
+        <div class="screen-title-area">
+          <h2>Ambient Care Assistant</h2>
+          <p class="screen-desc">Ask Gemini to analyze raw Ring telemetry or tap below to hear a reassuring audio briefing of your parent's daily routine.</p>
+        </div>
+
+        <!-- Metrics Row -->
+        <div class="metrics-row">
+          <div class="metric-card">
+            <span class="label">Shield Status</span>
+            <span class="value" style="color: var(--accent);">100% Private</span>
+          </div>
+          <div class="metric-card">
+            <span class="label">Ring Connection</span>
+            <span class="value">Excellent</span>
+          </div>
+        </div>
+
+        <!-- Gemini Synthesizer Section -->
+        <div class="card">
+          <div class="card-icon-header">
+            <div class="gemini-sparkle">✦</div>
+            <h3>Ambient Pattern Analyzer</h3>
+          </div>
+          <p class="card-desc">Translates raw Ring motion telemetry and doorbell logs into comforting, natural-language daily summaries, removing the need for invasive video monitoring.</p>
+          
+          <div class="button-wrapper">
+            <button id="btn-generate-ai" class="btn btn-secondary">
+              <span class="spinner hidden" id="ai-spinner"></span>
+              Synthesize Live Summary (AI)
+            </button>
+          </div>
+
+          <div class="ai-output-box" id="ai-summary-output">
+            <p class="placeholder-text">Press button above to synthesize recent sensor telemetry into a comforting, conversational report...</p>
+          </div>
+        </div>
+
+        <!-- TTS Voice Briefing Section -->
+        <div class="card">
+          <div class="card-icon-header">
+            <div class="tts-wave-icon">🔊</div>
+            <h3>Reassurance Voice Briefing</h3>
+          </div>
+          <p class="card-desc">Allows busy caregivers to listen to hands-free audio updates of their aging parent's status while commuting or working.</p>
+          
+          <div class="voice-box hidden" id="voice-waves-container">
+            <div class="wavelet"></div>
+            <div class="wavelet"></div>
+            <div class="wavelet"></div>
+            <div class="wavelet"></div>
+            <div class="wavelet"></div>
+            <span style="font-size: 11px; margin-left: 10px; color: var(--accent);">Streaming Audio...</span>
+          </div>
+
+          <div class="button-wrapper">
+            <button id="btn-play-voice" class="btn btn-accent">Play Audio Briefing</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ACTIVE SHEILD SUMMARY CARD (STICKY OR FOOTER INFO) -->
+      <div class="card active-shield-summary" id="bottom-active-config-panel">
+        <div class="panel-inner">
+          <div class="panel-left">
+            <span class="indicator-active-green">●</span>
+            <div>
+              <p class="panel-meta-title" id="footer-device">Mom's Kitchen Camera Connected</p>
+              <p class="panel-meta-desc" id="footer-privacy-level">Lens: Frosted Room Silhouette</p>
+            </div>
+          </div>
+          <button class="btn btn-tiny" id="btn-panel-modify">Modify Shield</button>
+        </div>
+      </div>
+
+    </main>
+
+    <!-- BOTTOM TAB NAVIGATION -->
+    <nav class="app-nav">
+      <button class="nav-item active" data-screen="configure">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" class="nav-icon" stroke="currentColor" stroke-width="2">
+          <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.1a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/>
+          <circle cx="12" cy="12" r="3"/>
+        </svg>
+        <span class="nav-label">Shield Config</span>
+      </button>
+      <button class="nav-item" data-screen="timeline">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" class="nav-icon" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"/>
+          <polyline points="12 6 12 12 16 14"/>
+        </svg>
+        <span class="nav-label">Timeline</span>
+      </button>
+      <button class="nav-item" data-screen="assistant">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" class="nav-icon" stroke="currentColor" stroke-width="2">
+          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+        </svg>
+        <span class="nav-label">AI Assistant</span>
+      </button>
+    </nav>
+  </div>
+
+  <footer class="desktop-footer">
+    <p>Kinward Care Portal &copy; 2026. Made with dignity and care. Serving: <span id="sync-parent-label">Eleanor (Mom)</span></p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
