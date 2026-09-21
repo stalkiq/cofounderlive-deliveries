@@ -1,0 +1,21 @@
+{
+  "name": "rhea-cycle-sanctuary",
+  "version": "1.0.0",
+  "description": "Rhea - A privacy-first menstrual cycle tracking sanctuary designed for the modern aesthetic.",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "smoke-test": "node scripts/smoke-test.mjs",
+    "smoke": "node scripts/smoke-test.mjs",
+    "test": "npm run smoke"
+  },
+  "dependencies": {
+    "@google/generative-ai": "^0.11.0",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "morgan": "^1.10.0"
+  },
+  "private": true
+}

@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rhea — A Sanctuary for Your Rhythms</title>
+    <!-- Google Fonts for Serif & Sans-Serif aesthetic -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!-- Responsive Phone Frame Context for a High-End Mobile feel -->
+    <div class="app-container">
+        <!-- App Header with Logo & Brand Eyebrow -->
+        <header class="app-header">
+            <div class="logo-area">
+                <span class="lunar-symbol">✨</span>
+                <h1>Rhea</h1>
+            </div>
+            <p class="brand-eyebrow">A Sanctuary for Your Rhythms</p>
+        </header>
+
+        <!-- Dynamic Main Content Window -->
+        <main class="app-main-content">
+
+            <!-- ============================================ -->
+            <!-- 1. ONBOARDING SCREEN                         -->
+            <!-- ============================================ -->
+            <section id="screen-onboarding" class="app-screen onboarding-screen active-temp">
+                <div class="onboarding-graphics">
+                    <!-- Elegant SVG Lunar Phase Morph Overlay -->
+                    <svg viewBox="0 0 100 100" class="morph-graphic">
+                        <defs>
+                            <radialGradient id="grad1" cx="50%" cy="50%" r="50%">
+                                <stop offset="0%" style="stop-color: #B85A3C; stop-opacity: 0.35" />
+                                <stop offset="100%" style="stop-color: #F9F6F0; stop-opacity: 0" />
+                            </radialGradient>
+                        </defs>
+                        <circle cx="50%" cy="50%" r="40" fill="url(#grad1)" />
+                        <path d="M 50,10 A 40,40 0 0,0 50,90 A 25,40 0 0,1 50,10 Z" fill="#4A2E35" opacity="0.85" />
+                    </svg>
+                </div>
+
+                <div class="onboarding-text">
+                    <h2 class="serif-title">Align with your body's natural architecture.</h2>
+                    <p class="subheadline text-muted">A privacy-first cycle companion designed for the modern aesthetic. Moving beyond clinical grids to deliver an organic, intuitive tracking experience.</p>
+                </div>
+
+                <div class="onboarding-card">
+                    <h3 class="card-title">Initiate Your Sanctuary</h3>
+                    <form id="onboarding-form">
+                        <div class="form-group">
+                            <label for="ob-nickname">What should we call you?</label>
+                            <input type="text" id="ob-nickname" placeholder="e.g. Helena" required value="Helena">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="ob-last-period">First Day of Your Last Cycle</label>
+                            <input type="date" id="ob-last-period" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="ob-cycle-length">Typical Cycle Length (Days)</label>
+                            <div class="cycle-slider-wrapper">
+                                <input type="range" id="ob-cycle-length" min="21" max="40" value="28" oninput="document.getElementById('cycle-length-val').innerText = this.value">
+                                <span id="cycle-length-val">28</span> days
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="ob-goal">Your Intention with Rhea</label>
+                            <select id="ob-goal">
+                                <option value="Rhythm & Flow Awareness">Rhythm & Flow Awareness</option>
+                                <option value="Hormonal Cycle Syncing">Hormonal Cycle Syncing</option>
+                                <option value="Grounding Somatic Rituals">Grounding Somatic Rituals</option>
+                                <option value="Zero Knowledge Intimate Privacy">Zero-Knowledge Privacy</option>
+                            </select>
+                        </div>
+
+                        <button type="submit" class="btn-primary">Enter the Sanctuary</button>
+                    </form>
+                </div>
+            </section>
+
+            <!-- ============================================ -->
+            <!-- 2. CYCLE WHEEL SCREEN (CALENDAR VIEW)         -->
+            <!-- ============================================ -->
+            <section id="screen-wheel" class="app-screen hidden">
+                <div class="screen-intro">
+                    <span class="eyebrow-accent">LUNAR SYNCHRONY</span>
+                    <h2 class="serif-title">The Cycle Wheel</h2>
+                    <p class="description">A tactile, circular SVG wheel mapping your transition days seamlessly, replacing standard grid-based calendar layouts with organic lunar-aligned rhythms.</p>
+                </div>
+
+                <!-- Live Phase Info Box -->
+                <div class="metrics-row">
+                    <div class="metric-block card">
+                        <span class="metric-label">Current Phase</span>
+                        <span class="metric-val text-primary" id="wheel-phase-name">Luteal Phase</span>
+                    </div>
+                    <div class="metric-block card">
+                        <span class="metric-label">Day of Cycle</span>
+                        <span class="metric-val text-accent" id="wheel-cycle-day">Day 21</span>
+                    </div>
+                </div>
+
+                <!-- SVG Cycle Wheel Hero Element -->
+                <div class="cycle-wheel-outer-container">
+                    <div class="cycle-wheel-inner">
+                        <svg id="svg-cycle-wheel" viewBox="0 0 300 300">
+                            <!-- SVG segments and pointer are generated dynamically to match user's actual configuration -->
+                        </svg>
+                        <div class="wheel-center-content">
+                            <p class="wheel-center-day" id="wheel-center-day-num">Day 21</p>
+                            <p class="wheel-center-label" id="wheel-center-phase-lbl">LUTEAL</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Phase Context Summary Cards -->
+                <div class="phase-timeline">
+                    <h3 class="section-title">Your Current Season Details</h3>
+                    <div id="phase-items-list" class="timeline-container">
+                        <!-- Filled by JS -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- ============================================ -->
+            <!-- 3. SANCTUARY AI SCREEN (ASSISTANT VIEW)     -->
+            <!-- ============================================ -->
+            <section id="screen-assistant" class="app-screen hidden">
+                <div class="screen-intro">
+                    <span class="eyebrow-accent">HOLISTIC COMPANION</span>
+                    <h2 class="serif-title">Holistic Sanctuary</h2>
+                    <p class="description">Your private, zero-knowledge companion. Ask Rhea for natural alignment practices, cycle-syncing nutrition, or gentle movement.</p>
+                </div>
+
+                <div class="privacy-notice">
+                    <div class="shield-icon">🛡️</div>
+                    <div>
+                        <strong>Zero-Knowledge Transits</strong>
+                        <p>Your intimate health records are stored locally. Prompts sent to Rhea AI contain only your query context and active rhythm phase.</p>
+                    </div>
+                </div>
+
+                <!-- Preset Prompt Triggers -->
+                <div class="ritual-presets text-left">
+                    <h4 class="small-title">Suggested Alignment Prompts</h4>
+                    <div class="preset-pills">
+                        <button class="preset-pill" onclick="triggerPreset('Suggest a warm nutrition ritual for my current phase')">🍲 Phase Nutrition Focus</button>
+                        <button class="preset-pill" onclick="triggerPreset('What gentle movement is best to support progesterone today?')">🧘 Gentle Somatic Movement</button>
+                        <button class="preset-pill" onclick="triggerPreset('I am feeling deep muscle cramping. What can ease it naturally?')">🍵 Soothing Cramp Ritual</button>
+                    </div>
+                </div>
+
+                <!-- AI Chat Area -->
+                <div class="chat-container card">
+                    <div class="chat-history" id="chat-history-box">
+                        <div class="chat-message assistant">
+                            <div class="message-meta">Rhea — Sanctuary AI</div>
+                            <div class="message-content">
+                                Welcome, <span class="user-name-placeholder">Helena</span>. You are walking in your <span class="user-phase-placeholder">Luteal Phase</span> today.
+                                <br><br>
+                                Let's align. Would you like to explore targeted nutrition, restorative somatic rest, or herbs to balance progesterone? Ask me anything below.
+                            </div>
+                        </div>
+                    </div>
+
+                    <form id="ai-chat-form" class="chat-input-bar">
+                        <input type="text" id="ai-query-input" placeholder="Ask Rhea about cycle syncing, herbs, rest..." required autocomplete="off">
+                        <button type="submit" class="btn-send">
+                            <svg viewBox="0 0 24 24" width="20" height="20">
+                                <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" fill="currentColor"/>
+                            </svg>
+                        </button>
+                    </form>
+                </div>
+            </section>
+
+            <!-- ============================================ -->
+            <!-- 4. DAILY RITUAL WORKFLOW (FORM VIEW)        -->
+            <!-- ============================================ -->
+            <section id="screen-workflow" class="app-screen hidden">
+                <div class="screen-intro">
+                    <span class="eyebrow-accent">DAILY SYNC</span>
+                    <h2 class="serif-title">Daily Ritual Log</h2>
+                    <p class="description">Check in with your body. Your intimate biological data is encrypted locally and never leaves your device.</p>
+                </div>
+
+                <div class="metrics-row mb-4">
+                    <div class="metric-block card w-full">
+                        <span class="metric-label">Total Logs Persisted</span>
+                        <span class="metric-val text-primary" id="metrics-logged-days">0 Days</span>
+                    </div>
+                </div>
+
+                <div class="workflow-card card">
+                    <h3 class="workflow-form-title">Log Your Daily Rhythm</h3>
+                    <p class="workflow-form-subtitle">A sensory, grounding ritual to record your physical and emotional landscape.</p>
+
+                    <!-- Intimate Log Form -->
+                    <form id="rhythm-daily-form">
+                        <div class="form-group">
+                            <label for="f-sensation">Physical Sensations</label>
+                            <select id="f-sensation" required>
+                                <option value="" disabled selected>-- How does your skin and breath feel? --</option>
+                                <option value="Grounded & Energetic">Grounded & Energetic</option>
+                                <option value="Tender & Sensitive">Tender & Sensitive</option>
+                                <option value="Mild Cramping">Mild Cramping</option>
+                                <option value="Restless & Active">Restless & Active</option>
+                                <option value="Deeply Fatigued">Deeply Fatigued</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="f-intensity">Sensation Intensity</label>
+                            <select id="f-intensity" required>
+                                <option value="" disabled selected>-- How audible is this feedback? --</option>
+                                <option value="Whisper-soft / Barely there">Whisper-soft / Barely there</option>
+                                <option value="Gentle / Noticeable">Gentle / Noticeable</option>
+                                <option value="Resonant / Grounding">Resonant / Grounding</option>
+                                <option value="Vibrant / Intense">Vibrant / Intense</option>
+                                <option value="Deep / Demanding">Deep / Demanding</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="f-flow">Flow Intensity</label>
+                            <select id="f-flow" required>
+                                <option value="" disabled selected>-- Menstrual Flow Density --</option>
+                                <option value="None">None</option>
+                                <option value="Light Spotting">Light Spotting</option>
+                                <option value="Medium Flow">Medium Flow</option>
+                                <option value="Heavy Flow">Heavy Flow</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="f-bbt">Basal Body Temperature (°F)</label>
+                            <input type="number" step="0.01" id="f-bbt" placeholder="e.g. 97.8" required min="95.0" max="105.0">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="f-emotional">Emotional Landscape</label>
+                            <select id="f-emotional" required>
+                                <option value="" disabled selected>-- Select your mood current --</option>
+                                <option value="Reflective & Quiet">Reflective & Quiet</option>
+                                <option value="Expressive & Social">Expressive & Social</option>
+                                <option value="Dynamic & Focused">Dynamic & Focused</option>
+                                <option value="Receptive & Soft">Receptive & Soft</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="f-date">Ritual Date</label>
+                            <input type="date" id="f-date" required>
+                        </div>
+
+                        <button type="submit" class="btn-primary">Commit to Local Storage</button>
+                    </form>
+                </div>
+            </section>
+
+            <!-- ============================================ -->
+            <!-- 5. HISTORY & SANCTUARY SETTINGS SCREEN        -->
+            <!-- ============================================ -->
+            <section id="screen-history" class="app-screen hidden">
+                <div class="screen-intro">
+                    <span class="eyebrow-accent">RECORDS & PRIVACY</span>
+                    <h2 class="serif-title">Sanctuary Vault</h2>
+                    <p class="description">Review your historical rhythms saved securely in the backend memory. Real-time encryption statistics and local privacy states.</p>
+                </div>
+
+                <div class="encryption-toggle-card card">
+                    <div class="toggle-row">
+                        <div class="toggle-text">
+                            <strong>Simulated On-Device Encryption</strong>
+                            <p class="text-xs text-muted">Leverages a high-entropy client cipher before writing records blockages to the server.</p>
+                        </div>
+                        <label class="switch">
+                            <input type="checkbox" id="toggle-encryption" checked>
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Log History Timeline -->
+                <div class="history-list-section">
+                    <h3 class="section-title">Encrypted Somatic Logs</h3>
+                    <div id="logged-item-timeline" class="history-timeline">
+                        <!-- Filled by JS -->
+                        <div class="no-logs">
+                            <p>No somatic rituals committed yet. Open the Daily Sync screen to register your first day.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Profile Customization & Clear data -->
+                <div class="settings-danger-zone card">
+                    <h3 class="card-title text-accent">Demolish Sanctuary Key (Reset)</h3>
+                    <p class="text-xs text-muted mb-4">Warning: This completely deletes your current period phase offsets, profile setting configurations, and logged local dates stored in memory.</p>
+                    <button class="btn-danger" id="btn-wipe-data">Wipe All My Data</button>
+                    <button class="btn-outline-text mt-2" id="btn-reconfigure" style="width: 100%;">Reconfigure Onboarding Only</button>
+                </div>
+            </section>
+
+        </main>
+
+        <!-- Dynamic Success Feedback Screen Overlay -->
+        <div id="success-overlay" class="done-overlay hidden">
+            <div class="success-card">
+                <div class="checkmark-circle">✓</div>
+                <h3 id="overlay-title">Rhythm Logged</h3>
+                <p id="overlay-msg">Your daily ritual has been encrypted and saved locally. Your cycle wheel has updated to reflect this shift.</p>
+                <button class="btn-primary" onclick="closeSuccessOverlay()">Return to Sanctuary</button>
+            </div>
+        </div>
+
+        <!-- ============================================ -->
+        <!-- MOBILE BOTTOM NAVIGATION                     -->
+        <!-- ============================================ -->
+        <nav class="app-bottom-nav" id="bottom-navbar">
+            <button class="nav-item active" data-screen="wheel">
+                <span class="nav-icon">◯</span>
+                <span class="nav-label">Wheel</span>
+            </button>
+            <button class="nav-item" data-screen="assistant">
+                <span class="nav-icon">✨</span>
+                <span class="nav-label">Rhea Guide</span>
+            </button>
+            <button class="nav-item" data-screen="workflow">
+                <span class="nav-icon">✍</span>
+                <span class="nav-label">Log</span>
+            </button>
+            <button class="nav-item" data-screen="history">
+                <span class="nav-icon">⚿</span>
+                <span class="nav-label">Vault</span>
+            </button>
+        </nav>
+    </div>
+
+    <!-- Main Dynamic Application Logic Javascript -->
+    <script src="js/app.js"></script>
+</body>
+</html>
